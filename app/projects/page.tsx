@@ -13,7 +13,7 @@ const projectsList = [
     badge: "VPN · ENC",
     description:
       "Military-grade network obfuscation using custom VLESS-Reality implementation. Zero-log architecture with geo-distributed nodes across multiple regions. Built for privacy-first users who demand uncompromising security.",
-    tags: ["SWIFT", "GO", "WEB"],
+    tags: ["SWIFT", "WINUI", "C#", "WEB"],
     link: { label: "VIEW TECHNICAL SPECS", href: "https://dopplervpn.org" },
   },
   {
@@ -21,7 +21,7 @@ const projectsList = [
     badge: "NEURAL · GEN",
     description:
       "Neural network automated content synthesis. Fine-tuned LLMs for technical documentation and professional content editing. Automated pipelines for multi-language content generation and distribution.",
-    tags: ["PYTHON", "AI", "REACT"],
+    tags: ["SWIFT", "KOTLIN"],
     link: { label: "VIEW PROJECT", href: "#" },
   },
 ];
@@ -35,7 +35,7 @@ export default function ProjectsPage() {
         <h1 className="text-display max-w-3xl">ACTIVE DEPLOYMENTS</h1>
         <p className="text-body text-on-surface-variant mt-6 max-w-lg">
           A catalog of precision software instruments developed for global
-          scale. Built with industrial-grade reliability and Swedish minimalist
+          scale. Built with industrial-grade reliability and minimalist
           principles.
         </p>
       </section>

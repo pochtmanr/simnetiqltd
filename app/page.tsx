@@ -60,11 +60,11 @@ export default function HomePage() {
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 lg:px-12 pt-24 pb-20">
         <p className="text-label text-outline mb-6">
-          TECHNOLOGY STUDIO · GERMANY
+          TECHNOLOGY STUDIO · LONDON
         </p>
         <h1 className="text-display max-w-4xl">SIMNETIQ</h1>
         <p className="text-body text-on-surface-variant mt-6 max-w-lg">
-          Technology studio based in Germany. Precision software engineering for
+          Technology studio based in London. Precision software engineering for
           web, mobile, VPN infrastructure, and AI systems.
         </p>
       </section>

@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     template: "%s — SIMNETIQ",
   },
   description:
-    "Precision software engineering. Web development, mobile apps, automation, and VPN infrastructure. Based in Germany.",
+    "Precision software engineering. Web development, mobile apps, automation, and VPN infrastructure. Based in London, UK.",
   metadataBase: new URL("https://simnetiq.store"),
   openGraph: {
     title: "SIMNETIQ — Technology Studio",
     description:
-      "Precision software engineering. Web development, mobile apps, automation, and VPN infrastructure. Based in Germany.",
+      "Precision software engineering. Web development, mobile apps, automation, and VPN infrastructure. Based in London, UK.",
     url: "https://simnetiq.store",
     siteName: "SIMNETIQ",
     locale: "en_US",

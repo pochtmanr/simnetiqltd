@@ -28,7 +28,7 @@ const values = [
   },
   {
     title: "LEGACY",
-    text: "Rooted in German and Swedish industrial design principles.",
+    text: "Rooted in Scandinavian and British industrial design principles.",
   },
 ];
 
@@ -51,11 +51,11 @@ export default function AboutPage() {
           </div>
           <div className="flex flex-col gap-6">
             <div className="border border-outline-variant p-6">
-              <p className="text-display text-on-surface">2019</p>
+              <p className="text-display text-on-surface">2025</p>
               <p className="text-label text-outline mt-2">FOUNDED</p>
             </div>
             <div className="border border-outline-variant p-6">
-              <p className="text-headline text-on-surface">GERMANY</p>
+              <p className="text-headline text-on-surface">LONDON, UK</p>
               <p className="text-label text-outline mt-2">OPERATIONS</p>
             </div>
           </div>

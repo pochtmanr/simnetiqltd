@@ -18,7 +18,7 @@ export function Footer() {
             >
               SUPPORT@SIMNETIQ.STORE
             </Link>
-            <span className="text-label text-outline">GERMANY</span>
+            <span className="text-label text-outline">LONDON, UK</span>
           </div>
         </div>
       </div>
