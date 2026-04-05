@@ -24,6 +24,14 @@ const projectsList = [
     tags: ["SWIFT", "KOTLIN"],
     link: { label: "VISIT WEBSITE", href: "https://www.creatorai.art/en" },
   },
+  {
+    title: "ISR Shipping",
+    badge: "LOGISTICS · OPS",
+    description:
+      "Delivery management platform with real-time GPS driver tracking, route optimization, and order lifecycle management. Built for the Israeli logistics market with multi-language support.",
+    tags: ["NEXT.JS", "REACT", "NODE"],
+    link: { label: "VISIT WEBSITE", href: "https://www.isrshipping.com" },
+  },
 ];
 
 export default function ProjectsPage() {
@@ -43,7 +51,7 @@ export default function ProjectsPage() {
       {/* Projects Grid */}
       <section className="border-t border-outline-variant">
         <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
             {projectsList.map((project, i) => (
               <div
                 key={project.title}

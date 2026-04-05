@@ -21,12 +21,19 @@ const projects = [
     description:
       "Neural network automated content synthesis. Fine-tuned LLMs for technical documentation and professional content editing.",
   },
+  {
+    title: "ISR Shipping",
+    badge: "LOGISTICS · OPS",
+    description:
+      "Delivery management platform with real-time GPS tracking, route optimization, and order lifecycle management.",
+  },
 ];
 
 const capabilities = [
   "App Development",
   "VPN Infrastructure",
   "AI Integration",
+  "Logistics Systems",
 ];
 
 export default function HomePage() {
@@ -73,13 +80,13 @@ export default function HomePage() {
       <section className="border-t border-outline-variant">
         <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
           <p className="text-label text-outline mb-8">SELECTED · OPERATIONS</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
             {projects.map((project, i) => (
               <div
                 key={project.title}
                 className={`p-6 border border-outline-variant ${
-                  i > 0 ? "md:border-l-0" : ""
-                }`}
+                  i % 2 !== 0 ? "md:border-l-0" : ""
+                } ${i >= 2 ? "md:border-t-0" : ""}`}
               >
                 <p className="text-label text-primary mb-3">{project.badge}</p>
                 <h3 className="text-headline text-on-surface mb-3">
