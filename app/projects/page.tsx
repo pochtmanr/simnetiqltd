@@ -14,7 +14,7 @@ const projectsList = [
     description:
       "Military-grade network obfuscation using custom VLESS-Reality implementation. Zero-log architecture with geo-distributed nodes across multiple regions. Built for privacy-first users who demand uncompromising security.",
     tags: ["SWIFT", "WINUI", "C#", "WEB"],
-    link: { label: "VIEW TECHNICAL SPECS", href: "https://dopplervpn.org" },
+    link: { label: "VISIT WEBSITE", href: "https://dopplervpn.org" },
   },
   {
     title: "Creator AI",
@@ -22,7 +22,7 @@ const projectsList = [
     description:
       "Neural network automated content synthesis. Fine-tuned LLMs for technical documentation and professional content editing. Automated pipelines for multi-language content generation and distribution.",
     tags: ["SWIFT", "KOTLIN"],
-    link: { label: "VIEW PROJECT", href: "#" },
+    link: { label: "VISIT WEBSITE", href: "https://www.creatorai.art/en" },
   },
 ];
 
