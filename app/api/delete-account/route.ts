@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import { sendEmail } from "@/lib/smtp";
 import { rateLimit } from "@/lib/rate-limit";
 
@@ -34,18 +35,39 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const timestamp = new Date().toISOString();
+
   try {
     await sendEmail({
       subject: `[Simnetiq] Account Deletion Request — ${identity}`,
-      text: `Account Deletion Request\n\nIdentity: ${identity}\nReason: ${reason || "Not provided"}\n\nTimestamp: ${new Date().toISOString()}`,
+      text: `Account Deletion Request\n\nIdentity: ${identity}\nReason: ${reason || "Not provided"}\n\nTimestamp: ${timestamp}`,
       html: `
         <h2>Account Deletion Request</h2>
         <p><strong>Identity:</strong> ${identity}</p>
         <p><strong>Reason:</strong> ${reason || "Not provided"}</p>
         <hr />
-        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+        <p><strong>Timestamp:</strong> ${timestamp}</p>
         <p><em>This request should be processed within 30 days per data retention policy.</em></p>
       `,
+    });
+
+    after(async () => {
+      const webhookUrl = process.env.N8N_DELETE_WEBHOOK;
+      if (webhookUrl) {
+        try {
+          await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              identity,
+              reason: reason || "Not provided",
+              timestamp,
+            }),
+          });
+        } catch (err) {
+          console.error("Failed to notify n8n (deletion):", err);
+        }
+      }
     });
 
     return NextResponse.json({

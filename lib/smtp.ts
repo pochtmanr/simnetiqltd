@@ -40,3 +40,26 @@ export async function sendEmail({
     html,
   });
 }
+
+export async function sendEmailTo({
+  to,
+  subject,
+  text,
+  html,
+}: {
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
+}) {
+  const transporter = createTransporter();
+  const from = getEnvOrThrow("SMTP_USER");
+
+  await transporter.sendMail({
+    from: `"Simnetiq" <${from}>`,
+    to,
+    subject,
+    text,
+    html,
+  });
+}
