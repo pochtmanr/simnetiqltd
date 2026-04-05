@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function DeleteAccountPage() {
@@ -37,8 +38,41 @@ export default function DeleteAccountPage() {
         </p>
         <h1 className="text-display max-w-3xl">SYSTEM EXIT</h1>
         <p className="text-body text-on-surface-variant mt-6 max-w-lg">
-          PERMANENT ACCOUNT DISSOLUTION AND CRYPTOGRAPHIC IDENTITY REMOVAL.
+          PERMANENT ACCOUNT DISSOLUTION FOR SIMNETIQ eSIM APP USERS.
         </p>
+      </section>
+
+      {/* App Info */}
+      <section className="border-t border-outline-variant">
+        <div className="mx-auto max-w-7xl px-6 lg:px-12 py-12">
+          <p className="text-label text-outline mb-4">APPLICABLE PRODUCTS</p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="https://apps.apple.com/pl/app/simnetiq-travel-esim-data/id6755963262"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-outline-variant p-4 hover:bg-surface-container-high transition-colors duration-[50ms] linear"
+            >
+              <p className="text-label text-primary mb-1">iOS</p>
+              <p className="text-body text-on-surface">
+                Simnetiq — Travel eSIM Data
+              </p>
+              <p className="text-label text-outline mt-1">APP STORE &rarr;</p>
+            </Link>
+            <Link
+              href="https://play.google.com/store/apps/details?id=com.simnetiq.storeAndroid&hl=gsw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-outline-variant p-4 hover:bg-surface-container-high transition-colors duration-[50ms] linear"
+            >
+              <p className="text-label text-primary mb-1">ANDROID</p>
+              <p className="text-body text-on-surface">
+                Simnetiq — Travel eSIM Data
+              </p>
+              <p className="text-label text-outline mt-1">GOOGLE PLAY &rarr;</p>
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Warning */}
@@ -55,11 +89,31 @@ export default function DeleteAccountPage() {
                 </p>
                 <p className="text-body text-on-surface-variant">
                   This action is permanent and cannot be undone. All data
-                  associated with this identity, including project history, VPN
-                  configurations, and secure tokens, will be purged from the
-                  Simnetiq production environment.
+                  associated with your account — including eSIM profiles, purchase
+                  history, and authentication credentials — will be permanently
+                  deleted from the Simnetiq production environment.
                 </p>
               </div>
+            </div>
+          </div>
+
+          <div className="mt-6 max-w-2xl">
+            <p className="text-label text-outline mb-2">
+              WHAT WILL BE DELETED
+            </p>
+            <div className="space-y-2">
+              <p className="text-body text-on-surface-variant">
+                &bull; Your account and authentication data (Google or Apple Sign-In link)
+              </p>
+              <p className="text-body text-on-surface-variant">
+                &bull; eSIM profiles and associated carrier data
+              </p>
+              <p className="text-body text-on-surface-variant">
+                &bull; Purchase and transaction history
+              </p>
+              <p className="text-body text-on-surface-variant">
+                &bull; Usage analytics and preferences
+              </p>
             </div>
           </div>
         </div>
@@ -71,22 +125,22 @@ export default function DeleteAccountPage() {
           <form onSubmit={handleSubmit} className="max-w-xl space-y-6">
             <div>
               <label className="text-label text-outline block mb-2">
-                CONFIRM IDENTITY (VPN-XXXX-XXXX-XXXX OR EMAIL)
+                ACCOUNT EMAIL (GOOGLE OR APPLE SIGN-IN EMAIL)
               </label>
               <input
-                type="text"
+                type="email"
                 required
                 value={form.identity}
                 onChange={(e) =>
                   setForm({ ...form, identity: e.target.value })
                 }
                 className="w-full bg-surface-container-highest border-b border-outline px-4 py-3 text-body text-on-surface focus:outline-none focus:border-primary"
-                placeholder="VPN-XXXX-XXXX-XXXX or email@example.com"
+                placeholder="your-email@example.com"
               />
             </div>
             <div>
               <label className="text-label text-outline block mb-2">
-                REASON FOR TERMINATION (OPTIONAL)
+                REASON FOR DELETION (OPTIONAL)
               </label>
               <textarea
                 rows={3}
@@ -119,8 +173,8 @@ export default function DeleteAccountPage() {
             {status === "sent" && (
               <div className="border border-outline-variant p-4">
                 <p className="text-label text-primary">
-                  DELETION REQUEST SUBMITTED. YOUR REQUEST WILL BE PROCESSED
-                  WITHIN 30 DAYS.
+                  DELETION REQUEST SUBMITTED. YOUR ACCOUNT AND ALL ASSOCIATED
+                  DATA WILL BE PERMANENTLY REMOVED WITHIN 30 DAYS.
                 </p>
               </div>
             )}
