@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -20,8 +21,17 @@ export function Navigation() {
     <nav className="border-b border-outline-variant bg-surface">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="flex h-14 items-center justify-between">
-          <Link href="/" className="text-label text-on-surface tracking-[0.05em]">
-            SIMNETIQ
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.svg"
+              alt="Simnetiq"
+              width={48}
+              height={17}
+              className="h-[17px] w-auto"
+            />
+            <span className="text-label text-on-surface tracking-[0.05em]">
+              SIMNETIQ
+            </span>
           </Link>
 
           {/* Desktop */}
