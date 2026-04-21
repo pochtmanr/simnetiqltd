@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Panel, Rail, SpecRow } from "@/components/panel";
 
 export const metadata: Metadata = {
   title: "About",
@@ -8,26 +9,42 @@ export const metadata: Metadata = {
 };
 
 const team = [
-  { role: "Lead Engineer", name: "R. POCHTMAN" },
-  { role: "Legal / Contracts", name: "D. ZITOMIRSKY" },
-  { role: "Developer / Marketing", name: "D. POLSKOY" },
+  {
+    role: "Lead Engineer / Director",
+    name: "R. Pochtman",
+    meta: "Mobile · Backend · Infra",
+  },
+  {
+    role: "Legal / Contracts",
+    name: "D. Zitomirsky",
+    meta: "Corporate · Compliance",
+  },
+  {
+    role: "Developer / Growth",
+    name: "D. Polskoy",
+    meta: "Distribution · Marketing",
+  },
 ];
 
 const values = [
   {
-    title: "PRECISION",
-    text: "Mathematics over aesthetics. Every pixel and line serves a structural purpose.",
+    code: "V-01",
+    title: "Precision",
+    text: "Mathematics over aesthetics. Every pixel, every line, every abstraction serves a structural purpose.",
   },
   {
-    title: "FUNCTION",
+    code: "V-02",
+    title: "Function",
     text: "We build instruments, not toys. UI is for control, not decoration.",
   },
   {
-    title: "INTEGRITY",
+    code: "V-03",
+    title: "Integrity",
     text: "Direct communication. Transparent architecture. Unwavering quality.",
   },
   {
-    title: "LEGACY",
+    code: "V-04",
+    title: "Legacy",
     text: "Rooted in Scandinavian and British industrial design principles.",
   },
 ];
@@ -36,147 +53,177 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-12 pt-24 pb-16">
-        <p className="text-label text-outline mb-6">MISSION CONTEXT</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="md:col-span-2">
-            <h1 className="text-display max-w-3xl">
-              WE BUILD THE KINETIC BLUEPRINT FOR INDUSTRIAL EXCELLENCE.
-            </h1>
-            <p className="text-body text-on-surface-variant mt-6 max-w-lg">
-              Simnetiq is a technical design and engineering collective. We
-              reject decorative trends in favor of functional precision and
-              geometric absolutism.
-            </p>
-          </div>
-          <div className="flex flex-col gap-6">
-            <div className="border border-outline-variant p-6">
-              <p className="text-display text-on-surface">2025</p>
-              <p className="text-label text-outline mt-2">FOUNDED</p>
+      <section className="border-b border-[var(--color-border)]">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
+          <Rail
+            items={[
+              "◆ SIMNETIQ / 02 / ABOUT",
+              "MISSION CONTEXT",
+              "DOSSIER · V1.0",
+            ]}
+            className="mb-10"
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+            <div className="lg:col-span-8">
+              <p className="text-label text-[var(--color-primary-glow)]">
+                ◇ Mission Context
+              </p>
+              <h1 className="text-display mt-6">
+                We build the kinetic blueprint for industrial software.
+              </h1>
+              <p className="text-body mt-8 max-w-xl">
+                Simnetiq is a technical design and engineering collective. We
+                reject decorative trends in favor of functional precision and
+                geometric absolutism — software that reads as an instrument, not
+                a decoration.
+              </p>
             </div>
-            <div className="border border-outline-variant p-6">
-              <p className="text-headline text-on-surface">LONDON, UK</p>
-              <p className="text-label text-outline mt-2">OPERATIONS</p>
+            <div className="lg:col-span-4 flex flex-col gap-5">
+              <Panel innerClassName="p-6">
+                <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
+                  ▸ Founded
+                </p>
+                <p className="text-display" style={{ fontSize: "clamp(2.25rem, 4vw, 3.25rem)" }}>
+                  2025
+                </p>
+              </Panel>
+              <Panel innerClassName="p-6">
+                <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
+                  ▸ Operations
+                </p>
+                <p className="text-headline">London, UK</p>
+                <p className="text-mono mt-2">51.5074°N · 0.1278°W</p>
+              </Panel>
             </div>
           </div>
         </div>
       </section>
 
       {/* Team */}
-      <section className="border-t border-outline-variant">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
-          <p className="text-label text-outline mb-4">PERSONNEL</p>
-          <h2 className="text-headline text-on-surface mb-8">
-            THE ARCHITECTURE TEAM
-          </h2>
-          <div className="max-w-2xl">
-            {team.map((member, i) => (
-              <div
-                key={member.name}
-                className={`flex items-center justify-between py-4 ${
-                  i < team.length - 1 ? "border-b border-outline-variant" : ""
-                }`}
-              >
-                <span className="text-body text-on-surface-variant">
-                  {member.role}
-                </span>
-                <span className="text-label text-on-surface">{member.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Geometric placeholder */}
-      <section className="bg-surface-container-highest">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
-          <div className="h-64 border border-outline-variant bg-surface-container flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-24 h-24 border-2 border-outline mx-auto mb-4 flex items-center justify-center">
-                <div className="w-12 h-12 border border-outline-variant rotate-45" />
-              </div>
-              <p className="text-label text-outline">
-                STRUCTURAL FORM · GEOMETRIC IDENTITY
+      <section className="border-b border-[var(--color-border)]">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div className="lg:col-span-4">
+              <p className="text-label text-[var(--color-primary-glow)]">
+                ◇ Personnel
               </p>
+              <h2 className="text-headline mt-5">The architecture team</h2>
+              <p className="text-body mt-6 max-w-sm">
+                Three owner-operators. Engineering, legal, distribution. No
+                layers between the work and the decision.
+              </p>
+            </div>
+            <div className="lg:col-span-8">
+              <Panel innerClassName="p-6 lg:p-8" corners>
+                {team.map((member, i) => (
+                  <div
+                    key={member.name}
+                    className={`grid grid-cols-12 gap-4 py-5 ${
+                      i < team.length - 1
+                        ? "border-b border-[var(--color-border)]"
+                        : ""
+                    }`}
+                  >
+                    <div className="col-span-2 sm:col-span-1 text-mono text-[var(--color-text-faint)]">
+                      0{i + 1}
+                    </div>
+                    <div className="col-span-10 sm:col-span-5 text-body">
+                      {member.role}
+                    </div>
+                    <div className="col-span-6 sm:col-span-3 text-label-sm text-[var(--color-text)]">
+                      {member.name}
+                    </div>
+                    <div className="col-span-6 sm:col-span-3 text-mono text-right">
+                      {member.meta}
+                    </div>
+                  </div>
+                ))}
+              </Panel>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Registration */}
-      <section className="border-t border-outline-variant">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="border border-outline-variant p-6">
-              <p className="text-label text-outline mb-4">
-                REGISTRATION DETAILS
+      {/* Registration split */}
+      <section className="border-b border-[var(--color-border)]">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-4">
+              <p className="text-label text-[var(--color-primary-glow)]">
+                ◇ Registration
               </p>
-              <p className="text-body text-on-surface font-medium">
-                SIMNETIQ LTD
-              </p>
-              <p className="text-body text-on-surface-variant mt-2">
-                Company Number: 16861177
-              </p>
-              <p className="text-body text-on-surface-variant">
-                2 Frederick Street, Kings Cross
-              </p>
-              <p className="text-body text-on-surface-variant">
-                London, WC1X 0ND
-              </p>
-              <p className="text-body text-on-surface-variant">
-                England &amp; Wales
+              <h2 className="text-headline mt-5">Certified entity</h2>
+              <p className="text-body mt-6 max-w-sm">
+                Incorporated in England &amp; Wales. All trading, contracting,
+                and invoicing runs through the parent entity.
               </p>
             </div>
-            <div className="border border-outline-variant p-6">
-              <p className="text-label text-outline mb-4">
-                REGISTERED ADDRESS
-              </p>
-              <p className="text-body text-on-surface font-medium">
-                Simnetiq Ltd
-              </p>
-              <p className="text-body text-on-surface-variant mt-2">
-                2 Frederick Street, Kings Cross
-              </p>
-              <p className="text-body text-on-surface-variant">
-                London, WC1X 0ND
-              </p>
-              <p className="text-body text-on-surface-variant">
-                United Kingdom
-              </p>
-              <Link
-                href="https://maps.google.com/?q=2+Frederick+Street+Kings+Cross+London+WC1X+0ND"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-label text-primary mt-4 inline-block hover:text-on-surface transition-colors duration-[50ms] linear"
-              >
-                VIEW ON GOOGLE MAPS &rarr;
-              </Link>
+            <div className="lg:col-span-4">
+              <Panel innerClassName="p-6 lg:p-8">
+                <p className="text-label-sm text-[var(--color-text-faint)] mb-5">
+                  ▸ Company Details
+                </p>
+                <SpecRow label="Legal name" value="Simnetiq Ltd" />
+                <SpecRow label="Company no." value="16861177" />
+                <SpecRow label="Jurisdiction" value="England & Wales" />
+                <SpecRow label="VAT status" value="On request" />
+              </Panel>
+            </div>
+            <div className="lg:col-span-4">
+              <Panel innerClassName="p-6 lg:p-8">
+                <p className="text-label-sm text-[var(--color-text-faint)] mb-5">
+                  ▸ Registered Address
+                </p>
+                <p className="text-body-strong text-[var(--color-text)]">
+                  Simnetiq Ltd
+                </p>
+                <p className="text-body mt-2">2 Frederick Street</p>
+                <p className="text-body">Kings Cross</p>
+                <p className="text-body">London, WC1X 0ND</p>
+                <p className="text-body">United Kingdom</p>
+                <Link
+                  href="https://maps.google.com/?q=2+Frederick+Street+Kings+Cross+London+WC1X+0ND"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-6 text-label-sm text-[var(--color-primary-glow)] hover:text-[var(--color-text)] transition-colors"
+                >
+                  View on Google Maps →
+                </Link>
+              </Panel>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="border-t border-outline-variant">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16">
-          <p className="text-label text-outline mb-8">
-            CERTIFIED ENGINEERING ENTITY
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
-            {values.map((value, i) => (
-              <div
-                key={value.title}
-                className={`p-6 border border-outline-variant ${
-                  i > 0 ? "sm:border-l-0" : ""
-                } ${i >= 2 ? "sm:border-t-0 lg:border-t" : ""} ${
-                  i >= 1 ? "lg:border-t" : ""
-                }`}
-              >
-                <h3 className="text-label text-on-surface mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-body text-on-surface-variant">{value.text}</p>
-              </div>
+      {/* Values grid */}
+      <section>
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
+            <div className="lg:col-span-4">
+              <p className="text-label text-[var(--color-primary-glow)]">
+                ◇ Principles
+              </p>
+              <h2 className="text-headline mt-5">Operating values</h2>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7 self-end">
+              <p className="text-body max-w-md">
+                Four constants that every project, hire, and decision is
+                measured against.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+            {values.map((value) => (
+              <Panel key={value.code} innerClassName="p-6 h-full">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-mono text-[var(--color-text-faint)]">
+                    {value.code}
+                  </span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
+                </div>
+                <h3 className="text-title mb-3">{value.title}</h3>
+                <p className="text-body">{value.text}</p>
+              </Panel>
             ))}
           </div>
         </div>
