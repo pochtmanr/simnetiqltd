@@ -1,7 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const columns = [
+type FooterLine = {
+  text: string;
+  strong?: boolean;
+  href?: string;
+};
+
+type FooterColumn = {
+  label: string;
+  lines: FooterLine[];
+};
+
+const columns: FooterColumn[] = [
   {
     label: "Entity",
     lines: [
@@ -11,15 +22,15 @@ const columns = [
     ],
   },
   {
-    label: "Operations",
+    label: "Documents",
     lines: [
-      { text: "LONDON · UK", strong: true },
-      { text: "2 Frederick Street" },
-      { text: "Kings Cross, WC1X 0ND" },
+      { text: "Legal", href: "/legal", strong: true },
+      { text: "Privacy", href: "/privacy-policy" },
+      { text: "Data Deletion", href: "/delete-account" },
     ],
   },
   {
-    label: "Transmission",
+    label: "Contact Us",
     lines: [
       { text: "support@simnetiq.store", strong: true },
       { text: "Technical studio" },
@@ -37,12 +48,6 @@ const social = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/romanpochtman/",
   },
-];
-
-const legalLinks = [
-  { href: "/legal", label: "Legal" },
-  { href: "/privacy-policy", label: "Privacy" },
-  { href: "/delete-account", label: "Data Deletion" },
 ];
 
 export function Footer() {
@@ -82,18 +87,35 @@ export function Footer() {
                   ▸ {col.label}
                 </p>
                 <div className="space-y-1.5">
-                  {col.lines.map((line, i) => (
-                    <p
-                      key={i}
-                      className={
-                        line.strong
-                          ? "text-body-strong text-[var(--color-text)]"
-                          : "text-body"
-                      }
-                    >
-                      {line.text}
-                    </p>
-                  ))}
+                  {col.lines.map((line, i) => {
+                    if (line.href) {
+                      return (
+                        <Link
+                          key={i}
+                          href={line.href}
+                          className={
+                            line.strong
+                              ? "block text-body-strong text-[var(--color-text)] hover:text-[var(--color-primary-glow)] transition-colors"
+                              : "block text-body hover:text-[var(--color-primary-glow)] transition-colors"
+                          }
+                        >
+                          {line.text}
+                        </Link>
+                      );
+                    }
+                    return (
+                      <p
+                        key={i}
+                        className={
+                          line.strong
+                            ? "text-body-strong text-[var(--color-text)]"
+                            : "text-body"
+                        }
+                      >
+                        {line.text}
+                      </p>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -106,16 +128,6 @@ export function Footer() {
             © {year} SIMNETIQ LTD · ALL SYSTEMS RESERVED
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-label-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <span className="h-3 w-px bg-[var(--color-border-strong)] hidden md:block" />
             {social.map((s) => (
               <Link
                 key={s.label}

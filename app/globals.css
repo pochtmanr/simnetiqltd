@@ -9,9 +9,9 @@
 
   /* Text — readable neutrals on dark bg */
   --color-text: #EBEBEB;
-  --color-text-muted: #B1B1B1;
-  --color-text-dim: #89898A;
-  --color-text-faint: #4F4F4F;
+  --color-text-muted: #CFCFCF;
+  --color-text-dim: #ABABAC;
+  --color-text-faint: #787878;
 
   /* Borders / rules */
   --color-border: rgba(255, 255, 255, 0.08);
@@ -30,8 +30,8 @@
   --color-background: #07090D;
   --color-foreground: #EBEBEB;
   --color-on-surface: #EBEBEB;
-  --color-on-surface-variant: #B1B1B1;
-  --color-outline: #89898A;
+  --color-on-surface-variant: #CFCFCF;
+  --color-outline: #ABABAC;
   --color-outline-variant: rgba(255, 255, 255, 0.12);
   --color-surface-container: #0A0A0B;
   --color-surface-container-low: #0A0A0B;

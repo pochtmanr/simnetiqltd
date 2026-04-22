@@ -1,11 +1,48 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Panel, Rail, SpecRow } from "@/components/panel";
+import { BreadcrumbSchema } from "@/components/structured-data";
+
+const SITE_URL = "https://simnetiq.store";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Simnetiq — London Software & Marketing Studio",
   description:
-    "Simnetiq is a technical design and engineering collective. Functional precision and geometric absolutism.",
+    "About Simnetiq Ltd — a London-based technology studio and engineering collective. Incorporated in England & Wales (Company No. 16861177). Three owner-operators covering mobile, web, AI, VPN infrastructure, paid acquisition, and legal. Registered at 2 Frederick Street, Kings Cross, London.",
+  keywords: [
+    "About Simnetiq",
+    "Simnetiq Ltd company",
+    "Simnetiq company number",
+    "Simnetiq London office",
+    "Simnetiq team",
+    "Simnetiq founders",
+    "Roman Pochtman",
+    "Dmitry Polskoy",
+    "David Zitomirsky",
+    "London software studio team",
+    "technology studio Kings Cross",
+    "England and Wales registered software company",
+    "Companies House 16861177",
+    "2 Frederick Street Kings Cross",
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: "About Simnetiq — London Technology Studio",
+    description:
+      "Simnetiq Ltd is a London-based engineering and marketing collective. Three owner-operators, full-stack capabilities, incorporated in England & Wales.",
+    url: `${SITE_URL}/about`,
+    siteName: "Simnetiq",
+    type: "website",
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Simnetiq — London Technology Studio",
+    description:
+      "Simnetiq Ltd is a London-based engineering and marketing collective. Three owner-operators, full-stack capabilities.",
+  },
 };
 
 const team = [
@@ -52,6 +89,12 @@ const values = [
 export default function AboutPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: `${SITE_URL}/` },
+          { name: "About", url: `${SITE_URL}/about` },
+        ]}
+      />
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">

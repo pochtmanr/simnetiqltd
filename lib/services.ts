@@ -476,7 +476,7 @@ export const services: Service[] = [
     meta: [
       { label: "Stack", value: "Next.js · Supabase · Stripe" },
       { label: "Typical TTM", value: "5–12 weeks" },
-      { label: "Reference", value: "Simnetiq · ISR Shipping" },
+      { label: "Reference", value: "Simnetiq · Go Delivery" },
     ],
   },
 ];

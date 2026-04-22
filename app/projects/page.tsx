@@ -1,11 +1,60 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Panel, Rail, SpecRow } from "@/components/panel";
+import {
+  BreadcrumbSchema,
+  PortfolioSchema,
+} from "@/components/structured-data";
+
+const SITE_URL = "https://simnetiq.store";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Projects — Simnetiq Deployments",
   description:
-    "Active deployments. Precision software instruments developed for global scale.",
+    "Simnetiq production deployments: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (LLM content platform on Anthropic and OpenAI), Physics.explained (open-source interactive physics), and Go Delivery / ISR Shipping (GPS-tracked logistics platform). Portfolio, case studies, and live apps from the London studio.",
+  keywords: [
+    "Simnetiq projects",
+    "Simnetiq portfolio",
+    "Simnetiq case studies",
+    "Simnetiq deployments",
+    "Doppler VPN",
+    "DopplerVPN",
+    "VLESS Reality VPN app",
+    "zero-log VPN",
+    "Creator AI",
+    "creatorai.art",
+    "LLM content platform",
+    "AI content agency portfolio",
+    "Physics.explained",
+    "physics.it.com",
+    "open source physics learning",
+    "ISR Shipping",
+    "Go Delivery logistics",
+    "delivery platform case study",
+    "London software portfolio",
+    "production app case studies",
+    "iOS app portfolio UK",
+    "Android app portfolio UK",
+    "Next.js production case studies",
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/projects`,
+  },
+  openGraph: {
+    title: "Projects — Simnetiq Deployments",
+    description:
+      "Production deployments from Simnetiq: Doppler VPN, Creator AI, Physics.explained, Go Delivery. Live apps, case studies, and portfolio.",
+    url: `${SITE_URL}/projects`,
+    siteName: "Simnetiq",
+    type: "website",
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects — Simnetiq Deployments",
+    description:
+      "Production deployments from Simnetiq: Doppler VPN, Creator AI, Physics.explained, Go Delivery.",
+  },
 };
 
 const projectsList = [
@@ -53,7 +102,7 @@ const projectsList = [
   },
   {
     id: "04",
-    title: "ISR Shipping",
+    title: "Go Delivery",
     badge: "LOGISTICS · OPS",
     description:
       "Delivery management platform with real-time GPS driver tracking, route optimization, and order lifecycle management. Built for the Israeli logistics market with multi-language support.",
@@ -70,6 +119,19 @@ const projectsList = [
 export default function ProjectsPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: `${SITE_URL}/` },
+          { name: "Projects", url: `${SITE_URL}/projects` },
+        ]}
+      />
+      <PortfolioSchema
+        items={projectsList.map((p) => ({
+          name: p.title,
+          url: p.link.href,
+          description: p.description,
+        }))}
+      />
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">

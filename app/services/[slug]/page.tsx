@@ -7,6 +7,152 @@ import {
   getService,
   services,
 } from "@/lib/services";
+import {
+  BreadcrumbSchema,
+  ServiceSchema,
+} from "@/components/structured-data";
+
+const SITE_URL = "https://simnetiq.store";
+
+const slugKeywords: Record<string, string[]> = {
+  "mobile-desktop": [
+    "mobile app development London",
+    "iOS app development agency London",
+    "Android app development agency UK",
+    "SwiftUI app developers",
+    "Jetpack Compose app developers",
+    "Kotlin app development agency",
+    "Swift development agency London",
+    "cross-platform app development UK",
+    "React Native agency London",
+    "Flutter agency UK",
+    "macOS app development studio",
+    "Windows app development WinUI 3",
+    "Linux desktop app development",
+    "Tauri app development",
+    "Electron app development agency",
+    "App Store submission service",
+    "Google Play submission service",
+    "TestFlight management",
+    "RevenueCat integration",
+    "StoreKit integration",
+    "Google Play Billing integration",
+    "mobile app MVP development London",
+    "production-grade mobile apps",
+    "hire iOS developer London",
+    "hire Android developer London",
+    "hire SwiftUI developer",
+    "hire Jetpack Compose developer",
+  ],
+  "growth-marketing": [
+    "growth marketing agency London",
+    "paid acquisition agency UK",
+    "performance marketing agency London",
+    "app marketing agency London",
+    "mobile app marketing agency UK",
+    "Meta ads management agency",
+    "Facebook ads agency London",
+    "Instagram ads agency UK",
+    "TikTok ads agency London",
+    "TikTok Spark Ads agency",
+    "Google Ads agency London",
+    "Google UAC agency",
+    "Apple Search Ads agency",
+    "AppsFlyer integration agency",
+    "Adjust integration agency",
+    "Branch SDK integration",
+    "MMP setup agency",
+    "mobile attribution setup",
+    "deep linking setup",
+    "App Store Optimisation agency",
+    "ASO London",
+    "LTV modelling agency",
+    "payback modelling agency",
+    "creative production for ads London",
+    "UGC ad creative agency",
+    "Server-side GTM agency",
+    "Meta Conversions API setup",
+    "TikTok Events API setup",
+    "growth retainer London",
+  ],
+  "ai-integration": [
+    "AI integration agency London",
+    "LLM engineering agency",
+    "LLM integration consultancy UK",
+    "Anthropic Claude integration",
+    "Claude API consultancy",
+    "OpenAI integration agency",
+    "GPT integration agency UK",
+    "RAG pipeline development",
+    "retrieval augmented generation agency",
+    "pgvector consulting",
+    "Pinecone integration",
+    "Weaviate integration",
+    "agentic automation agency",
+    "agent orchestration London",
+    "LangGraph development agency",
+    "Claude Agent SDK consultancy",
+    "AI feature engineering London",
+    "prompt engineering consultancy",
+    "prompt caching implementation",
+    "LLM evaluation harness",
+    "Braintrust consulting",
+    "Langfuse setup",
+    "AI product studio UK",
+    "voice AI agency",
+    "Whisper Deepgram integration",
+    "ElevenLabs integration",
+    "AI fine-tuning LoRA UK",
+    "Llama self-hosting consultancy",
+    "Mistral deployment consultancy",
+    "hire AI engineer London",
+  ],
+  "web-platforms": [
+    "web development agency London",
+    "Next.js agency London",
+    "Next.js 16 development agency",
+    "React 19 agency UK",
+    "TypeScript development agency",
+    "Tailwind v4 agency",
+    "shadcn/ui agency",
+    "HeroUI agency",
+    "Supabase development agency",
+    "Supabase consultancy UK",
+    "PostgreSQL consulting London",
+    "Drizzle ORM agency",
+    "Prisma agency",
+    "Stripe Billing integration",
+    "Stripe Connect integration agency",
+    "subscription billing agency",
+    "RevenueCat web integration",
+    "Apple IAP integration",
+    "Google Play Billing integration",
+    "SaaS development agency London",
+    "multi-tenant SaaS development",
+    "SSO integration agency",
+    "Sign in with Apple setup",
+    "Passkeys WebAuthn integration",
+    "Clerk integration agency",
+    "landing page design London",
+    "marketing website development",
+    "admin dashboard development",
+    "internal tools development",
+    "n8n workflow agency",
+    "Telegram bot development agency",
+    "Slack app development agency",
+    "Resend transactional email setup",
+    "Vercel deployment consultancy",
+    "Cloudflare Pages agency",
+    "Hostinger VPS consulting",
+  ],
+};
+
+const slugPriceFrom: Record<string, string> = {
+  "mobile-desktop": "1000",
+  "growth-marketing": "500",
+  "ai-integration": "500",
+  "web-platforms": "800",
+};
 
 export function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({ slug }));
@@ -20,9 +166,27 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return { title: "Service" };
+  const url = `${SITE_URL}/services/${slug}`;
+  const title = `${service.title} — ${service.tagline}`;
+  const description = service.summary;
   return {
-    title: service.title,
-    description: service.summary,
+    title,
+    description,
+    keywords: slugKeywords[slug] ?? [],
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${service.title} — Simnetiq`,
+      description,
+      url,
+      siteName: "Simnetiq",
+      type: "website",
+      locale: "en_GB",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.title} — Simnetiq`,
+      description,
+    },
   };
 }
 
@@ -42,6 +206,20 @@ export default async function ServicePage({
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: `${SITE_URL}/` },
+          { name: "Services", url: `${SITE_URL}/services` },
+          { name: service.title, url: `${SITE_URL}/services/${service.slug}` },
+        ]}
+      />
+      <ServiceSchema
+        name={service.title}
+        slug={service.slug}
+        summary={service.summary}
+        serviceTypes={slugKeywords[service.slug]}
+        priceFrom={slugPriceFrom[service.slug]}
+      />
       {/* ============================================================ */}
       {/* HERO (split)                                                  */}
       {/* ============================================================ */}
@@ -249,7 +427,7 @@ export default async function ServicePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">
-                ◇ Transmission
+                ◇ Contact Us
               </p>
               <h2 className="text-display mt-5" style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)" }}>
                 Open a channel.

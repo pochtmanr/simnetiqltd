@@ -1,10 +1,34 @@
 import type { Metadata } from "next";
 import { Panel, Rail, SpecRow } from "@/components/panel";
 
+const SITE_URL = "https://simnetiq.store";
+
 export const metadata: Metadata = {
-  title: "Privacy Policy — Simnetiq",
+  title: "Privacy Policy — Simnetiq Ltd",
   description:
-    "Privacy Policy for Simnetiq Ltd and its products including the Simnetiq eSIM app.",
+    "Privacy Policy for Simnetiq Ltd and its products including the Simnetiq eSIM app. GDPR-aligned processing, UK ICO oversight, data controller at 2 Frederick Street, Kings Cross, London. Details on data collection, retention, rights, sharing with eSIM and payment processors, cookies, and children's privacy.",
+  keywords: [
+    "Simnetiq privacy policy",
+    "Simnetiq eSIM privacy policy",
+    "GDPR privacy policy UK",
+    "Simnetiq Ltd data controller",
+    "UK ICO privacy policy",
+    "eSIM app privacy policy",
+    "Simnetiq data retention",
+    "Simnetiq data rights",
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/privacy-policy`,
+  },
+  openGraph: {
+    title: "Privacy Policy — Simnetiq Ltd",
+    description:
+      "GDPR-compliant privacy policy for Simnetiq Ltd and the Simnetiq eSIM application. Full data handling, retention, and user rights.",
+    url: `${SITE_URL}/privacy-policy`,
+    siteName: "Simnetiq",
+    type: "website",
+    locale: "en_GB",
+  },
 };
 
 const blocks = [

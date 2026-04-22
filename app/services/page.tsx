@@ -2,16 +2,81 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Panel, Rail } from "@/components/panel";
 import { services } from "@/lib/services";
+import { BreadcrumbSchema } from "@/components/structured-data";
+
+const SITE_URL = "https://simnetiq.store";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services — Development, AI, Growth Marketing & Infrastructure",
   description:
-    "Engineering capabilities offered by Simnetiq: mobile & desktop, growth & marketing, AI integration, and web platforms.",
+    "Simnetiq services: iOS/Android/macOS/Windows/Linux app development; Next.js, Supabase and Stripe web platforms; AI and LLM integration across Anthropic and OpenAI; paid acquisition on Meta, TikTok and Google with AppsFlyer and Adjust attribution; VPN infrastructure. Every engagement priced in GBP against a signed SOW.",
+  keywords: [
+    "Simnetiq services",
+    "software development services London",
+    "software agency services UK",
+    "mobile app development services London",
+    "iOS development services London",
+    "Android development services UK",
+    "cross-platform app development services",
+    "macOS Windows Linux app development",
+    "desktop application development UK",
+    "web development services London",
+    "Next.js development services",
+    "Next.js 16 development agency",
+    "React development agency London",
+    "Supabase development services",
+    "Stripe integration services",
+    "SaaS development services UK",
+    "AI integration services",
+    "LLM development services",
+    "Anthropic Claude integration services",
+    "OpenAI GPT integration services",
+    "RAG development services",
+    "agentic automation services",
+    "growth marketing services London",
+    "paid acquisition services UK",
+    "Meta ads services London",
+    "TikTok ads services",
+    "Google Ads services London",
+    "AppsFlyer integration services",
+    "Adjust integration services",
+    "App Store submission services",
+    "Google Play submission services",
+    "Telegram bot development services",
+    "n8n automation services",
+    "VPN development services",
+    "fixed price software development UK",
+    "SOW based software development",
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/services`,
+  },
+  openGraph: {
+    title: "Services — Simnetiq Engineering & Marketing",
+    description:
+      "Four capability groups: Mobile & Desktop, Growth & Marketing, AI Integration, Web & Platforms. Fixed-scope SOW engagements in GBP.",
+    url: `${SITE_URL}/services`,
+    siteName: "Simnetiq",
+    type: "website",
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Services — Simnetiq Engineering & Marketing",
+    description:
+      "Four capability groups: Mobile & Desktop, Growth & Marketing, AI Integration, Web & Platforms.",
+  },
 };
 
 export default function ServicesIndexPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: `${SITE_URL}/` },
+          { name: "Services", url: `${SITE_URL}/services` },
+        ]}
+      />
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
           <Rail
