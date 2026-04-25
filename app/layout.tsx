@@ -7,6 +7,7 @@ import {
   Rubik,
 } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
@@ -231,6 +232,7 @@ export default function RootLayout({
         <Navigation />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
