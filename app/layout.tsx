@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import {
+  Inter,
+  Space_Grotesk,
+  JetBrains_Mono,
+  Instrument_Serif,
+  Rubik,
+} from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -9,6 +15,32 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
   variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
+});
+
+// Doppler reference fonts — used on /projects/doppler-vpn design-system section.
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+
+const rubik = Rubik({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-rubik",
 });
 
 const SITE_URL = "https://simnetiq.store";
@@ -190,7 +222,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`${inter.variable} h-full`}>
+    <html
+      lang="en-GB"
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} h-full`}
+    >
       <body className="min-h-full flex flex-col font-sans antialiased">
         <GlobalStructuredData />
         <Navigation />

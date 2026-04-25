@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 const BASE_URL = "https://simnetiq.store";
 
 const organization = {
@@ -244,10 +242,9 @@ const website = {
 
 export function OrganizationSchema() {
   return (
-    <Script
+    <script
       id="ld-organization"
       type="application/ld+json"
-      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
     />
   );
@@ -255,10 +252,9 @@ export function OrganizationSchema() {
 
 export function ProfessionalServiceSchema() {
   return (
-    <Script
+    <script
       id="ld-professional-service"
       type="application/ld+json"
-      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalService) }}
     />
   );
@@ -266,10 +262,9 @@ export function ProfessionalServiceSchema() {
 
 export function WebsiteSchema() {
   return (
-    <Script
+    <script
       id="ld-website"
       type="application/ld+json"
-      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
     />
   );
@@ -299,10 +294,9 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
     })),
   };
   return (
-    <Script
+    <script
       id={`ld-breadcrumb-${items.map((i) => i.name).join("-").toLowerCase().replace(/\s+/g, "-")}`}
       type="application/ld+json"
-      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
@@ -349,10 +343,9 @@ export function ServiceSchema({
       : undefined,
   };
   return (
-    <Script
+    <script
       id={`ld-service-${slug}`}
       type="application/ld+json"
-      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
@@ -383,10 +376,9 @@ export function PortfolioSchema({ items }: { items: ProjectItem[] }) {
     })),
   };
   return (
-    <Script
+    <script
       id="ld-portfolio"
       type="application/ld+json"
-      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );

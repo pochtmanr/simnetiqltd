@@ -57,19 +57,31 @@ export const metadata: Metadata = {
   },
 };
 
-const projectsList = [
+type ProjectEntry = {
+  id: string;
+  title: string;
+  badge: string;
+  description: string;
+  tags: string[];
+  link: { label: string; href: string };
+  secondaryLink?: { label: string; href: string };
+  meta: { label: string; value: string }[];
+};
+
+const projectsList: ProjectEntry[] = [
   {
     id: "01",
     title: "Physics.explained",
     badge: "EDUCATION · OPEN",
     description:
-      "Physics taught visually. Interactive animations driven by accurate solvers — unit-tested ODE integrators, Newton-Raphson root finders — with a dictionary of 113+ concepts and profiles of 53+ physicists. Free, open-source, and built to expand across electromagnetism, thermodynamics, relativity, quantum, and modern physics.",
-    tags: ["NEXT.JS", "WEBGL", "MATHJAX", "ODEX"],
-    link: { label: "Visit site", href: "https://physics.it.com/" },
+      "An open-source, interactive physics encyclopedia. Every diagram is a live simulation driven by unit-tested ODE integrators and Newton–Raphson solvers. A context-aware AI tutor at /ask answers physics questions with derivations grounded in the library. Classical mechanics, electromagnetism, thermodynamics, relativity, quantum, and modern physics — all shipped, all free.",
+    tags: ["NEXT.JS", "WEBGL", "MATHJAX", "AI"],
+    link: { label: "Read case study", href: "/projects/physics-explained" },
+    secondaryLink: { label: "Visit site", href: "https://physics.it.com/" },
     meta: [
       { label: "Deployed", value: "2026" },
-      { label: "Branches", value: "1 live · 5 coming" },
-      { label: "License", value: "Open source" },
+      { label: "Coverage", value: "Six branches · Live" },
+      { label: "AI Tutor", value: "/ask · Live" },
     ],
   },
   {
@@ -77,13 +89,14 @@ const projectsList = [
     title: "Doppler VPN",
     badge: "VPN · ENC",
     description:
-      "Military-grade network obfuscation using a custom VLESS-Reality implementation. Zero-log architecture with geo-distributed nodes across multiple regions. Built for privacy-first users who demand uncompromising security.",
+      "A censorship-resistant VPN built on VLESS-Reality. Every connection looks like ordinary HTTPS — undetectable by deep packet inspection, resistant to TSPU and active probing. No registration, no logs, no account database. Native apps on iOS, Android, macOS, and Windows, self-hosted control plane, pay by card or crypto.",
     tags: ["SWIFT", "KOTLIN", "GO", "MARZBAN"],
-    link: { label: "Visit site", href: "https://dopplervpn.org" },
+    link: { label: "Read case study", href: "/projects/doppler-vpn" },
+    secondaryLink: { label: "Visit site", href: "https://dopplervpn.org" },
     meta: [
       { label: "Deployed", value: "2025" },
-      { label: "Regions", value: "EU · US · APAC" },
       { label: "Protocol", value: "VLESS · Reality" },
+      { label: "Platforms", value: "iOS · Android · macOS · Win" },
     ],
   },
   {
@@ -166,19 +179,16 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Project cards — each as split (content left, specs right), whole card clickable */}
+      {/* Project cards — each as split (content left, specs right) with explicit CTAs */}
       <section>
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20 space-y-8 lg:space-y-10">
           {projectsList.map((project) => {
-            const isExternal = project.link.href.startsWith("http");
+            const primaryExternal = project.link.href.startsWith("http");
+            const secondary = project.secondaryLink;
+            const secondaryExternal =
+              !!secondary && secondary.href.startsWith("http");
             return (
-              <Link
-                key={project.id}
-                href={project.link.href}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-                className="block group"
-              >
+              <article key={project.id} className="group">
                 <Panel innerClassName="p-6 lg:p-10" corners>
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     {/* Left: copy + tags */}
@@ -191,9 +201,7 @@ export default function ProjectsPage() {
                           {project.badge}
                         </span>
                       </div>
-                      <h2 className="text-headline mb-5 group-hover:text-[var(--color-primary-glow)] transition-colors">
-                        {project.title}
-                      </h2>
+                      <h2 className="text-headline mb-5">{project.title}</h2>
                       <p className="text-body mb-8 max-w-lg">
                         {project.description}
                       </p>
@@ -207,10 +215,36 @@ export default function ProjectsPage() {
                           </span>
                         ))}
                       </div>
-                      <span className="btn-primary group-hover:bg-[var(--color-primary-dim)] group-hover:border-[var(--color-primary-dim)]">
-                        {project.link.label}
-                        <span>{isExternal ? "↗" : "→"}</span>
-                      </span>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Link
+                          href={project.link.href}
+                          target={primaryExternal ? "_blank" : undefined}
+                          rel={
+                            primaryExternal
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                          className="btn-primary"
+                        >
+                          {project.link.label}
+                          <span>{primaryExternal ? "↗" : "→"}</span>
+                        </Link>
+                        {secondary && (
+                          <Link
+                            href={secondary.href}
+                            target={secondaryExternal ? "_blank" : undefined}
+                            rel={
+                              secondaryExternal
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
+                            className="btn-secondary"
+                          >
+                            {secondary.label}
+                            <span>{secondaryExternal ? "↗" : "→"}</span>
+                          </Link>
+                        )}
+                      </div>
                     </div>
 
                     {/* Right: specs panel */}
@@ -236,7 +270,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                 </Panel>
-              </Link>
+              </article>
             );
           })}
         </div>

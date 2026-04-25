@@ -5,12 +5,24 @@ import { useState } from "react";
 import { HeroVisual } from "@/components/hero-visual";
 import { Panel, Rail, SpecRow } from "@/components/panel";
 
-const projects = [
+type ProjectCard = {
+  id: string;
+  title: string;
+  badge: string;
+  href: string;
+  caseStudy?: string;
+  description: string;
+  stack: string;
+  status: string;
+};
+
+const projects: ProjectCard[] = [
   {
     id: "01",
     title: "Physics.explained",
     badge: "EDUCATION · OPEN",
     href: "https://physics.it.com/",
+    caseStudy: "/projects/physics-explained",
     description:
       "Physics taught visually. Interactive animations driven by accurate solvers, a dictionary of concepts, and profiles physicists.",
     stack: "Next.js · WebGL · MathJax · odex",
@@ -21,6 +33,7 @@ const projects = [
     title: "Doppler VPN",
     badge: "VPN · ENC",
     href: "https://dopplervpn.org",
+    caseStudy: "/projects/doppler-vpn",
     description:
       "Military-grade network obfuscation using a custom VLESS-Reality implementation. Zero-log architecture, geo-distributed nodes.",
     stack: "Swift · Kotlin · Go · Marzban",
@@ -161,9 +174,9 @@ export function HomePageClient() {
                   systems. Calm surfaces, uncompromising internals.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a href="#projects" className="btn-primary">
+                  <Link href="/projects" className="btn-primary">
                     Active Operations →
-                  </a>
+                  </Link>
                   <a href="#contact" className="btn-secondary">
                     Contact Us
                   </a>
@@ -209,46 +222,56 @@ export function HomePageClient() {
             {projects.map((project) => {
               const isExternal = project.href.startsWith("http");
               return (
-                <Link
+                <Panel
                   key={project.id}
-                  href={project.href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                  className="block group"
+                  innerClassName="p-6 lg:p-8 h-full flex flex-col"
+                  corners
                 >
-                  <Panel innerClassName="p-6 lg:p-8 h-full flex flex-col" corners>
-                    <div className="flex items-start justify-between mb-6">
-                      <span className="text-mono text-[var(--color-text-faint)]">
-                        {project.id}
-                      </span>
-                      <span className="text-label-sm text-[var(--color-primary-glow)]">
-                        {project.badge}
-                      </span>
+                  <div className="flex items-start justify-between mb-6">
+                    <span className="text-mono text-[var(--color-text-faint)]">
+                      {project.id}
+                    </span>
+                    <span className="text-label-sm text-[var(--color-primary-glow)]">
+                      {project.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-headline mb-3">{project.title}</h3>
+                  <p className="text-body max-w-md mb-8 flex-1">
+                    {project.description}
+                  </p>
+                  <div className="border-t border-[var(--color-border)] pt-5">
+                    <div className="mb-5">
+                      <p className="text-label-sm text-[var(--color-text-faint)]">
+                        Stack
+                      </p>
+                      <p className="text-[var(--color-text)] mt-1.5 normal-case tracking-normal font-[300] text-[13px]">
+                        {project.stack}
+                      </p>
                     </div>
-                    <h3 className="text-headline mb-3 group-hover:text-[var(--color-primary-glow)] transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-body max-w-md mb-8 flex-1">
-                      {project.description}
-                    </p>
-                    <div className="border-t border-[var(--color-border)] pt-5 flex items-end justify-between gap-4">
-                      <div>
-                        <p className="text-label-sm text-[var(--color-text-faint)]">
-                          Stack
-                        </p>
-                        <p className="text-[var(--color-text)] mt-1.5 normal-case tracking-normal font-[300] text-[13px]">
-                          {project.stack}
-                        </p>
-                      </div>
-                      <span className="inline-flex items-center gap-2 text-label-sm text-[var(--color-text)] border border-[var(--color-border-strong)] px-4 py-2 whitespace-nowrap group-hover:border-[var(--color-primary-glow)] group-hover:text-[var(--color-primary-glow)] group-hover:bg-[var(--color-primary)]/10 transition-colors">
-                        Visit
+                    <div className="flex flex-wrap items-center gap-3">
+                      <Link
+                        href={project.href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        className="inline-flex items-center gap-2 text-label-sm text-[var(--color-text)] border border-[var(--color-border-strong)] px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary-glow)] hover:text-[var(--color-primary-glow)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                      >
+                        Visit site
                         <span className="text-[var(--color-primary-glow)]">
                           {isExternal ? "↗" : "→"}
                         </span>
-                      </span>
+                      </Link>
+                      {project.caseStudy && (
+                        <Link
+                          href={project.caseStudy}
+                          className="inline-flex items-center gap-2 text-label-sm text-[var(--color-primary-glow)] border border-[var(--color-primary-glow)]/40 px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary-glow)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                        >
+                          Case study
+                          <span>→</span>
+                        </Link>
+                      )}
                     </div>
-                  </Panel>
-                </Link>
+                  </div>
+                </Panel>
               );
             })}
           </div>
