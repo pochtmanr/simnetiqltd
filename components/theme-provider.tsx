@@ -18,13 +18,15 @@ type ThemeContextValue = {
   toggleTheme: () => void;
 };
 
+export const THEME_COOKIE = "theme";
 export const THEME_STORAGE_KEY = "theme";
 
-// Dark is the default. Users opt-in to light by toggling — the choice is then persisted.
-// System preference is intentionally ignored on first visit.
-export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('theme');var t=(s==='light'||s==='dark')?s:'dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
-
-const STORAGE_KEY = THEME_STORAGE_KEY;
+// Runs only on first visit (when the server has not seen a theme cookie yet).
+// Detects the OS / browser preference synchronously, writes the resolved value
+// to the cookie + localStorage, and applies data-theme so subsequent paint is
+// already correct. After this runs once, the server reads the cookie and SSRs
+// the right theme on every future request — no script, no FOUC.
+export const THEME_INIT_SCRIPT = `(function(){try{var k='${"theme"}';var c=document.cookie.match(/(?:^|; )theme=(light|dark)/);var stored=c?c[1]:null;if(!stored){try{var ls=localStorage.getItem(k);if(ls==='light'||ls==='dark')stored=ls;}catch(e){}}var t=stored||(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=t;document.cookie='theme='+t+';path=/;max-age=31536000;samesite=lax';try{localStorage.setItem(k,t);}catch(e){}}catch(e){}})();`;
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
@@ -34,6 +36,15 @@ function readInitialTheme(): Theme {
   return attr === "light" ? "light" : "dark";
 }
 
+function persistTheme(theme: Theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    /* localStorage may be unavailable (privacy mode); ignore */
+  }
+  document.cookie = `${THEME_COOKIE}=${theme};path=/;max-age=31536000;samesite=lax`;
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => readInitialTheme());
 
@@ -41,11 +52,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement;
     root.setAttribute("data-theme", theme);
     root.style.colorScheme = theme;
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      /* storage may be unavailable (privacy mode); ignore */
-    }
+    persistTheme(theme);
   }, [theme]);
 
   const setTheme = useCallback((next: Theme) => {
@@ -71,4 +78,3 @@ export function useTheme(): ThemeContextValue {
   }
   return ctx;
 }
-

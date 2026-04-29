@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import {
   Inter,
@@ -229,8 +230,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07090D",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#07090D" },
+    { media: "(prefers-color-scheme: light)", color: "#F7F5F1" },
+  ],
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
 };
@@ -254,19 +258,28 @@ export default async function RootLayout({
   const dir = getDirection(locale);
   const dict = await getDictionary(locale);
 
+  const themeCookie = (await cookies()).get("theme")?.value;
+  const initialTheme: "light" | "dark" =
+    themeCookie === "light" || themeCookie === "dark" ? themeCookie : "dark";
+  const hasExplicitChoice = themeCookie === "light" || themeCookie === "dark";
+
   return (
     <html
       lang={LOCALE_HTML_LANG[locale]}
       dir={dir}
+      data-theme={initialTheme}
+      style={{ colorScheme: initialTheme }}
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
-        />
+        {!hasExplicitChoice && (
+          <Script
+            id="theme-init"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
+          />
+        )}
         <ThemeProvider>
           <GlobalStructuredData />
           <Navigation locale={locale} dict={dict.nav} />
