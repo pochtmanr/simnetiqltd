@@ -1,113 +1,57 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Panel, Rail, SpecRow } from "@/components/panel";
-import { BreadcrumbSchema } from "@/components/structured-data";
+import {
+  BreadcrumbSchema,
+  CaseStudyArticleSchema,
+} from "@/components/structured-data";
+import { getDictionary } from "@/lib/dictionaries";
+import { isLocale, type Locale } from "@/lib/i18n";
+import { buildLocalizedMetadata } from "@/lib/seo-meta";
 
 const SITE_URL = "https://simnetiq.store";
 
-export const metadata: Metadata = {
-  title: "Doppler VPN — Case Study",
-  description:
-    "Doppler VPN is a censorship-resistant VPN built on VLESS-Reality. Traffic is indistinguishable from normal HTTPS, defeats deep packet inspection, TSPU, and active probing. No registration, no logs, native apps on iOS, Android, macOS, and Windows. Pay with card or crypto.",
-  alternates: { canonical: `${SITE_URL}/projects/doppler-vpn` },
-  openGraph: {
-    title: "Doppler VPN — Case Study",
-    description:
-      "Censorship-resistant VPN built on VLESS-Reality. Undetectable by DPI, zero-log, no registration — iOS, Android, macOS, Windows.",
-    url: `${SITE_URL}/projects/doppler-vpn`,
-    siteName: "Simnetiq",
-    type: "article",
-    locale: "en_GB",
-    images: [{ url: "/doppler-header.avif", alt: "Doppler VPN — hero visual" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Doppler VPN — Case Study",
-    description:
-      "VLESS-Reality VPN that works where other VPNs get blocked. Zero registration, zero logs.",
-    images: ["/doppler-header.avif"],
-  },
-};
-
-const specs = [
-  { label: "Status", value: "Launched · Live" },
-  { label: "Deployed", value: "2025" },
-  { label: "Protocol", value: "VLESS · Reality" },
-  { label: "Infrastructure", value: "Marzban · self-hosted" },
-  { label: "Regions", value: "Five · Global" },
-  { label: "Devices", value: "Up to 10" },
-  { label: "Logs", value: "None · by design" },
+const DOPPLER_KEYWORDS = [
+  "Doppler VPN",
+  "DopplerVPN case study",
+  "VLESS Reality VPN",
+  "Reality protocol VPN",
+  "censorship resistant VPN",
+  "anti-DPI VPN",
+  "anti-TSPU VPN",
+  "zero log VPN",
+  "no registration VPN",
+  "Marzban deployment",
+  "VPN for Russia",
+  "VPN for Iran",
+  "VPN for China",
+  "iOS VPN client",
+  "Android VPN client",
+  "macOS VPN client",
+  "Windows VPN client",
+  "crypto pay VPN",
+  "Simnetiq case study Doppler",
+  "VPN engineering case study",
 ];
 
-const insideItems = [
-  {
-    figure: "TLS",
-    label: "DPI bypass",
-    body: "VLESS-Reality performs a genuine TLS handshake against a real site certificate. Deep packet inspection sees ordinary HTTPS, not a VPN tunnel — nothing to classify, nothing to block.",
-  },
-  {
-    figure: "ID-0",
-    label: "No registration",
-    body: "The device is the account. No email, no phone number, no personal information. A subscription key unlocks connectivity — accounts we never create can't be breached, subpoenaed, or leaked.",
-  },
-  {
-    figure: "RT",
-    label: "Smart routing",
-    body: "Traffic is routed by destination, not by server list. The client picks the fastest healthy path automatically — no manual server hopping, no stale hops when a region is under load.",
-  },
-  {
-    figure: "DNS",
-    label: "Encrypted DNS",
-    body: "Every query is encrypted end-to-end and discarded after resolution. Tracker and malware domains are filtered at the DNS layer across every app on the device, not just the browser.",
-  },
-];
-
-const infrastructure = [
-  {
-    id: "I-01",
-    label: "Protocol",
-    title: "VLESS-Reality",
-    body: "XTLS-Reality over VLESS. Zero TLS fingerprint, genuine certificate from a third-party front site, resistant to active probing.",
-  },
-  {
-    id: "I-02",
-    label: "Control plane",
-    title: "Marzban",
-    body: "Self-hosted Marzban orchestrates inbound nodes, subscription issuance, and key rotation across every region — no third-party SaaS in the auth path.",
-  },
-  {
-    id: "I-03",
-    label: "Edge",
-    title: "Frankfurt · Paris · Moscow · Tokyo · Tel Aviv",
-    body: "Five geo-distributed inbound nodes running the same dual-protocol stack. Failover is automatic; smart routing selects the lowest-latency healthy hop for each destination.",
-  },
-  {
-    id: "I-04",
-    label: "Data policy",
-    title: "Zero-log architecture",
-    body: "No browsing logs. No IP logs. No DNS query storage. No account database. Privacy isn't policy text — it's what the system is physically able to store.",
-  },
-  {
-    id: "I-05",
-    label: "Obfuscation",
-    title: "Anti-TSPU · Anti-DPI",
-    body: "Defeats TSPU, TLS fingerprinting, and active probing — the stack used by Russia, China, and Iran to block commercial VPNs. Domain on Roskomnadzor blocklist; service still operational via Telegram bot.",
-  },
-  {
-    id: "I-06",
-    label: "Billing",
-    title: "Card · Crypto · Stores",
-    body: "Pay through the App Store, Google Play, web checkout, or with BTC, ETH, USDT and USDC. One subscription, up to ten devices, no auto-renewal.",
-  },
-];
-
-const platforms = [
-  { id: "01", name: "iOS" },
-  { id: "02", name: "Android" },
-  { id: "03", name: "macOS" },
-  { id: "04", name: "Windows" },
-];
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale: Locale = isLocale(rawLocale) ? (rawLocale as Locale) : "en";
+  return buildLocalizedMetadata({
+    locale,
+    routeKey: "caseStudyDoppler",
+    path: "/projects/doppler-vpn",
+    keywords: DOPPLER_KEYWORDS,
+    ogImage: "/doppler-header.avif",
+    ogType: "article",
+  });
+}
 
 // Doppler VPN design system — referenced on this Simnetiq page as case-study content.
 // Palette values come from Doppler's token system (dark mode defaults).
@@ -124,48 +68,67 @@ const dopplerPalette = [
   { name: "Muted", hex: "#C5C5C5", role: "Text muted" },
 ];
 
-export default function DopplerVpnPage() {
+const typographyFontFamilies = [
+  "var(--font-serif), Georgia, 'Times New Roman', serif",
+  "var(--font-display), 'Space Grotesk', system-ui, sans-serif",
+  "var(--font-rubik), 'Rubik', system-ui, sans-serif",
+];
+
+const typographyFontStyles: ("italic" | "normal")[] = ["italic", "normal", "normal"];
+
+type Params = Promise<{ locale: string }>;
+
+export default async function DopplerVpnPage({ params }: { params: Params }) {
+  const { locale: rawLocale } = await params;
+  if (!isLocale(rawLocale)) notFound();
+  const locale = rawLocale as Locale;
+  const dict = await getDictionary(locale);
+  const c = dict.caseStudyDoppler;
+
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: `${SITE_URL}/` },
-          { name: "Projects", url: `${SITE_URL}/projects` },
-          { name: "Doppler VPN", url: `${SITE_URL}/projects/doppler-vpn` },
+          { name: "Home", url: `${SITE_URL}/${locale}` },
+          { name: "Projects", url: `${SITE_URL}/${locale}/projects` },
+          {
+            name: "Doppler VPN",
+            url: `${SITE_URL}/${locale}/projects/doppler-vpn`,
+          },
         ]}
+      />
+      <CaseStudyArticleSchema
+        headline={`${c.titleLine1} ${c.titleLine2}`.trim()}
+        path="/projects/doppler-vpn"
+        description={c.body}
+        image="/doppler-header.avif"
+        locale={locale}
+        datePublished="2025-09-01"
+        dateModified={new Date().toISOString().slice(0, 10)}
+        keywords={DOPPLER_KEYWORDS}
       />
 
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
           <Rail
-            items={[
-              "◆ SIMNETIQ / 02 / PROJECTS / DOPPLER-VPN",
-              "CASE STUDY",
-              "VLESS · REALITY · LIVE",
-            ]}
+            items={[c.rail.index, c.rail.tag, c.rail.status]}
             className="mb-10"
           />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">
-                ◇ Privacy · Censorship-resistant · Native
+                {c.eyebrow}
               </p>
               <h1 className="text-display mt-6">
-                <span className="block">Works where</span>
+                <span className="block">{c.titleLine1}</span>
                 <span className="block text-[var(--color-text-dim)]">
-                  other VPNs don&apos;t.
+                  {c.titleLine2}
                 </span>
               </h1>
             </div>
             <div className="lg:col-span-5 self-end">
-              <p className="text-body max-w-md">
-                Doppler VPN is a censorship-resistant VPN built on{" "}
-                <span className="text-body-strong">VLESS-Reality</span>. Your
-                traffic looks like ordinary HTTPS — undetectable by deep packet
-                inspection. No registration, no logs, no tracking. Native apps
-                on iOS, Android, macOS, and Windows.
-              </p>
+              <p className="text-body max-w-md">{c.body}</p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   href="https://dopplervpn.org"
@@ -173,7 +136,7 @@ export default function DopplerVpnPage() {
                   rel="noopener noreferrer"
                   className="btn-primary"
                 >
-                  Visit site
+                  {c.visitSite}
                   <span>↗</span>
                 </Link>
                 <Link
@@ -182,7 +145,7 @@ export default function DopplerVpnPage() {
                   rel="noopener noreferrer"
                   className="btn-secondary"
                 >
-                  App Store
+                  {c.appStore}
                   <span>↗</span>
                 </Link>
               </div>
@@ -209,22 +172,22 @@ export default function DopplerVpnPage() {
                 </div>
               </Panel>
               <div className="mt-4 text-mono text-[var(--color-text-faint)]">
-                Fig. 01 · Doppler VPN clients across four platforms
+                {c.figureCaption}
               </div>
             </div>
 
             <div className="lg:col-span-4">
               <Panel innerClassName="p-6 lg:p-8" corners>
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  ▸ Specification
+                  {c.specsLabel}
                 </p>
-                {specs.map((row) => (
+                {c.specs.map((row) => (
                   <SpecRow key={row.label} label={row.label} value={row.value} />
                 ))}
                 <div className="mt-6 flex items-center gap-2">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
                   <span className="text-mono text-[var(--color-primary-glow)]">
-                    Live · Nominal
+                    {dict.common.liveNominal}
                   </span>
                 </div>
               </Panel>
@@ -239,49 +202,21 @@ export default function DopplerVpnPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-4">
               <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-                § 01 · About
+                {c.aboutEyebrow}
               </p>
               <h2 className="text-headline">
-                <span className="block">A VPN that</span>
+                <span className="block">{c.aboutTitleA}</span>
                 <span className="block text-[var(--color-text-dim)]">
-                  stays invisible.
+                  {c.aboutTitleB}
                 </span>
               </h2>
             </div>
             <div className="lg:col-span-7 lg:col-start-6 space-y-5">
-              <p className="text-body">
-                Most consumer VPNs were built for a friendlier internet. They
-                tunnel with well-known protocols, sign transport layers with
-                recognisable fingerprints, and rely on server IPs that blocklists
-                catch within days. The moment a network operator wants them gone,
-                they&apos;re gone.
-              </p>
-              <p className="text-body">
-                Doppler starts from the opposite constraint: assume the network
-                is hostile. Every connection is wrapped in{" "}
-                <span className="text-body-strong">VLESS-Reality</span> —
-                XTLS-Reality over VLESS — so outbound traffic is
-                indistinguishable from a genuine HTTPS session to a legitimate
-                website. There is no TLS fingerprint to classify, no handshake
-                signature to match, nothing for deep packet inspection to lock
-                onto.
-              </p>
-              <p className="text-body">
-                Around the protocol sits a deliberately thin control plane. No
-                account database, no email, no phone number — the device itself
-                is the identity, and a subscription key unlocks connectivity.
-                There is no browsing log, no IP log, no DNS query storage. The
-                privacy claim isn&apos;t a policy line; it&apos;s a direct
-                consequence of what the infrastructure is built to never store.
-              </p>
-              <p className="text-body">
-                The product ships as native apps on iOS, Android, macOS, and
-                Windows, backed by a self-hosted Marzban control plane and
-                geo-distributed edge nodes. Subscriptions are payable through
-                the App Store, Google Play, web checkout, or with BTC, ETH,
-                USDT, and USDC — one plan, up to ten devices, one tap to
-                connect.
-              </p>
+              {c.aboutBody.map((p, i) => (
+                <p key={i} className="text-body">
+                  {p}
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -294,43 +229,24 @@ export default function DopplerVpnPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
               <div className="lg:col-span-7">
                 <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-                  § 02 · DPI Bypass · VLESS-Reality
+                  {c.dpiEyebrow}
                 </p>
                 <h2 className="text-headline mb-6">
-                  <span className="block">A tunnel that</span>
+                  <span className="block">{c.dpiTitleA}</span>
                   <span className="block text-[var(--color-text-dim)]">
-                    looks like nothing.
+                    {c.dpiTitleB}
                   </span>
                 </h2>
-                <p className="text-body max-w-xl mb-5">
-                  VLESS-Reality performs a real TLS handshake with a real
-                  website certificate. The edge node borrows its TLS identity
-                  from a legitimate third-party site, then muxes authenticated
-                  client traffic through the same connection. An observer —
-                  censor, ISP, or transit provider — sees a completely normal
-                  HTTPS session.
-                </p>
-                <p className="text-body max-w-xl">
-                  Because the signature is genuine, there is no anomaly to
-                  detect. Active probes against our servers get a real website
-                  back. Only an authenticated client activates the VPN tunnel —
-                  which is why Doppler stays online behind TSPU, the GFW, and
-                  the same inspection hardware that catches commercial VPNs
-                  within hours of launch.
-                </p>
+                <p className="text-body max-w-xl mb-5">{c.dpiBody1}</p>
+                <p className="text-body max-w-xl">{c.dpiBody2}</p>
               </div>
               <div className="lg:col-span-5">
                 <div className="border-l border-[var(--color-border)] lg:pl-10">
                   <p className="text-label-sm text-[var(--color-text-faint)] mb-5">
-                    ▸ Operational against
+                    {c.dpiOperationalLabel}
                   </p>
                   <ul className="space-y-3">
-                    {[
-                      "TSPU hardware deployed across Russian ISPs.",
-                      "TLS fingerprinting and JA3/JA4 classifiers.",
-                      "Active probing of server IPs by censors.",
-                      "Domain-level blocks — reachable via Telegram bot.",
-                    ].map((q) => (
+                    {c.dpiOperationalItems.map((q) => (
                       <li
                         key={q}
                         className="text-body border-l-2 border-[var(--color-primary-glow)] pl-4"
@@ -346,7 +262,7 @@ export default function DopplerVpnPage() {
                       rel="noopener noreferrer"
                       className="btn-primary"
                     >
-                      Open Doppler
+                      {c.dpiOpenDoppler}
                       <span>↗</span>
                     </Link>
                   </div>
@@ -362,16 +278,16 @@ export default function DopplerVpnPage() {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="mb-10">
             <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-              § 03 · What&apos;s inside
+              {c.insideEyebrow}
             </p>
-            <h2 className="text-headline">Four moving parts.</h2>
+            <h2 className="text-headline">{c.insideTitle}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {insideItems.map((item, i) => (
+            {c.insideItems.map((item, i) => (
               <Panel key={item.label} innerClassName="p-8" corners>
                 <div className="flex items-center justify-between mb-8">
                   <span className="text-mono text-[var(--color-text-faint)]">
-                    0{i + 1} · ENTRY
+                    0{i + 1} · {c.insideEntry}
                   </span>
                   <span className="text-label-sm text-[var(--color-primary-glow)]">
                     {item.label.toUpperCase()}
@@ -396,37 +312,31 @@ export default function DopplerVpnPage() {
         </div>
       </section>
 
-      {/* Infrastructure — swap for Physics's design-system section */}
+      {/* Infrastructure */}
       <section className="border-t border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
             <div className="lg:col-span-4">
               <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-                § 04 · Infrastructure
+                {c.infraEyebrow}
               </p>
               <h2 className="text-headline">
-                <span className="block">Built to stay</span>
+                <span className="block">{c.infraTitleA}</span>
                 <span className="block text-[var(--color-text-dim)]">
-                  unreachable.
+                  {c.infraTitleB}
                 </span>
               </h2>
             </div>
             <div className="lg:col-span-7 lg:col-start-6">
-              <p className="text-body">
-                The stack is deliberately small. A self-hosted Marzban control
-                plane issues subscriptions and rotates keys. Edge nodes run
-                VLESS-Reality behind real third-party certificates. Nothing
-                logs. Every layer is picked because it either contributes to
-                unobservability or it doesn&apos;t ship.
-              </p>
+              <p className="text-body">{c.infraBody}</p>
             </div>
           </div>
 
           <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-            ▸ Stack
+            {c.infraStackLabel}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {infrastructure.map((tile) => (
+            {c.infrastructure.map((tile) => (
               <Panel key={tile.id} innerClassName="p-6 lg:p-8" corners>
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-mono text-[var(--color-text-faint)]">
@@ -463,29 +373,23 @@ export default function DopplerVpnPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
             <div className="lg:col-span-4">
               <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-                § 05 · Design system
+                {c.designEyebrow}
               </p>
               <h2 className="text-headline">
-                <span className="block">Cinematic dark,</span>
+                <span className="block">{c.designTitleA}</span>
                 <span className="block text-[var(--color-text-dim)]">
-                  measured accents.
+                  {c.designTitleB}
                 </span>
               </h2>
             </div>
             <div className="lg:col-span-7 lg:col-start-6">
-              <p className="text-body">
-                Doppler flattens dark mode to a single page ground and lifts
-                cards with a graduated surface scale. Teal owns primary
-                interaction. Gold is the brand warmth. Violet is reserved for
-                the Pro tier. Amber flags freshness and warnings. Every accent
-                clears WCAG AA on the page bg.
-              </p>
+              <p className="text-body">{c.designBody}</p>
             </div>
           </div>
 
           {/* Palette swatches */}
           <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-            ▸ Palette
+            {c.paletteLabel}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {dopplerPalette.map((s) => (
@@ -521,91 +425,38 @@ export default function DopplerVpnPage() {
 
           {/* Typography pairing */}
           <p className="text-label-sm text-[var(--color-text-faint)] mt-12 mb-4">
-            ▸ Typography pairing
+            {c.typographyLabel}
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Serif hero */}
-            <Panel innerClassName="p-8 lg:p-10" corners>
-              <div className="text-mono text-[var(--color-primary-glow)] mb-6">
-                01 · Hero
-              </div>
-              <div
-                style={{
-                  fontFamily:
-                    "var(--font-serif), Georgia, 'Times New Roman', serif",
-                  fontStyle: "italic",
-                  fontSize: "clamp(2.25rem, 3.6vw, 3rem)",
-                  fontWeight: 400,
-                  letterSpacing: "-0.01em",
-                  lineHeight: 1.02,
-                  color: "var(--color-text)",
-                }}
-              >
-                Aa Bb 01
-              </div>
-              <div className="mt-6 text-label-sm text-[var(--color-text-dim)]">
-                Instrument Serif — Transitional serif, italic
-              </div>
-              <p className="mt-3 text-body">
-                Reserved for the landing hero headline on dopplervpn.org.
-                Italic, low contrast, oversized — carries all of the brand
-                warmth without a logotype.
-              </p>
-            </Panel>
-
-            {/* Body */}
-            <Panel innerClassName="p-8 lg:p-10" corners>
-              <div className="text-mono text-[var(--color-primary-glow)] mb-6">
-                02 · Body
-              </div>
-              <div
-                style={{
-                  fontFamily:
-                    "var(--font-display), 'Space Grotesk', system-ui, sans-serif",
-                  fontSize: "clamp(1.375rem, 2vw, 1.75rem)",
-                  fontWeight: 500,
-                  letterSpacing: "-0.005em",
-                  lineHeight: 1.25,
-                  color: "var(--color-text)",
-                }}
-              >
-                Works where other VPNs get blocked.
-              </div>
-              <div className="mt-6 text-label-sm text-[var(--color-text-dim)]">
-                Space Grotesk — Geometric sans
-              </div>
-              <p className="mt-3 text-body">
-                Default for sections, navigation, UI copy and pricing.
-                Weights 400, 500, 600, 700.
-              </p>
-            </Panel>
-
-            {/* Cyrillic */}
-            <Panel innerClassName="p-8 lg:p-10" corners>
-              <div className="text-mono text-[var(--color-primary-glow)] mb-6">
-                03 · Cyrillic
-              </div>
-              <div
-                style={{
-                  fontFamily:
-                    "var(--font-rubik), 'Rubik', system-ui, sans-serif",
-                  fontSize: "clamp(1.375rem, 2vw, 1.75rem)",
-                  fontWeight: 500,
-                  letterSpacing: "-0.005em",
-                  lineHeight: 1.25,
-                  color: "var(--color-text)",
-                }}
-              >
-                Работает там, где нет VPN.
-              </div>
-              <div className="mt-6 text-label-sm text-[var(--color-text-dim)]">
-                Rubik — Cyrillic companion
-              </div>
-              <p className="mt-3 text-body">
-                Active on ru and uk locales. Matches Space Grotesk&apos;s metrics
-                while shipping a full Cyrillic glyph set.
-              </p>
-            </Panel>
+            {c.typographyCards.map((card, i) => (
+              <Panel key={card.code} innerClassName="p-8 lg:p-10" corners>
+                <div className="text-mono text-[var(--color-primary-glow)] mb-6">
+                  {card.code}
+                </div>
+                <div
+                  style={{
+                    fontFamily: typographyFontFamilies[i],
+                    fontStyle: typographyFontStyles[i],
+                    fontSize:
+                      i === 0
+                        ? "clamp(2.25rem, 3.6vw, 3rem)"
+                        : "clamp(1.375rem, 2vw, 1.75rem)",
+                    fontWeight: i === 0 ? 400 : 500,
+                    letterSpacing: i === 0 ? "-0.01em" : "-0.005em",
+                    lineHeight: i === 0 ? 1.02 : 1.25,
+                    color: "var(--color-text)",
+                    direction: "ltr",
+                    unicodeBidi: "isolate",
+                  }}
+                >
+                  {card.sample}
+                </div>
+                <div className="mt-6 text-label-sm text-[var(--color-text-dim)]">
+                  {card.name}
+                </div>
+                <p className="mt-3 text-body">{card.body}</p>
+              </Panel>
+            ))}
           </div>
         </div>
       </section>
@@ -616,33 +467,24 @@ export default function DopplerVpnPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8">
             <div className="lg:col-span-4">
               <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-                § 06 · Platforms
+                {c.platformsEyebrow}
               </p>
               <h2 className="text-headline">
-                <span className="block">Four clients,</span>
-                <span className="block text-[var(--color-text-dim)]">
-                  all native.
-                </span>
+                <span className="block">{c.platformsTitle}</span>
               </h2>
             </div>
             <div className="lg:col-span-7 lg:col-start-6">
-              <p className="text-body">
-                Native apps on every supported platform — SwiftUI on iOS and
-                macOS, Kotlin on Android, a signed Windows client for x64 and
-                ARM64. One subscription covers up to ten devices. Status syncs
-                across them via a device-bound token, never via an email
-                address.
-              </p>
+              <p className="text-body">{c.platformsBody}</p>
             </div>
           </div>
 
           <Panel innerClassName="p-0" corners>
             <ul>
-              {platforms.map((p, i) => (
+              {c.platforms.map((p, i) => (
                 <li
                   key={p.id}
                   className={`grid grid-cols-12 items-center gap-4 px-6 lg:px-8 py-5 ${
-                    i < platforms.length - 1
+                    i < c.platforms.length - 1
                       ? "border-b border-[var(--color-border)]"
                       : ""
                   }`}
@@ -656,7 +498,7 @@ export default function DopplerVpnPage() {
                   <span className="col-span-3 md:col-span-3 flex justify-end items-center gap-2">
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
                     <span className="text-label-sm text-[var(--color-primary-glow)]">
-                      LIVE
+                      {c.live}
                     </span>
                   </span>
                 </li>
@@ -673,14 +515,10 @@ export default function DopplerVpnPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
               <div className="lg:col-span-8">
                 <p className="text-mono text-[var(--color-primary-glow)] mb-6">
-                  ◇ Continue
+                  {c.ctaEyebrow}
                 </p>
-                <h2 className="text-headline">Connect in one tap.</h2>
-                <p className="text-body mt-5 max-w-lg">
-                  Five regions, four native clients, one subscription up to ten
-                  devices. No registration, no logs — start with a three-day
-                  free trial on iOS or Android.
-                </p>
+                <h2 className="text-headline">{c.ctaTitle}</h2>
+                <p className="text-body mt-5 max-w-lg">{c.ctaBody}</p>
               </div>
               <div className="lg:col-span-4 flex lg:justify-end">
                 <div className="flex flex-wrap items-center gap-3">
@@ -690,7 +528,7 @@ export default function DopplerVpnPage() {
                     rel="noopener noreferrer"
                     className="btn-primary"
                   >
-                    Visit site
+                    {c.ctaPrimary}
                     <span>↗</span>
                   </Link>
                   <Link
@@ -699,7 +537,7 @@ export default function DopplerVpnPage() {
                     rel="noopener noreferrer"
                     className="btn-secondary"
                   >
-                    App Store
+                    {c.appStore}
                     <span>↗</span>
                   </Link>
                 </div>

@@ -1,43 +1,27 @@
-import Image from "next/image";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
+import { localizePath, type Locale } from "@/lib/i18n";
 
-type FooterLine = {
-  text: string;
-  strong?: boolean;
-  href?: string;
+type FooterDict = {
+  tagline: string;
+  body: string;
+  columns: {
+    entity: string;
+    documents: string;
+    contact: string;
+  };
+  lines: {
+    company: string;
+    companyNumber: string;
+    jurisdiction: string;
+    legal: string;
+    privacy: string;
+    deletion: string;
+    studio: string;
+    hours: string;
+  };
+  bottom: string;
 };
-
-type FooterColumn = {
-  label: string;
-  lines: FooterLine[];
-};
-
-const columns: FooterColumn[] = [
-  {
-    label: "Entity",
-    lines: [
-      { text: "SIMNETIQ LTD", strong: true },
-      { text: "No. 16861177" },
-      { text: "England & Wales" },
-    ],
-  },
-  {
-    label: "Documents",
-    lines: [
-      { text: "Legal", href: "/legal", strong: true },
-      { text: "Privacy", href: "/privacy-policy" },
-      { text: "Data Deletion", href: "/delete-account" },
-    ],
-  },
-  {
-    label: "Contact Us",
-    lines: [
-      { text: "support@simnetiq.store", strong: true },
-      { text: "Technical studio" },
-      { text: "Mon–Fri · 09:00–18:00 BST" },
-    ],
-  },
-];
 
 const social = [
   {
@@ -50,8 +34,42 @@ const social = [
   },
 ];
 
-export function Footer() {
+export function Footer({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: FooterDict;
+}) {
   const year = new Date().getFullYear();
+
+  type FooterLine = { text: string; strong?: boolean; href?: string };
+  const columns: { label: string; lines: FooterLine[] }[] = [
+    {
+      label: dict.columns.entity,
+      lines: [
+        { text: dict.lines.company, strong: true },
+        { text: dict.lines.companyNumber },
+        { text: dict.lines.jurisdiction },
+      ],
+    },
+    {
+      label: dict.columns.documents,
+      lines: [
+        { text: dict.lines.legal, href: localizePath(locale, "/legal"), strong: true },
+        { text: dict.lines.privacy, href: localizePath(locale, "/privacy-policy") },
+        { text: dict.lines.deletion, href: localizePath(locale, "/delete-account") },
+      ],
+    },
+    {
+      label: dict.columns.contact,
+      lines: [
+        { text: "support@simnetiq.store", strong: true },
+        { text: dict.lines.studio },
+        { text: dict.lines.hours },
+      ],
+    },
+  ];
 
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
@@ -60,24 +78,13 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3">
-              <Image
-                src="/logo.svg"
-                alt="Simnetiq"
-                width={109}
-                height={107}
-                className="h-5 w-auto"
-              />
-              <span className="text-label text-white">SIMNETIQ</span>
+              <Logo className="h-5 w-auto" />
+              <span className="text-label text-[var(--color-text)]">SIMNETIQ</span>
             </div>
             <p className="text-display mt-8" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-              PRECISION
-              <br />
-              ENGINEERING
+              {dict.tagline}
             </p>
-            <p className="text-body mt-6 max-w-md">
-              A London-based technology studio building high-integrity software for
-              web, mobile, VPN infrastructure, and AI systems.
-            </p>
+            <p className="text-body mt-6 max-w-md">{dict.body}</p>
           </div>
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
@@ -124,9 +131,7 @@ export function Footer() {
 
         {/* Bottom rail */}
         <div className="mt-14 pt-6 border-t border-[var(--color-border)] flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
-          <p className="text-mono">
-            © {year} SIMNETIQ LTD · ALL SYSTEMS RESERVED
-          </p>
+          <p className="text-mono">{dict.bottom.replace("{year}", String(year))}</p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             {social.map((s) => (
               <Link

@@ -5,12 +5,14 @@ import { Panel, Rail, SpecRow } from "@/components/panel";
 import {
   getAllServiceSlugs,
   getService,
-  services,
+  getServices,
 } from "@/lib/services";
 import {
   BreadcrumbSchema,
   ServiceSchema,
 } from "@/components/structured-data";
+import { getDictionary } from "@/lib/dictionaries";
+import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 
 const SITE_URL = "https://simnetiq.store";
 
@@ -161,26 +163,34 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const service = getService(slug);
+  const { locale: rawLocale, slug } = await params;
+  const locale: Locale = isLocale(rawLocale) ? (rawLocale as Locale) : "en";
+  const service = getService(slug, locale);
   if (!service) return { title: "Service" };
-  const url = `${SITE_URL}/services/${slug}`;
+  const url = `${SITE_URL}/${locale}/services/${slug}`;
   const title = `${service.title} — ${service.tagline}`;
   const description = service.summary;
   return {
     title,
     description,
     keywords: slugKeywords[slug] ?? [],
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        "en-GB": `${SITE_URL}/en/services/${slug}`,
+        "he-IL": `${SITE_URL}/he/services/${slug}`,
+        "x-default": `${SITE_URL}/en/services/${slug}`,
+      },
+    },
     openGraph: {
       title: `${service.title} — Simnetiq`,
       description,
       url,
       siteName: "Simnetiq",
       type: "website",
-      locale: "en_GB",
+      locale: locale === "he" ? "he_IL" : "en_GB",
     },
     twitter: {
       card: "summary_large_image",
@@ -193,12 +203,17 @@ export async function generateMetadata({
 export default async function ServicePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const service = getService(slug);
+  const { locale: rawLocale, slug } = await params;
+  if (!isLocale(rawLocale)) notFound();
+  const locale = rawLocale as Locale;
+  const service = getService(slug, locale);
   if (!service) notFound();
 
+  const dict = await getDictionary(locale);
+  const sd = dict.serviceDetail;
+  const services = getServices(locale);
   const currentIndex = services.findIndex((s) => s.slug === slug);
   const next = services[(currentIndex + 1) % services.length];
   const prev =
@@ -208,9 +223,12 @@ export default async function ServicePage({
     <>
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: `${SITE_URL}/` },
-          { name: "Services", url: `${SITE_URL}/services` },
-          { name: service.title, url: `${SITE_URL}/services/${service.slug}` },
+          { name: "Home", url: `${SITE_URL}/${locale}` },
+          { name: "Services", url: `${SITE_URL}/${locale}/services` },
+          {
+            name: service.title,
+            url: `${SITE_URL}/${locale}/services/${service.slug}`,
+          },
         ]}
       />
       <ServiceSchema
@@ -227,9 +245,9 @@ export default async function ServicePage({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
           <Rail
             items={[
-              `◆ SIMNETIQ / 02 / ${service.code}`,
+              sd.rail.indexTpl.replace("{code}", service.code),
               service.badge,
-              "CAPABILITY BRIEF",
+              sd.rail.brief,
             ]}
             className="mb-10"
           />
@@ -255,7 +273,7 @@ export default async function ServicePage({
             <div className="lg:col-span-4">
               <Panel innerClassName="p-5">
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  ▸ Brief
+                  {sd.brief}
                 </p>
                 {service.meta.map((m) => (
                   <SpecRow key={m.label} label={m.label} value={m.value} />
@@ -274,9 +292,9 @@ export default async function ServicePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-4">
               <p className="text-label text-[var(--color-primary-glow)]">
-                ◇ Scope
+                {sd.scope.eyebrow}
               </p>
-              <h2 className="text-headline mt-5">Services</h2>
+              <h2 className="text-headline mt-5">{sd.scope.title}</h2>
               <p className="text-body mt-6 max-w-sm">
                 {service.positioning}
               </p>
@@ -307,15 +325,12 @@ export default async function ServicePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
             <div className="lg:col-span-4">
               <p className="text-label text-[var(--color-primary-glow)]">
-                ◇ Instrumentation
+                {sd.stack.eyebrow}
               </p>
-              <h2 className="text-headline mt-5">Technology stack</h2>
+              <h2 className="text-headline mt-5">{sd.stack.title}</h2>
             </div>
             <div className="lg:col-span-6 lg:col-start-7 self-end">
-              <p className="text-body max-w-md">
-                The full surface we deploy across this capability. Chosen per
-                project — not every tool fits every brief.
-              </p>
+              <p className="text-body max-w-md">{sd.stack.body}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
@@ -326,7 +341,10 @@ export default async function ServicePage({
                     T-{String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-label-sm text-[var(--color-text-dim)]">
-                    {group.items.length} items
+                    {sd.stack.itemsCount.replace(
+                      "{count}",
+                      String(group.items.length)
+                    )}
                   </span>
                 </div>
                 <h3 className="text-title mb-5">{group.label}</h3>
@@ -354,16 +372,12 @@ export default async function ServicePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
             <div className="lg:col-span-5">
               <p className="text-label text-[var(--color-primary-glow)]">
-                ◇ Engagement
+                {sd.pricing.eyebrow}
               </p>
-              <h2 className="text-headline mt-5">Pricing</h2>
+              <h2 className="text-headline mt-5">{sd.pricing.title}</h2>
             </div>
             <div className="lg:col-span-6 lg:col-start-7 self-end">
-              <p className="text-body max-w-md">
-                Starting ranges in GBP. Final quotes depend on scope, timeline,
-                and support level. Every engagement is a signed SOW with fixed
-                milestones.
-              </p>
+              <p className="text-body max-w-md">{sd.pricing.body}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
@@ -379,11 +393,11 @@ export default async function ServicePage({
               >
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-mono text-[var(--color-text-faint)]">
-                    TIER · 0{i + 1}
+                    {sd.pricing.tier.replace("{n}", String(i + 1))}
                   </span>
                   {tier.highlighted && (
                     <span className="text-label-sm text-[var(--color-primary-glow)]">
-                      ◆ Recommended
+                      {sd.pricing.recommended}
                     </span>
                   )}
                 </div>
@@ -406,12 +420,13 @@ export default async function ServicePage({
                   </ul>
                 </div>
                 <Link
-                  href="/#contact"
+                  href={localizePath(locale, "/#contact")}
                   className={
                     tier.highlighted ? "btn-primary mt-8" : "btn-secondary mt-8"
                   }
                 >
-                  Request brief →
+                  {sd.pricing.requestBrief}
+                  <span aria-hidden="true">→</span>
                 </Link>
               </Panel>
             ))}
@@ -427,30 +442,28 @@ export default async function ServicePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">
-                ◇ Contact Us
+                {sd.cta.eyebrow}
               </p>
               <h2 className="text-display mt-5" style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)" }}>
-                Open a channel.
+                {sd.cta.title}
               </h2>
-              <p className="text-body mt-6 max-w-lg">
-                Briefs are reviewed within one working day. Tell us the
-                objective, timeline, and constraints — we&apos;ll come back with
-                a scope, price, and a plan.
-              </p>
+              <p className="text-body mt-6 max-w-lg">{sd.cta.body}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/#contact" className="btn-primary">
-                  Send brief →
+                <Link href={localizePath(locale, "/#contact")} className="btn-primary">
+                  {sd.cta.sendBrief}
+                  <span aria-hidden="true">→</span>
                 </Link>
-                <Link href="/projects" className="btn-secondary">
-                  View deployments
+                <Link href={localizePath(locale, "/projects")} className="btn-secondary">
+                  {sd.cta.viewDeployments}
+                  <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>
             <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <Link href={`/services/${prev.slug}`} className="block group">
+              <Link href={localizePath(locale, `/services/${prev.slug}`)} className="block group">
                 <Panel innerClassName="p-5 h-full">
                   <p className="text-mono text-[var(--color-text-faint)] mb-3">
-                    ← Previous
+                    {sd.cta.previous}
                   </p>
                   <p className="text-label-sm text-[var(--color-text-dim)] mb-1">
                     {prev.code}
@@ -458,10 +471,10 @@ export default async function ServicePage({
                   <p className="text-title">{prev.title}</p>
                 </Panel>
               </Link>
-              <Link href={`/services/${next.slug}`} className="block group">
+              <Link href={localizePath(locale, `/services/${next.slug}`)} className="block group">
                 <Panel innerClassName="p-5 h-full text-right">
                   <p className="text-mono text-[var(--color-text-faint)] mb-3">
-                    Next →
+                    {sd.cta.next}
                   </p>
                   <p className="text-label-sm text-[var(--color-text-dim)] mb-1">
                     {next.code}

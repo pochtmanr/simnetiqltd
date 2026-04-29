@@ -1,19 +1,49 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { Logo } from "@/components/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { localizePath, type Locale } from "@/lib/i18n";
 
-const links = [
-  { href: "/", label: "Home", code: "00" },
-  { href: "/projects", label: "Projects", code: "01" },
-  { href: "/services", label: "Services", code: "02" },
-  { href: "/about", label: "About", code: "03" },
-  { href: "/legal", label: "Legal", code: "04" },
-];
+type NavDict = {
+  links: {
+    home: string;
+    projects: string;
+    services: string;
+    about: string;
+    legal: string;
+  };
+  rail: {
+    online: string;
+    operations: string;
+  };
+  languageLabel: string;
+  themeLabel: string;
+  themes: {
+    dark: string;
+    light: string;
+    toggle: string;
+  };
+};
 
-export function Navigation() {
+const linkDefs = [
+  { key: "home", href: "/", code: "00" },
+  { key: "projects", href: "/projects", code: "01" },
+  { key: "services", href: "/services", code: "02" },
+  { key: "about", href: "/about", code: "03" },
+  { key: "legal", href: "/legal", code: "04" },
+] as const;
+
+export function Navigation({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: NavDict;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [clock, setClock] = useState("—");
@@ -31,8 +61,14 @@ export function Navigation() {
     return () => clearInterval(id);
   }, []);
 
+  const links = linkDefs.map((l) => ({
+    ...l,
+    href: localizePath(locale, l.href),
+    label: dict.links[l.key],
+  }));
+
   return (
-    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-[#07090D]/85 bg-[var(--color-bg)]">
+    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)] bg-[var(--color-bg)]">
       {/* Technical top rail */}
       <div className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
@@ -40,13 +76,14 @@ export function Navigation() {
             <div className="flex items-center gap-3 sm:gap-6">
               <span className="flex items-center gap-2">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                SYS · ONLINE
+                {dict.rail.online}
               </span>
               <span className="hidden sm:inline">51.5074°N · 0.1278°W</span>
-              <span className="hidden md:inline">LDN · OPERATIONS</span>
+              <span className="hidden md:inline">{dict.rail.operations}</span>
             </div>
             <div className="flex items-center gap-3 sm:gap-6">
-              <span>v1.0.0</span>
+              <LocaleSwitcher current={locale} className="hidden md:flex" />
+              <ThemeToggle className="hidden md:inline-flex" />
               <span suppressHydrationWarning>{clock}</span>
             </div>
           </div>
@@ -57,16 +94,9 @@ export function Navigation() {
       <nav className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <Image
-                src="/logo.svg"
-                alt="Simnetiq"
-                width={109}
-                height={107}
-                className="h-5 w-auto"
-                priority
-              />
-              <span className="text-label text-white">SIMNETIQ</span>
+            <Link href={localizePath(locale, "/")} className="flex items-center gap-3">
+              <Logo className="h-5 w-auto" />
+              <span className="text-label text-[var(--color-text)]">SIMNETIQ</span>
             </Link>
 
             {/* Desktop */}
@@ -160,13 +190,34 @@ export function Navigation() {
                         active
                           ? "text-[var(--color-primary-glow)]"
                           : "text-[var(--color-text-faint)]"
-                      }`}
+                      } btn-arrow`}
                     >
                       →
                     </span>
                   </Link>
                 );
               })}
+              <div className="mt-2 pt-5 border-t border-[var(--color-border)] space-y-5">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-label-sm text-[var(--color-text-faint)]">
+                    ▸ {dict.languageLabel}
+                  </p>
+                  <LocaleSwitcher current={locale} variant="segmented" />
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-label-sm text-[var(--color-text-faint)]">
+                    ▸ {dict.themeLabel}
+                  </p>
+                  <ThemeToggle
+                    variant="segmented"
+                    labels={{
+                      dark: dict.themes.dark,
+                      light: dict.themes.light,
+                      generic: dict.themes.toggle,
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         )}

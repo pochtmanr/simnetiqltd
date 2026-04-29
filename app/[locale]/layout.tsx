@@ -1,16 +1,28 @@
 import type { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
 import {
   Inter,
   Space_Grotesk,
   JetBrains_Mono,
   Instrument_Serif,
   Rubik,
+  Lunasima,
 } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
+import { ThemeProvider, THEME_INIT_SCRIPT } from "@/components/theme-provider";
+import { getDictionary } from "@/lib/dictionaries";
+import {
+  LOCALES,
+  LOCALE_HTML_LANG,
+  getDirection,
+  isLocale,
+  type Locale,
+} from "@/lib/i18n";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +54,12 @@ const rubik = Rubik({
   subsets: ["latin", "cyrillic"],
   weight: ["300", "400", "500", "700"],
   variable: "--font-rubik",
+});
+
+const lunasima = Lunasima({
+  subsets: ["latin", "hebrew"],
+  weight: ["400", "700"],
+  variable: "--font-lunasima",
 });
 
 const SITE_URL = "https://simnetiq.store";
@@ -141,10 +159,11 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "Software Engineering & Marketing Studio",
   alternates: {
-    canonical: SITE_URL,
+    canonical: `${SITE_URL}/en`,
     languages: {
-      "en-GB": SITE_URL,
-      "x-default": SITE_URL,
+      "en-GB": `${SITE_URL}/en`,
+      "he-IL": `${SITE_URL}/he`,
+      "x-default": `${SITE_URL}/en`,
     },
   },
   openGraph: {
@@ -205,7 +224,6 @@ export const metadata: Metadata = {
     telephone: false,
   },
   other: {
-    "theme-color": "#07090D",
     "msapplication-TileColor": "#07090D",
   },
 };
@@ -217,22 +235,45 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
+
+type Params = Promise<{ locale: string }>;
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Params;
 }>) {
+  const { locale: rawLocale } = await params;
+  if (!isLocale(rawLocale)) notFound();
+  const locale = rawLocale as Locale;
+  const dir = getDirection(locale);
+  const dict = await getDictionary(locale);
+
   return (
     <html
-      lang="en-GB"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} h-full`}
+      lang={LOCALE_HTML_LANG[locale]}
+      dir={dir}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} h-full`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
-        <GlobalStructuredData />
-        <Navigation />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <Analytics />
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
+        />
+        <ThemeProvider>
+          <GlobalStructuredData />
+          <Navigation locale={locale} dict={dict.nav} />
+          <main className="flex-1">{children}</main>
+          <Footer locale={locale} dict={dict.footer} />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -62,18 +62,19 @@ export function HeroVisual() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Background vignette
+      // Soft rust halo at center — fades to fully transparent at edges so the
+      // canvas blends into whatever bg the page is using (light or dark).
       const bg = ctx.createRadialGradient(
         width * 0.5,
         height * 0.5,
         0,
         width * 0.5,
         height * 0.5,
-        Math.max(width, height) * 0.8,
+        Math.max(width, height) * 0.7,
       );
       bg.addColorStop(0, "rgba(178, 69, 30, 0.08)");
-      bg.addColorStop(0.55, "rgba(10, 13, 20, 0)");
-      bg.addColorStop(1, "rgba(3, 3, 4, 0.8)");
+      bg.addColorStop(0.6, "rgba(178, 69, 30, 0.02)");
+      bg.addColorStop(1, "rgba(178, 69, 30, 0)");
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, width, height);
 

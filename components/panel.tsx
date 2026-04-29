@@ -5,6 +5,7 @@ type PanelProps = {
   className?: string;
   innerClassName?: string;
   corners?: boolean;
+  hover?: boolean;
   as?: "div" | "section" | "article";
 };
 
@@ -13,10 +14,11 @@ export function Panel({
   className = "",
   innerClassName = "",
   corners = false,
+  hover = false,
   as: Tag = "div",
 }: PanelProps) {
   return (
-    <Tag className={`gradient-shell ${className}`}>
+    <Tag className={`gradient-shell ${hover ? "is-hover" : ""} ${className}`}>
       <div className={`shell-inner relative ${innerClassName}`}>
         {corners && (
           <div className="corners pointer-events-none absolute inset-0">

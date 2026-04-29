@@ -1,0 +1,630 @@
+{
+  "common": {
+    "revision": "Revision",
+    "revisionApr2026": "Apr 2026",
+    "lastUpdatedApr2026": "Last updated: April 2026",
+    "lastRevisionApr2026": "Last revision: April 2026 · Protocol 1.0.0",
+    "endOfDocument": "END OF DOCUMENT · SIMNETIQ LTD © {year} · ALL RIGHTS RESERVED",
+    "viewOnGoogleMaps": "View on Google Maps →",
+    "openAppStore": "Open App Store →",
+    "openGooglePlay": "Open Google Play →",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "live": "Live",
+    "liveNominal": "Live · Nominal"
+  },
+  "nav": {
+    "links": {
+      "home": "Home",
+      "projects": "Projects",
+      "services": "Services",
+      "about": "About",
+      "legal": "Legal"
+    },
+    "rail": {
+      "online": "Sys · Online",
+      "operations": "London · Operations"
+    },
+    "languageLabel": "Language",
+    "themeLabel": "Theme",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light",
+      "toggle": "Toggle theme"
+    }
+  },
+  "hero": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 00 / INDEX",
+      "tagline": "VISUAL INSTRUMENT · PRECISION STUDIO",
+      "established": "EST. 2025 · LONDON"
+    },
+    "eyebrow": "◇ Technology Studio / London",
+    "titleLine1": "Simnetiq",
+    "titleLine2": "Engineering",
+    "body": "We design and operate high-integrity software for private networks, AI platforms, mobile applications, and logistics systems. Calm surfaces, uncompromising internals.",
+    "ctaPrimary": "Active Operations",
+    "ctaSecondary": "Contact Us",
+    "manifest": {
+      "label": "▸ Operator Manifest",
+      "founded": "Founded",
+      "founded_value": "2025",
+      "hq": "HQ",
+      "hq_value": "London, UK",
+      "verticals": "Verticals",
+      "verticals_value": "4 active",
+      "status": "Status",
+      "status_value": "Accepting briefs"
+    },
+    "accolade": {
+      "label": "Recognition",
+      "value": "Top 30 · Israel · Apple App Store"
+    },
+    "field": {
+      "label": "FIELD · 01",
+      "wave": "WAVE · RUST · BREATH 4S",
+      "signal": "SIGNAL OK"
+    }
+  },
+  "projects": {
+    "eyebrow": "◇ Selected / Operations",
+    "title": "Active deployments",
+    "body": "Four production systems currently online. Each built with an engineering-first philosophy: reliability, architectural purity, no filler.",
+    "stack": "Stack",
+    "visit": "Visit site",
+    "caseStudy": "Case study",
+    "items": {
+      "physics": {
+        "title": "Physics.explained",
+        "badge": "EDUCATION · OPEN",
+        "description": "Physics taught visually. Interactive animations driven by accurate solvers, a dictionary of concepts, and profiles of physicists."
+      },
+      "doppler": {
+        "title": "Doppler VPN",
+        "badge": "VPN · ENC",
+        "description": "Military-grade network obfuscation using a custom VLESS-Reality implementation. Zero-log architecture, geo-distributed nodes."
+      },
+      "creator": {
+        "title": "Creator AI",
+        "badge": "NEURAL · GEN",
+        "description": "Neural content synthesis. Fine-tuned LLMs for technical documentation and multi-language editorial pipelines."
+      },
+      "delivery": {
+        "title": "Go Delivery",
+        "badge": "LOGISTICS · OPS",
+        "description": "Delivery platform with real-time GPS tracking, route optimization, and end-to-end order lifecycle management.",
+        "accolade": "Top 30 · Israel · Apple App Store"
+      }
+    }
+  },
+  "capabilities": {
+    "eyebrow": "◇ Methodology",
+    "title": "Core capabilities",
+    "body": "Engineering-led. Each vertical is owned by a senior practitioner, shipping production systems — not prototypes.",
+    "viewService": "View service →",
+    "items": {
+      "mobile": {
+        "title": "Mobile & Desktop",
+        "text": "Native iOS, Android, macOS, Windows, Linux. SwiftUI, Compose, WinUI 3, .NET, Tauri."
+      },
+      "growth": {
+        "title": "Growth & Marketing",
+        "text": "Meta, TikTok, and Google ad campaigns wired to AppsFlyer, Adjust, and real in-app attribution."
+      },
+      "ai": {
+        "title": "AI Integration",
+        "text": "LLM pipelines, embeddings, RAG, agentic automation across Anthropic / OpenAI stacks."
+      },
+      "web": {
+        "title": "Web & Platforms",
+        "text": "Next.js, Supabase, Stripe, edge-grade billing and auth pipelines end to end."
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "◇ Transmission",
+    "title": "Open a channel",
+    "body": "Briefs, partnerships, engineering contracts. We respond inside one working day.",
+    "directLabel": "▸ Direct",
+    "email": "Email",
+    "location": "Location",
+    "location_value": "London, UK · BST",
+    "response": "Response",
+    "response_value": "< 24h weekdays",
+    "name": "▸ Name",
+    "namePlaceholder": "Full name",
+    "emailLabel": "▸ Email",
+    "emailPlaceholder": "you@domain.com",
+    "message": "▸ Message",
+    "messagePlaceholder": "Outline the objective",
+    "ready": "CH · 01 READY",
+    "sending": "SENDING…",
+    "submit": "EXECUTE",
+    "transmitted": "TRANSMITTED",
+    "failed": "FAILED · RETRY",
+    "successMessage": "▸ Message transmitted. Expect response within one working day.",
+    "errorMessage": "▸ Transmission failed. Retry or email support@simnetiq.store."
+  },
+  "footer": {
+    "tagline": "PRECISION ENGINEERING",
+    "body": "A London-based technology studio building high-integrity software for web, mobile, VPN infrastructure, and AI systems.",
+    "columns": {
+      "entity": "Entity",
+      "documents": "Documents",
+      "contact": "Contact Us"
+    },
+    "lines": {
+      "company": "SIMNETIQ LTD",
+      "companyNumber": "No. 16861177",
+      "jurisdiction": "England & Wales",
+      "legal": "Legal",
+      "privacy": "Privacy",
+      "deletion": "Data Deletion",
+      "studio": "Technical studio",
+      "hours": "Mon–Fri · 09:00–18:00 BST"
+    },
+    "bottom": "© {year} SIMNETIQ LTD · ALL SYSTEMS RESERVED"
+  },
+  "about": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 02 / ABOUT",
+      "context": "MISSION CONTEXT",
+      "dossier": "DOSSIER · V1.0"
+    },
+    "eyebrow": "◇ Mission Context",
+    "title": "We build the kinetic blueprint for industrial software.",
+    "body": "Simnetiq is a technical design and engineering collective. We reject decorative trends in favour of functional precision and geometric absolutism — software that reads as an instrument, not a decoration.",
+    "founded": "▸ Founded",
+    "operations": "▸ Operations",
+    "operationsValue": "London, UK",
+    "personnel": {
+      "eyebrow": "◇ Personnel",
+      "title": "The architecture team",
+      "body": "Three owner-operators. Engineering, legal, distribution. No layers between the work and the decision."
+    },
+    "team": [
+      { "role": "Lead Engineer / Director", "name": "R. Pochtman", "meta": "Mobile · Backend · Infra" },
+      { "role": "Legal / Contracts", "name": "D. Zitomirsky", "meta": "Corporate · Compliance" },
+      { "role": "Developer / Growth", "name": "D. Polskoy", "meta": "Distribution · Marketing" }
+    ],
+    "registration": {
+      "eyebrow": "◇ Registration",
+      "title": "Certified entity",
+      "body": "Incorporated in England & Wales. All trading, contracting, and invoicing runs through the parent entity.",
+      "companyDetails": "▸ Company Details",
+      "registeredAddress": "▸ Registered Address",
+      "legalName": "Legal name",
+      "companyNo": "Company no.",
+      "jurisdiction": "Jurisdiction",
+      "jurisdictionValue": "England & Wales",
+      "vatStatus": "VAT status",
+      "vatStatusValue": "On request"
+    },
+    "principles": {
+      "eyebrow": "◇ Principles",
+      "title": "Operating values",
+      "body": "Four constants that every project, hire, and decision is measured against."
+    },
+    "values": [
+      { "code": "V-01", "title": "Precision", "text": "Mathematics over aesthetics. Every pixel, every line, every abstraction serves a structural purpose." },
+      { "code": "V-02", "title": "Function", "text": "We build instruments, not toys. UI is for control, not decoration." },
+      { "code": "V-03", "title": "Integrity", "text": "Direct communication. Transparent architecture. Unwavering quality." },
+      { "code": "V-04", "title": "Legacy", "text": "Rooted in Scandinavian and British industrial design principles." }
+    ]
+  },
+  "projectsPage": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 01 / PROJECTS",
+      "archive": "ENGINEERING ARCHIVE",
+      "active": "ACTIVE ENTRIES · 04"
+    },
+    "eyebrow": "◇ Engineering Archive",
+    "titleLine1": "Active",
+    "titleLine2": "Deployments",
+    "body": "A catalog of precision software instruments developed for global scale. Industrial-grade reliability, minimalist interfaces, engineering-first execution.",
+    "specification": "▸ Specification",
+    "readCaseStudy": "Read case study",
+    "visitSite": "Visit site",
+    "items": {
+      "physics": {
+        "title": "Physics.explained",
+        "badge": "EDUCATION · OPEN",
+        "description": "An open-source, interactive physics encyclopedia. Every diagram is a live simulation driven by unit-tested ODE integrators and Newton–Raphson solvers. A context-aware AI tutor at /ask answers physics questions with derivations grounded in the library. Classical mechanics, electromagnetism, thermodynamics, relativity, quantum, and modern physics — all shipped, all free.",
+        "deployed": "Deployed",
+        "deployedValue": "2026",
+        "coverage": "Coverage",
+        "coverageValue": "Six branches · Live",
+        "tutor": "AI Tutor",
+        "tutorValue": "/ask · Live"
+      },
+      "doppler": {
+        "title": "Doppler VPN",
+        "badge": "VPN · ENC",
+        "description": "A censorship-resistant VPN built on VLESS-Reality. Every connection looks like ordinary HTTPS — undetectable by deep packet inspection, resistant to TSPU and active probing. No registration, no logs, no account database. Native apps on iOS, Android, macOS, and Windows, self-hosted control plane, pay by card or crypto.",
+        "deployed": "Deployed",
+        "deployedValue": "2025",
+        "protocol": "Protocol",
+        "protocolValue": "VLESS · Reality",
+        "platforms": "Platforms",
+        "platformsValue": "iOS · Android · macOS · Win"
+      },
+      "creator": {
+        "title": "Creator AI",
+        "badge": "NEURAL · GEN",
+        "description": "Neural content synthesis. Fine-tuned LLMs for technical documentation, multi-language editorial pipelines, and automated publishing workflows.",
+        "deployed": "Deployed",
+        "deployedValue": "2025",
+        "models": "Models",
+        "modelsValue": "Anthropic · OpenAI",
+        "platforms": "Platforms",
+        "platformsValue": "iOS · Android · Web"
+      },
+      "delivery": {
+        "title": "Go Delivery",
+        "badge": "LOGISTICS · OPS",
+        "description": "Delivery management platform with real-time GPS driver tracking, route optimization, and order lifecycle management. Built for the Israeli logistics market with multi-language support.",
+        "deployed": "Deployed",
+        "deployedValue": "2025",
+        "market": "Market",
+        "marketValue": "IL · Domestic",
+        "scope": "Scope",
+        "scopeValue": "Dispatch · Fleet · Ops"
+      }
+    }
+  },
+  "servicesIndex": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 02 / SERVICES",
+      "capabilityIndex": "CAPABILITY INDEX",
+      "entries": "ENTRIES · 0{count}"
+    },
+    "eyebrow": "◇ Capabilities",
+    "titleLine1": "Engineering",
+    "titleLine2": "Services",
+    "body": "Four capability groups. Each with a defined scope, stack, and pricing tier — every engagement scoped against a signed SOW.",
+    "servicesCount": "{count} services",
+    "viewBrief": "View brief →"
+  },
+  "serviceDetail": {
+    "rail": {
+      "indexTpl": "◆ SIMNETIQ / 02 / {code}",
+      "brief": "CAPABILITY BRIEF"
+    },
+    "scope": {
+      "eyebrow": "◇ Scope",
+      "title": "Services"
+    },
+    "stack": {
+      "eyebrow": "◇ Instrumentation",
+      "title": "Technology stack",
+      "body": "The full surface we deploy across this capability. Chosen per project — not every tool fits every brief.",
+      "itemsCount": "{count} items"
+    },
+    "pricing": {
+      "eyebrow": "◇ Engagement",
+      "title": "Pricing",
+      "body": "Starting ranges in GBP. Final quotes depend on scope, timeline, and support level. Every engagement is a signed SOW with fixed milestones.",
+      "tier": "TIER · 0{n}",
+      "recommended": "◆ Recommended",
+      "requestBrief": "Request brief →"
+    },
+    "cta": {
+      "eyebrow": "◇ Contact Us",
+      "title": "Open a channel.",
+      "body": "Briefs are reviewed within one working day. Tell us the objective, timeline, and constraints — we'll come back with a scope, price, and a plan.",
+      "sendBrief": "Send brief →",
+      "viewDeployments": "View deployments",
+      "previous": "← Previous",
+      "next": "Next →"
+    },
+    "brief": "▸ Brief"
+  },
+  "legal": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 03 / LEGAL",
+      "compliance": "REGULATORY COMPLIANCE",
+      "rev": "REV · APR 2026"
+    },
+    "eyebrow": "◇ Legal Framework",
+    "title": "Legal documentation",
+    "tocLabel": "▸ Index",
+    "tocSections": [
+      { "number": "01", "label": "Impressum" },
+      { "number": "02", "label": "Privacy Policy" },
+      { "number": "03", "label": "Terms of Service" }
+    ],
+    "documentLabel": "▸ Document",
+    "revision": "Revision",
+    "protocol": "Protocol",
+    "jurisdiction": "Jurisdiction",
+    "jurisdictionValue": "UK",
+    "impressum": {
+      "tag": "Entity disclosure",
+      "title": "Impressum",
+      "rows": [
+        { "label": "Entity", "value": "Simnetiq Ltd" },
+        { "label": "Activity", "value": "Engineering & Systems Architecture" },
+        { "label": "Registered office", "value": "2 Frederick Street, Kings Cross, London, WC1X 0ND, England & Wales" },
+        { "label": "Company number", "value": "16861177" },
+        { "label": "Managing director", "value": "Roman Pochtman" },
+        { "label": "Responsible for content", "value": "Roman Pochtman" },
+        { "label": "Contact", "value": "support@simnetiq.store" }
+      ]
+    },
+    "privacy": {
+      "tag": "Data protection",
+      "title": "Privacy Policy",
+      "blocks": [
+        { "title": "Data Controller", "body": "The data controller for this website is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store." },
+        { "title": "Data Collection", "body": "We collect data you voluntarily provide through our contact form (name, email address, message content) and account deletion request form (identity information, optional reason). We may also collect basic analytics data such as page views, browser type, and approximate geographic location through standard web server logs." },
+        { "title": "Legal Basis (GDPR)", "body": "Processing of contact form data is based on your consent (Art. 6(1)(a) GDPR) and our legitimate interest in responding to inquiries (Art. 6(1)(f) GDPR). Analytics data processing is based on our legitimate interest in understanding website usage patterns." },
+        { "title": "Data Retention", "body": "Contact form submissions are retained for the duration necessary to respond to your inquiry, typically no longer than 12 months. Account deletion requests are processed within 30 days and associated data is purged from our systems. Web server logs are automatically deleted after 90 days." },
+        { "title": "Your Rights", "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk." },
+        { "title": "Cookies & Tracking", "body": "This website does not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only." }
+      ]
+    },
+    "terms": {
+      "tag": "Terms of service",
+      "title": "Terms of Service",
+      "blocks": [
+        { "title": "Scope of Operations", "body": "By accessing the Simnetiq website (simnetiq.store), you agree to these Terms of Service. This website provides information about Simnetiq Ltd and its products. The content is provided \"as is\" without warranty of any kind, express or implied." },
+        { "title": "Intellectual Property", "body": "All content on this website, including text, graphics, logos, design elements, and software, is the intellectual property of Simnetiq Ltd and is protected by applicable copyright and trademark laws. Unauthorized reproduction or distribution is prohibited." },
+        { "title": "Limitation of Liability", "body": "Simnetiq Ltd shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of this website. Our total liability shall not exceed the amount paid by you, if any, for accessing this website." },
+        { "title": "Governing Law", "body": "These Terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales." }
+      ]
+    }
+  },
+  "privacy": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 03.02 / PRIVACY",
+      "policy": "DATA PROTECTION POLICY",
+      "rev": "REV · APR 2026"
+    },
+    "eyebrow": "◇ Legal Framework",
+    "title": "Privacy Policy",
+    "documentLabel": "▸ Document",
+    "contactLabel": "▸ Contact",
+    "revision": "Revision",
+    "protocol": "Protocol",
+    "jurisdiction": "Jurisdiction",
+    "jurisdictionValue": "UK · GDPR",
+    "entries": "Entries",
+    "kingsCross": "Kings Cross, London",
+    "blocks": [
+      { "title": "Data Controller", "body": "The data controller is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store." },
+      { "title": "Data Collection", "body": "We collect data you voluntarily provide through our contact form (name, email address, message content) and account deletion request form (identity information, optional reason). We may also collect basic analytics data such as page views, browser type, and approximate geographic location through standard web server logs." },
+      { "title": "Mobile Application Data", "body": "The Simnetiq eSIM application collects the following data to provide its services: account information (email, name) for authentication; device information necessary for eSIM provisioning; purchase history for order management; and optional push notification tokens. All data is processed in accordance with this policy and stored securely using industry-standard encryption." },
+      { "title": "Legal Basis (GDPR)", "body": "Processing of contact form data is based on your consent (Art. 6(1)(a) GDPR) and our legitimate interest in responding to inquiries (Art. 6(1)(f) GDPR). Processing of account and purchase data is necessary for the performance of a contract (Art. 6(1)(b) GDPR). Analytics data processing is based on our legitimate interest in understanding usage patterns." },
+      { "title": "Data Sharing", "body": "We do not sell your personal data. We may share data with: eSIM providers for the purpose of activating your connectivity plans; payment processors (Stripe, Apple, Google) to process transactions; and hosting providers (Vercel, Supabase) for infrastructure. All third-party processors are bound by data processing agreements compliant with GDPR." },
+      { "title": "Data Retention", "body": "Contact form submissions are retained for the duration necessary to respond to your inquiry, typically no longer than 12 months. Account data is retained for the duration of your account and deleted within 30 days of an account deletion request. Purchase records may be retained for up to 7 years for tax and legal compliance. Web server logs are automatically deleted after 90 days." },
+      { "title": "Your Rights", "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You may also request account deletion directly through our app or at simnetiq.store/delete-account. You have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk." },
+      { "title": "Cookies & Tracking", "body": "This website and our mobile applications do not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only." },
+      { "title": "Children's Privacy", "body": "Our services are not directed to children under 13. We do not knowingly collect personal data from children. If we become aware that we have collected data from a child under 13, we will delete it promptly." },
+      { "title": "Changes to This Policy", "body": "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Your continued use of our services after changes constitutes acceptance of the updated policy." },
+      { "title": "Contact", "body": "For any questions or concerns about this Privacy Policy or our data practices, contact us at support@simnetiq.store or write to: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom." }
+    ]
+  },
+  "deleteAccount": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 04 / EXIT",
+      "protocol": "DE-PROVISIONING PROTOCOL",
+      "status": "STATUS 410 · GONE"
+    },
+    "eyebrow": "◇ Account Lifecycle",
+    "title": "System exit",
+    "body": "Permanent account dissolution for Simnetiq eSIM app users. Submit the de-provisioning request below. All associated data will be purged from production within 30 days.",
+    "operationLabel": "▸ Operation",
+    "statusCode": "Status code",
+    "statusCodeValue": "410 · Gone",
+    "retention": "Retention",
+    "retentionValue": "30d wipe",
+    "scope": "Scope",
+    "scopeValue": "All account data",
+    "reversible": "Reversible",
+    "reversibleValue": "No",
+    "applicable": {
+      "eyebrow": "◇ Applicable",
+      "title": "Products",
+      "body": "This protocol applies to account holders of the Simnetiq eSIM application on iOS and Android.",
+      "iosTitle": "Simnetiq — Travel eSIM Data",
+      "iosDistribution": "App Store distribution",
+      "androidTitle": "Simnetiq — Travel eSIM Data",
+      "androidDistribution": "Google Play distribution"
+    },
+    "warningLabel": "⚠ Final confirmation required",
+    "warningBody": "This action is permanent and cannot be undone. All data associated with your account — including eSIM profiles, purchase history, and authentication credentials — will be permanently deleted from the Simnetiq production environment.",
+    "willBeDeletedLabel": "▸ What will be deleted",
+    "willBeDeletedItems": [
+      "Account and authentication data (Google or Apple Sign-In link)",
+      "eSIM profiles and associated carrier data",
+      "Purchase and transaction history",
+      "Usage analytics and preferences"
+    ],
+    "requestLabel": "▸ De-provisioning request",
+    "accountEmail": "Account email",
+    "accountEmailHint": "Use the email linked to your Google or Apple Sign-In.",
+    "reasonLabel": "Reason (optional)",
+    "reasonPlaceholder": "Optional feedback",
+    "submit": "Execute deletion",
+    "processing": "Processing…",
+    "cancel": "Cancel process",
+    "successMessage": "▸ Deletion request submitted. Your account and all associated data will be permanently removed within 30 days.",
+    "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.store."
+  },
+  "caseStudyDoppler": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 02 / PROJECTS / DOPPLER-VPN",
+      "tag": "CASE STUDY",
+      "status": "VLESS · REALITY · LIVE"
+    },
+    "eyebrow": "◇ Privacy · Censorship-resistant · Native",
+    "titleLine1": "Works where",
+    "titleLine2": "other VPNs don't.",
+    "body": "Doppler VPN is a censorship-resistant VPN built on VLESS-Reality. Your traffic looks like ordinary HTTPS — undetectable by deep packet inspection. No registration, no logs, no tracking. Native apps on iOS, Android, macOS, and Windows.",
+    "visitSite": "Visit site",
+    "appStore": "App Store",
+    "specsLabel": "▸ Specification",
+    "figureCaption": "Fig. 01 · Doppler iOS client",
+    "specs": [
+      { "label": "Status", "value": "Launched · Live" },
+      { "label": "Deployed", "value": "2025" },
+      { "label": "Protocol", "value": "VLESS · Reality" },
+      { "label": "Infrastructure", "value": "Marzban · self-hosted" },
+      { "label": "Regions", "value": "Five · Global" },
+      { "label": "Devices", "value": "Up to 10" },
+      { "label": "Logs", "value": "None · by design" }
+    ],
+    "aboutEyebrow": "§ 01 · About",
+    "aboutTitleA": "A VPN that",
+    "aboutTitleB": "stays invisible.",
+    "aboutBody": [
+      "Most consumer VPNs were built for a friendlier internet. They tunnel with well-known protocols, sign transport layers with recognisable fingerprints, and rely on server IPs that blocklists catch within days. The moment a network operator wants them gone, they're gone.",
+      "Doppler starts from the opposite constraint: assume the network is hostile. Every connection is wrapped in VLESS-Reality — XTLS-Reality over VLESS — so outbound traffic is indistinguishable from a genuine HTTPS session to a legitimate website. There is no TLS fingerprint to classify, no handshake signature to match, nothing for deep packet inspection to lock onto.",
+      "Around the protocol sits a deliberately thin control plane. No account database, no email, no phone number — the device itself is the identity, and a subscription key unlocks connectivity. There is no browsing log, no IP log, no DNS query storage. The privacy claim isn't a policy line; it's a direct consequence of what the infrastructure is built to never store.",
+      "The product ships as native apps on iOS, Android, macOS, and Windows, backed by a self-hosted Marzban control plane and geo-distributed edge nodes. Subscriptions are payable through the App Store, Google Play, web checkout, or with BTC, ETH, USDT, and USDC — one plan, up to ten devices, one tap to connect."
+    ],
+    "dpiEyebrow": "§ 02 · DPI bypass · VLESS-Reality",
+    "dpiTitleA": "A tunnel that",
+    "dpiTitleB": "looks like nothing.",
+    "dpiBody1": "VLESS-Reality performs a real TLS handshake with a real website certificate. The edge node borrows its TLS identity from a legitimate third-party site, then muxes authenticated client traffic through the same connection. An observer — censor, ISP, or transit provider — sees a completely normal HTTPS session.",
+    "dpiBody2": "Because the signature is genuine, there is no anomaly to detect. Active probes against our servers get a real website back. Only an authenticated client activates the VPN tunnel — which is why Doppler stays online behind TSPU, the GFW, and the same inspection hardware that catches commercial VPNs within hours of launch.",
+    "dpiOperationalLabel": "▸ Operational against",
+    "dpiOperationalItems": [
+      "TSPU hardware deployed across Russian ISPs.",
+      "TLS fingerprinting and JA3/JA4 classifiers.",
+      "Active probing of server IPs by censors.",
+      "Domain-level blocks — reachable via Telegram bot."
+    ],
+    "dpiOpenDoppler": "Open Doppler",
+    "insideEyebrow": "§ 03 · What's inside",
+    "insideTitle": "Four moving parts.",
+    "insideEntry": "ENTRY",
+    "insideItems": [
+      { "figure": "TLS", "label": "DPI bypass", "body": "VLESS-Reality performs a genuine TLS handshake against a real site certificate. Deep packet inspection sees ordinary HTTPS, not a VPN tunnel — nothing to classify, nothing to block." },
+      { "figure": "ID-0", "label": "No registration", "body": "The device is the account. No email, no phone number, no personal information. A subscription key unlocks connectivity — accounts we never create can't be breached, subpoenaed, or leaked." },
+      { "figure": "RT", "label": "Smart routing", "body": "Traffic is routed by destination, not by server list. The client picks the fastest healthy path automatically — no manual server hopping, no stale hops when a region is under load." },
+      { "figure": "DNS", "label": "Encrypted DNS", "body": "Every query is encrypted end-to-end and discarded after resolution. Tracker and malware domains are filtered at the DNS layer across every app on the device, not just the browser." }
+    ],
+    "infraEyebrow": "§ 04 · Infrastructure",
+    "infraTitleA": "How it",
+    "infraTitleB": "actually works.",
+    "infraBody": "The stack is deliberately small. A self-hosted Marzban control plane issues subscriptions and rotates keys. Edge nodes run VLESS-Reality behind real third-party certificates. Nothing logs. Every layer is picked because it either contributes to unobservability or it doesn't ship.",
+    "infraStackLabel": "▸ Stack",
+    "infrastructure": [
+      { "id": "I-01", "label": "Protocol", "title": "VLESS-Reality", "body": "XTLS-Reality over VLESS. Zero TLS fingerprint, genuine certificate from a third-party front site, resistant to active probing." },
+      { "id": "I-02", "label": "Control plane", "title": "Marzban", "body": "Self-hosted Marzban orchestrates inbound nodes, subscription issuance, and key rotation across every region — no third-party SaaS in the auth path." },
+      { "id": "I-03", "label": "Edge", "title": "Frankfurt · Paris · Moscow · Tokyo · Tel Aviv", "body": "Five geo-distributed inbound nodes running the same dual-protocol stack. Failover is automatic; smart routing selects the lowest-latency healthy hop for each destination." },
+      { "id": "I-04", "label": "Data policy", "title": "Zero-log architecture", "body": "No browsing logs. No IP logs. No DNS query storage. No account database. Privacy isn't policy text — it's what the system is physically able to store." },
+      { "id": "I-05", "label": "Obfuscation", "title": "Anti-TSPU · Anti-DPI", "body": "Defeats TSPU, TLS fingerprinting, and active probing — the stack used by Russia, China, and Iran to block commercial VPNs. Domain on Roskomnadzor blocklist; service still operational via Telegram bot." },
+      { "id": "I-06", "label": "Billing", "title": "Card · Crypto · Stores", "body": "Pay through the App Store, Google Play, web checkout, or with BTC, ETH, USDT and USDC. One subscription, up to ten devices, no auto-renewal." }
+    ],
+    "designEyebrow": "§ 05 · Design system",
+    "designTitleA": "Cinematic dark,",
+    "designTitleB": "measured accents.",
+    "designBody": "Doppler flattens dark mode to a single page ground and lifts cards with a graduated surface scale. Teal owns primary interaction. Gold is the brand warmth. Violet is reserved for the Pro tier. Amber flags freshness and warnings. Every accent clears WCAG AA on the page bg.",
+    "paletteLabel": "▸ Palette",
+    "typographyLabel": "▸ Typography pairing",
+    "typographyCards": [
+      { "code": "01 · Hero", "sample": "Aa Bb 01", "name": "Instrument Serif — Transitional serif, italic", "body": "Reserved for the landing hero headline on dopplervpn.org. Italic, low contrast, oversized — carries all of the brand warmth without a logotype." },
+      { "code": "02 · Body", "sample": "Works where other VPNs get blocked.", "name": "Space Grotesk — Geometric sans", "body": "Default for sections, navigation, UI copy and pricing. Weights 400, 500, 600, 700." },
+      { "code": "03 · Cyrillic", "sample": "Работает там, где нет VPN.", "name": "Rubik — Cyrillic companion", "body": "Active on ru and uk locales. Matches Space Grotesk's metrics while shipping a full Cyrillic glyph set." }
+    ],
+    "platformsEyebrow": "§ 06 · Platforms",
+    "platformsTitle": "Native everywhere.",
+    "platformsBody": "Native apps on every supported platform — SwiftUI on iOS and macOS, Kotlin on Android, a signed Windows client for x64 and ARM64. One subscription covers up to ten devices. Status syncs across them via a device-bound token, never via an email address.",
+    "platforms": [
+      { "id": "01", "name": "iOS" },
+      { "id": "02", "name": "Android" },
+      { "id": "03", "name": "macOS" },
+      { "id": "04", "name": "Windows" }
+    ],
+    "live": "LIVE",
+    "ctaEyebrow": "◇ Continue",
+    "ctaTitle": "Try the network.",
+    "ctaBody": "Three-day free trial on iOS. Subscription unlocks every region and every platform. Pay by card, by IAP, or with crypto.",
+    "ctaPrimary": "Visit site"
+  },
+  "caseStudyPhysics": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 01 / PROJECTS / PHYSICS.EXPLAINED",
+      "tag": "CASE STUDY",
+      "status": "CLASSICAL MECHANICS · LIVE"
+    },
+    "eyebrow": "◇ Education · Open · Interactive",
+    "titleLine1": "Physics,",
+    "titleLine2": "taught visually.",
+    "body": "Physics.explained is an open-source, interactive physics encyclopedia. Live simulations, a cross-linked concept graph, physicist profiles, and an AI tutor at /ask — all six branches of physics under one roof, all shipped.",
+    "visitSite": "Visit site",
+    "tryAsk": "Try /ask",
+    "specsLabel": "▸ Specification",
+    "figureCaption": "Fig. 01 · Interactive mechanics visualisation",
+    "specs": [
+      { "label": "Status", "value": "Launched · Live" },
+      { "label": "Deployed", "value": "2026" },
+      { "label": "License", "value": "Open source" },
+      { "label": "Stack", "value": "Next.js · WebGL · MathJax" },
+      { "label": "Solvers", "value": "ODEX · Newton–Raphson" },
+      { "label": "AI Tutor", "value": "/ask · Live" },
+      { "label": "Coverage", "value": "Six branches · Live" }
+    ],
+    "aboutEyebrow": "§ 01 · About",
+    "aboutTitleA": "A physics library",
+    "aboutTitleB": "that computes.",
+    "aboutBody": [
+      "Physics.explained began as a rejection of static textbook diagrams. Most physics content on the web is written once, rendered flat, and frozen — a pendulum drawn but not swung, an orbit shown but not integrated. Students are left memorising shapes instead of developing intuition.",
+      "The product treats every diagram as executable physics. Motion is computed at runtime by ODE integrators with numerical tolerances chosen to stay faithful under perturbation. Equilibria are solved by Newton–Raphson root finders. Drag initial conditions, nudge parameters, and the simulation responds as the equations themselves would.",
+      "Around the solver core sits a dense reference layer: a cross-linked concept graph spanning classical mechanics, electromagnetism, thermodynamics, relativity, quantum mechanics, and modern physics, plus biographical profiles of the physicists behind every result. Every concept links back to the simulations that demonstrate it and the people who shaped it.",
+      "On top of all of that sits /ask — an AI tutor grounded in the same concept graph. Ask anything from \"derive Kepler's third law\" to \"why does entropy always increase?\" and get a worked answer with citations back into the library. The full encyclopedia, the solver engine, and the tutor are free and open source."
+    ],
+    "askEyebrow": "§ 02 · physics.it.com/ask",
+    "askTitleA": "A tutor that's",
+    "askTitleB": "read the whole library.",
+    "askBody1": "/ask is an AI tutor wired directly into the concept graph. Ask a question in plain language, get a worked derivation back — with citations to the encyclopedia entries and live simulations that back it up.",
+    "askBody2": "Because the tutor is grounded in the library, answers stay inside physics — no hallucinated formulas, no drift. Every response links to the concepts it used, so readers can dig deeper the moment a term feels unfamiliar.",
+    "askExamplesLabel": "▸ Example prompts",
+    "askExamples": [
+      "Derive Kepler's third law from Newtonian gravity.",
+      "Why does entropy always increase?",
+      "Explain the double-slit experiment in 3 sentences.",
+      "Show the Lorentz transform for a boost in x."
+    ],
+    "askOpen": "Open /ask",
+    "insideEyebrow": "§ 03 · What's inside",
+    "insideTitle": "Four moving parts.",
+    "insideEntry": "ENTRY",
+    "insideItems": [
+      { "figure": "/ask", "label": "AI tutor", "body": "Ask any physics question and get a derivation, a diagram, and cross-links back to the encyclopedia. The tutor is grounded in the same concept graph that drives the simulations, so answers stay inside the library." },
+      { "figure": "ODE", "label": "Simulations", "body": "Every diagram is a live simulation. Unit-tested ordinary differential equation integrators run in the browser — drag initial conditions, nudge parameters, watch the physics respond." },
+      { "figure": "DICT", "label": "Concept graph", "body": "A searchable, cross-linked encyclopedia of physics concepts — first principles through modern formulations — each entry bound to the simulations that demonstrate it and the physicists who shaped it." },
+      { "figure": "BIO", "label": "Physicist profiles", "body": "Biographical dossiers for the scientists behind every result, wired into the concept graph so derivations, diagrams, and history sit one click apart." }
+    ],
+    "designEyebrow": "§ 04 · Design system",
+    "designTitleA": "Instrument,",
+    "designTitleB": "not illustration.",
+    "designBody": "The visual language borrows from scientific instrumentation: near-black ground, bone foreground, and a small set of saturated accents that carry meaning — cyan for primary actions and states, magenta, amber, and mint for categorical signals across simulations.",
+    "paletteLabel": "▸ Palette",
+    "typographyLabel": "▸ Typography pairing",
+    "typographyCards": [
+      { "code": "01 · Display", "sample": "Aa Bb 01", "name": "Space Grotesk — Geometric modular sans", "body": "Used for headlines, figures, and swatch names on physics.it.com. Stands in for Archive Grotesk / General Sans." },
+      { "code": "02 · Body", "sample": "The quick brown fox integrates over dt.", "name": "Inter — Neo-grotesque sans", "body": "Carries long-form reading at 14–17 px. Weights 300, 400, 500, 700." },
+      { "code": "03 · Eyebrow / Mono", "sample": "/* dt = 1/60s; solve(...) */", "name": "JetBrains Mono — Code & labels", "body": "Reserved for labels, coordinates, code excerpts, and metadata rails." }
+    ],
+    "branchesEyebrow": "§ 05 · Branches",
+    "branchesTitleA": "All six,",
+    "branchesTitleB": "all live.",
+    "branchesBody": "One solver stack powers every branch — the same numerics that integrate a pendulum also run Maxwell's equations, thermal gradients, Lorentz transforms, Schrödinger evolution, and the modern-physics capstones. Every branch ships with its simulations, its concept entries, and its physicist profiles already wired into /ask.",
+    "branches": [
+      { "id": "01", "name": "Classical Mechanics" },
+      { "id": "02", "name": "Electromagnetism" },
+      { "id": "03", "name": "Thermodynamics" },
+      { "id": "04", "name": "Relativity" },
+      { "id": "05", "name": "Quantum Mechanics" },
+      { "id": "06", "name": "Modern Physics" }
+    ],
+    "live": "LIVE",
+    "ctaEyebrow": "◇ Continue",
+    "ctaTitle": "Open the library.",
+    "ctaBody": "Every concept, every physicist, every simulation, plus the AI tutor at /ask — all live, all free, all open source."
+  }
+}

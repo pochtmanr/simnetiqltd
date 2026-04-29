@@ -351,6 +351,65 @@ export function ServiceSchema({
   );
 }
 
+type CaseStudySchemaInput = {
+  /** Article headline (page title without site suffix). */
+  headline: string;
+  /** Path under the site root, e.g. "/projects/doppler-vpn". */
+  path: string;
+  /** Short description / dek. */
+  description: string;
+  /** Hero image URL — absolute or root-relative. */
+  image: string;
+  /** Locale, used to set inLanguage and pick canonical alternates. */
+  locale: "en" | "he";
+  /** ISO date — first published. Defaults to studio founding year. */
+  datePublished?: string;
+  /** ISO date — last meaningful edit. */
+  dateModified?: string;
+  /** Tags / keywords for the article. */
+  keywords?: string[];
+};
+
+export function CaseStudyArticleSchema({
+  headline,
+  path,
+  description,
+  image,
+  locale,
+  datePublished = "2025-01-01",
+  dateModified,
+  keywords,
+}: CaseStudySchemaInput) {
+  const url = `${BASE_URL}/${locale}${path}`;
+  const absoluteImage = image.startsWith("http")
+    ? image
+    : `${BASE_URL}${image}`;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    headline,
+    description,
+    image: [absoluteImage],
+    datePublished,
+    dateModified: dateModified ?? datePublished,
+    inLanguage: locale === "he" ? "he-IL" : "en-GB",
+    author: { "@id": `${BASE_URL}/#organization` },
+    publisher: { "@id": `${BASE_URL}/#organization` },
+    isPartOf: { "@id": `${BASE_URL}/#website` },
+    keywords: keywords?.join(", "),
+    url,
+  };
+  return (
+    <script
+      id={`ld-article-${path.replace(/\//g, "-")}`}
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 type ProjectItem = {
   name: string;
   url: string;

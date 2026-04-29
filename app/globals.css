@@ -43,6 +43,49 @@
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
 }
 
+/* ------------------------------------------------------------------ */
+/* Light theme palette — opt-in via [data-theme="light"]                */
+/* ------------------------------------------------------------------ */
+
+[data-theme="light"] {
+  /* Surfaces — warm off-white ramp that complements rust accents */
+  --color-bg: #F7F5F1;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FCFAF7;
+  --color-surface-sunk: #EFEBE5;
+
+  /* Text — near-black on warm white */
+  --color-text: #0A0A0B;
+  --color-text-muted: #3A3A3C;
+  --color-text-dim: #6E6E70;
+  --color-text-faint: #9A9A9C;
+
+  /* Borders / rules */
+  --color-border: rgba(0, 0, 0, 0.10);
+  --color-border-strong: rgba(0, 0, 0, 0.22);
+  --color-border-faint: rgba(0, 0, 0, 0.04);
+
+  /* Accents — keep brand rust, swap glow to a darker variant for contrast */
+  --color-primary: #B2451E;
+  --color-primary-dim: #7D3015;
+  --color-primary-glow: #8E3614;
+  --color-secondary: #B2451E;
+  --color-tertiary: #8B8612;
+  --color-error: #C2392E;
+
+  /* Material aliases */
+  --color-background: #F7F5F1;
+  --color-foreground: #0A0A0B;
+  --color-on-surface: #0A0A0B;
+  --color-on-surface-variant: #3A3A3C;
+  --color-outline: #6E6E70;
+  --color-outline-variant: rgba(0, 0, 0, 0.14);
+  --color-surface-container: #FFFFFF;
+  --color-surface-container-low: #FBF9F5;
+  --color-surface-container-high: #FCFAF7;
+  --color-surface-container-highest: #F0EDE7;
+}
+
 * {
   border-radius: 2px;
 }
@@ -54,6 +97,11 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 ::selection {
@@ -138,27 +186,48 @@ body {
 /* Buttons                                                             */
 /* ------------------------------------------------------------------ */
 
-.btn-primary {
+/*
+ * Site-wide CTA — the "hero" pattern (top-edge tracer + arrow nudge) is
+ * now intrinsic to .btn-primary / .btn-secondary. Every CTA across the
+ * site picks this up automatically. Trailing <span> children become the
+ * animated arrow without needing an explicit .btn-arrow class.
+ */
+
+.btn-primary,
+.btn-secondary {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background-color: var(--color-primary);
-  color: var(--color-text);
   padding: 14px 24px;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  border: 1px solid var(--color-primary);
   cursor: pointer;
   transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    color 120ms ease;
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border: 1px solid var(--color-primary);
 }
 .btn-primary:hover {
-  background-color: var(--color-primary-dim);
-  border-color: var(--color-primary-dim);
+  background-color: color-mix(in srgb, var(--color-primary) 92%, white);
+  border-color: color-mix(in srgb, var(--color-primary) 92%, white);
+  box-shadow:
+    0 8px 32px -8px color-mix(in srgb, var(--color-primary) 60%, transparent),
+    0 0 48px color-mix(in srgb, var(--color-primary-glow) 25%, transparent);
+}
+[data-theme="light"] .btn-primary:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 88%, black);
+  border-color: color-mix(in srgb, var(--color-primary) 88%, black);
 }
 .btn-primary:disabled {
   opacity: 0.5;
@@ -166,23 +235,91 @@ body {
 }
 
 .btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
   background-color: transparent;
   color: var(--color-text);
-  padding: 14px 24px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
   border: 1px solid var(--color-border-strong);
-  cursor: pointer;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 .btn-secondary:hover {
   background-color: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: var(--color-primary-glow);
+  color: var(--color-primary-glow);
+  box-shadow:
+    0 8px 32px -8px color-mix(in srgb, var(--color-primary-glow) 35%, transparent);
+}
+[data-theme="light"] .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Tracer: top-edge stroke that draws in on hover. */
+.btn-primary::before,
+.btn-secondary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary-glow);
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover::before,
+.btn-secondary:hover::before {
+  transform: scaleX(1);
+}
+.btn-primary:disabled::before {
+  display: none;
+}
+[dir="rtl"] .btn-primary::before,
+[dir="rtl"] .btn-secondary::before {
+  transform-origin: 100% 50%;
+}
+
+/* Arrow / chevron that nudges on hover. Targets explicit .btn-arrow
+ * AND any trailing <span> child, so legacy CTAs ( <span>→</span> )
+ * animate without callsite changes. */
+.btn-arrow,
+.btn-primary > span:last-child,
+.btn-secondary > span:last-child {
+  display: inline-block;
+  transition: transform 180ms ease-out;
+}
+.btn-primary:hover .btn-arrow,
+.btn-secondary:hover .btn-arrow,
+.btn-primary:hover > span:last-child,
+.btn-secondary:hover > span:last-child,
+.group:hover .btn-arrow {
+  transform: translateX(4px);
+}
+[dir="rtl"] .btn-arrow,
+[dir="rtl"] .btn-primary > span:last-child,
+[dir="rtl"] .btn-secondary > span:last-child {
+  transform: scaleX(-1);
+}
+[dir="rtl"] .btn-primary:hover .btn-arrow,
+[dir="rtl"] .btn-secondary:hover .btn-arrow,
+[dir="rtl"] .btn-primary:hover > span:last-child,
+[dir="rtl"] .btn-secondary:hover > span:last-child,
+[dir="rtl"] .group:hover .btn-arrow {
+  transform: scaleX(-1) translateX(4px);
+}
+
+/* btn-tracer kept as a no-op alias for backwards compatibility — the
+ * effect is now baked into .btn-primary / .btn-secondary directly. */
+.btn-tracer {
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::before,
+  .btn-secondary::before,
+  .btn-arrow,
+  .btn-primary > span:last-child,
+  .btn-secondary > span:last-child {
+    transition: none;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -226,7 +363,8 @@ input::placeholder, textarea::placeholder {
   height: 100%;
 }
 .group:hover > .gradient-shell,
-a:hover > .gradient-shell {
+a:hover > .gradient-shell,
+.gradient-shell.is-hover:hover {
   background: linear-gradient(
     145deg,
     rgba(255, 179, 138, 0.38) 0%,
@@ -331,4 +469,138 @@ a:hover > .gradient-shell {
 
 @media (prefers-reduced-motion: reduce) {
   .breathe, .pulse-dot { animation: none !important; }
+}
+
+/* ------------------------------------------------------------------ */
+/* RTL adjustments — flip directional glyphs and asymmetric gradients  */
+/* ------------------------------------------------------------------ */
+
+/* Mirror the ASCII arrows so they point the right way in Hebrew.      */
+[dir="rtl"] .text-mono,
+[dir="rtl"] .text-label,
+[dir="rtl"] .text-label-sm {
+  letter-spacing: 0.06em;
+}
+
+/* Flip the gradient-shell highlight so it lights the top-RIGHT corner */
+/* (the "reading start" corner) when in RTL, matching LTR behavior.    */
+[dir="rtl"] .gradient-shell {
+  background: linear-gradient(
+    -145deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+[dir="rtl"] .group:hover > .gradient-shell,
+[dir="rtl"] a:hover > .gradient-shell,
+[dir="rtl"] .gradient-shell.is-hover:hover {
+  background: linear-gradient(
+    -145deg,
+    rgba(255, 179, 138, 0.38) 0%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Light theme — component overrides                                   */
+/* ------------------------------------------------------------------ */
+
+[data-theme="light"] .gradient-shell {
+  background: linear-gradient(
+    145deg,
+    rgba(0, 0, 0, 0.10) 0%,
+    rgba(0, 0, 0, 0.04) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+[data-theme="light"] .gradient-shell > .shell-inner {
+  background: var(--color-surface);
+  box-shadow: rgba(15, 17, 21, 0.04) 0 0 60px 0 inset;
+}
+[data-theme="light"] .group:hover > .gradient-shell,
+[data-theme="light"] a:hover > .gradient-shell,
+[data-theme="light"] .gradient-shell.is-hover:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(178, 69, 30, 0.32) 0%,
+    rgba(0, 0, 0, 0.06) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+[data-theme="light"][dir="rtl"] .gradient-shell {
+  background: linear-gradient(
+    -145deg,
+    rgba(0, 0, 0, 0.10) 0%,
+    rgba(0, 0, 0, 0.04) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+[data-theme="light"][dir="rtl"] .group:hover > .gradient-shell,
+[data-theme="light"][dir="rtl"] a:hover > .gradient-shell,
+[data-theme="light"][dir="rtl"] .gradient-shell.is-hover:hover {
+  background: linear-gradient(
+    -145deg,
+    rgba(178, 69, 30, 0.32) 0%,
+    rgba(0, 0, 0, 0.06) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+[data-theme="light"] .corners > .corner {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+[data-theme="light"] ::selection {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+/* In RTL/Hebrew context, redirect every font family token to Lunasima      */
+/* so Tailwind utilities (font-sans, font-mono), inline                     */
+/* font-[family-name:var(--font-mono)], the .rail / .text-mono / .text-*    */
+/* classes, and the Inter / JetBrains-Mono buttons all pick up a            */
+/* Hebrew-capable face automatically. Latin glyphs in Lunasima fall back    */
+/* through the listed system stack.                                         */
+[dir="rtl"] {
+  --font-sans: var(--font-lunasima), "Lunasima", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-lunasima), "Lunasima", ui-monospace, system-ui, sans-serif;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] .text-display,
+[dir="rtl"] .text-headline,
+[dir="rtl"] .text-title,
+[dir="rtl"] .text-body,
+[dir="rtl"] .text-body-strong,
+[dir="rtl"] .text-label,
+[dir="rtl"] .text-label-sm,
+[dir="rtl"] .text-mono,
+[dir="rtl"] .rail,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select,
+[dir="rtl"] button {
+  font-family: var(--font-lunasima), "Lunasima", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* The hero's coordinate rail is positional — keep numbers L→R.        */
+[dir="rtl"] .text-mono {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Inline arrows that aren't wrapped in .btn-arrow should still mirror */
+/* when used in directional contexts. Use .rtl-mirror to opt-in.       */
+[dir="rtl"] .rtl-mirror {
+  display: inline-block;
+  transform: scaleX(-1);
 }
