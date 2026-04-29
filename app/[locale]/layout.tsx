@@ -10,12 +10,15 @@ import {
   Lunasima,
 } from "next/font/google";
 import "../globals.css";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
-import { ThemeProvider, THEME_INIT_SCRIPT } from "@/components/theme-provider";
+import {
+  ThemeProvider,
+  THEME_INIT_SCRIPT,
+  type ThemeChoice,
+} from "@/components/theme-provider";
 import { getDictionary } from "@/lib/dictionaries";
 import {
   LOCALES,
@@ -176,10 +179,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/icon-512.png",
-        width: 512,
-        height: 512,
-        alt: "Simnetiq — Technology Studio",
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Simnetiq — London Software Engineering & Growth Marketing Studio",
         type: "image/png",
       },
     ],
@@ -190,7 +193,7 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     creator: "@simnetiq",
     site: "@simnetiq",
-    images: ["/icon-512.png"],
+    images: ["/opengraph-image.png"],
   },
   icons: {
     icon: [
@@ -258,29 +261,40 @@ export default async function RootLayout({
   const dir = getDirection(locale);
   const dict = await getDictionary(locale);
 
-  const themeCookie = (await cookies()).get("theme")?.value;
-  const initialTheme: "light" | "dark" =
-    themeCookie === "light" || themeCookie === "dark" ? themeCookie : "dark";
-  const hasExplicitChoice = themeCookie === "light" || themeCookie === "dark";
+  const themeCookie = (await cookies()).get("theme-pref")?.value;
+  const choice: ThemeChoice =
+    themeCookie === "light" || themeCookie === "dark" || themeCookie === "system"
+      ? themeCookie
+      : "system";
+  // For explicit overrides we set data-theme during SSR so first paint matches.
+  // For "system" we omit the attribute and let the @media rule in globals.css
+  // drive the palette from the OS preference — no JS, no FOUC.
+  const dataTheme = choice === "system" ? undefined : choice;
+  // colorScheme on <html> tells the UA which native control palette to use.
+  // For system mode we leave it unset and let the inline init script set it
+  // synchronously based on prefers-color-scheme before first paint.
+  const colorSchemeStyle =
+    choice === "system" ? undefined : { colorScheme: choice };
 
   return (
     <html
       lang={LOCALE_HTML_LANG[locale]}
       dir={dir}
-      data-theme={initialTheme}
-      style={{ colorScheme: initialTheme }}
+      data-theme={dataTheme}
+      style={colorSchemeStyle}
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
-        {!hasExplicitChoice && (
-          <Script
-            id="theme-init"
-            strategy="beforeInteractive"
-            dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
-          />
-        )}
-        <ThemeProvider>
+        {/* Inline, blocking, synchronous. Must be the first <body> child so
+            the browser parses + executes it before any other body content
+            is laid out — that's what eliminates the dark→light flash on
+            cold loads. Cannot use next/script beforeInteractive: the App
+            Router routes those through __next_s, which dispatches
+            asynchronously after the runtime boots, by which time the
+            page has already painted. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <ThemeProvider initialChoice={choice}>
           <GlobalStructuredData />
           <Navigation locale={locale} dict={dict.nav} />
           <main className="flex-1">{children}</main>

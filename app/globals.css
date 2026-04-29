@@ -44,7 +44,17 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Light theme palette — opt-in via [data-theme="light"]                */
+/* Light theme palette                                                  */
+/*                                                                      */
+/* The inline theme-init script (see components/theme-provider.tsx)     */
+/* always writes data-theme="light" or data-theme="dark" on <html>      */
+/* before first paint — even when the user's choice is "system" — so    */
+/* every component override below picks up the right palette without    */
+/* duplication.                                                         */
+/*                                                                      */
+/* The @media rule that follows is a no-JS fallback: if scripts are     */
+/* disabled and SSR didn't set data-theme (system mode), the OS         */
+/* preference still drives the palette via :root:not([data-theme]).     */
 /* ------------------------------------------------------------------ */
 
 [data-theme="light"] {
@@ -84,6 +94,45 @@
   --color-surface-container-low: #FBF9F5;
   --color-surface-container-high: #FCFAF7;
   --color-surface-container-highest: #F0EDE7;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-bg: #F7F5F1;
+    --color-surface: #FFFFFF;
+    --color-surface-raised: #FCFAF7;
+    --color-surface-sunk: #EFEBE5;
+
+    --color-text: #0A0A0B;
+    --color-text-muted: #3A3A3C;
+    --color-text-dim: #6E6E70;
+    --color-text-faint: #9A9A9C;
+
+    --color-border: rgba(0, 0, 0, 0.10);
+    --color-border-strong: rgba(0, 0, 0, 0.22);
+    --color-border-faint: rgba(0, 0, 0, 0.04);
+
+    --color-primary: #B2451E;
+    --color-primary-dim: #7D3015;
+    --color-primary-glow: #8E3614;
+    --color-secondary: #B2451E;
+    --color-tertiary: #8B8612;
+    --color-error: #C2392E;
+
+    --color-background: #F7F5F1;
+    --color-foreground: #0A0A0B;
+    --color-on-surface: #0A0A0B;
+    --color-on-surface-variant: #3A3A3C;
+    --color-outline: #6E6E70;
+    --color-outline-variant: rgba(0, 0, 0, 0.14);
+    --color-surface-container: #FFFFFF;
+    --color-surface-container-low: #FBF9F5;
+    --color-surface-container-high: #FCFAF7;
+    --color-surface-container-highest: #F0EDE7;
+
+    /* Ensure UA controls follow the resolved palette in system mode. */
+    color-scheme: light;
+  }
 }
 
 * {

@@ -104,12 +104,18 @@ export const ROUTE_COPY = {
 
 export type RouteKey = keyof typeof ROUTE_COPY;
 
+// Default OG/Twitter card. 1200×630 PNG served from /public so the URL
+// stays stable (CDN-friendly) and doesn't depend on Next's hashed
+// file-convention path. Per-route callers can override via `ogImage`.
+const DEFAULT_OG_IMAGE = "/opengraph-image.png";
+
 type BuildMetaInput = {
   locale: Locale;
   routeKey: RouteKey;
   /** Path AFTER the locale segment, e.g. "/about" or "/projects/doppler-vpn". Empty string for the home route. */
   path: string;
   keywords?: string[];
+  /** Override the default OG/Twitter card image. */
   ogImage?: string;
   ogType?: "website" | "article";
 };
@@ -134,7 +140,7 @@ export function buildLocalizedMetadata({
     (l) => OG_LOCALE[l]
   );
 
-  const image = ogImage ?? "/icon-512.png";
+  const image = ogImage ?? DEFAULT_OG_IMAGE;
 
   return {
     title: { absolute: copy.title },
@@ -152,7 +158,15 @@ export function buildLocalizedMetadata({
       type: ogType,
       locale: OG_LOCALE[locale],
       alternateLocale: alternateLocales,
-      images: [{ url: image, alt: copy.title }],
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: copy.title,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",

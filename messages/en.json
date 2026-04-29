@@ -29,6 +29,7 @@
     "languageLabel": "Language",
     "themeLabel": "Theme",
     "themes": {
+      "auto": "Auto",
       "dark": "Dark",
       "light": "Light",
       "toggle": "Toggle theme"

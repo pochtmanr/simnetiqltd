@@ -23,6 +23,7 @@ type NavDict = {
   languageLabel: string;
   themeLabel: string;
   themes: {
+    auto: string;
     dark: string;
     light: string;
     toggle: string;
@@ -211,6 +212,7 @@ export function Navigation({
                   <ThemeToggle
                     variant="segmented"
                     labels={{
+                      auto: dict.themes.auto,
                       dark: dict.themes.dark,
                       light: dict.themes.light,
                       generic: dict.themes.toggle,

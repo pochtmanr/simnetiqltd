@@ -29,6 +29,7 @@
     "languageLabel": "שפה",
     "themeLabel": "ערכת נושא",
     "themes": {
+      "auto": "אוטומטי",
       "dark": "כהה",
       "light": "בהיר",
       "toggle": "החלף ערכת נושא"
