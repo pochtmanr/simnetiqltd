@@ -58,13 +58,13 @@
 /* ------------------------------------------------------------------ */
 
 [data-theme="light"] {
-  /* Surfaces — warm off-white ramp that complements rust accents */
-  --color-bg: #F7F5F1;
+  /* Surfaces — cool neutral ramp, no beige cast */
+  --color-bg: #F4F5F7;
   --color-surface: #FFFFFF;
-  --color-surface-raised: #FCFAF7;
-  --color-surface-sunk: #EFEBE5;
+  --color-surface-raised: #FAFAFC;
+  --color-surface-sunk: #E8EAEE;
 
-  /* Text — near-black on warm white */
+  /* Text — near-black on cool white */
   --color-text: #0A0A0B;
   --color-text-muted: #3A3A3C;
   --color-text-dim: #6E6E70;
@@ -75,33 +75,33 @@
   --color-border-strong: rgba(0, 0, 0, 0.22);
   --color-border-faint: rgba(0, 0, 0, 0.04);
 
-  /* Accents — keep brand rust, swap glow to a darker variant for contrast */
-  --color-primary: #B2451E;
-  --color-primary-dim: #7D3015;
-  --color-primary-glow: #8E3614;
-  --color-secondary: #B2451E;
+  /* Accents — light-theme tuned: brighter primary for contrast on cool bg */
+  --color-primary: #C84F23;
+  --color-primary-dim: #8E3614;
+  --color-primary-glow: #E06A3A;
+  --color-secondary: #C84F23;
   --color-tertiary: #8B8612;
   --color-error: #C2392E;
 
   /* Material aliases */
-  --color-background: #F7F5F1;
+  --color-background: #F4F5F7;
   --color-foreground: #0A0A0B;
   --color-on-surface: #0A0A0B;
   --color-on-surface-variant: #3A3A3C;
   --color-outline: #6E6E70;
   --color-outline-variant: rgba(0, 0, 0, 0.14);
   --color-surface-container: #FFFFFF;
-  --color-surface-container-low: #FBF9F5;
-  --color-surface-container-high: #FCFAF7;
-  --color-surface-container-highest: #F0EDE7;
+  --color-surface-container-low: #F8F9FB;
+  --color-surface-container-high: #FAFAFC;
+  --color-surface-container-highest: #ECEEF2;
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --color-bg: #F7F5F1;
+    --color-bg: #F4F5F7;
     --color-surface: #FFFFFF;
-    --color-surface-raised: #FCFAF7;
-    --color-surface-sunk: #EFEBE5;
+    --color-surface-raised: #FAFAFC;
+    --color-surface-sunk: #E8EAEE;
 
     --color-text: #0A0A0B;
     --color-text-muted: #3A3A3C;
@@ -112,23 +112,23 @@
     --color-border-strong: rgba(0, 0, 0, 0.22);
     --color-border-faint: rgba(0, 0, 0, 0.04);
 
-    --color-primary: #B2451E;
-    --color-primary-dim: #7D3015;
-    --color-primary-glow: #8E3614;
-    --color-secondary: #B2451E;
+    --color-primary: #C84F23;
+    --color-primary-dim: #8E3614;
+    --color-primary-glow: #E06A3A;
+    --color-secondary: #C84F23;
     --color-tertiary: #8B8612;
     --color-error: #C2392E;
 
-    --color-background: #F7F5F1;
+    --color-background: #F4F5F7;
     --color-foreground: #0A0A0B;
     --color-on-surface: #0A0A0B;
     --color-on-surface-variant: #3A3A3C;
     --color-outline: #6E6E70;
     --color-outline-variant: rgba(0, 0, 0, 0.14);
     --color-surface-container: #FFFFFF;
-    --color-surface-container-low: #FBF9F5;
-    --color-surface-container-high: #FCFAF7;
-    --color-surface-container-highest: #F0EDE7;
+    --color-surface-container-low: #F8F9FB;
+    --color-surface-container-high: #FAFAFC;
+    --color-surface-container-highest: #ECEEF2;
 
     /* Ensure UA controls follow the resolved palette in system mode. */
     color-scheme: light;
@@ -274,9 +274,28 @@ body {
     0 8px 32px -8px color-mix(in srgb, var(--color-primary) 60%, transparent),
     0 0 48px color-mix(in srgb, var(--color-primary-glow) 25%, transparent);
 }
+[data-theme="light"] .btn-primary {
+  box-shadow:
+    0 1px 0 0 color-mix(in srgb, var(--color-primary) 60%, black) inset,
+    0 6px 18px -8px color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
 [data-theme="light"] .btn-primary:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 88%, black);
-  border-color: color-mix(in srgb, var(--color-primary) 88%, black);
+  background-color: color-mix(in srgb, var(--color-primary) 92%, black);
+  border-color: color-mix(in srgb, var(--color-primary) 92%, black);
+  box-shadow:
+    0 1px 0 0 color-mix(in srgb, var(--color-primary) 60%, black) inset,
+    0 10px 28px -8px color-mix(in srgb, var(--color-primary) 55%, transparent),
+    0 0 32px color-mix(in srgb, var(--color-primary-glow) 30%, transparent);
+}
+[data-theme="light"] .btn-secondary {
+  border-color: rgba(0, 0, 0, 0.18);
+}
+[data-theme="light"] .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow:
+    0 6px 18px -8px color-mix(in srgb, var(--color-primary) 35%, transparent);
 }
 .btn-primary:disabled {
   opacity: 0.5;
@@ -295,10 +314,6 @@ body {
   box-shadow:
     0 8px 32px -8px color-mix(in srgb, var(--color-primary-glow) 35%, transparent);
 }
-[data-theme="light"] .btn-secondary:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
 /* Tracer: top-edge stroke that draws in on hover. */
 .btn-primary::before,
 .btn-secondary::before {
@@ -566,7 +581,7 @@ a:hover > .gradient-shell,
 }
 [data-theme="light"] .gradient-shell > .shell-inner {
   background: var(--color-surface);
-  box-shadow: rgba(15, 17, 21, 0.04) 0 0 60px 0 inset;
+  box-shadow: none;
 }
 [data-theme="light"] .group:hover > .gradient-shell,
 [data-theme="light"] a:hover > .gradient-shell,
