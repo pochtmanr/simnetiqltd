@@ -386,6 +386,46 @@ body {
   }
 }
 
+/*
+ * Slide-fill CTA — text label that grows an orange fill from the
+ * leading edge on parent .group hover (right edge in RTL).
+ */
+.cta-fill {
+  position: relative;
+  overflow: hidden;
+  transition: color 360ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.group:hover .cta-fill,
+.cta-fill:hover {
+  color: #fff;
+}
+.cta-fill > * {
+  position: relative;
+  z-index: 1;
+}
+.cta-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.group:hover .cta-fill::before,
+.cta-fill:hover::before {
+  transform: scaleX(1);
+}
+[dir="rtl"] .cta-fill::before {
+  transform-origin: 100% 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-fill::before {
+    transition: none;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Inputs                                                              */
 /* ------------------------------------------------------------------ */

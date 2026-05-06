@@ -18,9 +18,7 @@
     "links": {
       "home": "Home",
       "projects": "Projects",
-      "services": "Services",
-      "about": "About",
-      "legal": "Legal"
+      "services": "Services"
     },
     "rail": {
       "online": "Sys · Online",
@@ -33,6 +31,16 @@
       "dark": "Dark",
       "light": "Light",
       "toggle": "Toggle theme"
+    },
+    "dropdowns": {
+      "projects": {
+        "eyebrow": "Selected work",
+        "cta": "Explore"
+      },
+      "services": {
+        "eyebrow": "What we do",
+        "cta": "Explore"
+      }
     }
   },
   "hero": {
@@ -102,8 +110,8 @@
   "capabilities": {
     "eyebrow": "◇ What we do",
     "title": "Offered services",
-    "subtitle": "Five things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
-    "body": "Five things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
+    "subtitle": "Four things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
+    "body": "Four things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
     "viewService": "Explore",
     "items": {
       "mobile": {
@@ -114,17 +122,13 @@
         "title": "Web & Platforms",
         "text": "Marketing sites, product platforms, and SaaS on Next.js, Supabase, and Stripe — billing, auth, and webhooks wired in."
       },
-      "ai": {
-        "title": "AI Integration",
-        "text": "Production LLM features: RAG, embeddings, structured tool use, and agentic workflows across Anthropic and OpenAI."
+      "aiAutomation": {
+        "title": "AI & Automation",
+        "text": "Production LLM features and the pipelines that feed them — n8n, Make, custom services on a dedicated VPS, any data source."
       },
       "growth": {
         "title": "Growth & Marketing",
         "text": "Meta, TikTok, and Google campaigns paired with AppsFlyer or Adjust — measured against real in-app conversions."
-      },
-      "automations": {
-        "title": "Automations & Pipelines",
-        "text": "Event-driven workflows, n8n pipelines, and vendor integrations that turn manual ops into scheduled, observable, retry-safe systems."
       }
     }
   },
@@ -169,6 +173,7 @@
       "company": "SIMNETIQ LTD",
       "companyNumber": "No. 16861177",
       "jurisdiction": "England & Wales",
+      "about": "About",
       "legal": "Legal",
       "privacy": "Privacy",
       "deletion": "Data Deletion",
@@ -301,6 +306,13 @@
     "rail": {
       "indexTpl": "◆ SIMNETIQ / 02 / {code}",
       "brief": "CAPABILITY BRIEF"
+    },
+    "hero": {
+      "ctaPricing": "See pricing",
+      "ctaContact": "Book a call",
+      "figureCaptionTpl": "{code} · {title} system map",
+      "specsLabel": "Engagement",
+      "liveLabel": "Currently accepting"
     },
     "scope": {
       "eyebrow": "◇ Scope",

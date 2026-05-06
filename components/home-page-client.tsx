@@ -12,7 +12,7 @@ import { ContactDisclosure } from "@/components/contact-disclosure";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type CapKey = "mobile" | "web" | "ai" | "growth" | "automations";
+type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
 
 type HomeDict = {
   hero: {
@@ -272,46 +272,32 @@ export function HomePageClient({
       >
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-            <div className="lg:col-span-5">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {dict.contact.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{dict.contact.title}</h2>
-              <p className="text-body mt-6 max-w-sm">{dict.contact.body}</p>
-              <div className="mt-10">
-                <Panel innerClassName="p-6">
-                  <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                    {dict.contact.directLabel}
-                  </p>
-                  <SpecRow
-                    label={dict.contact.email}
-                    value="support@simnetiq.store"
-                  />
-                  <SpecRow
-                    label={dict.contact.location}
-                    value={dict.contact.location_value}
-                  />
-                  <SpecRow
-                    label={dict.contact.response}
-                    value={dict.contact.response_value}
-                  />
-                </Panel>
-              </div>
-            </div>
-            <div className="lg:col-span-7 flex flex-col gap-8">
-              {/* Booking — primary CTA. Owned by Session B. */}
+            <div className="lg:col-span-5 flex flex-col gap-8">
               <div>
-                <h3 className="text-title mb-2">
-                  {dict.contact.bookingHeading}
-                </h3>
-                <p className="text-body mb-4 max-w-md">
-                  {dict.contact.bookingSubtitle}
+                <p className="text-label text-[var(--color-primary-glow)]">
+                  {dict.contact.eyebrow}
                 </p>
-                <Rail items={dict.contact.bookingRail} className="mb-3" />
-                <BookingPanel locale={locale} dict={dict} />
-                <p className="text-mono text-[var(--color-text-faint)] mt-3">
-                  {dict.contact.bookingFooter}
-                </p>
+                <h2 className="text-headline mt-5">{dict.contact.title}</h2>
+                <p className="text-body mt-6 max-w-sm">{dict.contact.body}</p>
+                <div className="mt-10">
+                  <Panel innerClassName="p-6">
+                    <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
+                      {dict.contact.directLabel}
+                    </p>
+                    <SpecRow
+                      label={dict.contact.email}
+                      value="support@simnetiq.store"
+                    />
+                    <SpecRow
+                      label={dict.contact.location}
+                      value={dict.contact.location_value}
+                    />
+                    <SpecRow
+                      label={dict.contact.response}
+                      value={dict.contact.response_value}
+                    />
+                  </Panel>
+                </div>
               </div>
 
               {/* Email message form — disclosure pattern. Booking is primary. */}
@@ -398,6 +384,19 @@ export function HomePageClient({
                   </form>
                 </Panel>
               </ContactDisclosure>
+            </div>
+            <div className="lg:col-span-7">
+              <h3 className="text-title mb-2">
+                {dict.contact.bookingHeading}
+              </h3>
+              <p className="text-body mb-4 max-w-md">
+                {dict.contact.bookingSubtitle}
+              </p>
+              <Rail items={dict.contact.bookingRail} className="mb-3" />
+              <BookingPanel locale={locale} dict={dict} />
+              <p className="text-mono text-[var(--color-text-faint)] mt-3">
+                {dict.contact.bookingFooter}
+              </p>
             </div>
           </div>
         </div>

@@ -98,8 +98,8 @@ export function BookingPanel({ locale }: BookingPanelProps) {
       if (cancelled) return;
 
       cal("ui", {
-        hideEventTypeDetails: false,
-        layout: "month_view",
+        hideEventTypeDetails: true,
+        layout: "column_view",
         cssVarsPerTheme: {
           light: SIMNETIQ_LIGHT_VARS,
           dark: SIMNETIQ_DARK_VARS,
@@ -135,16 +135,16 @@ export function BookingPanel({ locale }: BookingPanelProps) {
   // renders. New object identities trigger Cal's internal cleanup path,
   // which has bitten us with React 19's "removeChild" on null.
   const calStyle = useMemo<React.CSSProperties>(
-    () => ({ width: "100%", minHeight: 620, overflow: "hidden" }),
+    () => ({ width: "100%", minHeight: 560, overflow: "hidden" }),
     [],
   );
   const calConfig = useMemo(
-    () => ({ layout: "month_view" as const, theme, timeZone: tz }),
+    () => ({ layout: "column_view" as const, theme, timeZone: tz }),
     [theme, tz],
   );
 
   return (
-    <Panel className="overflow-hidden" innerClassName="p-0">
+    <Panel className="overflow-hidden mx-auto max-w-3xl" innerClassName="p-0">
       <Cal
         // Force a clean unmount/mount whenever the resolved theme changes
         // instead of letting Cal hot-swap config — the latter is the path

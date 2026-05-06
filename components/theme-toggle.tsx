@@ -58,8 +58,7 @@ export function ThemeToggle({
   };
 
   const handleCycleChoice = () => {
-    const next: ThemeChoice =
-      choice === "system" ? "light" : choice === "light" ? "dark" : "system";
+    const next: ThemeChoice = resolved === "dark" ? "light" : "dark";
     track("theme_change", { from: choice, to: next });
     cycleChoice();
   };
@@ -101,15 +100,13 @@ export function ThemeToggle({
     );
   }
 
-  // Icon variant — cycles system → light → dark → system. Aria-label
-  // describes the NEXT state in the cycle so screen readers announce
-  // what activation will do.
+  // Icon variant — single tap flips between light and dark based on what's
+  // actually rendered. Aria-label describes the NEXT state. Re-enabling
+  // "Auto" / system mode is done via the segmented variant in the mobile menu.
   const nextLabel = mounted
-    ? choice === "system"
+    ? resolved === "dark"
       ? labels.cycleToLight
-      : choice === "light"
-        ? labels.cycleToDark
-        : labels.cycleToSystem
+      : labels.cycleToDark
     : labels.generic;
 
   return (
@@ -122,15 +119,7 @@ export function ThemeToggle({
       suppressHydrationWarning
     >
       <span suppressHydrationWarning>
-        {!mounted ? (
-          <SunIcon />
-        ) : choice === "system" ? (
-          <AutoIcon resolved={resolved} />
-        ) : choice === "dark" ? (
-          <MoonIcon />
-        ) : (
-          <SunIcon />
-        )}
+        {!mounted ? <SunIcon /> : resolved === "dark" ? <MoonIcon /> : <SunIcon />}
       </span>
     </button>
   );
@@ -180,31 +169,3 @@ function MoonIcon() {
   );
 }
 
-// Half-sun / half-moon glyph signaling "follow system".
-// The fill side flips to mirror the resolved theme so the glyph
-// always reads as "auto, currently rendering as X".
-function AutoIcon({ resolved }: { resolved: "light" | "dark" }) {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="7" cy="7" r="4.4" />
-      <path
-        d={
-          resolved === "dark"
-            ? "M7 2.6 a 4.4 4.4 0 0 0 0 8.8 z"
-            : "M7 2.6 a 4.4 4.4 0 0 1 0 8.8 z"
-        }
-        fill="currentColor"
-      />
-    </svg>
-  );
-}

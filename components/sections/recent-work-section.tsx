@@ -144,19 +144,17 @@ export function RecentWorkSection({
                           locale,
                         })
                       }
-                      className="inline-flex items-center gap-2 text-label-sm text-[var(--color-text)] border border-[var(--color-border-strong)] px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary-glow)] hover:text-[var(--color-primary-glow)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                      className="cta-fill inline-flex items-center gap-2 text-label-sm text-[var(--color-text)] border border-[var(--color-border-strong)] px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary)]"
                     >
-                      {dict.projects.visit}
-                      <span className="text-[var(--color-primary-glow)]">
-                        {isExternal ? "↗" : "→"}
-                      </span>
+                      <span>{dict.projects.visit}</span>
+                      <span>{isExternal ? "↗" : "→"}</span>
                     </Link>
                     {project.caseStudy && (
                       <Link
                         href={localizePath(locale, project.caseStudy)}
-                        className="inline-flex items-center gap-2 text-label-sm text-[var(--color-primary-glow)] border border-[var(--color-primary-glow)]/40 px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary-glow)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                        className="cta-fill inline-flex items-center gap-2 text-label-sm text-[var(--color-primary-glow)] border border-[var(--color-primary-glow)]/40 px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary)]"
                       >
-                        {dict.projects.caseStudy}
+                        <span>{dict.projects.caseStudy}</span>
                         <span>→</span>
                       </Link>
                     )}

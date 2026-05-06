@@ -191,18 +191,18 @@ const professionalService = {
       },
       {
         "@type": "OfferCatalog",
-        name: "AI Integration",
+        name: "AI & Automation",
         itemListElement: [
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "LLM, RAG and Agentic Automation",
-              serviceType: "AI engineering",
-              url: `${BASE_URL}/services/ai-integration`,
+              name: "AI features, n8n pipelines, agentic workflows",
+              serviceType: "AI engineering and automation",
+              url: `${BASE_URL}/services/ai-automation`,
             },
             priceCurrency: "GBP",
-            price: "500",
+            price: "1500",
           },
         ],
       },

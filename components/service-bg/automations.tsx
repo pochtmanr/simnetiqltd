@@ -11,9 +11,23 @@ export function AutomationsBg() {
       strokeLinejoin="miter"
       aria-hidden="true"
     >
+      <g transform="translate(160 160) scale(0.85) translate(-160 -160)">
       <g transform="translate(160 160) scale(1 0.62) rotate(-22) translate(-160 -160)">
-        {/* base plate */}
+        {/* receded back face — depth layer */}
+        <g stroke="var(--color-primary-dim)" strokeWidth="1" fill="none">
+          <rect x="44" y="44" width="248" height="248" />
+        </g>
+
+        {/* depth struts — connect front corners to back corners */}
         <g stroke="var(--color-primary-dim)" strokeWidth="1">
+          <line x1="36" y1="36" x2="44" y2="44" />
+          <line x1="284" y1="36" x2="292" y2="44" />
+          <line x1="36" y1="284" x2="44" y2="292" />
+          <line x1="284" y1="284" x2="292" y2="292" />
+        </g>
+
+        {/* base plate — front face */}
+        <g stroke="var(--color-primary-glow)" strokeWidth="1.2" fill="var(--color-surface)">
           <rect x="36" y="36" width="248" height="248" />
         </g>
 
@@ -46,7 +60,7 @@ export function AutomationsBg() {
           />
           <path
             className={`${styles.trace} ${styles.t2}`}
-            d="M 78 232 L 130 232 L 130 168 L 176 168 L 240 160"
+            d="M 78 232 L 130 232 L 130 168 L 144 168 L 176 160 L 240 160"
             strokeDasharray="28 320"
             strokeDashoffset="0"
           />
@@ -118,6 +132,7 @@ export function AutomationsBg() {
             <line x1="256" y1="224" x2="256" y2="256" strokeWidth="0.8" stroke="var(--color-primary-dim)" />
           </g>
         </g>
+      </g>
       </g>
 
       {/* corner markers */}

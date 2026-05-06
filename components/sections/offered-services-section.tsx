@@ -4,12 +4,11 @@ import { Rail } from "@/components/panel";
 import { ServiceCard } from "@/components/service-card";
 import { MobileBg } from "@/components/service-bg/mobile";
 import { WebBg } from "@/components/service-bg/web";
-import { AiBg } from "@/components/service-bg/ai";
-import { GrowthBg } from "@/components/service-bg/growth";
 import { AutomationsBg } from "@/components/service-bg/automations";
+import { GrowthBg } from "@/components/service-bg/growth";
 import type { Locale } from "@/lib/i18n";
 
-type CapKey = "mobile" | "web" | "ai" | "growth" | "automations";
+type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
 
 type CapDict = {
   eyebrow: string;
@@ -27,9 +26,8 @@ type SectionDict = {
 const CARDS: { key: CapKey; code: string; href: string; bg: () => React.ReactElement }[] = [
   { key: "mobile", code: "C-01", href: "/services/mobile-desktop", bg: () => <MobileBg /> },
   { key: "web", code: "C-02", href: "/services/web-platforms", bg: () => <WebBg /> },
-  { key: "ai", code: "C-03", href: "/services/ai-integration", bg: () => <AiBg /> },
+  { key: "aiAutomation", code: "C-03", href: "/services/ai-automation", bg: () => <AutomationsBg /> },
   { key: "growth", code: "C-04", href: "/services/growth-marketing", bg: () => <GrowthBg /> },
-  { key: "automations", code: "C-05", href: "/services", bg: () => <AutomationsBg /> },
 ];
 
 export function OfferedServicesSection({
@@ -58,10 +56,9 @@ export function OfferedServicesSection({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
           {CARDS.map((card, i) => {
             const meta = caps.items[card.key];
-            const isLast = i === CARDS.length - 1;
             return (
               <ServiceCard
                 key={card.code}
@@ -74,7 +71,6 @@ export function OfferedServicesSection({
                 background={card.bg()}
                 index={i}
                 cta={caps.viewService}
-                className={isLast ? "xl:col-span-1 md:col-span-2 xl:col-start-2" : ""}
               />
             );
           })}

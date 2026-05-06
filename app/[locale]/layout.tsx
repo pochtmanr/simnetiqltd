@@ -296,7 +296,24 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <ThemeProvider initialChoice={choice}>
           <GlobalStructuredData />
-          <Navigation locale={locale} dict={dict.nav} />
+          <Navigation
+            locale={locale}
+            dict={{
+              ...dict.nav,
+              dropdowns: {
+                projects: {
+                  eyebrow: dict.projects.eyebrow,
+                  cta: dict.nav.dropdowns.projects.cta,
+                  items: dict.projects.items,
+                },
+                services: {
+                  eyebrow: dict.capabilities.eyebrow,
+                  cta: dict.capabilities.viewService,
+                  items: dict.capabilities.items,
+                },
+              },
+            }}
+          />
           <main className="flex-1">{children}</main>
           <Footer locale={locale} dict={dict.footer} />
           <Analytics />

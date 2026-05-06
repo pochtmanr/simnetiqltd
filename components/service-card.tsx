@@ -7,7 +7,7 @@ import { ScrollReveal } from "@/components/scroll-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type ServiceCode = "mobile" | "web" | "ai" | "growth" | "automations";
+type ServiceCode = "mobile" | "web" | "aiAutomation" | "growth";
 
 type ServiceCardProps = {
   code: ServiceCode;
@@ -72,8 +72,8 @@ export function ServiceCard({
             </div>
             <h3 className="text-title mb-3">{title}</h3>
             <p className="text-body mb-6 flex-1">{body}</p>
-            <span className="text-label-sm text-[var(--color-text-dim)] group-hover:text-[var(--color-primary-glow)] transition-colors inline-flex items-center gap-1.5">
-              {cta}
+            <span className="cta-fill text-label-sm self-start inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
+              <span>{cta}</span>
               <span aria-hidden="true" className="rtl-mirror">
                 →
               </span>

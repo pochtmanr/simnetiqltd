@@ -1,7 +1,7 @@
 import { track as vercelTrack } from "@vercel/analytics";
 import type { Locale } from "@/lib/i18n";
 
-type ServiceCode = "mobile" | "web" | "ai" | "growth" | "automations";
+type ServiceCode = "mobile" | "web" | "aiAutomation" | "growth";
 type ProjectId = "physics" | "doppler" | "creator" | "delivery";
 type ThemeValue = "system" | "light" | "dark";
 
@@ -17,7 +17,12 @@ export type AnalyticsEvent =
   | { name: "booking_completed"; props: { locale: Locale; tz: string; event_type: string } }
   | { name: "message_form_submit"; props: { locale: Locale } }
   | { name: "message_form_error"; props: { locale: Locale; reason: string } }
-  | { name: "contact_form_disclosed"; props: { locale: Locale } };
+  | { name: "contact_form_disclosed"; props: { locale: Locale } }
+  | { name: "nav_dropdown_open"; props: { menu: "projects" | "services" } }
+  | {
+      name: "nav_dropdown_card_click";
+      props: { menu: "projects" | "services"; item: string };
+    };
 
 const CLIENT_ID_KEY = "simnetiq_client_id";
 
@@ -76,7 +81,6 @@ export function track<E extends AnalyticsEvent>(name: E["name"], props: E["props
   // intentional during the build-out period so engineers can verify catalog
   // events fire on the right interactions.
   if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
     console.log("[analytics]", name, payload);
   }
   vercelTrack(name, payload);

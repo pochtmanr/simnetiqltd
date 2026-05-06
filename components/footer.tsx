@@ -14,6 +14,7 @@ type FooterDict = {
     company: string;
     companyNumber: string;
     jurisdiction: string;
+    about: string;
     legal: string;
     privacy: string;
     deletion: string;
@@ -56,7 +57,8 @@ export function Footer({
     {
       label: dict.columns.documents,
       lines: [
-        { text: dict.lines.legal, href: localizePath(locale, "/legal"), strong: true },
+        { text: dict.lines.about, href: localizePath(locale, "/about"), strong: true },
+        { text: dict.lines.legal, href: localizePath(locale, "/legal") },
         { text: dict.lines.privacy, href: localizePath(locale, "/privacy-policy") },
         { text: dict.lines.deletion, href: localizePath(locale, "/delete-account") },
       ],

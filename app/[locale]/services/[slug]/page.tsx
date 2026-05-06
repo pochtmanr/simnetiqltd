@@ -78,12 +78,14 @@ const slugKeywords: Record<string, string[]> = {
     "TikTok Events API setup",
     "growth retainer London",
   ],
-  "ai-integration": [
+  "ai-automation": [
+    "AI automation agency London",
     "AI integration agency London",
     "LLM engineering agency",
-    "LLM integration consultancy UK",
+    "n8n consultancy London",
+    "n8n development agency UK",
+    "Make.com automation agency",
     "Anthropic Claude integration",
-    "Claude API consultancy",
     "OpenAI integration agency",
     "GPT integration agency UK",
     "RAG pipeline development",
@@ -95,17 +97,18 @@ const slugKeywords: Record<string, string[]> = {
     "agent orchestration London",
     "LangGraph development agency",
     "Claude Agent SDK consultancy",
-    "AI feature engineering London",
+    "AI pipeline consultancy",
+    "self-hosted n8n VPS",
+    "custom AI pipelines on VPS",
+    "Telegram bot AI integration",
+    "Stripe automation pipeline",
+    "Supabase automation agency",
     "prompt engineering consultancy",
-    "prompt caching implementation",
     "LLM evaluation harness",
     "Braintrust consulting",
     "Langfuse setup",
-    "AI product studio UK",
-    "voice AI agency",
     "Whisper Deepgram integration",
     "ElevenLabs integration",
-    "AI fine-tuning LoRA UK",
     "Llama self-hosting consultancy",
     "Mistral deployment consultancy",
     "hire AI engineer London",
@@ -153,7 +156,7 @@ const slugKeywords: Record<string, string[]> = {
 const slugPriceFrom: Record<string, string> = {
   "mobile-desktop": "1000",
   "growth-marketing": "500",
-  "ai-integration": "500",
+  "ai-automation": "1500",
   "web-platforms": "800",
 };
 
@@ -240,10 +243,10 @@ export default async function ServicePage({
         priceFrom={slugPriceFrom[service.slug]}
       />
       {/* ============================================================ */}
-      {/* HERO (split)                                                  */}
+      {/* HERO BAND — case-study style (7/5)                            */}
       {/* ============================================================ */}
       <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
           <Rail
             items={[
               sd.rail.indexTpl.replace("{code}", service.code),
@@ -252,36 +255,71 @@ export default async function ServicePage({
             ]}
             className="mb-10"
           />
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-8">
-              <div className="flex items-center gap-4 mb-5">
-                <span className="text-mono text-[var(--color-text-faint)]">
-                  {service.code}
-                </span>
-                <span className="h-3 w-px bg-[var(--color-border-strong)]" />
-                <span className="text-label-sm text-[var(--color-primary-glow)]">
-                  {service.badge}
-                </span>
-              </div>
-              <h1 className="text-display">
-                {service.title}
-              </h1>
-              <p className="text-headline text-[var(--color-text-dim)] mt-4 normal-case tracking-normal" style={{ fontWeight: 300, letterSpacing: "-0.01em" }}>
-                {service.tagline}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-7">
+              <p className="text-label text-[var(--color-primary-glow)]">
+                {service.code}
               </p>
-              <p className="text-body mt-8 max-w-2xl">{service.summary}</p>
+              <h1 className="text-display mt-6">
+                <span className="block">{service.title}</span>
+                <span className="block text-[var(--color-text-dim)]">
+                  {service.tagline}
+                </span>
+              </h1>
             </div>
-            <div className="lg:col-span-4 flex flex-col gap-5">
-              <Panel className="overflow-hidden" innerClassName="p-0 aspect-square">
-                <ServiceHeroVisual slug={slug} />
+            <div className="lg:col-span-5 self-end">
+              <p className="text-body max-w-md">{service.summary}</p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Link href="#pricing" className="btn-primary">
+                  {sd.hero.ctaPricing}
+                  <span aria-hidden="true">→</span>
+                </Link>
+                <Link
+                  href={localizePath(locale, "/#contact")}
+                  className="btn-secondary"
+                >
+                  {sd.hero.ctaContact}
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* HERO VISUAL + SPECS BAND (8/4, 16:9 SVG)                      */}
+      {/* ============================================================ */}
+      <section>
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+            <div className="lg:col-span-8">
+              <Panel innerClassName="p-2" corners>
+                <div className="relative w-full overflow-hidden aspect-[16/9]">
+                  <ServiceHeroVisual slug={slug} />
+                </div>
               </Panel>
-              <Panel innerClassName="p-5">
+              <div className="mt-4 text-mono text-[var(--color-text-faint)]">
+                {sd.hero.figureCaptionTpl
+                  .replace("{code}", service.code)
+                  .replace("{title}", service.title)}
+              </div>
+            </div>
+
+            <div className="lg:col-span-4">
+              <Panel innerClassName="p-6 lg:p-8" corners>
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  {sd.brief}
+                  {sd.hero.specsLabel}
                 </p>
                 {service.meta.map((m) => (
                   <SpecRow key={m.label} label={m.label} value={m.value} />
                 ))}
+                <div className="mt-6 flex items-center gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
+                  <span className="text-mono text-[var(--color-primary-glow)]">
+                    {sd.hero.liveLabel}
+                  </span>
+                </div>
               </Panel>
             </div>
           </div>
@@ -371,7 +409,7 @@ export default async function ServicePage({
       {/* ============================================================ */}
       {/* PRICING                                                       */}
       {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
+      <section id="pricing" className="scroll-mt-24 border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
             <div className="lg:col-span-5">

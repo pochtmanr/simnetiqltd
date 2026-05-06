@@ -46,18 +46,23 @@ if(pre!==r){var s=document.createElement('style');s.id='theme-no-flash';s.append
 else{d.setAttribute('data-theme',r);}
 d.style.colorScheme=r;
 d.setAttribute('data-theme-choice',c);
+// IMPORTANT: never remove React-managed <meta> nodes (the static
+// media-driven theme-color tags rendered by next viewport config) — that
+// causes "Cannot read properties of null (reading 'removeChild')" on the
+// next route transition when React tries to unmount them. Instead, insert
+// our dynamic non-media meta as the FIRST <meta name="theme-color"> in
+// <head>: per spec, browsers pick the first matching one, and a node
+// without a media attribute always matches.
 if(c!=='system'){
-  // Explicit override — strip the static media-driven theme-color metas so
-  // the dynamic non-media tag wins regardless of OS preference.
-  var statics=document.querySelectorAll('meta[name="theme-color"][media]');
-  for(var i=0;i<statics.length;i++){statics[i].parentNode.removeChild(statics[i]);}
   var m=document.querySelector('meta[name="theme-color"][data-dyn]');
-  if(!m){m=document.createElement('meta');m.setAttribute('name','theme-color');m.setAttribute('data-dyn','1');document.head.appendChild(m);}
+  if(!m){m=document.createElement('meta');m.setAttribute('name','theme-color');m.setAttribute('data-dyn','1');document.head.insertBefore(m,document.head.firstChild);}
   m.setAttribute('content',r==='dark'?'${THEME_COLOR_DARK}':'${THEME_COLOR_LIGHT}');
 } else {
-  // System mode — let the static media-driven metas track OS naturally.
+  // System mode — drop our JS-created override and let the React-rendered
+  // media-driven metas track the OS preference. Safe to remove because we
+  // created this node ourselves; React does not track it.
   var dyn=document.querySelector('meta[name="theme-color"][data-dyn]');
-  if(dyn)dyn.parentNode.removeChild(dyn);
+  if(dyn&&dyn.parentNode)dyn.parentNode.removeChild(dyn);
 }
 }catch(e){}})();`;
 
@@ -91,18 +96,19 @@ function readInitialChoice(initialChoice: ThemeChoice | undefined): ThemeChoice 
 function syncMetaThemeColor(choice: ThemeChoice, resolved: ResolvedTheme) {
   if (typeof document === "undefined") return;
   if (choice === "system") {
-    // Let the static media-driven theme-color metas track OS naturally;
-    // remove any dynamic override left over from a previous explicit choice.
+    // Let the static media-driven theme-color metas (rendered by Next from
+    // viewport config) track the OS preference. Only remove our own
+    // JS-created override so the page doesn't carry a stale colour from
+    // the previous explicit choice.
     document
       .querySelectorAll('meta[name="theme-color"][data-dyn]')
       .forEach((el) => el.parentNode?.removeChild(el));
     return;
   }
-  // Explicit override — strip media-driven statics so the dynamic
-  // non-media tag wins regardless of OS preference.
-  document
-    .querySelectorAll('meta[name="theme-color"][media]')
-    .forEach((el) => el.parentNode?.removeChild(el));
+  // Explicit override. Per spec the browser uses the first matching
+  // <meta name="theme-color">, so insert our dynamic non-media tag as the
+  // first head child instead of deleting React-managed siblings — touching
+  // those triggers "removeChild on null" during the next route transition.
   let meta = document.querySelector<HTMLMetaElement>(
     'meta[name="theme-color"][data-dyn]',
   );
@@ -110,7 +116,7 @@ function syncMetaThemeColor(choice: ThemeChoice, resolved: ResolvedTheme) {
     meta = document.createElement("meta");
     meta.setAttribute("name", "theme-color");
     meta.setAttribute("data-dyn", "1");
-    document.head.appendChild(meta);
+    document.head.insertBefore(meta, document.head.firstChild);
   }
   meta.setAttribute(
     "content",
@@ -203,13 +209,14 @@ export function ThemeProvider({
     setChoiceState(next);
   }, []);
 
+  // Smart flip: always switch to the opposite of what's currently rendered.
+  // When in "system" mode the user's first click escapes auto-mode by
+  // explicitly picking the opposite of the OS-resolved theme — so a single
+  // tap always produces a visible change (no more dead-tap on system→same).
+  // To re-enable system, the user picks "Auto" from the segmented variant.
   const cycleChoice = useCallback(() => {
-    setChoiceState((current) => {
-      if (current === "system") return "light";
-      if (current === "light") return "dark";
-      return "system";
-    });
-  }, []);
+    setChoiceState(resolved === "dark" ? "light" : "dark");
+  }, [resolved]);
 
   const value = useMemo<ThemeContextValue>(
     () => ({ choice, resolved, setChoice, cycleChoice }),
