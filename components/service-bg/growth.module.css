@@ -1,0 +1,80 @@
+.root {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bar {
+  transform-origin: 50% 100%;
+  transform-box: fill-box;
+  animation: barGrow 5s ease-in-out infinite;
+}
+.bar.b1 { animation-delay: 0s; }
+.bar.b2 { animation-delay: 0.18s; }
+.bar.b3 { animation-delay: 0.36s; }
+.bar.b4 { animation-delay: 0.54s; }
+.bar.b5 { animation-delay: 0.72s; }
+.bar.b6 { animation-delay: 0.9s; }
+
+@keyframes barGrow {
+  0%   { transform: scaleY(0.05); opacity: 0.2; }
+  18%  { transform: scaleY(1);    opacity: 1; }
+  72%  { transform: scaleY(1);    opacity: 1; }
+  88%  { transform: scaleY(1);    opacity: 0; }
+  100% { transform: scaleY(0.05); opacity: 0; }
+}
+
+.trendLine {
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
+  animation: trendDraw 5s ease-in-out infinite;
+}
+
+@keyframes trendDraw {
+  0%   { stroke-dashoffset: 280; }
+  35%  { stroke-dashoffset: 0; }
+  72%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -280; }
+}
+
+.marker {
+  transform-origin: center;
+  transform-box: fill-box;
+  opacity: 0;
+  animation: markerPop 5s ease-in-out infinite;
+}
+.marker.m1 { animation-delay: 0.15s; }
+.marker.m2 { animation-delay: 0.55s; }
+.marker.m3 { animation-delay: 0.95s; }
+.marker.m4 { animation-delay: 1.35s; }
+.marker.m5 { animation-delay: 1.75s; }
+.marker.m6 { animation-delay: 2.15s; }
+
+@keyframes markerPop {
+  0%, 100% { opacity: 0; transform: scale(0.4); }
+  10%      { opacity: 1; transform: scale(1); }
+  68%      { opacity: 1; transform: scale(1); }
+  82%      { opacity: 0; transform: scale(0.4); }
+}
+
+.badge {
+  animation: badgePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .trendLine,
+  .marker,
+  .badge {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

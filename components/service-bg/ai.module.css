@@ -1,0 +1,83 @@
+.root {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.trace {
+  animation: trace 4s linear infinite;
+}
+.trace.t1 { animation-delay: 0s; }
+.trace.t2 { animation-delay: -1s; }
+.trace.t3 { animation-delay: -2s; }
+.trace.t4 { animation-delay: -3s; }
+
+@keyframes trace {
+  to { stroke-dashoffset: -384; }
+}
+
+.core {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: corePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+  0%, 100% { opacity: 0.88; }
+  50%      { opacity: 1; }
+}
+
+.orbit {
+  transform-origin: 160px 160px;
+  transform-box: view-box;
+  animation: orbit 6s linear infinite;
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.nodePulse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: nodePulse 2.6s ease-in-out infinite;
+}
+.nodePulse.n1 { animation-delay: 0s; }
+.nodePulse.n2 { animation-delay: 0.4s; }
+.nodePulse.n3 { animation-delay: 0.8s; }
+.nodePulse.n4 { animation-delay: 1.2s; }
+
+@keyframes nodePulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+.halo {
+  animation: haloRipple 3.2s ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.halo.h1 { animation-delay: 0s; }
+.halo.h2 { animation-delay: 1s; }
+.halo.h3 { animation-delay: 2s; }
+
+@keyframes haloRipple {
+  0%   { opacity: 0.4; }
+  60%  { opacity: 0.08; }
+  100% { opacity: 0.4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace,
+  .core,
+  .orbit,
+  .nodePulse,
+  .halo {
+    animation: none !important;
+    transform: none !important;
+    opacity: 0.85 !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

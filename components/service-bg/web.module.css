@@ -1,0 +1,50 @@
+.root {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.tabStrip {
+  animation: tabSlide 5s linear infinite;
+}
+
+@keyframes tabSlide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-58px); }
+}
+
+.codeLine {
+  stroke-dasharray: var(--len, 220);
+  stroke-dashoffset: var(--len, 220);
+  animation: typeLine 5s ease-in-out infinite;
+}
+.codeLine.l2 { animation-delay: 0.4s; }
+.codeLine.l3 { animation-delay: 0.8s; }
+.codeLine.l4 { animation-delay: 1.2s; }
+
+@keyframes typeLine {
+  0%   { stroke-dashoffset: var(--len, 220); }
+  35%  { stroke-dashoffset: 0; }
+  65%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: var(--len, 220); }
+}
+
+.caret {
+  animation: blink 1.1s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabStrip,
+  .codeLine,
+  .caret {
+    animation: none !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

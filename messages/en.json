@@ -37,24 +37,24 @@
   },
   "hero": {
     "rail": {
-      "index": "◆ SIMNETIQ / 00 / INDEX",
-      "tagline": "VISUAL INSTRUMENT · PRECISION STUDIO",
-      "established": "EST. 2025 · LONDON"
+      "index": "◆ SIMNETIQ / 00 / Home",
+      "tagline": "Software studio · London",
+      "established": "Est. 2025 · London"
     },
-    "eyebrow": "◇ Technology Studio / London",
+    "eyebrow": "◇ Technology studio / London",
     "titleLine1": "Simnetiq",
     "titleLine2": "Engineering",
-    "body": "We design and operate high-integrity software for private networks, AI platforms, mobile applications, and logistics systems. Calm surfaces, uncompromising internals.",
-    "ctaPrimary": "Active Operations",
-    "ctaSecondary": "Contact Us",
+    "body": "We design and ship reliable software — mobile apps, web platforms, AI features, and the network plumbing behind them. Calm interfaces, careful engineering, no filler.",
+    "ctaPrimary": "See recent work",
+    "ctaSecondary": "Contact us",
     "manifest": {
-      "label": "▸ Operator Manifest",
+      "label": "Studio at a glance",
       "founded": "Founded",
       "founded_value": "2025",
       "hq": "HQ",
       "hq_value": "London, UK",
-      "verticals": "Verticals",
-      "verticals_value": "4 active",
+      "verticals": "Active projects",
+      "verticals_value": "4",
       "status": "Status",
       "status_value": "Accepting briefs"
     },
@@ -63,89 +63,99 @@
       "value": "Top 30 · Israel · Apple App Store"
     },
     "field": {
-      "label": "FIELD · 01",
-      "wave": "WAVE · RUST · BREATH 4S",
-      "signal": "SIGNAL OK"
+      "label": "Field · 01",
+      "wave": "Signal · steady",
+      "signal": "Online"
     }
   },
   "projects": {
-    "eyebrow": "◇ Selected / Operations",
-    "title": "Active deployments",
-    "body": "Four production systems currently online. Each built with an engineering-first philosophy: reliability, architectural purity, no filler.",
+    "eyebrow": "◇ Selected work",
+    "title": "Recent work",
+    "body": "Four products live in the wild. Built with an engineering-first mindset: reliable, well-structured, made to last.",
     "stack": "Stack",
     "visit": "Visit site",
     "caseStudy": "Case study",
     "items": {
       "physics": {
         "title": "Physics.explained",
-        "badge": "EDUCATION · OPEN",
-        "description": "Physics taught visually. Interactive animations driven by accurate solvers, a dictionary of concepts, and profiles of physicists."
+        "badge": "Education · Open",
+        "description": "Physics taught visually. Interactive animations powered by accurate solvers, a concept dictionary, and physicist profiles."
       },
       "doppler": {
         "title": "Doppler VPN",
-        "badge": "VPN · ENC",
-        "description": "Military-grade network obfuscation using a custom VLESS-Reality implementation. Zero-log architecture, geo-distributed nodes."
+        "badge": "VPN · Encrypted",
+        "description": "A censorship-resistant VPN built on VLESS-Reality. Zero logs, geo-distributed nodes, native apps on every platform."
       },
       "creator": {
         "title": "Creator AI",
-        "badge": "NEURAL · GEN",
-        "description": "Neural content synthesis. Fine-tuned LLMs for technical documentation and multi-language editorial pipelines."
+        "badge": "AI · Generative",
+        "description": "Generative content platform. Fine-tuned LLMs for technical writing and multi-language editorial workflows."
       },
       "delivery": {
         "title": "Go Delivery",
-        "badge": "LOGISTICS · OPS",
-        "description": "Delivery platform with real-time GPS tracking, route optimization, and end-to-end order lifecycle management.",
+        "badge": "Logistics",
+        "description": "Delivery platform with live GPS tracking, route optimisation, and end-to-end order management.",
         "accolade": "Top 30 · Israel · Apple App Store"
       }
     }
   },
   "capabilities": {
-    "eyebrow": "◇ Methodology",
-    "title": "Core capabilities",
-    "body": "Engineering-led. Each vertical is owned by a senior practitioner, shipping production systems — not prototypes.",
-    "viewService": "View service →",
+    "eyebrow": "◇ What we do",
+    "title": "Offered services",
+    "subtitle": "Five things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
+    "body": "Five things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
+    "viewService": "Explore",
     "items": {
       "mobile": {
         "title": "Mobile & Desktop",
-        "text": "Native iOS, Android, macOS, Windows, Linux. SwiftUI, Compose, WinUI 3, .NET, Tauri."
-      },
-      "growth": {
-        "title": "Growth & Marketing",
-        "text": "Meta, TikTok, and Google ad campaigns wired to AppsFlyer, Adjust, and real in-app attribution."
-      },
-      "ai": {
-        "title": "AI Integration",
-        "text": "LLM pipelines, embeddings, RAG, agentic automation across Anthropic / OpenAI stacks."
+        "text": "Native iOS, Android, macOS, Windows, and Linux apps. SwiftUI, Jetpack Compose, WinUI 3, .NET, Tauri — chosen per project."
       },
       "web": {
         "title": "Web & Platforms",
-        "text": "Next.js, Supabase, Stripe, edge-grade billing and auth pipelines end to end."
+        "text": "Marketing sites, product platforms, and SaaS on Next.js, Supabase, and Stripe — billing, auth, and webhooks wired in."
+      },
+      "ai": {
+        "title": "AI Integration",
+        "text": "Production LLM features: RAG, embeddings, structured tool use, and agentic workflows across Anthropic and OpenAI."
+      },
+      "growth": {
+        "title": "Growth & Marketing",
+        "text": "Meta, TikTok, and Google campaigns paired with AppsFlyer or Adjust — measured against real in-app conversions."
+      },
+      "automations": {
+        "title": "Automations & Pipelines",
+        "text": "Event-driven workflows, n8n pipelines, and vendor integrations that turn manual ops into scheduled, observable, retry-safe systems."
       }
     }
   },
   "contact": {
-    "eyebrow": "◇ Transmission",
-    "title": "Open a channel",
-    "body": "Briefs, partnerships, engineering contracts. We respond inside one working day.",
-    "directLabel": "▸ Direct",
+    "eyebrow": "◇ Get in touch",
+    "title": "Contact us",
+    "body": "Briefs, partnerships, engineering work. We reply within one business day.",
+    "directLabel": "Direct line",
     "email": "Email",
     "location": "Location",
     "location_value": "London, UK · BST",
     "response": "Response",
-    "response_value": "< 24h weekdays",
-    "name": "▸ Name",
+    "response_value": "Within one business day",
+    "bookingHeading": "Book a 30-min call",
+    "bookingSubtitle": "7 days a week, 10:00–18:00 Berlin time. We'll send a Google Meet link.",
+    "bookingRail": ["30 MIN", "GOOGLE MEET", "MON–SUN", "10:00–18:00 BERLIN"],
+    "bookingFooter": "▸ Times shown in your local timezone · Reschedule or cancel any time",
+    "formHeading": "Prefer email? Send a message",
+    "name": "Your name",
     "namePlaceholder": "Full name",
-    "emailLabel": "▸ Email",
+    "emailLabel": "Email",
     "emailPlaceholder": "you@domain.com",
-    "message": "▸ Message",
-    "messagePlaceholder": "Outline the objective",
-    "ready": "CH · 01 READY",
-    "sending": "SENDING…",
-    "submit": "EXECUTE",
-    "transmitted": "TRANSMITTED",
-    "failed": "FAILED · RETRY",
-    "successMessage": "▸ Message transmitted. Expect response within one working day.",
-    "errorMessage": "▸ Transmission failed. Retry or email support@simnetiq.store."
+    "message": "How can we help?",
+    "messagePlaceholder": "A few sentences about what you need.",
+    "ready": "Ready",
+    "sending": "Sending…",
+    "submit": "Send message",
+    "transmitted": "Sent",
+    "failed": "Didn't go through — retry",
+    "successMessage": "Got it — we'll reply within one business day.",
+    "errorMessage": "Something went wrong. Please retry or email support@simnetiq.store."
   },
   "footer": {
     "tagline": "PRECISION ENGINEERING",
@@ -165,7 +175,7 @@
       "studio": "Technical studio",
       "hours": "Mon–Fri · 09:00–18:00 BST"
     },
-    "bottom": "© {year} SIMNETIQ LTD · ALL SYSTEMS RESERVED"
+    "bottom": "© {year} Simnetiq Ltd · All rights reserved"
   },
   "about": {
     "rail": {

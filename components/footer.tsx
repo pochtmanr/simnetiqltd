@@ -91,7 +91,7 @@ export function Footer({
             {columns.map((col) => (
               <div key={col.label}>
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  ▸ {col.label}
+                  {col.label}
                 </p>
                 <div className="space-y-1.5">
                   {col.lines.map((line, i) => {

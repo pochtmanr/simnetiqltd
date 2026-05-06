@@ -11,6 +11,7 @@ import {
   BreadcrumbSchema,
   ServiceSchema,
 } from "@/components/structured-data";
+import { ServiceHeroVisual } from "@/components/service-hero-visual";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 
@@ -270,7 +271,10 @@ export default async function ServicePage({
               </p>
               <p className="text-body mt-8 max-w-2xl">{service.summary}</p>
             </div>
-            <div className="lg:col-span-4">
+            <div className="lg:col-span-4 flex flex-col gap-5">
+              <Panel className="overflow-hidden" innerClassName="p-0 aspect-square">
+                <ServiceHeroVisual slug={slug} />
+              </Panel>
               <Panel innerClassName="p-5">
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
                   {sd.brief}

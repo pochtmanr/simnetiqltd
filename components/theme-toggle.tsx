@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { useTheme, type ThemeChoice } from "@/components/theme-provider";
+import { track } from "@/lib/analytics";
 
 const subscribe = () => () => {};
 const getServerSnapshot = () => false;
@@ -49,6 +50,20 @@ export function ThemeToggle({
   const { choice, resolved, setChoice, cycleChoice } = useTheme();
   const mounted = useIsMounted();
 
+  const handleSetChoice = (next: ThemeChoice) => {
+    if (next !== choice) {
+      track("theme_change", { from: choice, to: next });
+    }
+    setChoice(next);
+  };
+
+  const handleCycleChoice = () => {
+    const next: ThemeChoice =
+      choice === "system" ? "light" : choice === "light" ? "dark" : "system";
+    track("theme_change", { from: choice, to: next });
+    cycleChoice();
+  };
+
   if (variant === "segmented") {
     const options: { value: ThemeChoice; label: string }[] = [
       { value: "system", label: labels.auto },
@@ -67,7 +82,7 @@ export function ThemeToggle({
             <button
               key={opt.value}
               type="button"
-              onClick={() => setChoice(opt.value)}
+              onClick={() => handleSetChoice(opt.value)}
               aria-pressed={mounted ? active : undefined}
               className={[
                 "px-3 py-1.5 text-label-sm transition-colors",
@@ -100,7 +115,7 @@ export function ThemeToggle({
   return (
     <button
       type="button"
-      onClick={cycleChoice}
+      onClick={handleCycleChoice}
       aria-label={nextLabel}
       title={nextLabel}
       className={`inline-flex items-center justify-center w-6 h-6 text-[var(--color-text-faint)] hover:text-[var(--color-text)] transition-colors ${className}`}
