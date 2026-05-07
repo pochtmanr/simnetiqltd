@@ -272,14 +272,14 @@ export default async function ServicePage({
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link href="#pricing" className="btn-primary">
                   {sd.hero.ctaPricing}
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true" className="btn-arrow">→</span>
                 </Link>
                 <Link
                   href={localizePath(locale, "/#contact")}
                   className="btn-secondary"
                 >
                   {sd.hero.ctaContact}
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true" className="btn-arrow">→</span>
                 </Link>
               </div>
             </div>
@@ -468,7 +468,7 @@ export default async function ServicePage({
                   }
                 >
                   {sd.pricing.requestBrief}
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true" className="btn-arrow">→</span>
                 </Link>
               </Panel>
             ))}
@@ -493,11 +493,11 @@ export default async function ServicePage({
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href={localizePath(locale, "/#contact")} className="btn-primary">
                   {sd.cta.sendBrief}
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true" className="btn-arrow">→</span>
                 </Link>
                 <Link href={localizePath(locale, "/projects")} className="btn-secondary">
                   {sd.cta.viewDeployments}
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true" className="btn-arrow">→</span>
                 </Link>
               </div>
             </div>

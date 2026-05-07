@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Rail, SpecRow } from "@/components/panel";
+import { NotFoundActions } from "@/components/not-found-actions";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,7 +73,7 @@ export default function GlobalNotFound() {
 
           <section>
             <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
-              <Panel innerClassName="p-6 lg:p-10" corners>
+              <div className="border border-[var(--color-border)] p-6 lg:p-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                   <div className="lg:col-span-7">
                     <div className="flex items-center justify-between mb-8">
@@ -90,16 +90,9 @@ export default function GlobalNotFound() {
                       link goes to a live page. If you landed here from an old
                       bookmark, the project catalog is the fastest way back.
                     </p>
-                    <div className="flex flex-wrap items-center gap-4">
-                      <Link href="/en" className="btn-primary">
-                        Return to base
-                        <span>→</span>
-                      </Link>
-                      <Link href="/en/projects" className="btn-secondary">
-                        Browse projects
-                        <span>↗</span>
-                      </Link>
-                    </div>
+                    <NotFoundActions
+                      dict={{ home: "Return to base", projects: "Browse projects" }}
+                    />
                   </div>
 
                   <div className="lg:col-span-5">
@@ -120,7 +113,7 @@ export default function GlobalNotFound() {
                     </div>
                   </div>
                 </div>
-              </Panel>
+              </div>
             </div>
           </section>
         </main>

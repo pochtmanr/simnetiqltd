@@ -9,17 +9,7 @@ const BARS: Array<{ x: number; height: number; cls: string }> = [
   { x: 226, height: 72, cls: "b6" },
 ];
 
-const TREND: Array<[number, number]> = [
-  [68,  216],
-  [102, 196],
-  [136, 200],
-  [170, 168],
-  [204, 176],
-  [238, 144],
-];
-
 export function GrowthBg() {
-  const polyPoints = TREND.map(([x, y]) => `${x},${y}`).join(" ");
   return (
     <svg
       className={styles.root}
@@ -30,6 +20,7 @@ export function GrowthBg() {
       strokeLinejoin="miter"
       aria-hidden="true"
     >
+      <g transform="translate(160 160) scale(0.7) translate(-160 -160)">
       <g transform="translate(160 160) scale(0.88 1) skewY(-8) translate(-160 -160)">
         {/* receded back face */}
         <g stroke="var(--color-primary-dim)" strokeWidth="1">
@@ -92,13 +83,17 @@ export function GrowthBg() {
           <line x1="48" y1="224" x2="268" y2="224" />
         </g>
 
-        {/* baseline tick row */}
+        {/* baseline tick row — one per bar, matching column width */}
         <g stroke="var(--color-primary-dim)" strokeWidth="0.8">
-          <line x1="48" y1="244" x2="80" y2="244" />
-          <line x1="92" y1="244" x2="124" y2="244" />
-          <line x1="136" y1="244" x2="168" y2="244" />
-          <line x1="180" y1="244" x2="212" y2="244" />
-          <line x1="224" y1="244" x2="256" y2="244" />
+          {BARS.map((bar) => (
+            <line
+              key={`tick-${bar.cls}`}
+              x1={bar.x}
+              y1="244"
+              x2={bar.x + 22}
+              y2="244"
+            />
+          ))}
         </g>
 
         {/* bar chart — bars anchored at y=240 baseline */}
@@ -115,30 +110,7 @@ export function GrowthBg() {
           ))}
         </g>
 
-        {/* trend line tracing across */}
-        <polyline
-          className={styles.trendLine}
-          points={polyPoints}
-          stroke="var(--color-secondary)"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* trend markers */}
-        {TREND.map(([x, y], i) => (
-          <circle
-            key={`m${i}`}
-            className={`${styles.marker} ${styles[`m${i + 1}`]}`}
-            cx={x}
-            cy={y}
-            r="2.6"
-            fill="var(--color-secondary)"
-            stroke="var(--color-surface)"
-            strokeWidth="0.8"
-          />
-        ))}
+      </g>
       </g>
 
       {/* corner markers */}

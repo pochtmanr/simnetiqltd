@@ -9,6 +9,7 @@ import { OfferedServicesSection } from "@/components/sections/offered-services-s
 import { RecentWorkSection } from "@/components/sections/recent-work-section";
 import { BookingPanel } from "@/components/booking-panel";
 import { ContactDisclosure } from "@/components/contact-disclosure";
+import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
@@ -172,10 +173,21 @@ export function HomePageClient({
                   {dict.hero.eyebrow}
                 </p>
                 <h1 className="text-display mt-6">
-                  <span className="block">{dict.hero.titleLine1}</span>
-                  <span className="block text-[var(--color-text-dim)]">
-                    {dict.hero.titleLine2}
-                  </span>
+                  <TextReveal
+                    as="span"
+                    className="block"
+                    text={dict.hero.titleLine1}
+                    trigger="mount"
+                    step={35}
+                  />
+                  <TextReveal
+                    as="span"
+                    className="block text-[var(--color-text-dim)]"
+                    text={dict.hero.titleLine2}
+                    trigger="mount"
+                    step={35}
+                    delay={dict.hero.titleLine1.split(/\s+/).length * 35 + 120}
+                  />
                 </h1>
                 <p className="text-body mt-6 max-w-md">{dict.hero.body}</p>
 

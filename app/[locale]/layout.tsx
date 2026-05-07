@@ -14,11 +14,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
-import {
-  ThemeProvider,
-  THEME_INIT_SCRIPT,
-  type ThemeChoice,
-} from "@/components/theme-provider";
+import { ThemeProvider, type ThemeChoice } from "@/components/theme-provider";
+import { ThemeInitScript } from "@/components/theme-init-script";
 import { getDictionary } from "@/lib/dictionaries";
 import {
   LOCALES,
@@ -292,8 +289,13 @@ export default async function RootLayout({
             cold loads. Cannot use next/script beforeInteractive: the App
             Router routes those through __next_s, which dispatches
             asynchronously after the runtime boots, by which time the
-            page has already painted. */}
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+            page has already painted.
+
+            ThemeInitScript wraps the raw <script> in a server-only render
+            so React 19 doesn't reconcile it during client navigation
+            (which would log "Scripts inside React components are never
+            executed when rendering on the client"). */}
+        <ThemeInitScript />
         <ThemeProvider initialChoice={choice}>
           <GlobalStructuredData />
           <Navigation

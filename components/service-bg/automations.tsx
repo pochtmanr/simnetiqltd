@@ -11,19 +11,19 @@ export function AutomationsBg() {
       strokeLinejoin="miter"
       aria-hidden="true"
     >
-      <g transform="translate(160 160) scale(0.85) translate(-160 -160)">
+      <g transform="translate(160 160) scale(0.7) translate(-160 -160)">
       <g transform="translate(160 160) scale(1 0.62) rotate(-22) translate(-160 -160)">
         {/* receded back face — depth layer */}
         <g stroke="var(--color-primary-dim)" strokeWidth="1" fill="none">
-          <rect x="44" y="44" width="248" height="248" />
+          <rect x="28" y="44" width="248" height="248" />
         </g>
 
         {/* depth struts — connect front corners to back corners */}
         <g stroke="var(--color-primary-dim)" strokeWidth="1">
-          <line x1="36" y1="36" x2="44" y2="44" />
-          <line x1="284" y1="36" x2="292" y2="44" />
-          <line x1="36" y1="284" x2="44" y2="292" />
-          <line x1="284" y1="284" x2="292" y2="292" />
+          <line x1="36" y1="36" x2="28" y2="44" />
+          <line x1="284" y1="36" x2="276" y2="44" />
+          <line x1="36" y1="284" x2="28" y2="292" />
+          <line x1="284" y1="284" x2="276" y2="292" />
         </g>
 
         {/* base plate — front face */}

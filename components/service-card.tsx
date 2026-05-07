@@ -48,17 +48,12 @@ export function ServiceCard({
         onClick={() => track("service_card_click", { service: code, locale })}
       >
         <Panel innerClassName="p-6 lg:p-7 h-full flex flex-col overflow-hidden" hover>
-          {/* Animated background — masked so text stays readable */}
+          {/* Animated background — sized square on the end side so the    */}
+          {/* artwork fits within the card without slice-cropping.          */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              opacity: 0.18,
-              maskImage:
-                "radial-gradient(circle at 80% 80%, black 0%, transparent 75%)",
-              WebkitMaskImage:
-                "radial-gradient(circle at 80% 80%, black 0%, transparent 75%)",
-            }}
+            className="service-card-bg absolute end-3 top-1/2 -translate-y-1/2 w-[55%] max-w-[288px] aspect-square pointer-events-none"
+            style={{ opacity: 0.32 }}
           >
             {background}
           </div>

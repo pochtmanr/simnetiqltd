@@ -330,13 +330,13 @@
       "body": "Starting ranges in GBP. Final quotes depend on scope, timeline, and support level. Every engagement is a signed SOW with fixed milestones.",
       "tier": "TIER · 0{n}",
       "recommended": "◆ Recommended",
-      "requestBrief": "Request brief →"
+      "requestBrief": "Request brief"
     },
     "cta": {
       "eyebrow": "◇ Contact Us",
       "title": "Open a channel.",
       "body": "Briefs are reviewed within one working day. Tell us the objective, timeline, and constraints — we'll come back with a scope, price, and a plan.",
-      "sendBrief": "Send brief →",
+      "sendBrief": "Send brief",
       "viewDeployments": "View deployments",
       "previous": "← Previous",
       "next": "Next →"

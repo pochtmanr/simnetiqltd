@@ -13,7 +13,7 @@
 .trace.t3 { animation-delay: -2.4s; }
 
 @keyframes trace {
-  to { stroke-dashoffset: -384; }
+  to { stroke-dashoffset: -348; }
 }
 
 .processor {

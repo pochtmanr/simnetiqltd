@@ -17,6 +17,7 @@ export function MobileBg() {
         </clipPath>
       </defs>
 
+      <g transform="translate(160 160) scale(0.7) translate(-160 -160)">
       {/* ============================================================ */}
       {/* MESSAGES popped from phone (left)                             */}
       {/* ============================================================ */}
@@ -152,6 +153,7 @@ export function MobileBg() {
             <rect x="222" y="216" width="8" height="10" fill="var(--color-secondary)" stroke="none" />
           </g>
         </g>
+      </g>
       </g>
 
       {/* corner markers */}

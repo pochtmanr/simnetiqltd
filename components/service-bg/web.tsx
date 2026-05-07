@@ -20,6 +20,7 @@ export function WebBg() {
         </clipPath>
       </defs>
 
+      <g transform="translate(160 160) scale(0.7) translate(-160 -160)">
       <g transform="translate(160 160) scale(0.84 1) skewY(-6) translate(-160 -160)">
         {/* receded back face */}
         <g stroke="var(--color-primary-dim)" strokeWidth="1">
@@ -163,6 +164,7 @@ export function WebBg() {
           <rect x="124" y="196" width="60" height="28" />
           <rect x="192" y="196" width="60" height="28" />
         </g>
+      </g>
       </g>
 
       {/* corner markers */}

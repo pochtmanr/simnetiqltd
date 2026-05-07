@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Panel } from "@/components/panel";
+import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
@@ -74,10 +75,19 @@ export function RecentWorkSection({
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-14">
           <div className="lg:col-span-4">
-            <p className="text-label text-[var(--color-primary-glow)]">
-              {dict.projects.eyebrow}
-            </p>
-            <h2 className="text-headline mt-5">{dict.projects.title}</h2>
+            <TextReveal
+              as="p"
+              className="text-label text-[var(--color-primary-glow)]"
+              text={dict.projects.eyebrow}
+              step={25}
+            />
+            <TextReveal
+              as="h2"
+              className="text-headline mt-5"
+              text={dict.projects.title}
+              step={35}
+              delay={120}
+            />
           </div>
           <div className="lg:col-span-6 lg:col-start-7 self-end">
             <p className="text-body max-w-md">{dict.projects.body}</p>
@@ -144,18 +154,20 @@ export function RecentWorkSection({
                           locale,
                         })
                       }
-                      className="cta-fill inline-flex items-center gap-2 text-label-sm text-[var(--color-text)] border border-[var(--color-border-strong)] px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary)]"
+                      className="btn-secondary btn-tracer"
                     >
-                      <span>{dict.projects.visit}</span>
-                      <span>{isExternal ? "↗" : "→"}</span>
+                      {dict.projects.visit}
+                      <span aria-hidden="true" className="btn-arrow">
+                        {isExternal ? "↗" : "→"}
+                      </span>
                     </Link>
                     {project.caseStudy && (
                       <Link
                         href={localizePath(locale, project.caseStudy)}
-                        className="cta-fill inline-flex items-center gap-2 text-label-sm text-[var(--color-primary-glow)] border border-[var(--color-primary-glow)]/40 px-4 py-2 whitespace-nowrap hover:border-[var(--color-primary)]"
+                        className="btn-primary btn-tracer"
                       >
-                        <span>{dict.projects.caseStudy}</span>
-                        <span>→</span>
+                        {dict.projects.caseStudy}
+                        <span aria-hidden="true" className="btn-arrow">→</span>
                       </Link>
                     )}
                   </div>

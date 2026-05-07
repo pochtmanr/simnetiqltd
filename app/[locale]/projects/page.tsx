@@ -223,7 +223,7 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                           className="btn-primary"
                         >
                           {p[proj.link.labelKey]}
-                          <span>{primaryExternal ? "↗" : "→"}</span>
+                          <span aria-hidden="true" className="btn-arrow">{primaryExternal ? "↗" : "→"}</span>
                         </Link>
                         {proj.secondaryLink && secondaryHref && (
                           <Link
@@ -233,7 +233,7 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                             className="btn-secondary"
                           >
                             {p[proj.secondaryLink.labelKey]}
-                            <span>{secondaryExternal ? "↗" : "→"}</span>
+                            <span aria-hidden="true" className="btn-arrow">{secondaryExternal ? "↗" : "→"}</span>
                           </Link>
                         )}
                       </div>

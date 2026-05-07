@@ -2,6 +2,7 @@
 
 import { Rail } from "@/components/panel";
 import { ServiceCard } from "@/components/service-card";
+import { TextReveal } from "@/components/text-reveal";
 import { MobileBg } from "@/components/service-bg/mobile";
 import { WebBg } from "@/components/service-bg/web";
 import { AutomationsBg } from "@/components/service-bg/automations";
@@ -46,10 +47,19 @@ export function OfferedServicesSection({
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-14">
           <div className="lg:col-span-4">
-            <p className="text-label text-[var(--color-primary-glow)]">
-              {caps.eyebrow}
-            </p>
-            <h2 className="text-headline mt-5">{caps.title}</h2>
+            <TextReveal
+              as="p"
+              className="text-label text-[var(--color-primary-glow)]"
+              text={caps.eyebrow}
+              step={25}
+            />
+            <TextReveal
+              as="h2"
+              className="text-headline mt-5"
+              text={caps.title}
+              step={35}
+              delay={120}
+            />
           </div>
           <div className="lg:col-span-6 lg:col-start-7 self-end">
             <p className="text-body max-w-md">{subtitle}</p>

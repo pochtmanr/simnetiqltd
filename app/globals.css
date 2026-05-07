@@ -708,3 +708,34 @@ a:hover > .gradient-shell,
   display: inline-block;
   transform: scaleX(-1);
 }
+
+/* Service-card background — soft start-side fade so the artwork blends */
+/* into the card without a hard edge. Direction flips automatically.    */
+.service-card-bg {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 30%,
+    black 70%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 30%,
+    black 70%
+  );
+}
+[dir="rtl"] .service-card-bg {
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 30%,
+    black 70%
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 30%,
+    black 70%
+  );
+}
