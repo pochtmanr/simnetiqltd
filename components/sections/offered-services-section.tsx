@@ -41,7 +41,7 @@ export function OfferedServicesSection({
   const caps = dict.capabilities;
   const subtitle = caps.subtitle ?? caps.body;
   return (
-    <section id="services" className="scroll-mt-24 border-b border-[var(--color-border)]">
+    <>
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
         <Rail items={["§ 02", caps.title, subtitle]} className="mb-10" />
 
@@ -86,6 +86,6 @@ export function OfferedServicesSection({
           })}
         </div>
       </div>
-    </section>
+    </>
   );
 }

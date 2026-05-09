@@ -20,7 +20,10 @@ export type Service = {
   slug: string;
   code: string;
   badge: string;
+  /** First (primary, full-text) part of the headline. */
   title: string;
+  /** Second (dim) fragment of the headline, e.g. "Marketing" in "Growth & Marketing". */
+  titleSecondary: string;
   tagline: string;
   summary: string;
   positioning: string;
@@ -30,12 +33,18 @@ export type Service = {
   meta: { label: string; value: string }[];
 };
 
+/** Combined human-readable title used in listings, breadcrumbs, schema, and metadata. */
+export function getServiceFullTitle(s: Service): string {
+  return `${s.title} ${s.titleSecondary}`.replace(/\s+/g, " ").trim();
+}
+
 const servicesEn: Service[] = [
   {
     slug: "mobile-desktop",
     code: "C-01",
     badge: "NATIVE · CROSS-PLATFORM",
-    title: "Mobile & Desktop",
+    title: "Mobile &",
+    titleSecondary: "Desktop",
     tagline: "Native clients that ship.",
     summary:
       "Production-grade applications for iOS, Android, macOS, Windows, and Linux. SwiftUI, Jetpack Compose, WinUI 3, .NET, and modern cross-platform runtimes — always chosen for the right reason, never for the easy one.",
@@ -72,8 +81,9 @@ const servicesEn: Service[] = [
     slug: "growth-marketing",
     code: "C-02",
     badge: "ADS · ATTRIBUTION · GROWTH",
-    title: "Growth & ",
-    tagline: "Marketing",
+    title: "Growth &",
+    titleSecondary: "Marketing",
+    tagline: "Paid acquisition wired to real attribution.",
     summary:
       "Meta, TikTok, and Google ad campaigns tuned against in-app events — not vanity metrics. AppsFlyer, Adjust, and Branch integrations built into iOS and Android clients, with weekly reporting and creative iteration cycles.",
     positioning:
@@ -109,7 +119,8 @@ const servicesEn: Service[] = [
     slug: "ai-automation",
     code: "C-03",
     badge: "AI · PIPELINES · AGENTS",
-    title: "AI & Automation",
+    title: "AI &",
+    titleSecondary: "Automation",
     tagline: "Production AI, wired to real pipelines.",
     summary:
       "Any model — Anthropic, OpenAI, open-weight, or fine-tuned. Any pipeline — n8n, Make.com, custom Node or Python on a dedicated VPS. Any data source — Postgres, S3, Notion, Stripe, Telegram, your own SaaS. We connect them into automations that survive production: scheduled, observable, retry-safe.",
@@ -147,7 +158,8 @@ const servicesEn: Service[] = [
     code: "C-04",
     badge: "WEB · SAAS · BILLING",
     title: "Web &",
-    tagline: "Platforms",
+    titleSecondary: "Platforms",
+    tagline: "Next.js, Supabase, Stripe — production web.",
     summary:
       "Next.js 16, Supabase, Stripe, and edge-native billing. Marketing sites that convert, product platforms that scale, and the plumbing — auth, payments, webhooks, email — wired together cleanly.",
     positioning:
@@ -186,7 +198,8 @@ const servicesHe: Service[] = [
     slug: "mobile-desktop",
     code: "C-01",
     badge: "מקורי · רב-פלטפורמי",
-    title: "מובייל ושולחני",
+    title: "מובייל",
+    titleSecondary: "ושולחני",
     tagline: "אפליקציות מקוריות שיוצאות לאוויר.",
     summary:
       "אפליקציות ברמת ייצור ל-iOS, Android, macOS, Windows ו-Linux. SwiftUI, Jetpack Compose, WinUI 3, .NET וזמני ריצה רב-פלטפורמיים מודרניים — תמיד נבחרים מהסיבה הנכונה, לא הקלה.",
@@ -223,7 +236,8 @@ const servicesHe: Service[] = [
     slug: "growth-marketing",
     code: "C-02",
     badge: "פרסום · ייחוס · צמיחה",
-    title: "צמיחה ושיווק",
+    title: "צמיחה",
+    titleSecondary: "ושיווק",
     tagline: "רכישה ממומנת המחוברת לייחוס אמיתי.",
     summary:
       "קמפיינים ב-Meta, TikTok וגוגל המכוונים לאירועים בתוך האפליקציה — לא למדדי הבל. אינטגרציות AppsFlyer, Adjust ו-Branch הבנויות בלקוחות iOS ו-Android, עם דוחות שבועיים ומחזורי איטרציה יצירתיים.",
@@ -260,7 +274,8 @@ const servicesHe: Service[] = [
     slug: "ai-automation",
     code: "C-03",
     badge: "AI · צינורות · סוכנים",
-    title: "AI ואוטומציה",
+    title: "AI",
+    titleSecondary: "ואוטומציה",
     tagline: "AI ברמת ייצור, מחובר לצינורות אמיתיים.",
     summary:
       "כל מודל — Anthropic, OpenAI, משקל פתוח או מותאם אישית. כל צינור — n8n, Make.com, שירותי Node או Python מותאמים על VPS ייעודי. כל מקור נתונים — Postgres, S3, Notion, Stripe, Telegram, ה-SaaS שלכם. אנו מחברים אותם לאוטומציות ששורדות בייצור: מתוזמנות, מדידות, בטוחות לניסיון חוזר.",
@@ -297,7 +312,8 @@ const servicesHe: Service[] = [
     slug: "web-platforms",
     code: "C-04",
     badge: "ווב · SaaS · חיוב",
-    title: "ווב ופלטפורמות",
+    title: "ווב",
+    titleSecondary: "ופלטפורמות",
     tagline: "מערכות ווב מקצה לקצה.",
     summary:
       "Next.js 16, Supabase, Stripe וחיוב edge-native. אתרי שיווק שממירים, פלטפורמות מוצר שמתאקלמות, וכל האינסטלציה — אימות, תשלומים, webhooks, אימייל — מחווטת באופן נקי.",

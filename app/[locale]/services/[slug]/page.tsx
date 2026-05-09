@@ -5,6 +5,7 @@ import { Panel, Rail, SpecRow } from "@/components/panel";
 import {
   getAllServiceSlugs,
   getService,
+  getServiceFullTitle,
   getServices,
 } from "@/lib/services";
 import {
@@ -174,7 +175,8 @@ export async function generateMetadata({
   const service = getService(slug, locale);
   if (!service) return { title: "Service" };
   const url = `${SITE_URL}/${locale}/services/${slug}`;
-  const title = `${service.title} — ${service.tagline}`;
+  const fullTitle = getServiceFullTitle(service);
+  const title = `${fullTitle} — ${service.tagline}`;
   const description = service.summary;
   return {
     title,
@@ -189,7 +191,7 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${service.title} — Simnetiq`,
+      title: `${fullTitle} — Simnetiq`,
       description,
       url,
       siteName: "Simnetiq",
@@ -198,7 +200,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${service.title} — Simnetiq`,
+      title: `${fullTitle} — Simnetiq`,
       description,
     },
   };
@@ -230,13 +232,13 @@ export default async function ServicePage({
           { name: "Home", url: `${SITE_URL}/${locale}` },
           { name: "Services", url: `${SITE_URL}/${locale}/services` },
           {
-            name: service.title,
+            name: getServiceFullTitle(service),
             url: `${SITE_URL}/${locale}/services/${service.slug}`,
           },
         ]}
       />
       <ServiceSchema
-        name={service.title}
+        name={getServiceFullTitle(service)}
         slug={service.slug}
         summary={service.summary}
         serviceTypes={slugKeywords[service.slug]}
@@ -263,7 +265,7 @@ export default async function ServicePage({
               <h1 className="text-display mt-6">
                 <span className="block">{service.title}</span>
                 <span className="block text-[var(--color-text-dim)]">
-                  {service.tagline}
+                  {service.titleSecondary}
                 </span>
               </h1>
             </div>
@@ -302,7 +304,7 @@ export default async function ServicePage({
               <div className="mt-4 text-mono text-[var(--color-text-faint)]">
                 {sd.hero.figureCaptionTpl
                   .replace("{code}", service.code)
-                  .replace("{title}", service.title)}
+                  .replace("{title}", getServiceFullTitle(service))}
               </div>
             </div>
 
@@ -510,7 +512,7 @@ export default async function ServicePage({
                   <p className="text-label-sm text-[var(--color-text-dim)] mb-1">
                     {prev.code}
                   </p>
-                  <p className="text-title">{prev.title}</p>
+                  <p className="text-title">{getServiceFullTitle(prev)}</p>
                 </Panel>
               </Link>
               <Link href={localizePath(locale, `/services/${next.slug}`)} className="block group">
@@ -521,7 +523,7 @@ export default async function ServicePage({
                   <p className="text-label-sm text-[var(--color-text-dim)] mb-1">
                     {next.code}
                   </p>
-                  <p className="text-title">{next.title}</p>
+                  <p className="text-title">{getServiceFullTitle(next)}</p>
                 </Panel>
               </Link>
             </div>

@@ -207,7 +207,13 @@ export function Navigation({
   );
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)] bg-[var(--color-bg)]">
+    <header
+      className={`sticky top-0 z-40 bg-[var(--color-bg)] ${
+        openDropdown
+          ? ""
+          : "backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)]"
+      }`}
+    >
       {/* Technical top rail — status + clock only */}
       <div className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
@@ -229,8 +235,8 @@ export function Navigation({
           when a mega-menu opens we hide it so the nav and dropdown panel read
           as one continuous surface (the panel carries its own bottom border). */}
       <nav
-        className={`relative border-b ${
-          openDropdown ? "border-transparent" : "border-[var(--color-border)]"
+        className={`relative ${
+          openDropdown ? "" : "border-b border-[var(--color-border)]"
         }`}
       >
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12">

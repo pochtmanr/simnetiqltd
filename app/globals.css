@@ -739,3 +739,138 @@ a:hover > .gradient-shell,
     black 70%
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* Greptile frame system — site backdrop, section frame, build rail   */
+/* ------------------------------------------------------------------ */
+
+/* Site backdrop — faint dotted grid, theme-aware */
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--color-text) 8%, transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 36px 36px;
+  background-position: 0 0;
+  mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+}
+[data-theme="light"] .site-backdrop {
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--color-text) 14%, transparent) 1px,
+    transparent 1.5px
+  );
+}
+
+/* Dashed-rule utility classes — reusable inside any layout */
+.dash-rule-h {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-border-strong) 0 6px,
+    transparent 6px 10px
+  );
+}
+.dash-rule-v {
+  background-image: repeating-linear-gradient(
+    0deg,
+    var(--color-border-strong) 0 6px,
+    transparent 6px 10px
+  );
+}
+
+/* Section frame — dashed 4-sided enclosure, no pill */
+.section-frame {
+  position: relative;
+}
+.section-frame__rule {
+  position: absolute;
+  pointer-events: none;
+}
+.section-frame__rule--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-border-strong) 0 6px,
+    transparent 6px 10px
+  );
+}
+.section-frame__rule--bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-border-strong) 0 6px,
+    transparent 6px 10px
+  );
+}
+.section-frame__rule--left {
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 1px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    var(--color-border-strong) 0 6px,
+    transparent 6px 10px
+  );
+}
+.section-frame__rule--right {
+  top: 0;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 1px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    var(--color-border-strong) 0 6px,
+    transparent 6px 10px
+  );
+}
+
+/* Build rail */
+.build-rail {
+  display: none;
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid var(--color-border);
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  padding: 8px 24px;
+}
+.build-rail > * + * {
+  margin-inline-start: 12px;
+}
+@media (min-width: 768px) {
+  .build-rail {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Ensure page content sits above backdrop, but let the sticky header
+   keep its own stacking (z-40 in markup) so the mega-menu renders above
+   main. The header is hoisted to z-50 so it always wins over body siblings
+   that get z-index:1 from the rule below. */
+body > *:not(.site-backdrop):not(header) {
+  position: relative;
+  z-index: 1;
+}
+body > header {
+  z-index: 50;
+}

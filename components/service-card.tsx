@@ -47,32 +47,41 @@ export function ServiceCard({
         className="block h-full"
         onClick={() => track("service_card_click", { service: code, locale })}
       >
-        <Panel innerClassName="p-6 lg:p-7 h-full flex flex-col overflow-hidden" hover>
-          {/* Animated background — sized square on the end side so the    */}
-          {/* artwork fits within the card without slice-cropping.          */}
-          <div
-            aria-hidden="true"
-            className="service-card-bg absolute end-3 top-1/2 -translate-y-1/2 w-[55%] max-w-[288px] aspect-square pointer-events-none"
-            style={{ opacity: 0.32 }}
-          >
-            {background}
-          </div>
-
-          <div className="relative z-[1] flex flex-col h-full">
-            <div className="flex items-center justify-between mb-5">
-              <span className="text-mono text-[var(--color-text-faint)]">
-                {badge}
+        <Panel innerClassName="p-6 lg:p-7 h-full" hover>
+          <div className="flex items-stretch gap-5 lg:gap-7 h-full">
+            {/* Left: text column */}
+            <div className="relative z-[1] flex flex-1 min-w-0 flex-col">
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-mono text-[var(--color-text-faint)]">
+                  {badge}
+                </span>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
+              </div>
+              <h3 className="text-title mb-3">{title}</h3>
+              <p className="text-body mb-6 flex-1">{body}</p>
+              <span className="cta-fill text-label-sm self-start inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
+                <span>{cta}</span>
+                <span aria-hidden="true" className="rtl-mirror">
+                  →
+                </span>
               </span>
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
             </div>
-            <h3 className="text-title mb-3">{title}</h3>
-            <p className="text-body mb-6 flex-1">{body}</p>
-            <span className="cta-fill text-label-sm self-start inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
-              <span>{cta}</span>
-              <span aria-hidden="true" className="rtl-mirror">
-                →
-              </span>
-            </span>
+
+            {/* Right: 1:1 square frame with corners + service SVG */}
+            <div className="relative aspect-square shrink-0 w-[38%] max-w-[260px] self-center">
+              <div
+                aria-hidden="true"
+                className="corners pointer-events-none absolute inset-0"
+              >
+                <span className="corner tl" />
+                <span className="corner tr" />
+                <span className="corner bl" />
+                <span className="corner br" />
+              </div>
+              <div className="absolute inset-2 flex items-center justify-center">
+                {background}
+              </div>
+            </div>
           </div>
         </Panel>
       </Link>

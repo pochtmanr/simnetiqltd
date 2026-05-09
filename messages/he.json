@@ -76,6 +76,12 @@
       "signal": "מקוון"
     }
   },
+  "frame": {
+    "signal":   { "number": "01", "slug": "אות" },
+    "services": { "number": "02", "slug": "שירותים" },
+    "works":    { "number": "03", "slug": "עבודות" },
+    "contact":  { "number": "04", "slug": "קשר" }
+  },
   "projects": {
     "eyebrow": "◇ עבודות נבחרות",
     "title": "עבודות אחרונות",
@@ -300,7 +306,7 @@
     "titleLine2": "הנדסה",
     "body": "ארבע קבוצות יכולות. לכל אחת היקף, מחסנית ותגי תמחור מוגדרים — כל פרויקט מוגדר מול SOW חתום.",
     "servicesCount": "{count} שירותים",
-    "viewBrief": "צפייה בפרטים →"
+    "viewBrief": "צפייה בפרטים"
   },
   "serviceDetail": {
     "rail": {

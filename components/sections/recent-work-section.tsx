@@ -68,10 +68,7 @@ export function RecentWorkSection({
   dict: RecentWorkDict;
 }) {
   return (
-    <section
-      id="projects"
-      className="scroll-mt-24 border-b border-[var(--color-border)]"
-    >
+    <>
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-14">
           <div className="lg:col-span-4">
@@ -177,6 +174,6 @@ export function RecentWorkSection({
           })}
         </div>
       </div>
-    </section>
+    </>
   );
 }

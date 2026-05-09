@@ -134,7 +134,12 @@ export default async function ServicesIndexPage({
                     </span>
                   </div>
                   <div className="lg:col-span-6">
-                    <h2 className="text-headline mb-3">{service.title}</h2>
+                    <h2 className="text-headline mb-3">
+                      <span>{service.title}</span>{" "}
+                      <span className="text-[var(--color-text-dim)]">
+                        {service.titleSecondary}
+                      </span>
+                    </h2>
                     <p className="text-body max-w-lg">{service.summary}</p>
                   </div>
                   <div className="lg:col-span-3 flex lg:flex-col lg:items-end lg:justify-between gap-3">
@@ -144,8 +149,11 @@ export default async function ServicesIndexPage({
                         String(service.services.length)
                       )}
                     </div>
-                    <span className="text-label-sm text-[var(--color-text)] group-hover:text-[var(--color-primary-glow)] transition-colors">
-                      {s.viewBrief}
+                    <span className="cta-fill text-label-sm self-start lg:self-end inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
+                      <span>{s.viewBrief}</span>
+                      <span aria-hidden="true" className="rtl-mirror">
+                        →
+                      </span>
                     </span>
                   </div>
                 </div>

@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { HeroVisual } from "@/components/hero-visual";
+import { HeroCircuit } from "@/components/hero-circuit";
 import { Panel, Rail, SpecRow } from "@/components/panel";
+import { SectionFrame } from "@/components/section-frame";
 import { OfferedServicesSection } from "@/components/sections/offered-services-section";
 import { RecentWorkSection } from "@/components/sections/recent-work-section";
 import { BookingPanel } from "@/components/booking-panel";
@@ -16,6 +17,12 @@ import { localizePath, type Locale } from "@/lib/i18n";
 type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
 
 type HomeDict = {
+  frame: {
+    signal: { number: string; slug: string };
+    services: { number: string; slug: string };
+    works: { number: string; slug: string };
+    contact: { number: string; slug: string };
+  };
   hero: {
     rail: { index: string; tagline: string; established: string };
     eyebrow: string;
@@ -131,25 +138,16 @@ export function HomePageClient({
   return (
     <>
       {/* HERO */}
-      <section className="border-b border-[var(--color-border)]">
+      <SectionFrame noTop>
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-8 lg:py-10">
-          <Rail
-            items={[
-              dict.hero.rail.index,
-              dict.hero.rail.tagline,
-              dict.hero.rail.established,
-            ]}
-            className="mb-8"
-          />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+          <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
             <Panel
               className="order-2 lg:order-1 lg:col-span-7 min-h-[460px] lg:min-h-[620px]"
               innerClassName="h-full"
               corners
             >
               <div className="absolute inset-0">
-                <HeroVisual />
+                <HeroCircuit />
               </div>
               <div className="relative z-10 flex flex-col justify-between h-full p-6 lg:p-10">
                 <div className="flex items-start justify-between text-mono">
@@ -236,7 +234,7 @@ export function HomePageClient({
                 </div>
               </div>
 
-              <Panel innerClassName="p-6">
+              <Panel innerClassName="p-6" corners>
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
                   {dict.hero.manifest.label}
                 </p>
@@ -264,19 +262,24 @@ export function HomePageClient({
             </div>
           </div>
         </div>
-      </section>
+      </SectionFrame>
 
       {/* OFFERED SERVICES — moved BEFORE recent work */}
-      <OfferedServicesSection
-        locale={locale}
-        dict={{ capabilities: dict.capabilities }}
-      />
+      <SectionFrame id="services" className="scroll-mt-24">
+        <OfferedServicesSection
+          locale={locale}
+          dict={{ capabilities: dict.capabilities }}
+        />
+      </SectionFrame>
 
       {/* RECENT WORK */}
-      <RecentWorkSection locale={locale} dict={{ projects: dict.projects }} />
+      <SectionFrame id="projects" className="scroll-mt-24">
+        <RecentWorkSection locale={locale} dict={{ projects: dict.projects }} />
+      </SectionFrame>
 
       {/* CONTACT */}
-      <motion.section
+      <SectionFrame
+        as={motion.section}
         id="contact"
         className="scroll-mt-24"
         onViewportEnter={() => track("contact_section_view", { locale })}
@@ -412,7 +415,7 @@ export function HomePageClient({
             </div>
           </div>
         </div>
-      </motion.section>
+      </SectionFrame>
     </>
   );
 }

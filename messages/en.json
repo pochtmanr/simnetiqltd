@@ -76,6 +76,12 @@
       "signal": "Online"
     }
   },
+  "frame": {
+    "signal":   { "number": "01", "slug": "signal" },
+    "services": { "number": "02", "slug": "services" },
+    "works":    { "number": "03", "slug": "works" },
+    "contact":  { "number": "04", "slug": "contact" }
+  },
   "projects": {
     "eyebrow": "◇ Selected work",
     "title": "Recent work",
@@ -300,7 +306,7 @@
     "titleLine2": "Services",
     "body": "Four capability groups. Each with a defined scope, stack, and pricing tier — every engagement scoped against a signed SOW.",
     "servicesCount": "{count} services",
-    "viewBrief": "View brief →"
+    "viewBrief": "View brief"
   },
   "serviceDetail": {
     "rail": {

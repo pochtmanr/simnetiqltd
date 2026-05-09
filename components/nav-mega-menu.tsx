@@ -73,7 +73,7 @@ export function NavMegaMenu({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: reduce ? 0 : -8 }}
             transition={{ duration: reduce ? 0 : 0.18, ease: "easeOut" }}
-            className="absolute left-0 right-0 top-full z-40 border-b border-[var(--color-border)] backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--color-bg)_92%,transparent)] bg-[var(--color-bg)]"
+            className="absolute left-0 right-0 top-[calc(100%-1px)] z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]"
           >
             <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-6 lg:py-8">
               <p className="text-label text-[var(--color-primary-glow)] mb-5">
@@ -96,8 +96,9 @@ export function NavMegaMenu({
                     className="group block h-full"
                   >
                     <Panel
-                      innerClassName="p-5 lg:p-6 h-full flex flex-col overflow-hidden"
+                      innerClassName="p-5 lg:p-6 h-full flex flex-col"
                       hover
+                      corners
                     >
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-mono text-[var(--color-text-faint)]">
