@@ -14,7 +14,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
-import { SiteBackdrop } from "@/components/site-backdrop";
 import { BuildRail } from "@/components/build-rail";
 import { ThemeProvider, type ThemeChoice } from "@/components/theme-provider";
 import { ThemeInitScript } from "@/components/theme-init-script";
@@ -196,7 +195,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.png", sizes: "105x103", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.png", sizes: "48x48", type: "image/png" },
       { url: "/logo.svg", type: "image/svg+xml" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
@@ -285,7 +285,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
-        <SiteBackdrop />
         {/* Inline, blocking, synchronous. Must be the first <body> child so
             the browser parses + executes it before any other body content
             is laid out — that's what eliminates the dark→light flash on

@@ -744,30 +744,6 @@ a:hover > .gradient-shell,
 /* Greptile frame system — site backdrop, section frame, build rail   */
 /* ------------------------------------------------------------------ */
 
-/* Site backdrop — faint dotted grid, theme-aware */
-.site-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle at center,
-    color-mix(in srgb, var(--color-text) 8%, transparent) 1px,
-    transparent 1.5px
-  );
-  background-size: 36px 36px;
-  background-position: 0 0;
-  mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
-}
-[data-theme="light"] .site-backdrop {
-  background-image: radial-gradient(
-    circle at center,
-    color-mix(in srgb, var(--color-text) 14%, transparent) 1px,
-    transparent 1.5px
-  );
-}
-
 /* Dashed-rule utility classes — reusable inside any layout */
 .dash-rule-h {
   background-image: repeating-linear-gradient(
@@ -863,11 +839,8 @@ a:hover > .gradient-shell,
   }
 }
 
-/* Ensure page content sits above backdrop, but let the sticky header
-   keep its own stacking (z-40 in markup) so the mega-menu renders above
-   main. The header is hoisted to z-50 so it always wins over body siblings
-   that get z-index:1 from the rule below. */
-body > *:not(.site-backdrop):not(header) {
+/* Sticky header stacks above body content so the mega-menu renders above main. */
+body > *:not(header) {
   position: relative;
   z-index: 1;
 }
