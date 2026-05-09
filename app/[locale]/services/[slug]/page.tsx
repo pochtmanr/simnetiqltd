@@ -187,6 +187,7 @@ export async function generateMetadata({
       languages: {
         "en-GB": `${SITE_URL}/en/services/${slug}`,
         "he-IL": `${SITE_URL}/he/services/${slug}`,
+        "ru-RU": `${SITE_URL}/ru/services/${slug}`,
         "x-default": `${SITE_URL}/en/services/${slug}`,
       },
     },
@@ -196,7 +197,7 @@ export async function generateMetadata({
       url,
       siteName: "Simnetiq",
       type: "website",
-      locale: locale === "he" ? "he_IL" : "en_GB",
+      locale: { en: "en_GB", he: "he_IL", ru: "ru_RU" }[locale],
     },
     twitter: {
       card: "summary_large_image",

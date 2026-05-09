@@ -31,6 +31,11 @@ const COPY: Record<Locale, { title: string; description: string }> = {
     description:
       "תיעוד משפטי של Simnetiq Ltd — מספר רישום 16861177 ברשם החברות, רשומה באנגליה ובוויילס. פרטי חברה, תנאי התקשרות וכתובת רשומה: 2 Frederick Street, Kings Cross, London, WC1X 0ND.",
   },
+  ru: {
+    title: "Юридическое — Impressum, условия и реквизиты Simnetiq Ltd",
+    description:
+      "Юридическая документация Simnetiq Ltd — Companies House № 16861177, регистрация в Англии и Уэльсе. Impressum, условия сотрудничества, реквизиты компании, юридический адрес: 2 Frederick Street, Kings Cross, London, WC1X 0ND.",
+  },
 };
 
 export async function generateMetadata({
@@ -57,7 +62,7 @@ export async function generateMetadata({
       url,
       siteName: "Simnetiq",
       type: "website",
-      locale: locale === "he" ? "he_IL" : "en_GB",
+      locale: { en: "en_GB", he: "he_IL", ru: "ru_RU" }[locale],
     },
   };
 }

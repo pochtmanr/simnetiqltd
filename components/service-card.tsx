@@ -59,7 +59,15 @@ export function ServiceCard({
               </div>
               <h3 className="text-title mb-3">{title}</h3>
               <p className="text-body mb-6 flex-1">{body}</p>
-              <span className="cta-fill text-label-sm self-start inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
+              {/* Mobile: pre-filled, full-width — no hover state available */}
+              <span className="md:hidden text-label-sm !text-white flex w-full items-center justify-between gap-1.5 px-3 py-2.5 bg-[var(--color-primary)]">
+                <span>{cta}</span>
+                <span aria-hidden="true" className="rtl-mirror">
+                  →
+                </span>
+              </span>
+              {/* Desktop: slide-fill on hover */}
+              <span className="cta-fill text-label-sm self-start hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
                 <span>{cta}</span>
                 <span aria-hidden="true" className="rtl-mirror">
                   →
@@ -67,8 +75,8 @@ export function ServiceCard({
               </span>
             </div>
 
-            {/* Right: 1:1 square frame with corners + service SVG */}
-            <div className="relative aspect-square shrink-0 w-[38%] max-w-[260px] self-center">
+            {/* Right: 1:1 square frame with corners + service SVG (desktop only) */}
+            <div className="relative aspect-square shrink-0 w-[38%] max-w-[260px] self-center hidden md:block">
               <div
                 aria-hidden="true"
                 className="corners pointer-events-none absolute inset-0"

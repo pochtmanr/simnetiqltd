@@ -7,6 +7,7 @@ export const SITE_NAME = "Simnetiq";
 const OG_LOCALE: Record<Locale, string> = {
   en: "en_GB",
   he: "he_IL",
+  ru: "ru_RU",
 };
 
 type LocalizedCopy = { title: string; description: string };
@@ -26,6 +27,12 @@ const HOME: RouteCopy = {
     description:
       "סימנטיק הוא אולפן טכנולוגיה מלונדון: אפליקציות מקוריות ל-iOS, Android, macOS, Windows ו-Linux; פלטפורמות ווב על Next.js ו-Supabase; אינטגרציית LLM ו-RAG עם Anthropic ו-OpenAI; רכישה ממומנת ב-Meta, TikTok וגוגל המחוברת ל-AppsFlyer ו-Adjust; תשתית VPN. מקצה לקצה — מתיק עד ייצור.",
   },
+  ru: {
+    title:
+      "Simnetiq — лондонская студия разработки ПО и growth-маркетинга",
+    description:
+      "Simnetiq — лондонская технологическая студия: нативные приложения для iOS, Android, macOS, Windows и Linux; веб-платформы на Next.js и Supabase; интеграция LLM и RAG с Anthropic и OpenAI; платный трафик в Meta, TikTok и Google с атрибуцией через AppsFlyer и Adjust; VPN-инфраструктура. От брифа до продакшена.",
+  },
 };
 
 const ABOUT: RouteCopy = {
@@ -38,6 +45,11 @@ const ABOUT: RouteCopy = {
     title: "אודות סימנטיק — אולפן תוכנה ושיווק בלונדון",
     description:
       "אודות Simnetiq Ltd — אולפן טכנולוגיה מבוסס לונדון. רשום באנגליה ובוויילס (מספר חברה 16861177). שלושה שותפים-מפעילים המכסים מובייל, ווב, AI, תשתית VPN, רכישה ממומנת ומשפטים. כתובת רשומה: 2 Frederick Street, Kings Cross, London.",
+  },
+  ru: {
+    title: "О Simnetiq — лондонская студия разработки и маркетинга",
+    description:
+      "О компании Simnetiq Ltd — технологическая студия из Лондона. Зарегистрирована в Англии и Уэльсе (Companies House 16861177). Три владельца-практика, работающих по направлениям mobile, web, AI, VPN-инфраструктура, платный трафик и юридическое сопровождение. Юридический адрес: 2 Frederick Street, Kings Cross, London.",
   },
 };
 
@@ -52,6 +64,11 @@ const PROJECTS: RouteCopy = {
     description:
       "פריסות ייצור של סימנטיק: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (פלטפורמת תוכן LLM על Anthropic ו-OpenAI), Physics.explained (פיזיקה אינטראקטיבית בקוד פתוח) ו-Go Delivery / ISR Shipping (פלטפורמת לוגיסטיקה עם מעקב GPS). תיק עבודות, מקרי בוחן ואפליקציות חיות מהאולפן בלונדון.",
   },
+  ru: {
+    title: "Проекты — продакшен-развёртывания Simnetiq",
+    description:
+      "Продакшен-развёртывания Simnetiq: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (LLM-платформа контента на Anthropic и OpenAI), Physics.explained (open-source интерактивная физика) и Go Delivery / ISR Shipping (логистическая платформа с GPS-трекингом). Портфолио, кейсы и живые приложения лондонской студии.",
+  },
 };
 
 const SERVICES: RouteCopy = {
@@ -64,6 +81,11 @@ const SERVICES: RouteCopy = {
     title: "שירותים — פיתוח, AI, שיווק צמיחה ותשתית",
     description:
       "שירותי סימנטיק: פיתוח אפליקציות ל-iOS/Android/macOS/Windows/Linux; פלטפורמות ווב על Next.js, Supabase ו-Stripe; אינטגרציית AI ו-LLM ב-Anthropic ו-OpenAI; רכישה ממומנת ב-Meta, TikTok וגוגל עם ייחוס AppsFlyer ו-Adjust; תשתית VPN. כל התקשרות מתומחרת ב-GBP מול SOW חתום.",
+  },
+  ru: {
+    title: "Услуги — разработка, AI, growth-маркетинг и инфраструктура",
+    description:
+      "Услуги Simnetiq: разработка приложений для iOS/Android/macOS/Windows/Linux; веб-платформы на Next.js, Supabase и Stripe; интеграция AI и LLM на базе Anthropic и OpenAI; платный трафик в Meta, TikTok и Google с атрибуцией AppsFlyer и Adjust; VPN-инфраструктура. Каждый контракт оценивается в GBP по подписанному SOW.",
   },
 };
 
@@ -78,6 +100,11 @@ const CASE_DOPPLER: RouteCopy = {
     description:
       "Doppler VPN הוא VPN עמיד-צנזורה הבנוי על VLESS-Reality. התעבורה נראית כמו HTTPS רגיל — בלתי ניתנת לזיהוי על ידי DPI, עמידה מול TSPU וגישוש אקטיבי. ללא רישום, ללא לוגים, אפליקציות מקוריות ל-iOS, Android, macOS ו-Windows. תשלום בכרטיס או בקריפטו.",
   },
+  ru: {
+    title: "Doppler VPN — кейс",
+    description:
+      "Doppler VPN — устойчивый к цензуре VPN на основе VLESS-Reality. Трафик неотличим от обычного HTTPS, обходит DPI, ТСПУ и активное зондирование. Без регистрации, без логов, нативные клиенты для iOS, Android, macOS и Windows. Оплата картой или криптовалютой.",
+  },
 };
 
 const CASE_PHYSICS: RouteCopy = {
@@ -90,6 +117,11 @@ const CASE_PHYSICS: RouteCopy = {
     title: "Physics.explained — מקרה בוחן",
     description:
       "Physics.explained היא אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח שנבנתה על ידי סימנטיק. אנציקלופדיה חיה המקיפה מכניקה קלאסית, אלקטרומגנטיות, תרמודינמיקה, יחסות, קוונטים ופיזיקה מודרנית — מבוססת פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL, גרף מושגים מקושר ומורה בינה מלאכותית ב-/ask.",
+  },
+  ru: {
+    title: "Physics.explained — кейс",
+    description:
+      "Physics.explained — open-source интерактивная энциклопедия физики, созданная Simnetiq. Живая энциклопедия, охватывающая классическую механику, электромагнетизм, термодинамику, теорию относительности, квантовую и современную физику — построена на покрытых тестами решателях ОДУ, WebGL-визуализациях, связном графе понятий и AI-репетиторе на /ask с обоснованными выводами на материале библиотеки.",
   },
 };
 

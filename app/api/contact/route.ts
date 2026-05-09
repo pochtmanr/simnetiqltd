@@ -5,11 +5,12 @@ import { rateLimit } from "@/lib/rate-limit";
 import { renderAutoReplyEmail, type AutoReplyLocale } from "@/lib/email-templates";
 
 function detectLocale(req: NextRequest, body: { locale?: unknown }): AutoReplyLocale {
-  if (body.locale === "he" || body.locale === "en") return body.locale;
+  if (body.locale === "he" || body.locale === "en" || body.locale === "ru") return body.locale;
   const referer = req.headers.get("referer") ?? "";
   try {
     const path = new URL(referer).pathname;
     if (path.startsWith("/he")) return "he";
+    if (path.startsWith("/ru")) return "ru";
   } catch {
     /* invalid or missing referer */
   }

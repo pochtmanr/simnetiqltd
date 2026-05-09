@@ -1,4 +1,4 @@
-export type AutoReplyLocale = "en" | "he";
+export type AutoReplyLocale = "en" | "he" | "ru";
 
 type AutoReplyInput = {
   name: string;
@@ -91,6 +91,26 @@ const COPY = {
     textWorkHref: "עבודות אחרונות: ",
     textWhy: "קיבלת את ההודעה הזו כי יצרת קשר דרך simnetiq.store.",
   },
+  ru: {
+    subject: "Спасибо, что написали в Simnetiq",
+    greeting: (firstName: string) => `Здравствуйте, ${firstName}!`,
+    p1: "Спасибо за обращение — ваше сообщение дошло до нашего инбокса.",
+    echoLabel: "Вот что вы отправили:",
+    p3: "Ответим в течение одного рабочего дня.",
+    ctaPrimary: "Записаться на звонок",
+    ctaSecondary: "Свежие проекты",
+    address: "Simnetiq · Берлин, Германия",
+    why: "Вы получили это письмо, потому что обратились к нам на simnetiq.store.",
+    optOut: "Ответьте на это письмо словом STOP, если не хотите получать ответ.",
+    rights: "Simnetiq",
+    textGreeting: (firstName: string) => `Здравствуйте, ${firstName}!`,
+    textP1: "Спасибо за обращение — ваше сообщение дошло до нашего инбокса.",
+    textEcho: "Вот что вы отправили:",
+    textP3: "Ответим в течение одного рабочего дня.",
+    textBookHref: "Записаться на звонок: ",
+    textWorkHref: "Свежие проекты: ",
+    textWhy: "Вы получили это письмо, потому что обратились к нам на simnetiq.store.",
+  },
 } as const;
 
 export function renderAutoReplyEmail({
@@ -102,7 +122,8 @@ export function renderAutoReplyEmail({
   const align = locale === "he" ? "right" : "left";
   const copy = COPY[locale];
   const firstName = getFirstName(name);
-  const safeFirstName = escapeHtml(firstName || (locale === "he" ? "שלום" : "there"));
+  const fallbackName = { en: "there", he: "שלום", ru: "друг" }[locale];
+  const safeFirstName = escapeHtml(firstName || fallbackName);
   const truncatedMessage = truncate(message.trim(), 240);
   const safeMessage = escapeHtml(truncatedMessage).replace(/\n/g, "<br />");
   const year = new Date().getFullYear();
@@ -173,7 +194,7 @@ export function renderAutoReplyEmail({
 </html>`;
 
   const textParts = [
-    copy.textGreeting(firstName || (locale === "he" ? "שלום" : "there")),
+    copy.textGreeting(firstName || fallbackName),
     "",
     copy.textP1,
     "",

@@ -1,0 +1,14 @@
+wing: simnetiq.store
+rooms:
+- name: app
+  description: Files from app/
+- name: frontend
+  description: Files from components/
+- name: public
+  description: Files from public/
+- name: lib
+  description: Files from lib/
+- name: backend
+  description: Files from api/
+- name: general
+  description: Files that don't fit other rooms

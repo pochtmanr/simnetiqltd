@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint && npm run check:i18n",
+    "check:i18n": "tsx scripts/check-i18n.ts"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
@@ -26,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

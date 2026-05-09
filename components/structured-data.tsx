@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+
 const BASE_URL = "https://simnetiq.store";
 
 const organization = {
@@ -361,7 +363,7 @@ type CaseStudySchemaInput = {
   /** Hero image URL — absolute or root-relative. */
   image: string;
   /** Locale, used to set inLanguage and pick canonical alternates. */
-  locale: "en" | "he";
+  locale: Locale;
   /** ISO date — first published. Defaults to studio founding year. */
   datePublished?: string;
   /** ISO date — last meaningful edit. */
@@ -394,7 +396,7 @@ export function CaseStudyArticleSchema({
     image: [absoluteImage],
     datePublished,
     dateModified: dateModified ?? datePublished,
-    inLanguage: locale === "he" ? "he-IL" : "en-GB",
+    inLanguage: { en: "en-GB", he: "he-IL", ru: "ru-RU" }[locale],
     author: { "@id": `${BASE_URL}/#organization` },
     publisher: { "@id": `${BASE_URL}/#organization` },
     isPartOf: { "@id": `${BASE_URL}/#website` },

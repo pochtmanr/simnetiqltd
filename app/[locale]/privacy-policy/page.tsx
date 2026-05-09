@@ -36,6 +36,11 @@ const PRIVACY_COPY: Record<
     description:
       "מדיניות פרטיות של Simnetiq Ltd ושל מוצריה, כולל יישום ה-eSIM של סימנטיק. עיבוד תואם GDPR, פיקוח של ICO הבריטית, אחראי על המידע בכתובת 2 Frederick Street, Kings Cross, London. פרטי איסוף מידע, שמירה, זכויות, שיתוף עם ספקי eSIM ועיבוד תשלומים, עוגיות ופרטיות ילדים.",
   },
+  ru: {
+    title: "Политика конфиденциальности — Simnetiq Ltd",
+    description:
+      "Политика конфиденциальности Simnetiq Ltd и её продуктов, включая приложение Simnetiq eSIM. Обработка данных в соответствии с GDPR, надзор UK ICO, контролёр данных по адресу 2 Frederick Street, Kings Cross, London. Подробности о сборе данных, сроках хранения, правах, передаче eSIM- и платёжным процессорам, cookie и конфиденциальности детей.",
+  },
 };
 
 export async function generateMetadata({
@@ -65,7 +70,7 @@ export async function generateMetadata({
       url,
       siteName: "Simnetiq",
       type: "website",
-      locale: locale === "he" ? "he_IL" : "en_GB",
+      locale: { en: "en_GB", he: "he_IL", ru: "ru_RU" }[locale],
     },
   };
 }

@@ -32,6 +32,11 @@ const DELETE_COPY: Record<
     description:
       "בקשת מחיקה קבועה של חשבון ונתונים משירותי סימנטיק, כולל יישום ה-eSIM של סימנטיק. תהליך תואם GDPR, תואם מדיניות App Store ו-Google Play. מטופל תוך 30 יום.",
   },
+  ru: {
+    title: "Удаление аккаунта — запрос на удаление данных Simnetiq",
+    description:
+      "Запрос на безвозвратное удаление аккаунта и данных из сервисов Simnetiq, включая приложение Simnetiq eSIM. Соответствует требованиям GDPR, политикам App Store и Google Play. Обрабатывается в течение 30 дней.",
+  },
 };
 
 export async function generateMetadata({
@@ -62,7 +67,7 @@ export async function generateMetadata({
       url,
       siteName: "Simnetiq",
       type: "website",
-      locale: locale === "he" ? "he_IL" : "en_GB",
+      locale: { en: "en_GB", he: "he_IL", ru: "ru_RU" }[locale],
     },
   };
 }

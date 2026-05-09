@@ -142,7 +142,7 @@ export function HomePageClient({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-8 lg:py-10">
           <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
             <Panel
-              className="order-2 lg:order-1 lg:col-span-7 min-h-[460px] lg:min-h-[620px]"
+              className="order-2 lg:order-1 lg:col-span-7 aspect-square lg:aspect-auto lg:min-h-[620px]"
               innerClassName="h-full"
               corners
             >
@@ -189,8 +189,8 @@ export function HomePageClient({
                 </h1>
                 <p className="text-body mt-6 max-w-md">{dict.hero.body}</p>
 
-                {/* App Store accolade — Top 30 Israel developers */}
-                <div className="mt-7 inline-flex items-center gap-3 border border-[var(--color-border-strong)] px-3.5 py-2.5 max-w-fit">
+                {/* App Store accolade — Top 30 Israel developers (desktop only) */}
+                <div className="mt-7 hidden md:inline-flex items-center gap-3 border border-[var(--color-border-strong)] px-3.5 py-2.5 max-w-fit">
                   <span
                     aria-hidden="true"
                     className="inline-flex w-5 h-5 items-center justify-center text-[var(--color-primary-glow)]"
@@ -207,8 +207,8 @@ export function HomePageClient({
                 </div>
 
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link
-                    href={localizePath(locale, "/projects")}
+                  <a
+                    href="#contact"
                     onClick={() =>
                       track("hero_cta_click", { cta: "primary", locale })
                     }
@@ -218,9 +218,9 @@ export function HomePageClient({
                     <span aria-hidden="true" className="btn-arrow">
                       →
                     </span>
-                  </Link>
-                  <a
-                    href="#contact"
+                  </a>
+                  <Link
+                    href={localizePath(locale, "/services")}
                     onClick={() =>
                       track("hero_cta_click", { cta: "secondary", locale })
                     }
@@ -230,11 +230,11 @@ export function HomePageClient({
                     <span aria-hidden="true" className="btn-arrow">
                       →
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </div>
 
-              <Panel innerClassName="p-6" corners>
+              <Panel className="hidden lg:block" innerClassName="p-6" corners>
                 <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
                   {dict.hero.manifest.label}
                 </p>

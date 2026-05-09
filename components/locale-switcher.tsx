@@ -12,6 +12,7 @@ const LOCALE_COOKIE = "NEXT_LOCALE";
 const LOCALE_SHORT: Record<Locale, string> = {
   en: "EN",
   he: "עב",
+  ru: "RU",
 };
 
 const HEBREW_FONT_STACK =

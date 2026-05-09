@@ -126,17 +126,23 @@ function snap(v: number): number {
 }
 
 function buildLayout(width: number, height: number, rng: () => number): Layout {
+  const isMobile = width < 600;
+
   // Place the "mother" chip dead-center first; everything else lays out around it.
-  const motherW = Math.max(132, Math.min(168, Math.floor(width * 0.16)));
-  const motherH = Math.max(104, Math.min(132, Math.floor(height * 0.21)));
+  const motherW = isMobile
+    ? Math.max(78, Math.min(108, Math.floor(width * 0.26)))
+    : Math.max(132, Math.min(168, Math.floor(width * 0.16)));
+  const motherH = isMobile
+    ? Math.max(60, Math.min(84, Math.floor(height * 0.22)))
+    : Math.max(104, Math.min(132, Math.floor(height * 0.21)));
   const mother: MotherChip = {
     x: snap(width / 2 - motherW / 2) - 0.5,
     y: snap(height / 2 - motherH / 2) - 0.5,
     w: motherW,
     h: motherH,
-    pinCount: 9,
+    pinCount: isMobile ? 7 : 9,
   };
-  const motherBuffer = 28;
+  const motherBuffer = isMobile ? 18 : 28;
   const motherBox = {
     x1: mother.x - motherBuffer,
     y1: mother.y - motherBuffer,
@@ -144,24 +150,39 @@ function buildLayout(width: number, height: number, rng: () => number): Layout {
     y2: mother.y + mother.h + motherBuffer,
   };
 
-  // Place ICs across the panel on a coarse 3x2 / 4x2 jittered grid.
+  // Place ICs across the panel on a coarse jittered grid.
   const ics: IC[] = [];
   const cols = width > 900 ? 4 : 3;
   const rows = 2;
-  const padX = 90;
-  const padY = 70;
+  const padX = isMobile ? 38 : 90;
+  const padY = isMobile ? 42 : 70;
   const cellW = (width - padX * 2) / (cols - 1 || 1);
   const cellH = (height - padY * 2) / (rows - 1 || 1);
 
   let counter = 1;
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      const cx = padX + c * cellW + (rng() - 0.5) * 16;
-      const cy = padY + r * cellH + (rng() - 0.5) * 14;
-      const w = 38 + Math.floor(rng() * 18);
-      const h = 22 + Math.floor(rng() * 10);
-      const x = snap(cx) - 0.5;
-      const y = snap(cy) - 0.5;
+      const cx = padX + c * cellW + (rng() - 0.5) * (isMobile ? 10 : 16);
+      const cy = padY + r * cellH + (rng() - 0.5) * (isMobile ? 8 : 14);
+      const w = isMobile
+        ? 26 + Math.floor(rng() * 12)
+        : 38 + Math.floor(rng() * 18);
+      const h = isMobile
+        ? 16 + Math.floor(rng() * 8)
+        : 22 + Math.floor(rng() * 10);
+      // Clamp so the IC body + its pin stubs + label never bleed past the
+      // panel edge. Pins extend 4px out; labels can sit ~10px above the body.
+      const edgePad = 10;
+      const xRaw = snap(cx) - 0.5;
+      const yRaw = snap(cy) - 0.5;
+      const x = Math.max(
+        edgePad,
+        Math.min(width - w - edgePad, xRaw),
+      );
+      const y = Math.max(
+        edgePad + 4,
+        Math.min(height - h - edgePad, yRaw),
+      );
       // Skip cells that would crash into the mother chip's reserved zone.
       if (
         x < motherBox.x2 &&
@@ -172,7 +193,9 @@ function buildLayout(width: number, height: number, rng: () => number): Layout {
         continue;
       }
       const pinSide: "v" | "h" = rng() > 0.5 ? "v" : "h";
-      const pinCount = 6 + Math.floor(rng() * 5);
+      const pinCount = isMobile
+        ? 4 + Math.floor(rng() * 4)
+        : 6 + Math.floor(rng() * 5);
       const prefix = rng() > 0.65 ? "IC" : "U";
       ics.push({
         x,
@@ -383,7 +406,7 @@ function drawMotherChip(
   ctx.strokeStyle = rgba(palette.primaryGlow, 0.9);
   ctx.lineWidth = 1;
   ctx.beginPath();
-  const pinLen = 6;
+  const pinLen = Math.max(4, Math.round(Math.min(m.w, m.h) * 0.05));
   const stepX = m.w / (m.pinCount + 1);
   for (let p = 1; p <= m.pinCount; p++) {
     const px = Math.round(m.x + p * stepX) + 0.5;
@@ -427,12 +450,14 @@ function drawMotherChip(
     ctx.stroke();
   }
 
-  // Brand label below the chip
+  // Brand label below the chip — clearance scales with chip size so the
+  // label doesn't crash into ICs sitting just outside the buffer.
+  const labelOffset = Math.max(12, pinLen + 8);
   ctx.fillStyle = palette.textFaint;
   ctx.font = '9px ui-monospace, "JetBrains Mono", Menlo, monospace';
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
-  ctx.fillText("SIMNETIQ", m.x + m.w / 2, m.y + m.h + 16);
+  ctx.fillText("SIMNETIQ", m.x + m.w / 2, m.y + m.h + labelOffset);
 }
 
 function bakeStaticLayer(

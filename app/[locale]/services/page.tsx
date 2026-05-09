@@ -142,14 +142,22 @@ export default async function ServicesIndexPage({
                     </h2>
                     <p className="text-body max-w-lg">{service.summary}</p>
                   </div>
-                  <div className="lg:col-span-3 flex lg:flex-col lg:items-end lg:justify-between gap-3">
-                    <div className="text-mono text-[var(--color-text-faint)]">
+                  <div className="lg:col-span-3 flex flex-col lg:items-end lg:justify-between gap-3">
+                    <div className="flex items-center justify-between lg:justify-end w-full text-mono text-[var(--color-text-faint)]">
                       {s.servicesCount.replace(
                         "{count}",
                         String(service.services.length)
                       )}
                     </div>
-                    <span className="cta-fill text-label-sm self-start lg:self-end inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
+                    {/* Mobile: pre-filled, full-width — no hover on touch */}
+                    <span className="lg:hidden text-label-sm !text-white flex w-full items-center justify-between gap-1.5 px-3 py-2.5 bg-[var(--color-primary)]">
+                      <span>{s.viewBrief}</span>
+                      <span aria-hidden="true" className="rtl-mirror">
+                        →
+                      </span>
+                    </span>
+                    {/* Desktop: slide-fill on hover */}
+                    <span className="cta-fill text-label-sm self-end hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
                       <span>{s.viewBrief}</span>
                       <span aria-hidden="true" className="rtl-mirror">
                         →

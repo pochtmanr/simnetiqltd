@@ -348,9 +348,165 @@ const servicesHe: Service[] = [
   },
 ];
 
+const servicesRu: Service[] = [
+  {
+    slug: "mobile-desktop",
+    code: "C-01",
+    badge: "NATIVE · CROSS-PLATFORM",
+    title: "Mobile &",
+    titleSecondary: "Desktop",
+    tagline: "Нативные клиенты, которые выходят в продакшен.",
+    summary:
+      "Production-приложения для iOS, Android, macOS, Windows и Linux. SwiftUI, Jetpack Compose, WinUI 3, .NET и современные кросс-платформенные рантаймы — выбираем по существу, а не по простоте.",
+    positioning:
+      "От моноплатформенных MVP до мультиОС-продуктов с общими бэкендами. Закладываем долгосрочное качество: нативная производительность, разумная архитектура и готовность к публикации в сторах с первого дня.",
+    services: [
+      { code: "S-01", title: "Приложения для iOS / iPadOS", text: "Нативные SwiftUI + UIKit. Соответствие HIG, интеграция RevenueCat / StoreKit, доставка через TestFlight, ведение релиза в App Store от заявки до публикации." },
+      { code: "S-02", title: "Приложения для Android", text: "Jetpack Compose, Material 3, соответствие политикам Google Play. Coroutines, Hilt, Room, ExoPlayer — собираем именно те примитивы, которые нужны продукту." },
+      { code: "S-03", title: "Десктоп — macOS", text: "Нативный SwiftUI или AppKit для macOS. Утилиты для menu bar, документ-ориентированные приложения, дистрибуция через Mac App Store или нотаризованный DMG." },
+      { code: "S-04", title: "Десктоп — Windows", text: "WinUI 3, WPF и .NET 8+ для современного Windows-опыта. Упаковка MSIX, дистрибуция в Microsoft Store или подписанные standalone-инсталляторы." },
+      { code: "S-05", title: "Десктоп — Linux и кросс-платформа", text: "Tauri, Electron, Qt и Flutter Desktop для единой кодовой базы под macOS, Windows и Linux, когда это оправдано." },
+      { code: "S-06", title: "Сабмишн в сторы и release ops", text: "App Store, Google Play, Mac App Store, Microsoft Store. Метаданные, скриншоты, ответы ревьюверам, поэтапные раскатки, разбор крашей." },
+    ],
+    techStack: [
+      { label: "iOS / Apple", items: ["Swift", "SwiftUI", "UIKit", "Combine", "Core Data", "StoreKit 2", "WidgetKit", "Xcode Cloud"] },
+      { label: "Android / Google", items: ["Kotlin", "Jetpack Compose", "Material 3", "Coroutines", "Hilt", "Room", "WorkManager", "Play Billing"] },
+      { label: "macOS", items: ["SwiftUI", "AppKit", "Combine", "Swift Charts", "Mac Catalyst"] },
+      { label: "Windows", items: ["WinUI 3", "WPF", ".NET 8", "C#", "MSIX", "MAUI"] },
+      { label: "Кросс-платформа", items: ["Tauri", "Electron", "Flutter", "Qt 6", "React Native"] },
+      { label: "Дистрибуция", items: ["App Store Connect", "Google Play Console", "Mac App Store", "Microsoft Store", "Fastlane", "TestFlight"] },
+    ],
+    pricing: [
+      { name: "Mobile", price: "ОТ £1K", blurb: "iOS + Android в рамках одного контракта.", bullets: ["Нативный iOS (SwiftUI) + Android (Compose)", "Общая продуктовая спека и дизайн-система", "Подключение auth + платежей + аналитики", "Сабмишн в обе сторы"] },
+      { name: "Mobile + Desktop", price: "ОТ £3K", blurb: "Mobile плюс десктоп-клиенты на macOS и Windows.", highlighted: true, bullets: ["Нативные iOS + Android клиенты", "macOS (SwiftUI) + Windows (WinUI 3)", "Общий бэкенд и единый дизайн-язык", "Сабмишн на каждую из платформ"] },
+      { name: "Полная экосистема", price: "ИНДИВИДУАЛЬНО", blurb: "Приложения, сайт и боты как единый продукт.", bullets: ["Mobile + десктоп нативные клиенты", "Маркетинговый сайт + продуктовая платформа", "Боты для Telegram / Slack / Discord", "Бэкенд, auth, биллинг, автоматизация"] },
+    ],
+    meta: [
+      { label: "Платформы", value: "iOS · Android · macOS · Windows · Linux" },
+      { label: "Основной стек", value: "Swift · Kotlin · C# · Tauri" },
+      { label: "Типичный контракт", value: "6–16 недель" },
+    ],
+  },
+  {
+    slug: "growth-marketing",
+    code: "C-02",
+    badge: "ADS · ATTRIBUTION · GROWTH",
+    title: "Growth &",
+    titleSecondary: "Marketing",
+    tagline: "Платный трафик, привязанный к настоящей атрибуции.",
+    summary:
+      "Кампании в Meta, TikTok и Google, оптимизированные под реальные in-app события — не по vanity-метрикам. Интеграции AppsFlyer, Adjust и Branch встроены в iOS- и Android-клиенты, еженедельная отчётность и итерации креативов.",
+    positioning:
+      "Лёгкие контракты на платный трафик для приложений и платформ. Каждая кампания запускается с настроенной атрибуцией, тестируемыми вариантами креативов и понятным отчётом по тратам — без чёрно-ящичных агентских ретейнеров.",
+    services: [
+      { code: "S-01", title: "Meta Ads (Facebook / Instagram)", text: "Архитектура кампаний, продакшен креативов, дизайн аудиторий, подключение Pixel + Conversions API, еженедельные циклы оптимизации." },
+      { code: "S-02", title: "TikTok Ads", text: "TikTok Ads Manager, Spark Ads, партнёрства с креаторами, интеграция Events SDK. Креатив-first, а не spray-and-pray." },
+      { code: "S-03", title: "AppsFlyer и MMP-интеграция", text: "Подключение AppsFlyer, Adjust, Branch SDK в iOS и Android. Deep linking, маппинг событий, дедупликация, fraud-protection." },
+      { code: "S-04", title: "Продакшен креативов", text: "Видео, статика, UGC. Naming-конвенции, ведение креативной библиотеки, структурированный A/B." },
+      { code: "S-05", title: "Аналитика и отчётность", text: "Еженедельные отчёты по тратам, LTV-моделирование, отслеживание payback. Дашборды в Looker, Metabase или нативной консоли MMP." },
+      { code: "S-06", title: "Google Ads и App Campaigns", text: "Google UAC, поиск, YouTube. Tag Manager, GA4, server-side конверсии и кросс-канальная дедупликация." },
+    ],
+    techStack: [
+      { label: "Рекламные платформы", items: ["Meta Ads", "TikTok Ads", "Google Ads", "Apple Search Ads", "Reddit Ads"] },
+      { label: "Атрибуция (MMP)", items: ["AppsFlyer", "Adjust", "Branch", "Singular", "Kochava"] },
+      { label: "Аналитика", items: ["GA4", "Mixpanel", "Amplitude", "PostHog", "Looker Studio"] },
+      { label: "Server-side", items: ["Meta CAPI", "TikTok Events API", "Google Ads API", "Server GTM", "Stape"] },
+      { label: "Креатив", items: ["After Effects", "Figma", "CapCut", "Runway", "DaVinci Resolve"] },
+      { label: "Инструменты", items: ["Google Tag Manager", "Segment", "Iterable", "Customer.io"] },
+    ],
+    pricing: [
+      { name: "Starter", price: "ОТ £500", blurb: "Настройка одной платформы + запуск первого месяца.", bullets: ["Один рекламный канал (Meta или TikTok)", "Настройка кампаний, pixel и событий", "3 варианта креативов", "Мониторинг первого месяца"] },
+      { name: "Scale", price: "ОТ £1.5K", blurb: "Мультиканальный запуск с подключённой атрибуцией.", highlighted: true, bullets: ["Meta + TikTok (или + Google)", "Интеграция AppsFlyer / Adjust SDK", "Продакшен креативов + структура A/B", "Еженедельный отчётный дашборд", "Управление тратами в первый месяц"] },
+      { name: "Ретейнер", price: "ИНДИВИДУАЛЬНО", blurb: "Постоянные операции по росту, ежемесячный ритм.", bullets: ["Выделенный growth-оператор", "Управление мультиканальным портфелем", "Циклы итераций креативов", "Моделирование LTV и payback"] },
+    ],
+    meta: [
+      { label: "Каналы", value: "Meta · TikTok · Google" },
+      { label: "Атрибуция", value: "AppsFlyer · Adjust · Branch" },
+      { label: "Ритм", value: "Неделя на сетап, ежемесячные циклы" },
+    ],
+  },
+  {
+    slug: "ai-automation",
+    code: "C-03",
+    badge: "AI · PIPELINES · AGENTS",
+    title: "AI &",
+    titleSecondary: "Automation",
+    tagline: "Production AI, подключённый к реальным пайплайнам.",
+    summary:
+      "Любая модель — Anthropic, OpenAI, open-weight или fine-tuned. Любой пайплайн — n8n, Make.com, кастомный Node или Python на выделенном VPS. Любой источник данных — Postgres, S3, Notion, Stripe, Telegram, ваш собственный SaaS. Связываем их в автоматизации, которые выживают в продакшене: расписание, наблюдаемость, безопасные ретраи.",
+    positioning:
+      "Большинство AI-проектов останавливаются на демке чат-бота. Мы строим вокруг неё операционный слой — триггеры, потоки данных, ретраи, наблюдаемость — чтобы модель стала системой, а не feature flag'ом.",
+    services: [
+      { code: "S-01", title: "Инженерия AI-фич", text: "Архитектура промптов, кэширование, стриминг, структурированные ответы, tool-use. Проверяется evals, а не мнениями." },
+      { code: "S-02", title: "Retrieval и RAG", text: "Векторные хранилища (pgvector, Pinecone, Weaviate), гибридный поиск, реранкинг, стратегии чанкинга под конкретный корпус." },
+      { code: "S-03", title: "Агентные сценарии", text: "Многошаговые агенты с проверяемыми сайд-эффектами. Каталоги инструментов, guardrails, ограничения по стоимости, безопасное воспроизведение исполнения." },
+      { code: "S-04", title: "Пайплайны на n8n и Make", text: "Self-hosted n8n на вашем VPS или нашем. Webhook'и, расписания, ретраи, dead-letter очереди, полный аудит-трейл." },
+      { code: "S-05", title: "Кастомные пайплайны на VPS", text: "Когда n8n уже мало — TypeScript- или Python-сервисы на выделенном VPS, очереди через BullMQ или Redis Streams." },
+      { code: "S-06", title: "Интеграции данных и вендоров", text: "Postgres, Supabase, Stripe, HubSpot, Telegram, Slack, Notion, S3, Sheets, кастомный REST или GraphQL — подключаем чисто." },
+    ],
+    techStack: [
+      { label: "AI-провайдеры", items: ["Anthropic Claude", "OpenAI", "Google Gemini", "Mistral", "Together AI", "Replicate"] },
+      { label: "Open-weight и локальные", items: ["Llama 3", "Qwen", "DeepSeek", "Ollama", "vLLM", "LM Studio"] },
+      { label: "Векторы и retrieval", items: ["pgvector", "Pinecone", "Weaviate", "Qdrant", "Chroma", "Voyage AI"] },
+      { label: "Пайплайны", items: ["n8n", "Make.com", "Temporal", "BullMQ", "Trigger.dev", "Inngest"] },
+      { label: "Рантаймы", items: ["Node.js", "Python", "Bun", "Deno", "Docker", "Caddy / nginx"] },
+      { label: "Инфраструктура", items: ["Hetzner VPS", "Railway", "Fly.io", "Supabase", "Cloudflare Workers", "Vercel"] },
+    ],
+    pricing: [
+      { name: "Pilot", price: "ОТ £1.5K", blurb: "Одна AI-фича от и до за две недели.", bullets: ["Один сценарий под реальный кейс", "Интеграция Anthropic или OpenAI с кэшированием", "Базовый eval-харнесс", "Развёртывание на вашем стеке или нашем"] },
+      { name: "Production", price: "ОТ £4K", blurb: "AI-фича плюс пайплайн, который её питает.", highlighted: true, bullets: ["LLM-фича + слой retrieval / RAG", "n8n или кастомный пайплайн на выделенном VPS", "Интеграции вендоров (Stripe, Postgres, Telegram и т.д.)", "Наблюдаемость, ретраи, потолки по стоимости", "Eval-харнесс + первый месяц мониторинга"] },
+      { name: "Платформа", price: "ИНДИВИДУАЛЬНО", blurb: "Полноценная AI- и автоматизационная платформа на ваших данных.", bullets: ["Несколько AI-поверхностей", "Self-hosted модели или гибрид", "Кастомные агентные сценарии с guardrails", "Полный набор пайплайнов и интеграций данных", "Постоянное операционное сопровождение"] },
+    ],
+    meta: [
+      { label: "Модели", value: "Anthropic · OpenAI · Open-weight" },
+      { label: "Пайплайны", value: "n8n · Make · Кастом на VPS" },
+      { label: "Типичный контракт", value: "2–10 недель" },
+    ],
+  },
+  {
+    slug: "web-platforms",
+    code: "C-04",
+    badge: "WEB · SAAS · BILLING",
+    title: "Web &",
+    titleSecondary: "Platforms",
+    tagline: "Next.js, Supabase, Stripe — production-веб.",
+    summary:
+      "Next.js 16, Supabase, Stripe и edge-нативный биллинг. Маркетинговые сайты, которые конвертят, продуктовые платформы, которые масштабируются, и связующая сантехника — auth, платежи, webhooks, email — собранные чисто.",
+    positioning:
+      "От прецизионного лендинга до полноценного multi-tenant SaaS. Каждая платформа выходит с наблюдаемостью, CI/CD и понятной операционной историей с первого дня.",
+    services: [
+      { code: "S-01", title: "Лендинги и маркетинговые сайты", text: "Next.js + Tailwind. SEO-grade перформанс, CMS по запросу, аккуратная анимация, подключённая аналитика и эксперименты." },
+      { code: "S-02", title: "SaaS-платформы", text: "Supabase + Next.js app router. Auth, RLS, row-level подписки, файловое хранилище, фоновые задачи, админ-консоли." },
+      { code: "S-03", title: "Биллинг и подписки", text: "Stripe Billing, Apple / Google IAP, RevenueCat. Налоги, dunning, webhooks, customer-портал, флоу инвойсов." },
+      { code: "S-04", title: "Аутентификация", text: "Sign in with Apple, Google, OAuth, magic link, passkeys. Модели организаций / команд, флоу инвайтов, иерархии ролей." },
+      { code: "S-05", title: "Внутренние инструменты и дашборды", text: "Админ-панели, ops-дашборды, консоли автоматизации. Быстро, без ущерба для архитектуры." },
+      { code: "S-06", title: "Интеграции и автоматизация", text: "Workflow на n8n, Telegram-боты, Slack-приложения, webhook-релеи, ETL-пайплайны. Подключаем SaaS к вашим операциям." },
+    ],
+    techStack: [
+      { label: "Frontend", items: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4", "shadcn/ui", "HeroUI", "Framer Motion"] },
+      { label: "Backend / Data", items: ["Supabase", "PostgreSQL", "Drizzle", "Prisma", "Redis", "Cloudflare D1"] },
+      { label: "Платежи", items: ["Stripe Billing", "Stripe Connect", "RevenueCat", "Apple IAP", "Google Play Billing"] },
+      { label: "Auth", items: ["Supabase Auth", "Clerk", "Auth.js", "Passkeys / WebAuthn", "Sign in with Apple"] },
+      { label: "Хостинг", items: ["Vercel", "Cloudflare Pages", "Hostinger VPS", "Supabase Edge Functions"] },
+      { label: "Автоматизация", items: ["n8n", "Inngest", "Trigger.dev", "Telegram Bot API", "Resend / SMTP"] },
+    ],
+    pricing: [
+      { name: "Лендинг", price: "ОТ £800", blurb: "Прецизионный лендинг или маркетинговый сайт.", bullets: ["До 6 страниц", "Кастомная дизайн-система", "Аналитика + SEO + sitemap", "Один раунд правок контента"] },
+      { name: "Платформа", price: "ОТ £1.5K", blurb: "Полноценный SaaS или продуктовое веб-приложение.", highlighted: true, bullets: ["Auth, биллинг, webhooks, email", "Админ-/ops-дашборд", "Подключение Supabase + Stripe", "CI/CD, мониторинг, staging", "30 дней постзапускной поддержки"] },
+      { name: "Enterprise", price: "ИНДИВИДУАЛЬНО", blurb: "Multi-tenant, тяжёлый комплаенс, выделенная команда.", bullets: ["Мультирегиональная архитектура", "SSO, audit-логи, тонкий RBAC", "Соответствие SOC 2 / GDPR", "Подписанный SLA"] },
+    ],
+    meta: [
+      { label: "Стек", value: "Next.js · Supabase · Stripe" },
+      { label: "Типичный TTM", value: "5–12 недель" },
+      { label: "Референс", value: "Simnetiq · Go Delivery" },
+    ],
+  },
+];
+
 const SERVICES_BY_LOCALE: Record<Locale, Service[]> = {
   en: servicesEn,
   he: servicesHe,
+  ru: servicesRu,
 };
 
 /** Backward-compatible default export of the EN services array. */

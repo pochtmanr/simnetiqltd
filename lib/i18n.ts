@@ -1,4 +1,4 @@
-export const LOCALES = ["en", "he"] as const;
+export const LOCALES = ["en", "he", "ru"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "en";
@@ -8,11 +8,13 @@ const RTL_LOCALES: readonly Locale[] = ["he"];
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",
   he: "עברית",
+  ru: "Русский",
 };
 
 export const LOCALE_HTML_LANG: Record<Locale, string> = {
   en: "en-GB",
   he: "he-IL",
+  ru: "ru-RU",
 };
 
 export function isLocale(value: string): value is Locale {

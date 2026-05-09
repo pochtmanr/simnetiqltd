@@ -4,6 +4,7 @@ import type { Locale } from "./i18n";
 const loaders = {
   en: () => import("@/messages/en.json").then((m) => m.default),
   he: () => import("@/messages/he.json").then((m) => m.default),
+  ru: () => import("@/messages/ru.json").then((m) => m.default),
 } satisfies Record<Locale, () => Promise<Dictionary>>;
 
 export type Dictionary = typeof import("@/messages/en.json");
