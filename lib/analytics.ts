@@ -2,7 +2,12 @@ import { track as vercelTrack } from "@vercel/analytics";
 import type { Locale } from "@/lib/i18n";
 
 type ServiceCode = "mobile" | "web" | "aiAutomation" | "growth";
-type ProjectId = "physics" | "doppler" | "creator" | "delivery";
+type ProjectId =
+  | "physics"
+  | "doppler"
+  | "creator"
+  | "delivery"
+  | "greenflagged";
 type ThemeValue = "system" | "light" | "dark";
 
 export type AnalyticsEvent =

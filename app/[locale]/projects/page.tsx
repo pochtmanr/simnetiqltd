@@ -31,6 +31,10 @@ const PROJECTS_KEYWORDS = [
   "ISR Shipping",
   "Go Delivery logistics",
   "delivery platform case study",
+  "Green Flagged",
+  "AI contract review",
+  "contract reviewer for freelancers",
+  "legal-tech case study",
   "London software portfolio",
   "production app case studies",
   "iOS app portfolio UK",
@@ -50,10 +54,16 @@ export async function generateMetadata({
     routeKey: "projects",
     path: "/projects",
     keywords: PROJECTS_KEYWORDS,
+    markdownAlternate: true,
   });
 }
 
-type ProjectKey = "physics" | "doppler" | "creator" | "delivery";
+type ProjectKey =
+  | "physics"
+  | "doppler"
+  | "creator"
+  | "delivery"
+  | "greenflagged";
 
 type ProjectStruct = {
   key: ProjectKey;
@@ -62,6 +72,7 @@ type ProjectStruct = {
   link: { kind: "internal" | "external"; href: string; labelKey: "readCaseStudy" | "visitSite" };
   secondaryLink?: { kind: "internal" | "external"; href: string; labelKey: "readCaseStudy" | "visitSite" };
   metaKeys: { labelKey: string; valueKey: string }[];
+  status?: "live" | "inDev";
 };
 
 const projectsList: ProjectStruct[] = [
@@ -90,15 +101,17 @@ const projectsList: ProjectStruct[] = [
     ],
   },
   {
-    key: "creator",
+    key: "greenflagged",
     id: "03",
-    tags: ["SWIFT", "KOTLIN", "PYTHON", "SUPABASE"],
-    link: { kind: "external", href: "https://www.creatorai.art/en", labelKey: "visitSite" },
+    tags: ["NEXT.JS 16", "REACT 19", "TAILWIND V4", "GSAP"],
+    link: { kind: "internal", href: "/projects/green-flagged", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://greenflagged.vercel.app/", labelKey: "visitSite" },
     metaKeys: [
-      { labelKey: "deployed", valueKey: "deployedValue" },
-      { labelKey: "models", valueKey: "modelsValue" },
-      { labelKey: "platforms", valueKey: "platformsValue" },
+      { labelKey: "stage", valueKey: "stageValue" },
+      { labelKey: "scope", valueKey: "scopeValue" },
+      { labelKey: "stack", valueKey: "stackValue" },
     ],
+    status: "inDev",
   },
   {
     key: "delivery",
@@ -109,6 +122,17 @@ const projectsList: ProjectStruct[] = [
       { labelKey: "deployed", valueKey: "deployedValue" },
       { labelKey: "market", valueKey: "marketValue" },
       { labelKey: "scope", valueKey: "scopeValue" },
+    ],
+  },
+  {
+    key: "creator",
+    id: "05",
+    tags: ["SWIFT", "KOTLIN", "PYTHON", "SUPABASE"],
+    link: { kind: "external", href: "https://www.creatorai.art/en", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "deployed", valueKey: "deployedValue" },
+      { labelKey: "models", valueKey: "modelsValue" },
+      { labelKey: "platforms", valueKey: "platformsValue" },
     ],
   },
 ];
@@ -252,10 +276,21 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                           />
                         ))}
                         <div className="mt-6 flex items-center gap-2">
-                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                          <span className="text-mono text-[var(--color-primary-glow)]">
-                            {dict.common.liveNominal}
-                          </span>
+                          {proj.status === "inDev" ? (
+                            <>
+                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] pulse-dot" />
+                              <span className="text-mono text-[var(--color-secondary)]">
+                                {dict.common.inDevNominal}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
+                              <span className="text-mono text-[var(--color-primary-glow)]">
+                                {dict.common.liveNominal}
+                              </span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>

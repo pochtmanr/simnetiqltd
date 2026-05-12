@@ -35,7 +35,7 @@ type Phrasebook = {
   fullSeeAlso: string;
   homeHeading: string;
   liveDeploymentsHeading: string;
-  liveDeployments: (url: string) => string[];
+  liveDeployments: () => string[];
   homeNarrative: string;
   aboutHeading: string;
   companyRegistrationHeading: string;
@@ -58,6 +58,9 @@ type Phrasebook = {
   goDeliveryHeading: string;
   goDeliveryStatus: string;
   goDeliveryStack: string;
+  greenFlaggedHeading: string;
+  greenFlaggedStatus: string;
+  greenFlaggedStack: string;
   contactBookingHeading: string;
   contactLines: (url: string) => string[];
   machineRefsHeading: string;
@@ -83,9 +86,9 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     projectLines: (url) => [
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Censorship-resistant VPN on VLESS-Reality with native iOS, Android, macOS and Windows clients. Zero-log, zero-registration, indistinguishable from HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source interactive physics encyclopedia with unit-tested ODE solvers, WebGL visualisations and an AI tutor at /ask grounded in the library.`,
+      `- [Green Flagged](${url("/projects/green-flagged")}): AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades and suggested redlines in under eight minutes. Marketing site live, scanning engine in development.`,
       `- [Creator AI](https://www.creatorai.art/en): Multi-language LLM content platform on Anthropic and OpenAI. Editorial pipelines, native iOS and Android clients.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): Logistics platform with real-time GPS driver tracking, route optimisation and full order lifecycle management.`,
-      `- [Simnetiq eSIM](${url("")}): eSIM platform with Supabase backend, Stripe billing, iOS and Android clients, admin console.`,
     ],
     companyHeading: "Company",
     about: "About Simnetiq",
@@ -114,12 +117,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     homeHeading: "Home",
     liveDeploymentsHeading:
       "Live deployments referenced from the homepage",
-    liveDeployments: (url) => [
+    liveDeployments: () => [
       `- **Doppler VPN** (https://dopplervpn.org) — Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source interactive physics learning platform with accurate ODE solvers and a concepts dictionary.`,
       `- **Creator AI** (https://www.creatorai.art/en) — Neural content synthesis platform. Multi-language editorial pipelines on Anthropic and OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Logistics platform with real-time GPS driver tracking, route optimisation and order lifecycle management.`,
-      `- **Simnetiq eSIM** (${url}) — eSIM platform with Supabase backend and Stripe billing. iOS and Android clients, admin console.`,
     ],
     homeNarrative:
       "Simnetiq is a small London studio of three owner-operators. We deliver software end-to-end: native mobile and desktop apps, web platforms, AI features and pipelines, paid acquisition campaigns wired to real attribution, and bespoke VPN infrastructure. Each engagement is scoped, priced in GBP, and signed as a SOW before code is written.",
@@ -168,6 +170,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     goDeliveryStatus:
       "Status: Production. Israeli logistics platform with real-time GPS driver tracking, route optimisation, and order lifecycle management.",
     goDeliveryStack: "Stack: Next.js, React, Node.js, PostgreSQL.",
+    greenFlaggedHeading: "Green Flagged",
+    greenFlaggedStatus:
+      "Status: In development. Marketing site live at greenflagged.com; scan API not yet wired. Pre-launch, first scan free.",
+    greenFlaggedStack:
+      "Stack: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Radix UI primitives, GSAP, pnpm.",
     contactBookingHeading: "Contact & booking",
     contactLines: (url) => [
       `- **Book an intro call:** Cal.com widget on ${url}`,
@@ -201,9 +208,9 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     projectLines: (url) => [
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): VPN עמיד לצנזורה על VLESS-Reality עם לקוחות מקוריים ל-iOS, Android, macOS ו-Windows. ללא לוגים, ללא רישום, בלתי ניתן להבחנה מ-HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL ומורה AI ב-/ask המבוסס על הספרייה.`,
+      `- [Green Flagged](${url("/projects/green-flagged")}): סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות. אתר השיווק עלה, מנוע הסריקה בפיתוח.`,
       `- [Creator AI](https://www.creatorai.art/en): פלטפורמת תוכן LLM רב-לשונית על Anthropic ו-OpenAI. צנרת עריכה, לקוחות מקוריים ל-iOS ו-Android.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה מלא.`,
-      `- [Simnetiq eSIM](${url("")}): פלטפורמת eSIM עם בקאנד Supabase, חיוב Stripe, לקוחות iOS ו-Android, וקונסולת ניהול.`,
     ],
     companyHeading: "החברה",
     about: "אודות סימנטיק",
@@ -231,12 +238,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     fullSeeAlso: "ראו גם",
     homeHeading: "בית",
     liveDeploymentsHeading: "פריסות חיות בעמוד הבית",
-    liveDeployments: (url) => [
+    liveDeployments: () => [
       `- **Doppler VPN** (https://dopplervpn.org) — VPN VLESS-Reality מותאם אישית עם צמתים גיאו-מבוזרים ללא לוגים. לקוחות מקוריים ל-iOS ו-Android.`,
       `- **Physics.explained** (https://physics.it.com/) — פלטפורמת לימוד פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE מדויקים ומילון מושגים.`,
       `- **Creator AI** (https://www.creatorai.art/en) — פלטפורמת סינתזת תוכן נוירונית. צנרת עריכה רב-לשונית על Anthropic ו-OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה.`,
-      `- **Simnetiq eSIM** (${url}) — פלטפורמת eSIM עם בקאנד Supabase וחיוב Stripe. לקוחות iOS ו-Android, קונסולת ניהול.`,
     ],
     homeNarrative:
       "סימנטיק הוא אולפן לונדוני קטן של שלושה שותפים-מפעילים. אנו מספקים תוכנה מקצה לקצה: אפליקציות מובייל ושולחן עבודה מקוריות, פלטפורמות ווב, פיצ'רי AI וצנרות, קמפייני רכישה ממומנת מחוברים לייחוס אמיתי, ותשתית VPN ייעודית. כל התקשרות מוגדרת, מתומחרת ב-GBP, ונחתמת כ-SOW לפני שנכתב קוד.",
@@ -285,6 +291,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     goDeliveryStatus:
       "סטטוס: ייצור. פלטפורמת לוגיסטיקה ישראלית עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה.",
     goDeliveryStack: "סטאק: Next.js, React, Node.js, PostgreSQL.",
+    greenFlaggedHeading: "Green Flagged",
+    greenFlaggedStatus:
+      "סטטוס: בפיתוח. אתר השיווק עלה ב-greenflagged.com; API הסריקה עוד לא חובר. טרום-השקה, סריקה ראשונה חינם.",
+    greenFlaggedStack:
+      "סטאק: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, רכיבי Radix UI, GSAP, pnpm.",
     contactBookingHeading: "יצירת קשר והזמנה",
     contactLines: (url) => [
       `- **הזמנת שיחת היכרות:** ווידג'ט Cal.com ב-${url}`,
@@ -318,9 +329,9 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     projectLines: (url) => [
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Устойчивый к цензуре VPN на VLESS-Reality с нативными клиентами для iOS, Android, macOS и Windows. Без логов, без регистрации, неотличим от HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source интерактивная энциклопедия физики с покрытыми тестами решателями ОДУ, WebGL-визуализациями и AI-репетитором на /ask, основанным на материалах библиотеки.`,
+      `- [Green Flagged](${url("/projects/green-flagged")}): AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут. Маркетинговый сайт запущен, движок сканирования в разработке.`,
       `- [Creator AI](https://www.creatorai.art/en): Многоязычная LLM-платформа контента на Anthropic и OpenAI. Редакторские пайплайны, нативные клиенты iOS и Android.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и полным циклом управления заказами.`,
-      `- [Simnetiq eSIM](${url("")}): eSIM-платформа с бэкендом на Supabase, биллингом Stripe, клиентами iOS и Android, админ-консолью.`,
     ],
     companyHeading: "Компания",
     about: "О Simnetiq",
@@ -348,13 +359,12 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     fullSeeAlso: "См. также",
     homeHeading: "Главная",
     liveDeploymentsHeading:
-      "Живые продакшен-развёртывания, упомянутые на главной",
-    liveDeployments: (url) => [
+      "Живые продакшен-, упомянутые на главной",
+    liveDeployments: () => [
       `- **Doppler VPN** (https://dopplervpn.org) — Кастомный VPN на VLESS-Reality с гео-распределёнными нодами без логов. Нативные клиенты для iOS и Android.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source интерактивная платформа изучения физики с точными решателями ОДУ и словарём концепций.`,
       `- **Creator AI** (https://www.creatorai.art/en) — Платформа нейросетевого синтеза контента. Многоязычные редакторские пайплайны на Anthropic и OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и управлением жизненным циклом заказа.`,
-      `- **Simnetiq eSIM** (${url}) — eSIM-платформа с бэкендом на Supabase и биллингом Stripe. Клиенты iOS и Android, админ-консоль.`,
     ],
     homeNarrative:
       "Simnetiq — небольшая лондонская студия из трёх владельцев-практиков. Мы доставляем ПО от и до: нативные мобильные и десктоп-приложения, веб-платформы, AI-фичи и пайплайны, кампании платного трафика, привязанные к настоящей атрибуции, и заказную VPN-инфраструктуру. Каждый контракт описан, оценён в GBP и подписан как SOW до начала кода.",
@@ -403,6 +413,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     goDeliveryStatus:
       "Статус: Продакшен. Израильская логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и управлением жизненным циклом заказа.",
     goDeliveryStack: "Стек: Next.js, React, Node.js, PostgreSQL.",
+    greenFlaggedHeading: "Green Flagged",
+    greenFlaggedStatus:
+      "Статус: В разработке. Маркетинговый сайт запущен на greenflagged.com; API сканирования ещё не подключён. Пред-релиз, первая проверка бесплатно.",
+    greenFlaggedStack:
+      "Стек: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, примитивы Radix UI, GSAP, pnpm.",
     contactBookingHeading: "Контакты и запись",
     contactLines: (url) => [
       `- **Запись на ознакомительный звонок:** виджет Cal.com на ${url}`,
@@ -521,6 +536,159 @@ ${p.alternateLocaleLines.join("\n")}
 `;
 }
 
+// ─── Per-page Markdown builders ───────────────────────────────────────────
+// These return self-contained MD documents for each MD-supported route.
+// Used by app/[locale]/*/markdown/route.ts handlers and indirectly by
+// proxy.ts during Accept: text/markdown content negotiation.
+
+function buildHeader(p: Phrasebook, title: string, url: string): string {
+  return `# ${title}
+
+> ${p.fullCanonical}: ${url}
+> ${p.fullLastGenerated}: ${new Date().toISOString().slice(0, 10)}
+`;
+}
+
+export function buildHomeMarkdown(locale: Locale): string {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const home = ROUTE_COPY.home[locale];
+
+  return `${buildHeader(p, home.title, localeUrl(""))}
+${home.description}
+
+${p.homeNarrative}
+
+## ${p.liveDeploymentsHeading}
+
+${p.liveDeployments().join("\n")}
+
+## ${p.contactBookingHeading}
+
+${p.contactLines(localeUrl("")).join("\n")}
+
+## ${p.machineRefsHeading}
+
+${p.machineRefs(localeUrl("")).join("\n")}
+`;
+}
+
+export function buildAboutMarkdown(locale: Locale): string {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const about = ROUTE_COPY.about[locale];
+
+  return `${buildHeader(p, about.title, localeUrl("/about"))}
+${about.description}
+
+## ${p.companyRegistrationHeading}
+
+${p.companyRegistrationLines.join("\n")}
+
+## ${p.teamHeading}
+
+${p.teamLines.join("\n")}
+
+## ${p.operatingPrinciplesHeading}
+
+${p.operatingPrinciples.join("\n")}
+`;
+}
+
+export function buildServicesIndexMarkdown(locale: Locale): string {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const services = getServices(locale);
+  const servicesCopy = ROUTE_COPY.services[locale];
+
+  const serviceLinks = services
+    .map((s) => {
+      const title = getServiceFullTitle(s);
+      return `- [${title}](${localeUrl(`/services/${s.slug}`)}) — ${s.tagline}`;
+    })
+    .join("\n");
+
+  return `${buildHeader(p, servicesCopy.title, localeUrl("/services"))}
+${servicesCopy.description}
+
+## ${p.servicesHeading}
+
+${serviceLinks}
+`;
+}
+
+export function buildServiceMarkdown(
+  locale: Locale,
+  slug: string
+): string | null {
+  const p = PHRASEBOOK[locale];
+  const services = getServices(locale);
+  const service = services.find((s) => s.slug === slug);
+  if (!service) return null;
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const title = getServiceFullTitle(service);
+
+  return `${buildHeader(p, title, localeUrl(`/services/${slug}`))}
+${renderService(service, locale, p)}`;
+}
+
+export function buildProjectsIndexMarkdown(locale: Locale): string {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const projects = ROUTE_COPY.projects[locale];
+
+  return `${buildHeader(p, projects.title, localeUrl("/projects"))}
+${projects.description}
+
+## ${p.projectsHeading}
+
+${p.projectLines(localeUrl).join("\n")}
+`;
+}
+
+export function buildProjectMarkdown(
+  locale: Locale,
+  slug: string
+): string | null {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+
+  if (slug === "doppler-vpn") {
+    const c = ROUTE_COPY.caseStudyDoppler[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/doppler-vpn"))}
+Live: https://dopplervpn.org
+
+${c.description}
+
+${p.dopplerStack}
+${p.dopplerStatus}
+`;
+  }
+  if (slug === "physics-explained") {
+    const c = ROUTE_COPY.caseStudyPhysics[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/physics-explained"))}
+Live: https://physics.it.com
+
+${c.description}
+
+${p.physicsStack}
+${p.physicsStatus}
+`;
+  }
+  if (slug === "green-flagged") {
+    const c = ROUTE_COPY.caseStudyGreenFlagged[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/green-flagged"))}
+Live: https://greenflagged.vercel.app
+
+${c.description}
+
+${p.greenFlaggedStack}
+${p.greenFlaggedStatus}
+`;
+  }
+  return null;
+}
+
 export function buildLlmsFullTxt(locale: Locale): string {
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
@@ -532,6 +700,7 @@ export function buildLlmsFullTxt(locale: Locale): string {
   const servicesCopy = ROUTE_COPY.services[locale];
   const doppler = ROUTE_COPY.caseStudyDoppler[locale];
   const physics = ROUTE_COPY.caseStudyPhysics[locale];
+  const greenFlagged = ROUTE_COPY.caseStudyGreenFlagged[locale];
 
   const servicesSection = services
     .map((s) => renderService(s, locale, p))
@@ -557,7 +726,7 @@ ${p.homeNarrative}
 
 ## ${p.liveDeploymentsHeading}
 
-${p.liveDeployments(localeUrl("")).join("\n")}
+${p.liveDeployments().join("\n")}
 
 ---
 
@@ -621,6 +790,17 @@ ${physics.description}
 
 ${p.physicsStack}
 ${p.physicsStatus}
+
+## ${p.greenFlaggedHeading}
+
+${p.urlLabel}: ${localeUrl("/projects/green-flagged")}
+Live: https://greenflagged.vercel.app
+${p.titleLabel}: ${greenFlagged.title}
+
+${greenFlagged.description}
+
+${p.greenFlaggedStack}
+${p.greenFlaggedStatus}
 
 ## ${p.creatorHeading}
 

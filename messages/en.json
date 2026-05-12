@@ -12,7 +12,8 @@
     "next": "Next",
     "previous": "Previous",
     "live": "Live",
-    "liveNominal": "Live · Nominal"
+    "liveNominal": "Live · Nominal",
+    "inDevNominal": "In dev · Pre-launch"
   },
   "nav": {
     "links": {
@@ -85,7 +86,7 @@
   "projects": {
     "eyebrow": "◇ Selected work",
     "title": "Recent work",
-    "body": "Four products live in the wild. Built with an engineering-first mindset: reliable, well-structured, made to last.",
+    "body": "Production deployments from our London studio — four live in the wild, one in development. Built with an engineering-first mindset: reliable, well-structured, made to last.",
     "stack": "Stack",
     "visit": "Visit site",
     "caseStudy": "Case study",
@@ -110,6 +111,11 @@
         "badge": "Logistics",
         "description": "Delivery platform with live GPS tracking, route optimisation, and end-to-end order management.",
         "accolade": "Top 30 · Israel · Apple App Store"
+      },
+      "greenflagged": {
+        "title": "Green Flagged",
+        "badge": "Legal-tech · In dev",
+        "description": "AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades, and suggested redlines in under eight minutes."
       }
     }
   },
@@ -239,7 +245,7 @@
     "rail": {
       "index": "◆ SIMNETIQ / 01 / PROJECTS",
       "archive": "ENGINEERING ARCHIVE",
-      "active": "ACTIVE ENTRIES · 04"
+      "active": "ACTIVE ENTRIES · 05"
     },
     "eyebrow": "◇ Engineering Archive",
     "titleLine1": "Active",
@@ -248,6 +254,7 @@
     "specification": "▸ Specification",
     "readCaseStudy": "Read case study",
     "visitSite": "Visit site",
+    "inDev": "IN DEV",
     "items": {
       "physics": {
         "title": "Physics.explained",
@@ -292,6 +299,17 @@
         "marketValue": "IL · Domestic",
         "scope": "Scope",
         "scopeValue": "Dispatch · Fleet · Ops"
+      },
+      "greenflagged": {
+        "title": "Green Flagged",
+        "badge": "LEGAL-TECH · IN DEV",
+        "description": "AI contract review for freelancers and small teams. Paste contract text or drop a PDF/DOCX, get a plain-language verdict, flagged clauses, severity grades, and suggested redlines in under eight minutes. Marketing site live, scanning engine in development. Three tiers: pay-per-contract, Freelancer, Pro/Agency.",
+        "stage": "Stage",
+        "stageValue": "Pre-launch · First scan free",
+        "scope": "Scope",
+        "scopeValue": "Freelancers · Agencies · SMBs",
+        "stack": "Stack",
+        "stackValue": "Next.js 16 · React 19 · Tailwind v4"
       }
     }
   },
@@ -481,6 +499,94 @@
     "successMessage": "▸ Deletion request submitted. Your account and all associated data will be permanently removed within 30 days.",
     "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.store."
   },
+  "subscribe": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 05 / SUBSCRIBE",
+      "protocol": "BRIEFING CHANNEL",
+      "status": "STATUS 200 · OPEN"
+    },
+    "eyebrow": "◇ Briefing channel",
+    "title": "Subscribe to the Simnetiq briefing.",
+    "body": "A quiet, infrequent dispatch from a London engineering studio — shipping notes, infrastructure tear-downs, and the occasional capability announcement. Double opt-in. One click to unsubscribe.",
+    "operationLabel": "▸ Channel spec",
+    "cadence": "Cadence",
+    "cadenceValue": "Monthly · max",
+    "optIn": "Opt-in",
+    "optInValue": "Double",
+    "privacy": "Privacy",
+    "privacyValue": "No tracking pixels · no third-party sharing",
+    "unsubscribe": "Unsubscribe",
+    "unsubscribeValue": "One click · always",
+    "whatLabel": "▸ What you'll receive",
+    "whatItems": [
+      "Shipping notes from active projects",
+      "Infrastructure and engineering write-ups",
+      "Occasional service or capability announcements",
+      "Nothing more — no drip funnels, no marketing automation"
+    ],
+    "formLabel": "▸ Sign-up",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@domain.com",
+    "nameLabel": "Name",
+    "namePlaceholder": "First or full name",
+    "countryLabel": "Country",
+    "countryPlaceholder": "e.g. United Kingdom",
+    "companyLabel": "Company",
+    "companyPlaceholder": "Optional",
+    "submit": "Subscribe",
+    "sending": "Submitting…",
+    "successHeadline": "▸ Check your inbox",
+    "successBody": "We've sent a confirmation link to your email. Click it to complete your subscription — the link expires in 7 days.",
+    "errorMessage": "Couldn't process subscription. Please retry or email support@simnetiq.store.",
+    "confirmedHeadline": "▸ Subscription confirmed",
+    "confirmedBody": "You're on the list. Expect occasional, signal-only dispatches from London.",
+    "alreadyHeadline": "▸ Already subscribed",
+    "alreadyBody": "This email was already confirmed. Nothing to do — you're set.",
+    "invalidHeadline": "▸ Confirmation link invalid",
+    "invalidBody": "The confirmation link has expired or is incorrect. Submit the form below to receive a fresh one.",
+    "ctaServices": "Explore services"
+  },
+  "unsubscribe": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 06 / UNSUBSCRIBE",
+      "protocol": "OPT-OUT PROTOCOL",
+      "status": "STATUS 410 · GONE"
+    },
+    "eyebrow": "◇ Opt-out",
+    "title": "Unsubscribe.",
+    "body": "One click and we won't write again. No retention, no re-targeting — your address is removed from the active list immediately.",
+    "operationLabel": "▸ Operation",
+    "scope": "Scope",
+    "scopeValue": "All Simnetiq email",
+    "retention": "Retention",
+    "retentionValue": "Suppressed · permanent",
+    "reversible": "Reversible",
+    "reversibleValue": "Re-subscribe at any time",
+    "formLabel": "▸ Confirm opt-out",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@domain.com",
+    "reasonPrompt": "Before you go — what's the main reason? (optional, helps us be less annoying)",
+    "reasonChips": [
+      { "key": "too_frequent", "label": "Too frequent" },
+      { "key": "not_relevant", "label": "Not relevant" },
+      { "key": "didnt_subscribe", "label": "Didn't subscribe" },
+      { "key": "have_provider", "label": "Already have a provider" },
+      { "key": "spam_or_cold", "label": "Felt like spam" }
+    ],
+    "reasonLabel": "Anything else? (optional)",
+    "reasonPlaceholder": "Free text — even one word helps.",
+    "submit": "Confirm unsubscribe",
+    "processing": "Processing…",
+    "successHeadline": "▸ Opt-out registered",
+    "successBody": "You won't hear from us again. If you change your mind, the subscribe page is always open.",
+    "doneHeadline": "▸ Already unsubscribed",
+    "doneBody": "Your address has been removed. We won't send any further outreach.",
+    "errorHeadline": "▸ Couldn't process opt-out",
+    "errorBody": "Something went wrong. Please retry or email support@simnetiq.store.",
+    "invalidHeadline": "▸ Link expired or invalid",
+    "invalidBody": "This unsubscribe link couldn't be matched to a recipient. If you keep getting our email, reply with UNSUBSCRIBE and we'll remove you manually.",
+    "ctaHome": "Back to home"
+  },
   "caseStudyDoppler": {
     "rail": {
       "index": "◆ SIMNETIQ / 02 / PROJECTS / DOPPLER-VPN",
@@ -655,5 +761,120 @@
     "ctaEyebrow": "◇ Continue",
     "ctaTitle": "Open the library.",
     "ctaBody": "Every concept, every physicist, every simulation, plus the AI tutor at /ask — all live, all free, all open source."
+  },
+  "caseStudyGreenFlagged": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 03 / PROJECTS / GREEN-FLAGGED",
+      "tag": "CASE STUDY",
+      "status": "MARKETING SITE · LIVE / SCAN API · IN DEV"
+    },
+    "eyebrow": "◇ Legal-tech · Editorial · In development",
+    "titleLine1": "Get your contract",
+    "titleLine2": "green-flagged before you sign.",
+    "body": "Green Flagged is an AI contract reviewer for freelancers and small teams. Drop a PDF or paste contract text and get a plain-language verdict — flagged clauses, severity grades, and suggested redlines — in under eight minutes. Marketing site live; scanning engine in development.",
+    "visitSite": "Visit site",
+    "tryFree": "Try first scan free",
+    "specsLabel": "▸ Specification",
+    "figureCaption": "Fig. 01 · Green Flagged homepage · drop-zone hero",
+    "specs": [
+      { "label": "Status", "value": "In development" },
+      { "label": "Stage", "value": "Pre-launch · First scan free" },
+      { "label": "Site", "value": "greenflagged.com" },
+      { "label": "Audience", "value": "Freelancers · Agencies · SMBs" },
+      { "label": "Verdict time", "value": "Under 8 min" },
+      { "label": "Pricing", "value": "€9 one-off · €15/mo · €39/mo" },
+      { "label": "Retention", "value": "30 / 60 / 90 days · auto-delete" }
+    ],
+    "aboutEyebrow": "§ 01 · About",
+    "aboutTitleA": "A contract reviewer",
+    "aboutTitleB": "for people without a lawyer.",
+    "aboutBody": [
+      "Most freelancers and small teams sign contracts without a lawyer on retainer. The clauses that matter — IP ownership, payment terms, termination, liability caps, exclusivity, auto-renewal — get buried in legalese, and the cost of getting them wrong shows up months later.",
+      "Green Flagged compresses that gap. Drop a contract in as PDF, DOCX, or pasted text. The scanner runs it through a clause taxonomy, returns a single verdict with a risk grade, and breaks every flagged clause into a plain-language explanation with a suggested redline. The full report exports as PDF; the source contract auto-deletes by default on a configurable retention window.",
+      "Three tiers cover the realistic price points without subscription friction at the bottom. Pay-per-contract at €9 is one scan, one report, no account theatrics. Freelancer at €15/mo (or €150/yr) adds unlimited scans and side-by-side contract comparison. Pro/Agency at €39/mo (€390/yr) extends the same to three seats with API access for teams who scan contracts daily.",
+      "The product is informational, not legal advice — that disclaimer lives in the footer of every page. Green Flagged is the second opinion you'd ask a lawyer friend for at 11pm, delivered in under eight minutes."
+    ],
+    "pricingEyebrow": "§ 02 · Pricing",
+    "pricingTitleA": "Three tiers,",
+    "pricingTitleB": "no subscription wall.",
+    "pricingBody": "Most users will only ever need one scan. We priced for that explicitly — a single contract review costs €9 and never asks for a credit card to retain. Subscription tiers are for users who scan contracts weekly or run an agency.",
+    "pricingTiers": [
+      {
+        "id": "T-01",
+        "name": "Pay-per-contract",
+        "price": "€9",
+        "cadence": "one-off",
+        "bullets": [
+          "One contract scan, one full report",
+          "Plain-language verdict + flagged clauses",
+          "PDF export, auto-delete after 30 days",
+          "No account required after checkout"
+        ]
+      },
+      {
+        "id": "T-02",
+        "name": "Freelancer",
+        "price": "€15",
+        "cadence": "per month · €150/yr",
+        "bullets": [
+          "Unlimited scans",
+          "Side-by-side contract comparison",
+          "Custom retention (30 / 60 / 90 days)",
+          "Priority email support"
+        ]
+      },
+      {
+        "id": "T-03",
+        "name": "Pro / Agency",
+        "price": "€39",
+        "cadence": "per month · €390/yr · 3 seats",
+        "bullets": [
+          "Everything in Freelancer",
+          "Three seats + shared workspace",
+          "API access for batch scans",
+          "Priority queue + SLA"
+        ]
+      }
+    ],
+    "insideEyebrow": "§ 03 · What's inside",
+    "insideTitle": "Four moving parts.",
+    "insideEntry": "ENTRY",
+    "insideItems": [
+      { "figure": "PDF", "label": "Drop-zone", "body": "Paste contract text or drop a PDF/DOCX. The scanner returns a single verdict with a risk grade in under eight minutes — no account theatrics, no upload queue." },
+      { "figure": "EN", "label": "Plain language", "body": "Every flagged clause gets a plain-language explanation. No legalese, no hedging — what the clause says, what it costs you, and whether the standard market terms agree." },
+      { "figure": "EDIT", "label": "Suggested redlines", "body": "Each flagged clause ships with a suggested redline edit you can paste straight back to counterparty. Freelancer tier and up gets side-by-side comparison against your standard contract." },
+      { "figure": "TAX", "label": "Clause taxonomy", "body": "Scans for IP ownership, payment terms, termination, NDA scope, liability caps, jurisdiction, auto-renewal, kill fees, and exclusivity — the clauses that actually move money when something goes wrong." }
+    ],
+    "designEyebrow": "§ 04 · Design system",
+    "designTitleA": "Editorial spec-sheet,",
+    "designTitleB": "light-first.",
+    "designBody": "Green Flagged reads like a printed legal document married to a software-engineering tear-sheet. Sharp 2px corners, hairline rules, dotted dividers, monospaced labels in // MONO CAPS. Paper-and-ink neutrals with a sage-green accent. Severity colors — green, yellow, orange, red — are reserved for signals, never decoration. Light-first with a binary dark toggle persisted to localStorage; falls back to prefers-color-scheme on first load. Moved from dark/glass to this token system in May 2026.",
+    "paletteLabel": "▸ Palette",
+    "typographyLabel": "▸ Typography pairing",
+    "typographyCards": [
+      { "code": "01 · Display", "sample": "GREEN FLAGGED", "name": "Inter — Display, uppercase with negative tracking", "body": "Reserved for hero and section headlines. Uppercase, tight tracking, oversized — carries the editorial weight without a wordmark." },
+      { "code": "02 · Body", "sample": "Get your contract green-flagged before you sign.", "name": "Inter — Body", "body": "Default for paragraphs, scan results, and explanations. Weights 400 and 500." },
+      { "code": "03 · Mono", "sample": "// CLAUSE 04 · IP OWNERSHIP", "name": "JetBrains Mono — Labels & spec rows", "body": "Reserved for eyebrows, severity tags, dot-leader spec rows, and code-style labels across the report." }
+    ],
+    "taxonomyEyebrow": "§ 05 · Clause taxonomy",
+    "taxonomyTitleA": "Nine clauses that",
+    "taxonomyTitleB": "actually move money.",
+    "taxonomyBody": "Green Flagged scans for the clauses that decide who owns what, who pays when, and who gets stuck if it goes wrong. Each one is rendered as a single row with severity, a plain-language summary, and a suggested redline.",
+    "taxonomy": [
+      { "id": "01", "name": "IP ownership" },
+      { "id": "02", "name": "Payment terms" },
+      { "id": "03", "name": "Termination" },
+      { "id": "04", "name": "NDA scope" },
+      { "id": "05", "name": "Liability caps" },
+      { "id": "06", "name": "Jurisdiction" },
+      { "id": "07", "name": "Auto-renewal" },
+      { "id": "08", "name": "Kill fees" },
+      { "id": "09", "name": "Exclusivity" }
+    ],
+    "inDev": "IN DEV",
+    "ctaEyebrow": "◇ Continue",
+    "ctaTitle": "First scan, free.",
+    "ctaBody": "Marketing site is live at greenflagged.com. The scanning engine is in development — early users get their first contract review free at launch.",
+    "ctaPrimary": "Visit site"
   }
 }

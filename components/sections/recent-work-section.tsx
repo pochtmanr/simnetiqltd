@@ -6,7 +6,12 @@ import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type ProjectKey = "physics" | "doppler" | "creator" | "delivery";
+type ProjectKey =
+  | "physics"
+  | "doppler"
+  | "creator"
+  | "delivery"
+  | "greenflagged";
 
 type ProjectDef = {
   key: ProjectKey;
@@ -32,16 +37,23 @@ const PROJECTS: ProjectDef[] = [
     stack: "Swift · Kotlin · Go · Marzban",
   },
   {
-    key: "creator",
+    key: "greenflagged",
     id: "03",
-    href: "https://www.creatorai.art/en",
-    stack: "Swift · Kotlin · Python · Supabase",
+    href: "https://greenflagged.vercel.app/",
+    caseStudy: "/projects/green-flagged",
+    stack: "Next.js 16 · React 19 · Tailwind v4 · GSAP",
   },
   {
     key: "delivery",
     id: "04",
     href: "https://www.isrshipping.com",
     stack: "Next.js · Node · PostgreSQL",
+  },
+  {
+    key: "creator",
+    id: "05",
+    href: "https://www.creatorai.art/en",
+    stack: "Swift · Kotlin · Python · Supabase",
   },
 ];
 

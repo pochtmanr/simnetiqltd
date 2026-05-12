@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { HeroCircuit } from "@/components/hero-circuit";
@@ -8,11 +9,31 @@ import { Panel, Rail, SpecRow } from "@/components/panel";
 import { SectionFrame } from "@/components/section-frame";
 import { OfferedServicesSection } from "@/components/sections/offered-services-section";
 import { RecentWorkSection } from "@/components/sections/recent-work-section";
-import { BookingPanel } from "@/components/booking-panel";
 import { ContactDisclosure } from "@/components/contact-disclosure";
 import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
+
+// BookingPanel pulls in @calcom/embed-react and the Cal embed runtime.
+// It sits below the fold, so deferring its bundle keeps the initial HTML
+// + JS payload smaller without affecting first paint. Reserve the
+// minimum height so the contact section doesn't shift when it mounts.
+const BookingPanel = dynamic(
+  () =>
+    import("@/components/booking-panel").then((m) => ({
+      default: m.BookingPanel,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        style={{ minHeight: 560 }}
+        className="mx-auto max-w-3xl"
+        aria-hidden
+      />
+    ),
+  }
+);
 
 type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
 
@@ -53,7 +74,7 @@ type HomeDict = {
     visit: string;
     caseStudy: string;
     items: Record<
-      "physics" | "doppler" | "creator" | "delivery",
+      "physics" | "doppler" | "creator" | "delivery" | "greenflagged",
       { title: string; badge: string; description: string; accolade?: string }
     >;
   };

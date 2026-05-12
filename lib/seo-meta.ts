@@ -65,9 +65,9 @@ const PROJECTS: RouteCopy = {
       "פריסות ייצור של סימנטיק: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (פלטפורמת תוכן LLM על Anthropic ו-OpenAI), Physics.explained (פיזיקה אינטראקטיבית בקוד פתוח) ו-Go Delivery / ISR Shipping (פלטפורמת לוגיסטיקה עם מעקב GPS). תיק עבודות, מקרי בוחן ואפליקציות חיות מהאולפן בלונדון.",
   },
   ru: {
-    title: "Проекты — продакшен-развёртывания Simnetiq",
+    title: "Проекты — примеры Simnetiq",
     description:
-      "Продакшен-развёртывания Simnetiq: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (LLM-платформа контента на Anthropic и OpenAI), Physics.explained (open-source интерактивная физика) и Go Delivery / ISR Shipping (логистическая платформа с GPS-трекингом). Портфолио, кейсы и живые приложения лондонской студии.",
+      "Примеры Simnetiq: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (LLM-платформа контента на Anthropic и OpenAI), Physics.explained (open-source интерактивная физика) и Go Delivery / ISR Shipping (логистическая платформа с GPS-трекингом). Портфолио, кейсы и живые приложения лондонской студии.",
   },
 };
 
@@ -107,6 +107,42 @@ const CASE_DOPPLER: RouteCopy = {
   },
 };
 
+const SUBSCRIBE: RouteCopy = {
+  en: {
+    title: "Subscribe — Simnetiq Briefings",
+    description:
+      "Subscribe to Simnetiq briefings — quiet, infrequent updates from a London engineering studio: shipping notes, infrastructure tear-downs, and the occasional capability announcement. Double opt-in. One click to unsubscribe.",
+  },
+  he: {
+    title: "הרשמה — תדריכי סימנטיק",
+    description:
+      "הירשמו לתדריכי סימנטיק — עדכונים נדירים ושקטים מאולפן הנדסה לונדוני: הערות שיגור, פירוקי תשתית והכרזות יכולת מדי פעם. הצטרפות בשני שלבים. ביטול בלחיצה אחת.",
+  },
+  ru: {
+    title: "Подписка — рассылка Simnetiq",
+    description:
+      "Подпишитесь на рассылку Simnetiq — редкие, тихие обновления из лондонской инженерной студии: заметки о релизах, разборы инфраструктуры и иногда — новые услуги. Двойное подтверждение. Отписка в один клик.",
+  },
+};
+
+const UNSUBSCRIBE: RouteCopy = {
+  en: {
+    title: "Unsubscribe — Simnetiq",
+    description:
+      "Unsubscribe from Simnetiq emails. One click and we'll never write again.",
+  },
+  he: {
+    title: "ביטול הרשמה — סימנטיק",
+    description:
+      "ביטול הרשמה למיילים של סימנטיק. לחיצה אחת ולא נכתוב שוב.",
+  },
+  ru: {
+    title: "Отписаться — Simnetiq",
+    description:
+      "Отписка от писем Simnetiq. Один клик — и мы больше не пишем.",
+  },
+};
+
 const CASE_PHYSICS: RouteCopy = {
   en: {
     title: "Physics.explained — Case Study",
@@ -125,13 +161,34 @@ const CASE_PHYSICS: RouteCopy = {
   },
 };
 
+const CASE_GREENFLAGGED: RouteCopy = {
+  en: {
+    title: "Green Flagged — Case Study",
+    description:
+      "Green Flagged is an AI contract reviewer for freelancers and small teams. Drop a PDF or paste contract text and get a plain-language verdict — flagged clauses, severity grades, and suggested redlines — in under eight minutes. Built around an editorial / spec-sheet aesthetic with a light-first token system. Marketing site live; scanning engine in development.",
+  },
+  he: {
+    title: "Green Flagged — מקרה בוחן",
+    description:
+      "Green Flagged הוא סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF או מדביקים טקסט חוזה ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות. עיצוב במראה של דף מפרט עריכתי עם מערכת טוקנים שמתחילה במצב בהיר. אתר השיווק עלה; מנוע הסריקה בפיתוח.",
+  },
+  ru: {
+    title: "Green Flagged — кейс",
+    description:
+      "Green Flagged — AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF или вставьте текст договора и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут. Построен на редакторско-спецификационной эстетике со светлой токен-системой. Маркетинговый сайт запущен; движок сканирования в разработке.",
+  },
+};
+
 export const ROUTE_COPY = {
   home: HOME,
   about: ABOUT,
   projects: PROJECTS,
   services: SERVICES,
+  subscribe: SUBSCRIBE,
+  unsubscribe: UNSUBSCRIBE,
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
+  caseStudyGreenFlagged: CASE_GREENFLAGGED,
 } as const;
 
 export type RouteKey = keyof typeof ROUTE_COPY;
@@ -150,6 +207,8 @@ type BuildMetaInput = {
   /** Override the default OG/Twitter card image. */
   ogImage?: string;
   ogType?: "website" | "article";
+  /** When true, advertise a Markdown alternate at `${url}/markdown` for AI agents. */
+  markdownAlternate?: boolean;
 };
 
 export function buildLocalizedMetadata({
@@ -159,6 +218,7 @@ export function buildLocalizedMetadata({
   keywords,
   ogImage,
   ogType = "website",
+  markdownAlternate = false,
 }: BuildMetaInput): Metadata {
   const copy = ROUTE_COPY[routeKey][locale];
   const url = `${SITE_URL}/${locale}${path}`;
@@ -181,6 +241,9 @@ export function buildLocalizedMetadata({
     alternates: {
       canonical: url,
       languages,
+      ...(markdownAlternate
+        ? { types: { "text/markdown": `${url}/markdown` } }
+        : {}),
     },
     openGraph: {
       title: copy.title,
