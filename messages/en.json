@@ -782,7 +782,7 @@
       { "label": "Site", "value": "greenflagged.com" },
       { "label": "Audience", "value": "Freelancers · Agencies · SMBs" },
       { "label": "Verdict time", "value": "Under 8 min" },
-      { "label": "Pricing", "value": "€9 one-off · €15/mo · €39/mo" },
+      { "label": "Pricing", "value": "Free · $3/contract · $25/mo" },
       { "label": "Retention", "value": "30 / 60 / 90 days · auto-delete" }
     ],
     "aboutEyebrow": "§ 01 · About",
@@ -791,48 +791,68 @@
     "aboutBody": [
       "Most freelancers and small teams sign contracts without a lawyer on retainer. The clauses that matter — IP ownership, payment terms, termination, liability caps, exclusivity, auto-renewal — get buried in legalese, and the cost of getting them wrong shows up months later.",
       "Green Flagged compresses that gap. Drop a contract in as PDF, DOCX, or pasted text. The scanner runs it through a clause taxonomy, returns a single verdict with a risk grade, and breaks every flagged clause into a plain-language explanation with a suggested redline. The full report exports as PDF; the source contract auto-deletes by default on a configurable retention window.",
-      "Three tiers cover the realistic price points without subscription friction at the bottom. Pay-per-contract at €9 is one scan, one report, no account theatrics. Freelancer at €15/mo (or €150/yr) adds unlimited scans and side-by-side contract comparison. Pro/Agency at €39/mo (€390/yr) extends the same to three seats with API access for teams who scan contracts daily.",
+      "Three tiers cover the realistic price points without subscription friction at the bottom. Free lets you test one contract a month with the full clause report and rewrite suggestions. Pay-as-you-go at $3 per contract is one scan, one report, no recurring charges — card or crypto checkout. Standard at $25/month bundles ten contracts plus a faster analysis queue, clause-type filtering, and an audit log for solo users who scan weekly.",
       "The product is informational, not legal advice — that disclaimer lives in the footer of every page. Green Flagged is the second opinion you'd ask a lawyer friend for at 11pm, delivered in under eight minutes."
     ],
     "pricingEyebrow": "§ 02 · Pricing",
     "pricingTitleA": "Three tiers,",
     "pricingTitleB": "no subscription wall.",
-    "pricingBody": "Most users will only ever need one scan. We priced for that explicitly — a single contract review costs €9 and never asks for a credit card to retain. Subscription tiers are for users who scan contracts weekly or run an agency.",
+    "pricingBody": "Most users will only ever need one scan. The free tier covers that — one contract a month, full report, no card. Pay-as-you-go is for the occasional extra contract. Standard is for solo users who scan weekly and want faster analysis plus an audit log.",
+    "popularLabel": "MOST POPULAR",
     "pricingTiers": [
       {
         "id": "T-01",
-        "name": "Pay-per-contract",
-        "price": "€9",
-        "cadence": "one-off",
+        "name": "Free",
+        "tagline": "Test one contract.",
+        "price": "$0",
+        "cadence": "USD",
+        "popular": false,
+        "cta": "Start free",
         "bullets": [
-          "One contract scan, one full report",
-          "Plain-language verdict + flagged clauses",
-          "PDF export, auto-delete after 30 days",
-          "No account required after checkout"
+          { "included": true, "text": "Contracts per month: 1" },
+          { "included": true, "text": "Save contracts and results" },
+          { "included": true, "text": "Full clause report" },
+          { "included": true, "text": "Clause rewrite suggestions" },
+          { "included": false, "text": "Faster analysis queue" },
+          { "included": false, "text": "Filter by clause type" },
+          { "included": false, "text": "Audit log" }
         ]
       },
       {
         "id": "T-02",
-        "name": "Freelancer",
-        "price": "€15",
-        "cadence": "per month · €150/yr",
+        "name": "Pay as you go",
+        "tagline": "No commitment, not recurring.",
+        "price": "$3",
+        "cadence": "per contract",
+        "popular": false,
+        "cta": "Buy a contract",
         "bullets": [
-          "Unlimited scans",
-          "Side-by-side contract comparison",
-          "Custom retention (30 / 60 / 90 days)",
-          "Priority email support"
+          { "included": true, "text": "Contracts per month: 0" },
+          { "included": true, "text": "Each extra contract: $3.00" },
+          { "included": true, "text": "Save contracts and results" },
+          { "included": true, "text": "Full clause report" },
+          { "included": true, "text": "Clause rewrite suggestions" },
+          { "included": true, "text": "Card or crypto checkout" },
+          { "included": false, "text": "Faster analysis queue" }
         ]
       },
       {
         "id": "T-03",
-        "name": "Pro / Agency",
-        "price": "€39",
-        "cadence": "per month · €390/yr · 3 seats",
+        "name": "Standard",
+        "tagline": "Best for solo adventures.",
+        "price": "$25",
+        "cadence": "per month",
+        "popular": true,
+        "cta": "Start standard",
         "bullets": [
-          "Everything in Freelancer",
-          "Three seats + shared workspace",
-          "API access for batch scans",
-          "Priority queue + SLA"
+          { "included": true, "text": "Contracts per month: 10" },
+          { "included": true, "text": "Each extra contract: $3.00" },
+          { "included": true, "text": "Save contracts and results" },
+          { "included": true, "text": "Full clause report" },
+          { "included": true, "text": "Faster analysis queue" },
+          { "included": true, "text": "Clause rewrite suggestions" },
+          { "included": true, "text": "Filter by clause type" },
+          { "included": true, "text": "Audit log" }
         ]
       }
     ],

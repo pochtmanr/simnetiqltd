@@ -241,43 +241,85 @@ export default async function GreenFlaggedPage({ params }: { params: Params }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {c.pricingTiers.map((tier) => (
-              <Panel key={tier.id} innerClassName="p-6 lg:p-8 h-full flex flex-col" corners>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-mono text-[var(--color-text-faint)]">
-                    {tier.id}
+              <div key={tier.id} className="relative flex">
+                {tier.popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 px-3 py-1 text-label-sm bg-[var(--color-primary-glow)] text-[var(--color-bg)] tracking-wider whitespace-nowrap">
+                    {c.popularLabel}
                   </span>
-                  <span className="text-label-sm text-[var(--color-primary-glow)]">
-                    {tier.name.toUpperCase()}
-                  </span>
-                </div>
-                <div
-                  className="mb-2"
-                  style={{
-                    fontSize: "clamp(2.25rem, 3.6vw, 3rem)",
-                    fontWeight: 500,
-                    letterSpacing: "-0.025em",
-                    lineHeight: 1,
-                    color: "var(--color-text)",
-                  }}
+                )}
+                <Panel
+                  innerClassName={`p-6 lg:p-8 h-full w-full flex flex-col ${
+                    tier.popular
+                      ? "ring-1 ring-[var(--color-primary-glow)]"
+                      : ""
+                  }`}
+                  corners
                 >
-                  {tier.price}
-                </div>
-                <div className="text-mono text-[var(--color-text-dim)] mb-6">
-                  {tier.cadence}
-                </div>
-                <ul className="space-y-3 flex-1">
-                  {tier.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="text-body border-l-2 border-[var(--color-primary-glow)] pl-4"
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-mono text-[var(--color-text-faint)]">
+                      // {tier.id}
+                    </span>
+                    <span className="text-label-sm text-[var(--color-primary-glow)]">
+                      {tier.name.toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="text-title mb-2">{tier.name}</div>
+                  <p className="text-body text-[var(--color-text-dim)] mb-6">
+                    {tier.tagline}
+                  </p>
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span
+                      style={{
+                        fontSize: "clamp(2.25rem, 3.6vw, 3rem)",
+                        fontWeight: 500,
+                        letterSpacing: "-0.025em",
+                        lineHeight: 1,
+                        color: "var(--color-text)",
+                      }}
                     >
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </Panel>
+                      {tier.price}
+                    </span>
+                  </div>
+                  <div className="text-mono text-[var(--color-text-dim)] mb-6">
+                    {tier.cadence}
+                  </div>
+                  <ul className="space-y-3 flex-1 mb-8">
+                    {tier.bullets.map((b) => (
+                      <li
+                        key={b.text}
+                        className={`text-body flex items-start gap-3 ${
+                          b.included
+                            ? ""
+                            : "text-[var(--color-text-faint)] line-through decoration-[var(--color-text-faint)]/40"
+                        }`}
+                      >
+                        <span
+                          aria-hidden
+                          className={`mt-1 inline-flex items-center justify-center w-4 h-4 text-mono shrink-0 ${
+                            b.included
+                              ? "text-[var(--color-primary-glow)]"
+                              : "text-[var(--color-text-faint)]"
+                          }`}
+                        >
+                          {b.included ? "✓" : "—"}
+                        </span>
+                        <span>{b.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href={PROJECT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={tier.popular ? "btn-primary" : "btn-secondary"}
+                  >
+                    {tier.cta}
+                    <span>↗</span>
+                  </Link>
+                </Panel>
+              </div>
             ))}
           </div>
         </div>
