@@ -78,7 +78,7 @@ type Phrasebook = {
 const PHRASEBOOK: Record<Locale, Phrasebook> = {
   en: {
     intro:
-      "Simnetiq Ltd is a London-based software engineering and growth marketing studio. We build production iOS, Android, macOS, Windows and Linux applications; Next.js / Supabase / Stripe web platforms; LLM, RAG and agentic automation on Anthropic, OpenAI and open-weight models; paid acquisition on Meta, TikTok and Google wired to AppsFlyer and Adjust attribution; and censorship-resistant VPN infrastructure on VLESS-Reality. Three owner-operators, registered in England & Wales (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
+      "Simnetiq Ltd is a London-based software engineering studio. We build production iOS, Android, macOS, Windows and Linux applications; Next.js / Supabase / Stripe web platforms; LLM, RAG and agentic automation on Anthropic, OpenAI and open-weight models; and censorship-resistant VPN infrastructure on VLESS-Reality. Two owner-operators, registered in England & Wales (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
     postIntro:
       "Every engagement is priced in GBP against a signed SOW. Brief to production, end-to-end. No agency retainers, no black-box reporting.",
     servicesHeading: "Services",
@@ -124,7 +124,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Logistics platform with real-time GPS driver tracking, route optimisation and order lifecycle management.`,
     ],
     homeNarrative:
-      "Simnetiq is a small London studio of three owner-operators. We deliver software end-to-end: native mobile and desktop apps, web platforms, AI features and pipelines, paid acquisition campaigns wired to real attribution, and bespoke VPN infrastructure. Each engagement is scoped, priced in GBP, and signed as a SOW before code is written.",
+      "Simnetiq is a small London studio of two owner-operators. We deliver software end-to-end: native mobile and desktop apps, web platforms, AI features and pipelines, and bespoke VPN infrastructure. Each engagement is scoped, priced in GBP, and signed as a SOW before code is written.",
     aboutHeading: "About",
     companyRegistrationHeading: "Company registration",
     companyRegistrationLines: [
@@ -136,11 +136,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "- **Founded:** 2025",
       "- **Operations:** London, United Kingdom (51.5074°N · 0.1278°W)",
     ],
-    teamHeading: "Team (three owner-operators)",
+    teamHeading: "Team (two owner-operators)",
     teamLines: [
       "01 — Director / Engineering — Roman Pochtman — Mobile, web, AI, infrastructure",
-      "02 — Director / Engineering — Dmitry Polskoy — Backend, automation, growth wiring",
-      "03 — Director / Legal & Operations — David Zitomirsky — Contracts, compliance, finance",
+      "02 — Director / Legal & Operations — David Zitomirsky — Contracts, compliance, finance",
     ],
     operatingPrinciplesHeading: "Operating principles",
     operatingPrinciples: [
@@ -200,7 +199,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
   },
   he: {
     intro:
-      "Simnetiq Ltd הוא אולפן הנדסת תוכנה ושיווק צמיחה מבוסס לונדון. אנחנו בונים אפליקציות ייצור ל-iOS, Android, macOS, Windows ו-Linux; פלטפורמות ווב על Next.js / Supabase / Stripe; אוטומציה של LLM, RAG ו-Agentic על מודלים של Anthropic, OpenAI ו-open-weight; רכישה ממומנת ב-Meta, TikTok וגוגל המחוברת לייחוס AppsFlyer ו-Adjust; ותשתית VPN עמידה לצנזורה על VLESS-Reality. שלושה שותפים-מפעילים, רשומים באנגליה ובוויילס (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
+      "Simnetiq Ltd הוא אולפן הנדסת תוכנה מבוסס לונדון. אנחנו בונים אפליקציות ייצור ל-iOS, Android, macOS, Windows ו-Linux; פלטפורמות ווב על Next.js / Supabase / Stripe; אוטומציה של LLM, RAG ו-Agentic על מודלים של Anthropic, OpenAI ו-open-weight; ותשתית VPN עמידה לצנזורה על VLESS-Reality. שני שותפים-מפעילים, רשומים באנגליה ובוויילס (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
     postIntro:
       "כל התקשרות מתומחרת ב-GBP מול SOW חתום. מתיק עד ייצור, מקצה לקצה. ללא ריטיינרים סוכנותיים, ללא דיווח קופסה שחורה.",
     servicesHeading: "שירותים",
@@ -245,7 +244,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה.`,
     ],
     homeNarrative:
-      "סימנטיק הוא אולפן לונדוני קטן של שלושה שותפים-מפעילים. אנו מספקים תוכנה מקצה לקצה: אפליקציות מובייל ושולחן עבודה מקוריות, פלטפורמות ווב, פיצ'רי AI וצנרות, קמפייני רכישה ממומנת מחוברים לייחוס אמיתי, ותשתית VPN ייעודית. כל התקשרות מוגדרת, מתומחרת ב-GBP, ונחתמת כ-SOW לפני שנכתב קוד.",
+      "סימנטיק הוא אולפן לונדוני קטן של שני שותפים-מפעילים. אנו מספקים תוכנה מקצה לקצה: אפליקציות מובייל ושולחן עבודה מקוריות, פלטפורמות ווב, פיצ'רי AI וצנרות, ותשתית VPN ייעודית. כל התקשרות מוגדרת, מתומחרת ב-GBP, ונחתמת כ-SOW לפני שנכתב קוד.",
     aboutHeading: "אודות",
     companyRegistrationHeading: "רישום החברה",
     companyRegistrationLines: [
@@ -257,11 +256,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "- **שנת ייסוד:** 2025",
       "- **פעילות:** לונדון, בריטניה (51.5074°N · 0.1278°W)",
     ],
-    teamHeading: "צוות (שלושה שותפים-מפעילים)",
+    teamHeading: "צוות (שני שותפים-מפעילים)",
     teamLines: [
       "01 — דירקטור / הנדסה — Roman Pochtman — מובייל, ווב, AI, תשתית",
-      "02 — דירקטור / הנדסה — Dmitry Polskoy — בקאנד, אוטומציה, חיווט גרואת'",
-      "03 — דירקטור / משפט ותפעול — David Zitomirsky — חוזים, ציות, פיננסים",
+      "02 — דירקטור / משפט ותפעול — David Zitomirsky — חוזים, ציות, פיננסים",
     ],
     operatingPrinciplesHeading: "עקרונות תפעוליים",
     operatingPrinciples: [
@@ -321,7 +319,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
   },
   ru: {
     intro:
-      "Simnetiq Ltd — лондонская студия разработки ПО и growth-маркетинга. Мы собираем production-приложения для iOS, Android, macOS, Windows и Linux; веб-платформы на Next.js / Supabase / Stripe; LLM, RAG и агентную автоматизацию на моделях Anthropic, OpenAI и open-weight; платный трафик в Meta, TikTok и Google с атрибуцией через AppsFlyer и Adjust; устойчивую к цензуре VPN-инфраструктуру на VLESS-Reality. Три владельца-практика, регистрация в Англии и Уэльсе (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
+      "Simnetiq Ltd — лондонская студия разработки ПО. Мы собираем production-приложения для iOS, Android, macOS, Windows и Linux; веб-платформы на Next.js / Supabase / Stripe; LLM, RAG и агентную автоматизацию на моделях Anthropic, OpenAI и open-weight; устойчивую к цензуре VPN-инфраструктуру на VLESS-Reality. Два владельца-практика, регистрация в Англии и Уэльсе (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
     postIntro:
       "Каждый контракт оценивается в GBP по подписанному SOW. От брифа до продакшена, от и до. Без агентских ретейнеров, без чёрно-ящичных отчётов.",
     servicesHeading: "Услуги",
@@ -367,7 +365,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и управлением жизненным циклом заказа.`,
     ],
     homeNarrative:
-      "Simnetiq — небольшая лондонская студия из трёх владельцев-практиков. Мы доставляем ПО от и до: нативные мобильные и десктоп-приложения, веб-платформы, AI-фичи и пайплайны, кампании платного трафика, привязанные к настоящей атрибуции, и заказную VPN-инфраструктуру. Каждый контракт описан, оценён в GBP и подписан как SOW до начала кода.",
+      "Simnetiq — небольшая лондонская студия из двух владельцев-практиков. Мы доставляем ПО от и до: нативные мобильные и десктоп-приложения, веб-платформы, AI-фичи и пайплайны, и заказную VPN-инфраструктуру. Каждый контракт описан, оценён в GBP и подписан как SOW до начала кода.",
     aboutHeading: "О компании",
     companyRegistrationHeading: "Регистрация компании",
     companyRegistrationLines: [
@@ -379,11 +377,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "- **Год основания:** 2025",
       "- **Операции:** Лондон, Великобритания (51.5074°N · 0.1278°W)",
     ],
-    teamHeading: "Команда (три владельца-практика)",
+    teamHeading: "Команда (два владельца-практика)",
     teamLines: [
       "01 — Директор / Инжиниринг — Roman Pochtman — Mobile, web, AI, инфраструктура",
-      "02 — Директор / Инжиниринг — Dmitry Polskoy — Backend, автоматизация, growth-обвязка",
-      "03 — Директор / Юр. и операционная часть — David Zitomirsky — Контракты, комплаенс, финансы",
+      "02 — Директор / Юр. и операционная часть — David Zitomirsky — Контракты, комплаенс, финансы",
     ],
     operatingPrinciplesHeading: "Операционные принципы",
     operatingPrinciples: [

@@ -7,7 +7,7 @@ import { ScrollReveal } from "@/components/scroll-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type ServiceCode = "mobile" | "web" | "aiAutomation" | "growth";
+type ServiceCode = "mobile" | "web" | "aiAutomation";
 
 type ServiceCardProps = {
   code: ServiceCode;

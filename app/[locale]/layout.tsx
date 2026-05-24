@@ -66,9 +66,9 @@ const lunasima = Lunasima({
 
 const SITE_URL = "https://simnetiq.store";
 const SITE_NAME = "Simnetiq";
-const DEFAULT_TITLE = "Simnetiq — London Software Engineering & Growth Marketing Studio";
+const DEFAULT_TITLE = "Simnetiq — London Software Engineering Studio";
 const DEFAULT_DESCRIPTION =
-  "Simnetiq is a London-based technology studio. We design, engineer and market iOS and Android apps, Next.js web platforms, AI/LLM systems and VPN infrastructure. Full-stack development, growth marketing, App Store and Google Play submission — from brief to production.";
+  "Simnetiq is a London-based technology studio. We design and engineer iOS and Android apps, Next.js web platforms, AI/LLM systems and VPN infrastructure. Full-stack development, App Store and Google Play submission — from brief to production.";
 
 const KEYWORDS = [
   "Simnetiq",
@@ -78,7 +78,6 @@ const KEYWORDS = [
   "software development agency London",
   "software engineering studio London",
   "product studio London",
-  "development and marketing agency London",
   "full-stack development agency UK",
   "mobile app developers London",
   "iOS app development London",
@@ -102,7 +101,6 @@ const KEYWORDS = [
   "Supabase development agency",
   "web development agency UK",
   "landing page design London",
-  "marketing website development",
   "AI integration agency",
   "LLM engineering London",
   "Anthropic Claude integration",
@@ -111,17 +109,6 @@ const KEYWORDS = [
   "pgvector consulting",
   "agentic automation development",
   "AI product engineering UK",
-  "growth marketing agency London",
-  "paid acquisition agency UK",
-  "Meta ads agency",
-  "TikTok ads agency",
-  "Google Ads management agency",
-  "Apple Search Ads agency",
-  "AppsFlyer integration experts",
-  "Adjust integration experts",
-  "mobile measurement partner setup",
-  "App Store optimisation agency",
-  "ASO agency London",
   "app store submission service",
   "Google Play submission service",
   "VPN development agency",
@@ -133,12 +120,10 @@ const KEYWORDS = [
   "Telegram bot development",
   "Stripe Billing integration",
   "RevenueCat integration agency",
-  "eSIM platform development",
   "logistics platform development",
   "Doppler VPN",
   "Creator AI",
   "Physics.explained",
-  "Simnetiq eSIM",
 ];
 
 export const metadata: Metadata = {
@@ -159,7 +144,7 @@ export const metadata: Metadata = {
   keywords: KEYWORDS,
   referrer: "origin-when-cross-origin",
   category: "technology",
-  classification: "Software Engineering & Marketing Studio",
+  classification: "Software Engineering Studio",
   alternates: {
     canonical: `${SITE_URL}/en`,
     languages: {
@@ -180,7 +165,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Simnetiq — London Software Engineering & Growth Marketing Studio",
+        alt: "Simnetiq — London Software Engineering Studio",
         type: "image/png",
       },
     ],

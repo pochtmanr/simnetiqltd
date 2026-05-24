@@ -18,11 +18,10 @@ const organization = {
   },
   image: `${BASE_URL}/icon-512.png`,
   description:
-    "Simnetiq is a London-based software engineering and growth marketing studio building high-integrity mobile apps, web platforms, AI systems, and VPN infrastructure for global clients.",
+    "Simnetiq is a London-based software engineering studio building high-integrity mobile apps, web platforms, AI systems, and VPN infrastructure for global clients.",
   foundingDate: "2025",
   founders: [
     { "@type": "Person", name: "Roman Pochtman" },
-    { "@type": "Person", name: "Dmitry Polskoy" },
     { "@type": "Person", name: "David Zitomirsky" },
   ],
   address: {
@@ -68,12 +67,12 @@ const professionalService = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "@id": `${BASE_URL}/#service`,
-  name: "Simnetiq — Software Engineering & Growth Marketing Studio",
+  name: "Simnetiq — Software Engineering Studio",
   url: BASE_URL,
   image: `${BASE_URL}/icon-512.png`,
   logo: `${BASE_URL}/icon-512.png`,
   description:
-    "End-to-end product studio: iOS, Android, macOS, Windows and Linux applications; Next.js web platforms; LLM and AI integration; paid acquisition across Meta, TikTok and Google; VPN and network infrastructure.",
+    "End-to-end product studio: iOS, Android, macOS, Windows and Linux applications; Next.js web platforms; LLM and AI integration; VPN and network infrastructure.",
   priceRange: "£££",
   address: {
     "@type": "PostalAddress",
@@ -107,13 +106,6 @@ const professionalService = {
     "LLM engineering",
     "RAG pipelines",
     "Agentic automation",
-    "Growth marketing",
-    "Paid acquisition",
-    "Meta ads management",
-    "TikTok ads management",
-    "Google Ads management",
-    "AppsFlyer integration",
-    "Adjust integration",
     "VPN infrastructure",
     "Network engineering",
     "Technical SEO",
@@ -141,11 +133,6 @@ const professionalService = {
     "Telegram Bot API",
     "VLESS-Reality",
     "Marzban",
-    "AppsFlyer",
-    "Adjust",
-    "Meta Ads",
-    "TikTok Ads",
-    "Google Ads",
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -171,23 +158,6 @@ const professionalService = {
               price: "1000",
               minPrice: "1000",
             },
-          },
-        ],
-      },
-      {
-        "@type": "OfferCatalog",
-        name: "Growth & Marketing",
-        itemListElement: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Paid Acquisition and Attribution",
-              serviceType: "Performance marketing",
-              url: `${BASE_URL}/services/growth-marketing`,
-            },
-            priceCurrency: "GBP",
-            price: "500",
           },
         ],
       },
@@ -237,7 +207,7 @@ const website = {
   url: BASE_URL,
   name: "Simnetiq",
   description:
-    "London software engineering and growth marketing studio. Mobile, web, AI and infrastructure.",
+    "London software engineering studio. Mobile, web, AI and infrastructure.",
   publisher: { "@id": `${BASE_URL}/#organization` },
   inLanguage: "en-GB",
 };

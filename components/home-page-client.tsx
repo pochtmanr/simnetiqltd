@@ -35,7 +35,7 @@ const BookingPanel = dynamic(
   }
 );
 
-type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
+type CapKey = "mobile" | "web" | "aiAutomation";
 
 type HomeDict = {
   frame: {

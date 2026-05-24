@@ -15,7 +15,6 @@ const HOME_KEYWORDS = [
   "London software development studio",
   "London software engineering studio",
   "London app development agency",
-  "London growth marketing agency",
   "UK software studio",
   "UK mobile app agency",
   "UK product studio",
@@ -36,20 +35,12 @@ const HOME_KEYWORDS = [
   "VPN infrastructure engineering",
   "VLESS Reality VPN development",
   "Marzban VPN agency",
-  "paid acquisition agency London",
-  "Meta ads agency UK",
-  "TikTok ads agency UK",
-  "Google Ads agency London",
-  "AppsFlyer integration agency",
-  "Adjust integration agency",
-  "App Store optimisation London",
   "SaaS platform builder UK",
   "Telegram bot agency",
   "n8n automation agency",
   "Doppler VPN",
   "Creator AI",
   "Physics.explained",
-  "Simnetiq eSIM",
   "hire app developers London",
   "hire Next.js developers",
   "hire Swift developers",
@@ -70,6 +61,7 @@ export async function generateMetadata({
     routeKey: "home",
     path: "",
     keywords: HOME_KEYWORDS,
+    markdownAlternate: true,
   });
 }
 
@@ -97,12 +89,6 @@ const portfolioItems = [
     url: "https://www.isrshipping.com",
     description:
       "Logistics platform with real-time GPS driver tracking, route optimisation and order lifecycle management.",
-  },
-  {
-    name: "Simnetiq eSIM",
-    url: "https://simnetiq.store",
-    description:
-      "eSIM platform with Supabase backend and Stripe billing. iOS and Android clients, admin console.",
   },
 ];
 

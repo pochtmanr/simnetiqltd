@@ -17,39 +17,39 @@ type RouteCopy = Record<Locale, LocalizedCopy>;
 const HOME: RouteCopy = {
   en: {
     title:
-      "Simnetiq — London Software Engineering & Growth Marketing Studio",
+      "Simnetiq — London Software Engineering Studio",
     description:
-      "Simnetiq is a London technology studio: iOS, Android, macOS, Windows and Linux applications; Next.js and Supabase web platforms; LLM and RAG integration with Anthropic and OpenAI; paid acquisition across Meta, TikTok and Google wired to AppsFlyer and Adjust; VPN infrastructure. End-to-end brief to production.",
+      "Simnetiq is a London technology studio: iOS, Android, macOS, Windows and Linux applications; Next.js and Supabase web platforms; LLM and RAG integration with Anthropic and OpenAI; VPN infrastructure. End-to-end brief to production.",
   },
   he: {
     title:
-      "סימנטיק — אולפן הנדסת תוכנה ושיווק צמיחה בלונדון",
+      "סימנטיק — אולפן הנדסת תוכנה בלונדון",
     description:
-      "סימנטיק הוא אולפן טכנולוגיה מלונדון: אפליקציות מקוריות ל-iOS, Android, macOS, Windows ו-Linux; פלטפורמות ווב על Next.js ו-Supabase; אינטגרציית LLM ו-RAG עם Anthropic ו-OpenAI; רכישה ממומנת ב-Meta, TikTok וגוגל המחוברת ל-AppsFlyer ו-Adjust; תשתית VPN. מקצה לקצה — מתיק עד ייצור.",
+      "סימנטיק הוא אולפן טכנולוגיה מלונדון: אפליקציות מקוריות ל-iOS, Android, macOS, Windows ו-Linux; פלטפורמות ווב על Next.js ו-Supabase; אינטגרציית LLM ו-RAG עם Anthropic ו-OpenAI; תשתית VPN. מקצה לקצה — מתיק עד ייצור.",
   },
   ru: {
     title:
-      "Simnetiq — лондонская студия разработки ПО и growth-маркетинга",
+      "Simnetiq — лондонская студия разработки ПО",
     description:
-      "Simnetiq — лондонская технологическая студия: нативные приложения для iOS, Android, macOS, Windows и Linux; веб-платформы на Next.js и Supabase; интеграция LLM и RAG с Anthropic и OpenAI; платный трафик в Meta, TikTok и Google с атрибуцией через AppsFlyer и Adjust; VPN-инфраструктура. От брифа до продакшена.",
+      "Simnetiq — лондонская технологическая студия: нативные приложения для iOS, Android, macOS, Windows и Linux; веб-платформы на Next.js и Supabase; интеграция LLM и RAG с Anthropic и OpenAI; VPN-инфраструктура. От брифа до продакшена.",
   },
 };
 
 const ABOUT: RouteCopy = {
   en: {
-    title: "About Simnetiq — London Software & Marketing Studio",
+    title: "About Simnetiq — London Software Studio",
     description:
-      "About Simnetiq Ltd — a London-based technology studio and engineering collective. Incorporated in England & Wales (Company No. 16861177). Three owner-operators covering mobile, web, AI, VPN infrastructure, paid acquisition, and legal. Registered at 2 Frederick Street, Kings Cross, London.",
+      "About Simnetiq Ltd — a London-based technology studio and engineering collective. Incorporated in England & Wales (Company No. 16861177). Two owner-operators covering mobile, web, AI, VPN infrastructure, and legal. Registered at 2 Frederick Street, Kings Cross, London.",
   },
   he: {
-    title: "אודות סימנטיק — אולפן תוכנה ושיווק בלונדון",
+    title: "אודות סימנטיק — אולפן תוכנה בלונדון",
     description:
-      "אודות Simnetiq Ltd — אולפן טכנולוגיה מבוסס לונדון. רשום באנגליה ובוויילס (מספר חברה 16861177). שלושה שותפים-מפעילים המכסים מובייל, ווב, AI, תשתית VPN, רכישה ממומנת ומשפטים. כתובת רשומה: 2 Frederick Street, Kings Cross, London.",
+      "אודות Simnetiq Ltd — אולפן טכנולוגיה מבוסס לונדון. רשום באנגליה ובוויילס (מספר חברה 16861177). שני שותפים-מפעילים המכסים מובייל, ווב, AI, תשתית VPN ומשפטים. כתובת רשומה: 2 Frederick Street, Kings Cross, London.",
   },
   ru: {
-    title: "О Simnetiq — лондонская студия разработки и маркетинга",
+    title: "О Simnetiq — лондонская студия разработки",
     description:
-      "О компании Simnetiq Ltd — технологическая студия из Лондона. Зарегистрирована в Англии и Уэльсе (Companies House 16861177). Три владельца-практика, работающих по направлениям mobile, web, AI, VPN-инфраструктура, платный трафик и юридическое сопровождение. Юридический адрес: 2 Frederick Street, Kings Cross, London.",
+      "О компании Simnetiq Ltd — технологическая студия из Лондона. Зарегистрирована в Англии и Уэльсе (Companies House 16861177). Два владельца-практика, работающих по направлениям mobile, web, AI, VPN-инфраструктура и юридическое сопровождение. Юридический адрес: 2 Frederick Street, Kings Cross, London.",
   },
 };
 
@@ -73,19 +73,19 @@ const PROJECTS: RouteCopy = {
 
 const SERVICES: RouteCopy = {
   en: {
-    title: "Services — Development, AI, Growth Marketing & Infrastructure",
+    title: "Services — Development, AI & Infrastructure",
     description:
-      "Simnetiq services: iOS/Android/macOS/Windows/Linux app development; Next.js, Supabase and Stripe web platforms; AI and LLM integration across Anthropic and OpenAI; paid acquisition on Meta, TikTok and Google with AppsFlyer and Adjust attribution; VPN infrastructure. Every engagement priced in GBP against a signed SOW.",
+      "Simnetiq services: iOS/Android/macOS/Windows/Linux app development; Next.js, Supabase and Stripe web platforms; AI and LLM integration across Anthropic and OpenAI; VPN infrastructure. Every engagement priced in GBP against a signed SOW.",
   },
   he: {
-    title: "שירותים — פיתוח, AI, שיווק צמיחה ותשתית",
+    title: "שירותים — פיתוח, AI ותשתית",
     description:
-      "שירותי סימנטיק: פיתוח אפליקציות ל-iOS/Android/macOS/Windows/Linux; פלטפורמות ווב על Next.js, Supabase ו-Stripe; אינטגרציית AI ו-LLM ב-Anthropic ו-OpenAI; רכישה ממומנת ב-Meta, TikTok וגוגל עם ייחוס AppsFlyer ו-Adjust; תשתית VPN. כל התקשרות מתומחרת ב-GBP מול SOW חתום.",
+      "שירותי סימנטיק: פיתוח אפליקציות ל-iOS/Android/macOS/Windows/Linux; פלטפורמות ווב על Next.js, Supabase ו-Stripe; אינטגרציית AI ו-LLM ב-Anthropic ו-OpenAI; תשתית VPN. כל התקשרות מתומחרת ב-GBP מול SOW חתום.",
   },
   ru: {
-    title: "Услуги — разработка, AI, growth-маркетинг и инфраструктура",
+    title: "Услуги — разработка, AI и инфраструктура",
     description:
-      "Услуги Simnetiq: разработка приложений для iOS/Android/macOS/Windows/Linux; веб-платформы на Next.js, Supabase и Stripe; интеграция AI и LLM на базе Anthropic и OpenAI; платный трафик в Meta, TikTok и Google с атрибуцией AppsFlyer и Adjust; VPN-инфраструктура. Каждый контракт оценивается в GBP по подписанному SOW.",
+      "Услуги Simnetiq: разработка приложений для iOS/Android/macOS/Windows/Linux; веб-платформы на Next.js, Supabase и Stripe; интеграция AI и LLM на базе Anthropic и OpenAI; VPN-инфраструктура. Каждый контракт оценивается в GBP по подписанному SOW.",
   },
 };
 

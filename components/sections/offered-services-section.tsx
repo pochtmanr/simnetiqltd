@@ -6,10 +6,9 @@ import { TextReveal } from "@/components/text-reveal";
 import { MobileBg } from "@/components/service-bg/mobile";
 import { WebBg } from "@/components/service-bg/web";
 import { AutomationsBg } from "@/components/service-bg/automations";
-import { GrowthBg } from "@/components/service-bg/growth";
 import type { Locale } from "@/lib/i18n";
 
-type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
+type CapKey = "mobile" | "web" | "aiAutomation";
 
 type CapDict = {
   eyebrow: string;
@@ -28,7 +27,6 @@ const CARDS: { key: CapKey; code: string; href: string; bg: () => React.ReactEle
   { key: "mobile", code: "C-01", href: "/services/mobile-desktop", bg: () => <MobileBg /> },
   { key: "web", code: "C-02", href: "/services/web-platforms", bg: () => <WebBg /> },
   { key: "aiAutomation", code: "C-03", href: "/services/ai-automation", bg: () => <AutomationsBg /> },
-  { key: "growth", code: "C-04", href: "/services/growth-marketing", bg: () => <GrowthBg /> },
 ];
 
 export function OfferedServicesSection({

@@ -33,13 +33,6 @@ const SERVICES_KEYWORDS = [
   "OpenAI GPT integration services",
   "RAG development services",
   "agentic automation services",
-  "growth marketing services London",
-  "paid acquisition services UK",
-  "Meta ads services London",
-  "TikTok ads services",
-  "Google Ads services London",
-  "AppsFlyer integration services",
-  "Adjust integration services",
   "App Store submission services",
   "Google Play submission services",
   "Telegram bot development services",
@@ -61,6 +54,7 @@ export async function generateMetadata({
     routeKey: "services",
     path: "/services",
     keywords: SERVICES_KEYWORDS,
+    markdownAlternate: true,
   });
 }
 

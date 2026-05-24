@@ -137,10 +137,6 @@
       "aiAutomation": {
         "title": "AI & Automation",
         "text": "Production LLM features and the pipelines that feed them — n8n, Make, custom services on a dedicated VPS, any data source."
-      },
-      "growth": {
-        "title": "Growth & Marketing",
-        "text": "Meta, TikTok, and Google campaigns paired with AppsFlyer or Adjust — measured against real in-app conversions."
       }
     }
   },
@@ -209,12 +205,11 @@
     "personnel": {
       "eyebrow": "◇ Personnel",
       "title": "The architecture team",
-      "body": "Three owner-operators. Engineering, legal, distribution. No layers between the work and the decision."
+      "body": "Two owner-operators. Engineering and legal. No layers between the work and the decision."
     },
     "team": [
       { "role": "Lead Engineer / Director", "name": "R. Pochtman", "meta": "Mobile · Backend · Infra" },
-      { "role": "Legal / Contracts", "name": "D. Zitomirsky", "meta": "Corporate · Compliance" },
-      { "role": "Developer / Growth", "name": "D. Polskoy", "meta": "Distribution · Marketing" }
+      { "role": "Legal / Contracts", "name": "D. Zitomirsky", "meta": "Corporate · Compliance" }
     ],
     "registration": {
       "eyebrow": "◇ Registration",
@@ -793,68 +788,6 @@
       "Green Flagged compresses that gap. Drop a contract in as PDF, DOCX, or pasted text. The scanner runs it through a clause taxonomy, returns a single verdict with a risk grade, and breaks every flagged clause into a plain-language explanation with a suggested redline. The full report exports as PDF; the source contract auto-deletes by default on a configurable retention window.",
       "Three tiers cover the realistic price points without subscription friction at the bottom. Free lets you test one contract a month with the full clause report and rewrite suggestions. Pay-as-you-go at $3 per contract is one scan, one report, no recurring charges — card or crypto checkout. Standard at $25/month bundles ten contracts plus a faster analysis queue, clause-type filtering, and an audit log for solo users who scan weekly.",
       "The product is informational, not legal advice — that disclaimer lives in the footer of every page. Green Flagged is the second opinion you'd ask a lawyer friend for at 11pm, delivered in under eight minutes."
-    ],
-    "pricingEyebrow": "§ 02 · Pricing",
-    "pricingTitleA": "Three tiers,",
-    "pricingTitleB": "no subscription wall.",
-    "pricingBody": "Most users will only ever need one scan. The free tier covers that — one contract a month, full report, no card. Pay-as-you-go is for the occasional extra contract. Standard is for solo users who scan weekly and want faster analysis plus an audit log.",
-    "popularLabel": "MOST POPULAR",
-    "pricingTiers": [
-      {
-        "id": "T-01",
-        "name": "Free",
-        "tagline": "Test one contract.",
-        "price": "$0",
-        "cadence": "USD",
-        "popular": false,
-        "cta": "Start free",
-        "bullets": [
-          { "included": true, "text": "Contracts per month: 1" },
-          { "included": true, "text": "Save contracts and results" },
-          { "included": true, "text": "Full clause report" },
-          { "included": true, "text": "Clause rewrite suggestions" },
-          { "included": false, "text": "Faster analysis queue" },
-          { "included": false, "text": "Filter by clause type" },
-          { "included": false, "text": "Audit log" }
-        ]
-      },
-      {
-        "id": "T-02",
-        "name": "Pay as you go",
-        "tagline": "No commitment, not recurring.",
-        "price": "$3",
-        "cadence": "per contract",
-        "popular": false,
-        "cta": "Buy a contract",
-        "bullets": [
-          { "included": true, "text": "Contracts per month: 0" },
-          { "included": true, "text": "Each extra contract: $3.00" },
-          { "included": true, "text": "Save contracts and results" },
-          { "included": true, "text": "Full clause report" },
-          { "included": true, "text": "Clause rewrite suggestions" },
-          { "included": true, "text": "Card or crypto checkout" },
-          { "included": false, "text": "Faster analysis queue" }
-        ]
-      },
-      {
-        "id": "T-03",
-        "name": "Standard",
-        "tagline": "Best for solo adventures.",
-        "price": "$25",
-        "cadence": "per month",
-        "popular": true,
-        "cta": "Start standard",
-        "bullets": [
-          { "included": true, "text": "Contracts per month: 10" },
-          { "included": true, "text": "Each extra contract: $3.00" },
-          { "included": true, "text": "Save contracts and results" },
-          { "included": true, "text": "Full clause report" },
-          { "included": true, "text": "Faster analysis queue" },
-          { "included": true, "text": "Clause rewrite suggestions" },
-          { "included": true, "text": "Filter by clause type" },
-          { "included": true, "text": "Audit log" }
-        ]
-      }
     ],
     "insideEyebrow": "§ 03 · What's inside",
     "insideTitle": "Four moving parts.",

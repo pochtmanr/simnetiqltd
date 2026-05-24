@@ -11,7 +11,7 @@ import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
 type ProjectKey = "physics" | "doppler" | "creator" | "delivery";
-type CapKey = "mobile" | "web" | "aiAutomation" | "growth";
+type CapKey = "mobile" | "web" | "aiAutomation";
 
 type NavDict = {
   links: {
@@ -81,7 +81,6 @@ const SERVICE_META: { key: CapKey; code: string; href: string }[] = [
   { key: "mobile", code: "C-01", href: "/services/mobile-desktop" },
   { key: "web", code: "C-02", href: "/services/web-platforms" },
   { key: "aiAutomation", code: "C-03", href: "/services/ai-automation" },
-  { key: "growth", code: "C-04", href: "/services/growth-marketing" },
 ];
 
 const HOVER_OPEN_DELAY = 100;

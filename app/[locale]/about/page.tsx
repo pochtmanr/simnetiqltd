@@ -17,7 +17,6 @@ const ABOUT_KEYWORDS = [
   "Simnetiq team",
   "Simnetiq founders",
   "Roman Pochtman",
-  "Dmitry Polskoy",
   "David Zitomirsky",
   "London software studio team",
   "technology studio Kings Cross",
@@ -38,6 +37,7 @@ export async function generateMetadata({
     routeKey: "about",
     path: "/about",
     keywords: ABOUT_KEYWORDS,
+    markdownAlternate: true,
   });
 }
 
