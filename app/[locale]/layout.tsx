@@ -8,6 +8,8 @@ import {
   Instrument_Serif,
   Rubik,
   Lunasima,
+  Geist,
+  Geist_Mono,
 } from "next/font/google";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -62,6 +64,19 @@ const lunasima = Lunasima({
   subsets: ["latin", "hebrew"],
   weight: ["400", "700"],
   variable: "--font-lunasima",
+});
+
+// VisaPassage reference fonts — used on /projects/visapassage design-system section.
+const geist = Geist({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-geist",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-geist-mono",
 });
 
 const SITE_URL = "https://simnetiq.store";
@@ -266,7 +281,7 @@ export default async function RootLayout({
       dir={dir}
       data-theme={dataTheme}
       style={colorSchemeStyle}
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} h-full`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">

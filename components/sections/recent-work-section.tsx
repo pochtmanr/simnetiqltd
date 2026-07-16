@@ -11,7 +11,9 @@ type ProjectKey =
   | "doppler"
   | "creator"
   | "delivery"
-  | "greenflagged";
+  | "greenflagged"
+  | "smsactivate"
+  | "visapassage";
 
 type ProjectDef = {
   key: ProjectKey;
@@ -37,21 +39,35 @@ const PROJECTS: ProjectDef[] = [
     stack: "Swift · Kotlin · Go · Marzban",
   },
   {
-    key: "greenflagged",
+    key: "smsactivate",
     id: "03",
+    href: "https://simnetiq.xyz/",
+    caseStudy: "/projects/sms-activate",
+    stack: "Next.js · React · Tailwind · iOS & Android",
+  },
+  {
+    key: "visapassage",
+    id: "04",
+    href: "https://visapassage.com/",
+    caseStudy: "/projects/visapassage",
+    stack: "Next.js · React · Supabase · Tailwind",
+  },
+  {
+    key: "greenflagged",
+    id: "05",
     href: "https://greenflagged.vercel.app/",
     caseStudy: "/projects/green-flagged",
     stack: "Next.js 16 · React 19 · Tailwind v4 · GSAP",
   },
   {
     key: "delivery",
-    id: "04",
+    id: "06",
     href: "https://www.isrshipping.com",
     stack: "Next.js · Node · PostgreSQL",
   },
   {
     key: "creator",
-    id: "05",
+    id: "07",
     href: "https://www.creatorai.art/en",
     stack: "Swift · Kotlin · Python · Supabase",
   },

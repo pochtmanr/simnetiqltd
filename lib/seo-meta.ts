@@ -179,6 +179,42 @@ const CASE_GREENFLAGGED: RouteCopy = {
   },
 };
 
+const CASE_SMSACTIVATE: RouteCopy = {
+  en: {
+    title: "SMS Activate — Case Study",
+    description:
+      "SMS Activate by SIMNETIQ rents you a real carrier number in 50+ countries for exactly as long as a verification code takes to arrive. 35+ services from Telegram to PayPal, codes in about thirty seconds, single-use numbers, and one-time credit packs that never expire — no SIM, no eSIM, no subscription, no personal number handed over. Web, iOS and Android.",
+  },
+  he: {
+    title: "SMS Activate — מקרה בוחן",
+    description:
+      "SMS Activate מבית SIMNETIQ משכיר לך מספר אמיתי ברשת סלולרית ביותר מ-50 מדינות בדיוק לפרק הזמן שלוקח לקוד אימות להגיע. יותר מ-35 שירותים — מטלגרם ועד PayPal, קודים בתוך כשלושים שניות, מספרים לשימוש חד-פעמי וחבילות קרדיט חד-פעמיות שאינן פגות תוקף — בלי SIM, בלי eSIM, בלי מנוי ובלי למסור את המספר האישי. ווב, iOS ואנדרואיד.",
+  },
+  ru: {
+    title: "SMS Activate — кейс",
+    description:
+      "SMS Activate от SIMNETIQ выдаёт настоящий номер оператора в 50+ странах ровно на то время, которое нужно коду подтверждения. 35+ сервисов — от Telegram до PayPal, код приходит примерно за тридцать секунд, номера одноразовые, а разовые пакеты кредитов не сгорают — без SIM, без eSIM, без подписки и без передачи личного номера. Веб, iOS и Android.",
+  },
+};
+
+const CASE_VISAPASSAGE: RouteCopy = {
+  en: {
+    title: "VisaPassage — Case Study",
+    description:
+      "VisaPassage is multi-passport visa intelligence. One encrypted profile holds every passport, residency and document; the comparison engine ranks routes across all of them by least paperwork, shortest wait and lowest cost, then generates a country-specific checklist and auto-fills the government forms. Versioned, expiry-aware document vault with access logging. Free to start, no card required.",
+  },
+  he: {
+    title: "VisaPassage — מקרה בוחן",
+    description:
+      "VisaPassage היא פלטפורמת מודיעין ויזות לבעלי דרכונים מרובים. פרופיל מוצפן אחד מחזיק כל דרכון, תושבות ומסמך; מנוע ההשוואה מדרג מסלולים על פני כולם לפי מינימום ניירת, זמן ההמתנה הקצר ביותר והעלות הנמוכה ביותר, ואז מייצר רשימת מסמכים ייעודית למדינה וממלא אוטומטית את הטפסים הממשלתיים. כספת מסמכים עם ניהול גרסאות, מעקב תפוגה ותיעוד גישה. התחלה חינם, ללא כרטיס אשראי.",
+  },
+  ru: {
+    title: "VisaPassage — кейс",
+    description:
+      "VisaPassage — визовая аналитика для владельцев нескольких паспортов. Один зашифрованный профиль хранит все паспорта, виды на жительство и документы; движок сравнения ранжирует маршруты по всем из них — меньше бумаг, короче ожидание, ниже стоимость, — затем формирует чек-лист под конкретную страну и автоматически заполняет государственные формы. Хранилище документов с версиями, контролем сроков и журналом доступа. Начать бесплатно, без карты.",
+  },
+};
+
 export const ROUTE_COPY = {
   home: HOME,
   about: ABOUT,
@@ -189,6 +225,8 @@ export const ROUTE_COPY = {
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
   caseStudyGreenFlagged: CASE_GREENFLAGGED,
+  caseStudySmsActivate: CASE_SMSACTIVATE,
+  caseStudyVisaPassage: CASE_VISAPASSAGE,
 } as const;
 
 export type RouteKey = keyof typeof ROUTE_COPY;

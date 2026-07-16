@@ -7,7 +7,9 @@ type ProjectId =
   | "doppler"
   | "creator"
   | "delivery"
-  | "greenflagged";
+  | "greenflagged"
+  | "smsactivate"
+  | "visapassage";
 type ThemeValue = "system" | "light" | "dark";
 
 export type AnalyticsEvent =

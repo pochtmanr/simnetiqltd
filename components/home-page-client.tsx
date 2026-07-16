@@ -74,7 +74,13 @@ type HomeDict = {
     visit: string;
     caseStudy: string;
     items: Record<
-      "physics" | "doppler" | "creator" | "delivery" | "greenflagged",
+      | "physics"
+      | "doppler"
+      | "creator"
+      | "delivery"
+      | "greenflagged"
+      | "smsactivate"
+      | "visapassage",
       { title: string; badge: string; description: string; accolade?: string }
     >;
   };

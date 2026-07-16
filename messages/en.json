@@ -116,6 +116,16 @@
         "title": "Green Flagged",
         "badge": "Legal-tech · In dev",
         "description": "AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades, and suggested redlines in under eight minutes."
+      },
+      "smsactivate": {
+        "title": "SMS Activate by SIMNETIQ",
+        "badge": "Telecom · Live",
+        "description": "Virtual numbers for sign-ups. Pick a service and a country, get a real carrier number in about thirty seconds, and keep your own number out of someone else's database. One-time credit packs, no subscription."
+      },
+      "visapassage": {
+        "title": "VisaPassage",
+        "badge": "Travel-tech · Live",
+        "description": "Multi-passport visa intelligence. Compare every visa route across all the passports and residencies you hold, then generate the exact document package for the one you pick — checklists, auto-filled forms, and expiry tracking."
       }
     }
   },
@@ -305,6 +315,28 @@
         "scopeValue": "Freelancers · Agencies · SMBs",
         "stack": "Stack",
         "stackValue": "Next.js 16 · React 19 · Tailwind v4"
+      },
+      "smsactivate": {
+        "title": "SMS Activate by SIMNETIQ",
+        "badge": "TELECOM · LIVE",
+        "description": "Virtual numbers for sign-up verification. Pick one of 35+ services and one of 50+ countries, get a real carrier number, and the code lands in about thirty seconds. Single-use numbers, cancellable activations, and one-time credit packs that never expire — no SIM, no eSIM, no identity contract, no auto-renew.",
+        "coverage": "Coverage",
+        "coverageValue": "50+ countries · 35+ services",
+        "billing": "Billing",
+        "billingValue": "One-time credits · No subscription",
+        "platforms": "Platforms",
+        "platformsValue": "Web · iOS · Android"
+      },
+      "visapassage": {
+        "title": "VisaPassage",
+        "badge": "TRAVEL-TECH · LIVE",
+        "description": "Multi-passport visa intelligence. One encrypted profile holds every passport, residency, and document; the comparison engine ranks routes by least paperwork, shortest wait, and lowest cost, then generates a country-specific checklist and auto-fills the government forms. Versioned, expiry-aware document vault. Free to start.",
+        "engine": "Engine",
+        "engineValue": "Least paperwork · Shortest wait · Lowest cost",
+        "scope": "Scope",
+        "scopeValue": "Multi-passport travellers · Agencies",
+        "stack": "Stack",
+        "stackValue": "Next.js · React · Supabase"
       }
     }
   },
@@ -759,7 +791,7 @@
   },
   "caseStudyGreenFlagged": {
     "rail": {
-      "index": "◆ SIMNETIQ / 03 / PROJECTS / GREEN-FLAGGED",
+      "index": "◆ SIMNETIQ / 05 / PROJECTS / GREEN-FLAGGED",
       "tag": "CASE STUDY",
       "status": "MARKETING SITE · LIVE / SCAN API · IN DEV"
     },
@@ -828,6 +860,208 @@
     "ctaEyebrow": "◇ Continue",
     "ctaTitle": "First scan, free.",
     "ctaBody": "Marketing site is live at greenflagged.com. The scanning engine is in development — early users get their first contract review free at launch.",
+    "ctaPrimary": "Visit site"
+  },
+  "caseStudySmsActivate": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 03 / PROJECTS / SMS-ACTIVATE",
+      "tag": "CASE STUDY",
+      "status": "WEB · LIVE / iOS · ANDROID · LIVE"
+    },
+    "eyebrow": "◇ Telecom · Privacy · Live",
+    "titleLine1": "A number for the sign-up.",
+    "titleLine2": "Not for life.",
+    "body": "Every sign-up wants a phone number, and every number handed over is one more row in a database you will never see. SMS Activate rents you a real carrier number for exactly as long as it takes a verification code to arrive — then retires it.",
+    "visitSite": "Visit site",
+    "tryFree": "Get the app",
+    "specsLabel": "▸ Specification",
+    "figureCaption": "Fig. 01 · SMS Activate homepage · service and country picker",
+    "specs": [
+      { "label": "Status", "value": "Live" },
+      { "label": "Countries", "value": "50+ · real carrier networks" },
+      { "label": "Services", "value": "35+ · Telegram to PayPal" },
+      { "label": "Delivery", "value": "~30 seconds to code" },
+      { "label": "Billing", "value": "One-time credits · No auto-renew" },
+      { "label": "Platforms", "value": "Web · iOS · Android" }
+    ],
+    "aboutEyebrow": "§ 01 · About",
+    "aboutTitleA": "Verification without",
+    "aboutTitleB": "the lifetime contract.",
+    "aboutBody": [
+      "The phone number became the default identity key of the consumer internet without anyone deciding it should. It is a permanent identifier, tied to a carrier contract and a legal name, and it is requested by every service that wants proof you are not a bot — including services that have no business knowing it.",
+      "SMS Activate separates the one thing a sign-up actually needs, a code that arrives once, from the thing it usually takes, a number you keep for a decade. You pick a service and a country, you get a live number on a real carrier network, and the code lands in the app for one-tap copying. The number is single-use and is retired afterwards; it is never recycled back to another customer for the same service.",
+      "There is no SIM to post, no eSIM profile to install, and no identity contract to sign. Billing is one-time credit packs — one, five, or ten activations — that never expire and never auto-renew. A pending activation that never receives a code can be cancelled.",
+      "Numbers come from real carrier ranges in more than fifty countries rather than the VOIP blocks most services silently reject, which is the difference between a code arriving and a sign-up form telling you the number is invalid."
+    ],
+    "insideEyebrow": "§ 03 · What's inside",
+    "insideTitle": "Four numbers.",
+    "insideEntry": "ENTRY",
+    "insideItems": [
+      {
+        "figure": "50+",
+        "label": "Countries",
+        "body": "Numbers on real carrier networks rather than VOIP ranges — the blocks that major services actually accept, across more than fifty countries."
+      },
+      {
+        "figure": "35+",
+        "label": "Services",
+        "body": "Telegram, WhatsApp, Google, Instagram, TikTok, Discord, Steam, PayPal, Apple, Uber, Binance and the rest of the long tail."
+      },
+      {
+        "figure": "~30s",
+        "label": "Delivery",
+        "body": "From picking a number to the code landing in the app. It appears in your activation list ready for one-tap copy — no inbox to refresh."
+      },
+      {
+        "figure": "0",
+        "label": "Subscriptions",
+        "body": "One-time credit packs of one, five, or ten activations. Credits never expire, nothing auto-renews, and pending activations can be cancelled."
+      }
+    ],
+    "designEyebrow": "§ 04 · Design system",
+    "designTitleA": "System neutrals,",
+    "designTitleB": "one signal blue.",
+    "designBody": "The interface is a utility, not a destination — you open it, you take a code, you leave. The palette is built from a near-black to near-white greyscale with a single saturated blue reserved for the action that matters: get the number. Nothing else on the page competes for that colour.",
+    "paletteLabel": "▸ Palette",
+    "typographyLabel": "▸ Typography pairing",
+    "typographyCards": [
+      {
+        "code": "01 · Display",
+        "sample": "SMS ACTIVATE",
+        "name": "Inter — Display, tight tracking",
+        "body": "Hero and section headlines. Large, tightly tracked, and set without a wordmark so the sentence carries the brand."
+      },
+      {
+        "code": "02 · Body",
+        "sample": "A number for the sign-up. Not for life.",
+        "name": "Inter — Body",
+        "body": "Product copy, service and country lists, billing explanations. Weights 400 and 500."
+      },
+      {
+        "code": "03 · Mono",
+        "sample": "// +44 7700 900 123 · CODE 481920",
+        "name": "Mono — Numbers & codes",
+        "body": "Reserved for the things you copy: numbers, verification codes, activation IDs, and spec rows."
+      }
+    ],
+    "taxonomyEyebrow": "§ 05 · Service catalogue",
+    "taxonomyTitleA": "The services",
+    "taxonomyTitleB": "people actually sign up for.",
+    "taxonomyBody": "Thirty-five and counting. Each one is a maintained integration rather than a generic number pool — a service is only listed once its codes are landing reliably on the carrier ranges we hold.",
+    "taxonomy": [
+      { "id": "01", "name": "Telegram" },
+      { "id": "02", "name": "WhatsApp" },
+      { "id": "03", "name": "Google" },
+      { "id": "04", "name": "Instagram" },
+      { "id": "05", "name": "TikTok" },
+      { "id": "06", "name": "Discord" },
+      { "id": "07", "name": "PayPal" },
+      { "id": "08", "name": "Steam" },
+      { "id": "09", "name": "Apple" }
+    ],
+    "live": "LIVE",
+    "ctaEyebrow": "◇ Continue",
+    "ctaTitle": "Keep your number to yourself.",
+    "ctaBody": "Pick a service, pick a country, take the code. Credit packs start at a single activation, never expire, and never auto-renew.",
+    "ctaPrimary": "Visit site"
+  },
+  "caseStudyVisaPassage": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 04 / PROJECTS / VISAPASSAGE",
+      "tag": "CASE STUDY",
+      "status": "WEB · LIVE / FREE TO START"
+    },
+    "eyebrow": "◇ Travel-tech · Multi-passport · Live",
+    "titleLine1": "One profile for",
+    "titleLine2": "every visa journey.",
+    "body": "Hold two passports and every visa question doubles. VisaPassage compares the routes across every citizenship and residency you hold, ranks them by paperwork, wait, and cost, then builds the document package for the one you pick.",
+    "visitSite": "Visit site",
+    "tryFree": "Start free",
+    "specsLabel": "▸ Specification",
+    "figureCaption": "Fig. 01 · VisaPassage homepage · one profile, every passport",
+    "specs": [
+      { "label": "Status", "value": "Live" },
+      { "label": "Profile", "value": "Passports · Residencies · Documents" },
+      { "label": "Engine", "value": "Least paperwork · Shortest wait · Lowest cost" },
+      { "label": "Vault", "value": "Versioned · Tagged · Expiry-aware" },
+      { "label": "Security", "value": "Encrypted at rest · Access logged" },
+      { "label": "Pricing", "value": "Free to start · No card required" }
+    ],
+    "aboutEyebrow": "§ 01 · About",
+    "aboutTitleA": "The best route is",
+    "aboutTitleB": "rarely the obvious one.",
+    "aboutBody": [
+      "Visa guidance assumes you have one passport. Anyone with two — or a passport plus a residence permit — is left doing the comparison by hand across a dozen consular websites, each written for a single nationality and none of them willing to tell you that the other document in your drawer would have been faster, cheaper, or waived entirely.",
+      "VisaPassage starts from the profile rather than the destination. You add every passport and residency you hold once, into an encrypted vault, and the comparison engine evaluates each destination and visa type against all of them at the same time — ranking routes by the least paperwork, the shortest wait, and the lowest cost.",
+      "Once a route is chosen the work becomes mechanical, so the product does it: a checklist generated for your exact case rather than a generic list, government forms pre-filled from profile data you have already entered, and a document vault that is versioned, tagged, and aware of what expires when. Update a passport once and it propagates to every application that references it.",
+      "Rules carry a source URL, a verification date, and an internal review before they go live — because a stale requirement is worse than no requirement. VisaPassage does not guarantee outcomes; official government rules and consular decisions prevail."
+    ],
+    "insideEyebrow": "§ 03 · What's inside",
+    "insideTitle": "From profile to filing.",
+    "insideEntry": "ENTRY",
+    "insideItems": [
+      {
+        "figure": "Multi",
+        "label": "Passports",
+        "body": "Every citizenship and residency you hold, compared side by side against the same destination — including the routes a single-passport guide would never surface."
+      },
+      {
+        "figure": "Per route",
+        "label": "Checklists",
+        "body": "Country- and case-specific document lists generated for your exact route, not a generic checklist you have to filter down yourself."
+      },
+      {
+        "figure": "Versioned",
+        "label": "Vault",
+        "body": "Documents stored encrypted at rest, tagged, and expiry-aware. Update one and it propagates across every application referencing it."
+      },
+      {
+        "figure": "Auto-filled",
+        "label": "Forms",
+        "body": "Profile data pre-populated into government templates, so the same passport number is never typed a fourth time."
+      }
+    ],
+    "designEyebrow": "§ 04 · Design system",
+    "designTitleA": "Passport blue,",
+    "designTitleB": "stamp yellow.",
+    "designBody": "The palette borrows from the documents themselves — the blue of a passport gate and the yellow of an entry stamp — over a paper-white surface that reads as a form rather than an app. Green and red are held back for one job each: a route you qualify for, and a route you do not.",
+    "paletteLabel": "▸ Palette",
+    "typographyLabel": "▸ Typography pairing",
+    "typographyCards": [
+      {
+        "code": "01 · Display",
+        "sample": "VISAPASSAGE",
+        "name": "Geist — Display, tight tracking",
+        "body": "Hero and section headlines. Set large with negative tracking, the second line dropped to a muted grey."
+      },
+      {
+        "code": "02 · Body",
+        "sample": "Compare every visa type across all your passports.",
+        "name": "Geist — Body",
+        "body": "Route comparisons, checklists, and guidance. Weights 400 and 500."
+      },
+      {
+        "code": "03 · Mono",
+        "sample": "// ROUTE 02 · SCHENGEN · 15 DAYS",
+        "name": "Geist Mono — Labels & spec rows",
+        "body": "Eyebrows, route identifiers, processing times, expiry dates, and every dot-leader spec row."
+      }
+    ],
+    "taxonomyEyebrow": "§ 05 · Journey",
+    "taxonomyTitleA": "Five steps,",
+    "taxonomyTitleB": "entered once.",
+    "taxonomyBody": "The profile is the unit of work. Everything downstream — comparison, checklist, forms, reminders — reads from it, which is why the passport number is typed exactly once.",
+    "taxonomy": [
+      { "id": "01", "name": "Create your encrypted profile" },
+      { "id": "02", "name": "Add passports and residencies" },
+      { "id": "03", "name": "Compare routes side by side" },
+      { "id": "04", "name": "Generate the document package" },
+      { "id": "05", "name": "Submit and track appointments" }
+    ],
+    "live": "LIVE",
+    "ctaEyebrow": "◇ Continue",
+    "ctaTitle": "Start with the passport you already hold.",
+    "ctaBody": "Free to start, no card required. VisaPassage does not guarantee visa outcomes — official government rules and consular decisions prevail.",
     "ctaPrimary": "Visit site"
   }
 }

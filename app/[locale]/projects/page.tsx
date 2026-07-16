@@ -35,6 +35,16 @@ const PROJECTS_KEYWORDS = [
   "AI contract review",
   "contract reviewer for freelancers",
   "legal-tech case study",
+  "SMS Activate",
+  "simnetiq.xyz",
+  "virtual numbers",
+  "SMS verification numbers",
+  "temporary phone number",
+  "VisaPassage",
+  "visapassage.com",
+  "multi-passport visa comparison",
+  "visa requirements comparison",
+  "visa document checklist",
   "London software portfolio",
   "production app case studies",
   "iOS app portfolio UK",
@@ -63,7 +73,9 @@ type ProjectKey =
   | "doppler"
   | "creator"
   | "delivery"
-  | "greenflagged";
+  | "greenflagged"
+  | "smsactivate"
+  | "visapassage";
 
 type ProjectStruct = {
   key: ProjectKey;
@@ -101,8 +113,34 @@ const projectsList: ProjectStruct[] = [
     ],
   },
   {
-    key: "greenflagged",
+    key: "smsactivate",
     id: "03",
+    tags: ["NEXT.JS", "REACT", "TAILWIND", "iOS", "ANDROID"],
+    link: { kind: "internal", href: "/projects/sms-activate", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://simnetiq.xyz/", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "coverage", valueKey: "coverageValue" },
+      { labelKey: "billing", valueKey: "billingValue" },
+      { labelKey: "platforms", valueKey: "platformsValue" },
+    ],
+    status: "live",
+  },
+  {
+    key: "visapassage",
+    id: "04",
+    tags: ["NEXT.JS", "REACT", "SUPABASE", "TAILWIND"],
+    link: { kind: "internal", href: "/projects/visapassage", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://visapassage.com/", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "engine", valueKey: "engineValue" },
+      { labelKey: "scope", valueKey: "scopeValue" },
+      { labelKey: "stack", valueKey: "stackValue" },
+    ],
+    status: "live",
+  },
+  {
+    key: "greenflagged",
+    id: "05",
     tags: ["NEXT.JS 16", "REACT 19", "TAILWIND V4", "GSAP"],
     link: { kind: "internal", href: "/projects/green-flagged", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://greenflagged.vercel.app/", labelKey: "visitSite" },
@@ -115,7 +153,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "delivery",
-    id: "04",
+    id: "06",
     tags: ["NEXT.JS", "REACT", "NODE", "POSTGRES"],
     link: { kind: "external", href: "https://www.isrshipping.com", labelKey: "visitSite" },
     metaKeys: [
@@ -126,7 +164,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "creator",
-    id: "05",
+    id: "07",
     tags: ["SWIFT", "KOTLIN", "PYTHON", "SUPABASE"],
     link: { kind: "external", href: "https://www.creatorai.art/en", labelKey: "visitSite" },
     metaKeys: [

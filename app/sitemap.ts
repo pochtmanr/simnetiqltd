@@ -36,6 +36,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/projects/doppler-vpn", freq: "monthly", priority: 0.85 },
     { path: "/projects/physics-explained", freq: "monthly", priority: 0.85 },
     { path: "/projects/green-flagged", freq: "monthly", priority: 0.8 },
+    { path: "/projects/sms-activate", freq: "monthly", priority: 0.85 },
+    { path: "/projects/visapassage", freq: "monthly", priority: 0.85 },
     { path: "/services", freq: "monthly", priority: 0.9 },
     { path: "/about", freq: "monthly", priority: 0.8 },
     { path: "/legal", freq: "yearly", priority: 0.4 },

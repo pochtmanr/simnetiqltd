@@ -21,6 +21,8 @@ const PROJECT_SLUGS = [
   "doppler-vpn",
   "physics-explained",
   "green-flagged",
+  "sms-activate",
+  "visapassage",
 ] as const;
 
 function buildRoutes(): MdRoute[] {
