@@ -3,7 +3,10 @@ export const revalidate = 86400;
 
 const SITE_URL = "https://simnetiq.store";
 
-const BLOCKED = ["/api/", "/_next/static/chunks/"];
+// Only the API surface is blocked. Next's static chunks must stay crawlable:
+// the homepage renders through a client component, so a crawler that can't
+// fetch /_next/static/chunks/ renders a near-empty page.
+const BLOCKED = ["/api/"];
 
 const USER_AGENTS: { ua: string; allow: string; disallow?: string[] }[] = [
   { ua: "*", allow: "/", disallow: BLOCKED },

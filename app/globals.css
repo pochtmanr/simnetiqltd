@@ -847,3 +847,31 @@ body > *:not(header) {
 body > header {
   z-index: 50;
 }
+
+/*
+ * Mount-triggered word reveal (see components/text-reveal.tsx).
+ * Transform only — never opacity. These headings are above the fold and
+ * include the homepage h1, which is the LCP element; Chrome does not count
+ * an opacity-0 element as painted, so fading in would stall LCP. Sliding a
+ * fully-opaque word costs nothing because transforms don't affect layout.
+ */
+@keyframes text-reveal-rise {
+  from {
+    transform: translateY(0.6em);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.text-reveal-word {
+  display: inline-block;
+  white-space: pre;
+  animation: text-reveal-rise 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-reveal-word {
+    animation: none;
+    transform: none;
+  }
+}

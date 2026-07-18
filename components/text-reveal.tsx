@@ -23,7 +23,28 @@ export function TextReveal({
   if (reduce) return <Tag className={className}>{text}</Tag>;
 
   const words = text.split(/\s+/);
-  const isMount = trigger === "mount";
+
+  // `mount` reveals run on CSS, not motion, and animate transform only. Motion
+  // serializes its `initial` state into the SSR payload, so an opacity-0 start
+  // would ship the text invisible and stall LCP until hydration — these are
+  // above-the-fold headings, including the homepage h1 (the LCP element).
+  // A transform-only animation paints at full opacity in the first frame.
+  if (trigger === "mount") {
+    return (
+      <Tag className={className}>
+        {words.map((word, i) => (
+          <span
+            key={`${i}-${word}`}
+            className="text-reveal-word"
+            style={{ animationDelay: `${delay + i * step}ms` }}
+          >
+            {word}
+            {i < words.length - 1 ? " " : ""}
+          </span>
+        ))}
+      </Tag>
+    );
+  }
 
   return (
     <Tag className={className} aria-label={text}>
@@ -33,12 +54,8 @@ export function TextReveal({
           aria-hidden
           className="inline-block whitespace-pre"
           initial={{ opacity: 0, y: "0.6em" }}
-          {...(isMount
-            ? { animate: { opacity: 1, y: 0 } }
-            : {
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true, margin: "-10% 0px" },
-              })}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
           transition={{
             duration: 0.45,
             ease: [0.16, 1, 0.3, 1],

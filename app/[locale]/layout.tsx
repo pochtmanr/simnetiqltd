@@ -165,6 +165,7 @@ export const metadata: Metadata = {
     languages: {
       "en-GB": `${SITE_URL}/en`,
       "he-IL": `${SITE_URL}/he`,
+      "ru-RU": `${SITE_URL}/ru`,
       "x-default": `${SITE_URL}/en`,
     },
   },
