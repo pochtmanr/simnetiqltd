@@ -99,26 +99,58 @@ Measure before and after with Lighthouse or the PSI API and report both numbers.
 
 ---
 
-## 2. Accessibility + best-practices audit
+## 2. Best Practices → 100, plus accessibility
+
+**Do section 1 first.** Every current Best Practices failure originates in the
+Cal.eu embed (console error, third-party `__cf_bm` cookie, deprecated Shared
+Storage API). Those are vendor scripts we don't control, so the score can't reach
+100 while the embed loads on page load. Click-gating it in section 1 makes all
+three audits pass without touching them directly.
+
+Note: colour contrast is scored under **Accessibility**, not Best Practices —
+they're separate categories. Both are covered below.
 
 ```
-Accessibility and best-practices pass on simnetiq.store (Next.js 16 App Router).
+Best Practices and Accessibility pass on simnetiq.store (Next.js 16 App Router,
+Tailwind v4 CSS-first, locales en/he/ru, RTL on Hebrew).
 
-Known issues from Lighthouse:
+Goal: Lighthouse Best Practices 100, and fix real accessibility defects.
 
-1. components/contact-disclosure.tsx:66-83 — the collapsed panel is
+PREREQUISITE — check whether the Cal.eu embed is already click-gated
+(components/booking-panel.tsx, mounted from components/home-page-client.tsx).
+If it still loads on page load, gate it FIRST. These three Best Practices
+failures are all downstream of it and are otherwise unfixable, since they come
+from app.cal.eu/embed/embed.js which we don't control:
+  - "Uncaught Error: iframe doesn't exist. createIframe must be called before
+    doInIframe" — possibly the key={`${theme}-${tz}`} remount on <Cal>
+  - third-party cookie __cf_bm
+  - deprecated Shared Storage API warning
+Re-run Lighthouse after gating and report which of these actually cleared before
+doing anything else.
+
+REMAINING BEST PRACTICES:
+1. next.config.ts has no headers() at all. Lighthouse checks for an effective
+   CSP against XSS and for HSTS. Add both. Be careful: a CSP has to allow the
+   inline theme script (components/theme-init-script.tsx) and the Cal embed
+   origins — verify nothing breaks rather than shipping a CSP that silently
+   blocks the booking flow. Test the actual booking flow after.
+2. Audit remaining console errors and deprecated API warnings in production.
+
+ACCESSIBILITY:
+3. components/contact-disclosure.tsx:66-83 — the collapsed panel is
    aria-hidden="true" but its input/textarea/button children stay in the tab
-   order (it uses height:0 + overflow:hidden, not hidden/inert). Focusable
-   elements inside an aria-hidden subtree is an axe violation. Use inert.
-2. Console error in production: "Uncaught Error: iframe doesn't exist.
-   createIframe must be called before doInIframe" from app.cal.eu/embed/embed.js.
-   Likely the key={`${theme}-${tz}`} remount on <Cal> in components/booking-panel.tsx.
-3. Third-party cookie (__cf_bm) and a deprecated Shared Storage API warning, both
-   from the Cal embed. Determine what's actually in our control vs vendor-side.
+   order (height:0 + overflow:hidden, not hidden/inert). Focusable elements
+   inside an aria-hidden subtree is an axe violation. Use inert.
+4. Colour contrast audit against WCAG AA (4.5:1 body, 3:1 large text). The token
+   system is in app/globals.css — --color-text-dim and --color-text-faint are the
+   likely failures, and .build-rail uses --color-text-faint at 10px, which is a
+   strong candidate. Check BOTH themes: [data-theme="light"] overrides and the
+   dark default. Report measured ratios, don't eyeball it.
+5. Full axe pass over every route (15 pages x 3 locales). Check the Hebrew RTL
+   locale specifically — mirrored layouts often break focus order.
 
-Then run a full axe pass over every route (13 pages x 3 locales, including the
-RTL Hebrew locale, which is worth checking specifically) and fix what you find.
-Report what you changed and what you deliberately left.
+Report what you changed, what you deliberately left, and the before/after scores
+for all four Lighthouse categories.
 ```
 
 ---
@@ -168,6 +200,62 @@ Cleanup pass on simnetiq.store:
    Consolidate to one exported constant.
 5. Verify every advertised markdown alternate resolves. Some <link rel="alternate"
    type="text/markdown"> URLs have 404'd in production before.
+```
+
+---
+
+## 5. AI / agentic-browser visibility
+
+Goal: when someone asks an AI assistant or agentic browser for a studio that
+builds software for small businesses, Simnetiq is a credible candidate.
+
+**What this can and can't do.** You cannot make a model assert you're "the best"
+— models derive reputation from third-party corroboration (directories, reviews,
+mentions, press), not from what a site says about itself. Self-declared
+superlatives in copy read as marketing and get discounted. What genuinely moves
+this is being *unambiguous and extractable*: precisely what you build, for whom,
+where, at what price, with what evidence. That is what gets you into the
+candidate set. Getting ranked top within it is an off-site problem.
+
+**Hard constraint:** never fabricate `aggregateRating`, `Review`, testimonials, or
+client names. Fake review markup violates Google's structured-data policy and
+risks a manual action — a far worse outcome than not ranking. Only mark up
+things that actually happened.
+
+```
+AI and agentic-browser discoverability for simnetiq.store — a London software
+studio (Simnetiq Ltd, Company No. 16861177) selling to small businesses.
+
+Existing surfaces: app/llms.txt, app/llms-full.txt, per-locale variants under
+app/[locale]/, per-project markdown routes, lib/llms-txt.ts, and
+components/structured-data.tsx (Organization, ProfessionalService, Website,
+Breadcrumb, Article, ItemList, Service schemas). robots.txt already allows
+OAI-SearchBot, PerplexityBot, ClaudeBot, Claude-Web.
+
+So the plumbing exists. The question is whether the CONTENT is good enough to be
+picked up and cited.
+
+1. Read app/llms.txt and llms-full.txt as if you were an AI agent answering "find
+   me a studio to build an app for my small business in London." Does the site
+   answer that? Be blunt about what's missing — audience, engagement model,
+   pricing bands, timelines, tech, what we decline.
+2. Audit the ProfessionalService / Organization schema in
+   components/structured-data.tsx for accuracy and completeness: areaServed,
+   serviceType, priceRange, address, founding, sameAs links to real profiles
+   (Companies House, GitHub, LinkedIn). Only claim what's verifiable.
+3. Small-business positioning is currently implicit at best. Assess whether the
+   homepage and services copy (messages/{en,he,ru}.json, lib/services.ts) actually
+   state who we serve. Propose concrete copy — factual and specific ("we build
+   iOS and Android apps for UK small businesses, typical engagement 6-12 weeks,
+   from £X"), not superlatives.
+4. Add FAQPage schema answering the questions a small-business buyer actually
+   asks: cost, timeline, ownership of code, ongoing maintenance, what happens if
+   we disappear. Follow existing patterns in components/structured-data.tsx.
+5. Recommend the off-site work that actually drives AI citation — directories,
+   profiles, corroborating sources. Flag it as out-of-repo work.
+
+Do NOT invent aggregateRating, reviews, testimonials, or client names. If a claim
+can't be substantiated, say so instead of marking it up.
 ```
 
 ---
