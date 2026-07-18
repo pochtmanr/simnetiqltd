@@ -179,11 +179,106 @@ const CASE_VISAPASSAGE: RouteCopy = {
   },
 };
 
+const HOW_WE_WORK: RouteCopy = {
+  en: {
+    title: "How We Work — Scope, Ownership, Support",
+    description:
+      "How a Simnetiq engagement actually runs: you work directly with the engineers, the price is fixed against a signed SOW before work starts, you own the source and infrastructure from day one, and support continues past launch. Four commitments, written out in full.",
+  },
+  he: {
+    title: "איך אנחנו עובדים — אפיון, בעלות, תמיכה",
+    description:
+      "איך התקשרות עם סימנטיק באמת מתנהלת: אתם עובדים ישירות מול המהנדסים, המחיר קבוע מול SOW חתום לפני תחילת העבודה, הקוד והתשתית בבעלותכם מהיום הראשון, והתמיכה נמשכת אחרי ההשקה. ארבע התחייבויות, כתובות במלואן.",
+  },
+  ru: {
+    title: "Как мы работаем — объём, права, поддержка",
+    description:
+      "Как на самом деле устроен проект с Simnetiq: вы работаете напрямую с инженерами, цена фиксируется по подписанному SOW до старта, код и инфраструктура принадлежат вам с первого дня, а поддержка продолжается после запуска. Четыре обязательства, расписанные полностью.",
+  },
+};
+
+const HWW_ENGINEERS: RouteCopy = {
+  en: {
+    title: "Work Directly With the Engineers Who Build It",
+    description:
+      "No account managers and no handoff to juniors after the pitch. Simnetiq is two owner-operators registered in England and Wales — the engineer who scopes your project is the one who writes it. What that changes about the estimate, and how the continuity risk of a two-person studio is handled.",
+  },
+  he: {
+    title: "עובדים ישירות מול המהנדסים שבונים",
+    description:
+      "בלי מנהלי לקוח ובלי העברה למפתחים זוטרים אחרי הפגישה. סימנטיק היא שני בעלים־מפעילים הרשומים באנגליה ובוויילס — המהנדס שמאפיין את הפרויקט הוא זה שכותב אותו. מה זה משנה בהערכה, ואיך מטופל סיכון ההמשכיות של סטודיו בן שני אנשים.",
+  },
+  ru: {
+    title: "Работа напрямую с инженерами, которые пишут код",
+    description:
+      "Без аккаунт-менеджеров и без передачи джуниорам после презентации. Simnetiq — это два владельца-практика, зарегистрированных в Англии и Уэльсе: тот, кто оценивает проект, тот его и пишет. Что это меняет в оценке и как закрывается риск непрерывности студии из двух человек.",
+  },
+};
+
+const HWW_SCOPE: RouteCopy = {
+  en: {
+    title: "Fixed-Price Development Against a Signed SOW",
+    description:
+      "Every Simnetiq engagement is priced in GBP against a signed statement of work: deliverables, timeline and price agreed before any code is written. What the SOW contains, why fixed price beats time and materials, how change requests are quoted, and where a fixed price genuinely does not fit.",
+  },
+  he: {
+    title: "מחיר קבוע מול מסמך עבודה חתום",
+    description:
+      "כל התקשרות עם סימנטיק מתומחרת בליש\"ט מול מסמך עבודה חתום: תוצרים, לוח זמנים ומחיר שסוכמו לפני שנכתבה שורת קוד. מה יש ב־SOW, למה מחיר קבוע עדיף על חיוב שעתי, איך מתומחרים שינויים, ואיפה מחיר קבוע באמת לא מתאים.",
+  },
+  ru: {
+    title: "Фиксированная цена по подписанному SOW",
+    description:
+      "Каждый проект Simnetiq оценивается в фунтах по подписанному SOW: результаты, сроки и цена согласованы до первой строки кода. Что входит в SOW, почему фиксированная цена лучше почасовой оплаты, как оцениваются изменения и где фиксированная цена действительно не работает.",
+  },
+};
+
+const HWW_OWNERSHIP: RouteCopy = {
+  en: {
+    title: "Who Owns the Code When You Hire an Agency",
+    description:
+      "At Simnetiq the source sits in your repository from the first commit, infrastructure and App Store accounts are billed to you, and there is no licence fee to keep using what we built. Includes the honest edge cases: hosted VPS arrangements, third-party service costs, and reused components.",
+  },
+  he: {
+    title: "למי שייך הקוד כשמעסיקים סוכנות פיתוח",
+    description:
+      "בסימנטיק הקוד יושב במאגר שלכם מהקומיט הראשון, התשתית וחשבונות ה־App Store מחויבים אליכם, ואין דמי רישיון כדי להמשיך להשתמש במה שבנינו. כולל את מקרי הקצה הכנים: שרתים שאנחנו מתפעלים, עלויות שירותי צד שלישי ורכיבים בשימוש חוזר.",
+  },
+  ru: {
+    title: "Кому принадлежит код, если нанять агентство",
+    description:
+      "В Simnetiq исходный код лежит в вашем репозитории с первого коммита, инфраструктура и аккаунты App Store оформлены на вас, и нет лицензионной платы за дальнейшее использование. Включая честные пограничные случаи: наш хостинг VPS, расходы на сторонние сервисы и переиспользуемые компоненты.",
+  },
+};
+
+const HWW_SUPPORT: RouteCopy = {
+  en: {
+    title: "Software Support and Maintenance After Launch",
+    description:
+      "Every Simnetiq build ships with error tracking, uptime monitoring and CI/CD from day one. What maintenance covers — defects, dependency and security updates, iOS and Android platform churn, App Store resubmission — what counts as new work, and what happens if a support period ends.",
+  },
+  he: {
+    title: "תמיכה ותחזוקת תוכנה אחרי ההשקה",
+    description:
+      "כל פרויקט של סימנטיק עולה לאוויר עם מעקב שגיאות, ניטור זמינות ו־CI/CD מהיום הראשון. מה התחזוקה מכסה — תקלות, עדכוני תלויות ואבטחה, שינויי פלטפורמה ב־iOS ובאנדרואיד, הגשה מחדש ל־App Store — מה נחשב עבודה חדשה, ומה קורה כשתקופת תמיכה מסתיימת.",
+  },
+  ru: {
+    title: "Поддержка и сопровождение софта после запуска",
+    description:
+      "Каждый проект Simnetiq выходит в прод с трекингом ошибок, мониторингом доступности и CI/CD с первого дня. Что покрывает поддержка — дефекты, обновления зависимостей и безопасности, изменения платформ iOS и Android, повторная подача в App Store, — что считается новой работой и что происходит, когда период поддержки заканчивается.",
+  },
+};
+
 export const ROUTE_COPY = {
   home: HOME,
   about: ABOUT,
   projects: PROJECTS,
   services: SERVICES,
+  howWeWork: HOW_WE_WORK,
+  howWeWorkEngineers: HWW_ENGINEERS,
+  howWeWorkScope: HWW_SCOPE,
+  howWeWorkOwnership: HWW_OWNERSHIP,
+  howWeWorkSupport: HWW_SUPPORT,
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
   caseStudyGreenFlagged: CASE_GREENFLAGGED,

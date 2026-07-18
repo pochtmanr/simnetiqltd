@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllHowWeWorkSlugs } from "@/lib/how-we-work";
 import { getAllServiceSlugs } from "@/lib/services";
 import { LOCALES, LOCALE_HTML_LANG } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
@@ -38,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/projects/sms-activate", freq: "monthly", priority: 0.85 },
     { path: "/projects/visapassage", freq: "monthly", priority: 0.85 },
     { path: "/services", freq: "monthly", priority: 0.9 },
+    { path: "/how-we-work", freq: "monthly", priority: 0.85 },
     { path: "/about", freq: "monthly", priority: 0.8 },
     { path: "/legal", freq: "yearly", priority: 0.4 },
     { path: "/privacy-policy", freq: "yearly", priority: 0.4 },
@@ -52,5 +54,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (slug) => buildEntry(`/services/${slug}`, "monthly", 0.8, now)
   );
 
-  return [...staticEntries, ...serviceEntries];
+  const howWeWorkEntries: MetadataRoute.Sitemap =
+    getAllHowWeWorkSlugs().flatMap((slug) =>
+      buildEntry(`/how-we-work/${slug}`, "monthly", 0.8, now)
+    );
+
+  return [...staticEntries, ...serviceEntries, ...howWeWorkEntries];
 }

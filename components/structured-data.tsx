@@ -273,6 +273,47 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   );
 }
 
+type FaqSchemaInput = {
+  items: { q: string; a: string }[];
+  /** Path after the locale segment, e.g. "/how-we-work/code-ownership". */
+  path: string;
+  locale: Locale;
+};
+
+/**
+ * FAQPage markup for a page whose questions and answers are visible on the page
+ * itself — Google requires the marked-up text to be present in the rendered HTML.
+ *
+ * The `@id` carries the locale (matching CaseStudyArticleSchema) so the three
+ * language variants of a page don't collide on one identifier.
+ */
+export function FaqSchema({ items, path, locale }: FaqSchemaInput) {
+  const url = `${BASE_URL}/${locale}${path}`;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    url,
+    inLanguage: locale,
+    isPartOf: { "@id": `${BASE_URL}/#website` },
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+  return (
+    <script
+      id={`ld-faq-${locale}${path.replace(/\//g, "-")}`}
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 type ServiceSchemaInput = {
   name: string;
   slug: string;

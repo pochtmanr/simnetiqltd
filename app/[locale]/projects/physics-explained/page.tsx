@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Panel, Rail, SpecRow } from "@/components/panel";
+import { ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
   CaseStudyArticleSchema,
@@ -48,6 +49,7 @@ export async function generateMetadata({
     keywords: PHYSICS_KEYWORDS,
     ogImage: "/physics-header.avif",
     ogType: "article",
+    markdownAlternate: true,
   });
 }
 
@@ -113,6 +115,12 @@ export default async function PhysicsExplainedPage({
           />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
+              <ProjectLogo
+                project="physics"
+                alt="Physics.explained"
+                size={56}
+                className="mb-6"
+              />
               <p className="text-label text-[var(--color-primary-glow)]">
                 {c.eyebrow}
               </p>

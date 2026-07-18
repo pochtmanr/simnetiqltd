@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Panel, Rail, SpecRow } from "@/components/panel";
+import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
   PortfolioSchema,
@@ -254,10 +255,21 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                 <Panel innerClassName="p-6 lg:p-10" corners>
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     <div className="lg:col-span-7">
-                      <div className="flex items-center justify-between mb-8">
-                        <span className="text-mono text-[var(--color-text-faint)]">
-                          {proj.id} · ENTRY
-                        </span>
+                      <div className="flex items-center justify-between gap-4 mb-8">
+                        {/* min-height keeps the header row aligned across
+                            entries whose project has no supplied mark. */}
+                        <div className="flex items-center gap-3 min-h-9">
+                          {hasProjectLogo(proj.key) && (
+                            <ProjectLogo
+                              project={proj.key}
+                              alt={item.title}
+                              size={30}
+                            />
+                          )}
+                          <span className="text-mono text-[var(--color-text-faint)]">
+                            {proj.id} · ENTRY
+                          </span>
+                        </div>
                         <span className="text-label-sm text-[var(--color-primary-glow)]">
                           {item.badge}
                         </span>

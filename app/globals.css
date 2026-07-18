@@ -168,7 +168,6 @@ body {
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 0.96;
-  text-transform: uppercase;
   color: var(--color-text);
 }
 
@@ -178,7 +177,6 @@ body {
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.08;
-  text-transform: uppercase;
   color: var(--color-text);
 }
 
@@ -873,5 +871,42 @@ body > header {
   .text-reveal-word {
     animation: none;
     transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Project logos — theme-aware marks                                   */
+/* ------------------------------------------------------------------ */
+
+/* Single-colour marks ship as black-on-transparent and are inverted to  */
+/* white for the dark palette. Mirrors the palette cascade above: the    */
+/* base rule is the DARK theme, light is the explicit override.          */
+.logo-mono {
+  filter: invert(1);
+}
+[data-theme="light"] .logo-mono {
+  filter: none;
+}
+
+/* Marks that ship as a light/dark artwork pair swap by visibility.      */
+.logo-when-light {
+  display: none;
+}
+[data-theme="light"] .logo-when-dark {
+  display: none;
+}
+[data-theme="light"] .logo-when-light {
+  display: block;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .logo-mono {
+    filter: none;
+  }
+  :root:not([data-theme]) .logo-when-dark {
+    display: none;
+  }
+  :root:not([data-theme]) .logo-when-light {
+    display: block;
   }
 }

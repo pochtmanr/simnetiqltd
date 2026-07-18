@@ -50,7 +50,6 @@
       "tagline": "Software studio · London",
       "established": "Est. 2025 · London"
     },
-    "eyebrow": "◇ Technology studio / London",
     "titleLine1": "Simnetiq",
     "titleLine2": "Engineering",
     "body": "We design and ship reliable software — mobile apps, web platforms, AI features, and the network plumbing behind them. Calm interfaces, careful engineering, no filler.",
@@ -78,13 +77,25 @@
     }
   },
   "frame": {
-    "signal":   { "number": "01", "slug": "signal" },
-    "services": { "number": "02", "slug": "services" },
-    "works":    { "number": "03", "slug": "works" },
-    "contact":  { "number": "04", "slug": "contact" }
+    "signal": {
+      "number": "01",
+      "slug": "signal"
+    },
+    "services": {
+      "number": "02",
+      "slug": "services"
+    },
+    "works": {
+      "number": "03",
+      "slug": "works"
+    },
+    "contact": {
+      "number": "04",
+      "slug": "contact"
+    }
   },
   "projects": {
-    "eyebrow": "◇ Selected work",
+    "eyebrow": "Selected work",
     "title": "Recent work",
     "body": "Production deployments from our London studio — four live in the wild, one in development. Built with an engineering-first mindset: reliable, well-structured, made to last.",
     "stack": "Stack",
@@ -120,20 +131,20 @@
       "smsactivate": {
         "title": "SMS Activate by SIMNETIQ",
         "badge": "Telecom · Live",
-        "description": "Virtual numbers for sign-ups. Pick a service and a country, get a real carrier number in about thirty seconds, and keep your own number out of someone else's database. One-time credit packs, no subscription."
+        "description": "Virtual numbers for sign-ups. Pick a service and a country, get a real carrier number in about thirty seconds, and keep your own number out of someone else's database."
       },
       "visapassage": {
         "title": "VisaPassage",
         "badge": "Travel-tech · Live",
-        "description": "Multi-passport visa intelligence. Compare every visa route across all the passports and residencies you hold, then generate the exact document package for the one you pick — checklists, auto-filled forms, and expiry tracking."
+        "description": "Multi-passport visa intelligence. Compare every visa route across all the passports and residencies you hold, then generate the exact document package for the one you pick."
       }
     }
   },
   "capabilities": {
-    "eyebrow": "◇ What we do",
+    "eyebrow": "What we do",
     "title": "Offered services",
-    "subtitle": "Four things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
-    "body": "Four things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
+    "subtitle": "Three things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
+    "body": "Three things we ship every week. Each one led by a senior engineer who has lived in that area for years.",
     "viewService": "Explore",
     "items": {
       "mobile": {
@@ -150,8 +161,32 @@
       }
     }
   },
+  "whyUs": {
+    "eyebrow": "Why work with us",
+    "title": "How we work",
+    "body": "Four things that hold true on every engagement, whether it runs six weeks or six months.",
+    "cta": "Read more",
+    "items": {
+      "people": {
+        "title": "You talk to the engineers",
+        "text": "No account managers, no handoff to juniors after the pitch. The people who scope your project are the people who write it."
+      },
+      "scope": {
+        "title": "Scoped before it starts",
+        "text": "Every engagement is defined against a signed SOW — deliverables, timeline, and price agreed up front. No open-ended hourly drift."
+      },
+      "ownership": {
+        "title": "You own all of it",
+        "text": "Source, infrastructure, accounts, and deployment keys are yours from day one. Nothing sits behind a licence you have to keep paying us for."
+      },
+      "support": {
+        "title": "We stay past launch",
+        "text": "Shipping is the middle of the job, not the end. Monitoring, maintenance, and the next iteration are part of how we plan the work."
+      }
+    }
+  },
   "contact": {
-    "eyebrow": "◇ Get in touch",
+    "eyebrow": "Get in touch",
     "title": "Contact us",
     "body": "Briefs, partnerships, engineering work. We reply within one business day.",
     "directLabel": "Direct line",
@@ -162,8 +197,14 @@
     "response_value": "Within one business day",
     "bookingHeading": "Book a 30-min call",
     "bookingSubtitle": "7 days a week, 10:00–18:00 Berlin time. We'll send a Google Meet link.",
-    "bookingRail": ["30 MIN", "GOOGLE MEET", "MON–SUN", "10:00–18:00 BERLIN"],
+    "bookingRail": [
+      "30 MIN",
+      "GOOGLE MEET",
+      "MON–SUN",
+      "10:00–18:00 BERLIN"
+    ],
     "bookingFooter": "▸ Times shown in your local timezone · Reschedule or cancel any time",
+    "bookingCta": "Show available times",
     "formHeading": "Prefer email? Send a message",
     "name": "Your name",
     "namePlaceholder": "Full name",
@@ -192,6 +233,7 @@
       "companyNumber": "No. 16861177",
       "jurisdiction": "England & Wales",
       "about": "About",
+      "howWeWork": "How We Work",
       "legal": "Legal",
       "privacy": "Privacy",
       "deletion": "Data Deletion",
@@ -206,23 +248,31 @@
       "context": "MISSION CONTEXT",
       "dossier": "DOSSIER · V1.0"
     },
-    "eyebrow": "◇ Mission Context",
+    "eyebrow": "Mission Context",
     "title": "We build the kinetic blueprint for industrial software.",
     "body": "Simnetiq is a technical design and engineering collective. We reject decorative trends in favour of functional precision and geometric absolutism — software that reads as an instrument, not a decoration.",
     "founded": "▸ Founded",
     "operations": "▸ Operations",
     "operationsValue": "London, UK",
     "personnel": {
-      "eyebrow": "◇ Personnel",
+      "eyebrow": "Personnel",
       "title": "The architecture team",
       "body": "Two owner-operators. Engineering and legal. No layers between the work and the decision."
     },
     "team": [
-      { "role": "Lead Engineer / Director", "name": "R. Pochtman", "meta": "Mobile · Backend · Infra" },
-      { "role": "Legal / Contracts", "name": "D. Zitomirsky", "meta": "Corporate · Compliance" }
+      {
+        "role": "Lead Engineer / Director",
+        "name": "R. Pochtman",
+        "meta": "Mobile · Backend · Infra"
+      },
+      {
+        "role": "Legal / Contracts",
+        "name": "D. Zitomirsky",
+        "meta": "Corporate · Compliance"
+      }
     ],
     "registration": {
-      "eyebrow": "◇ Registration",
+      "eyebrow": "Registration",
       "title": "Certified entity",
       "body": "Incorporated in England & Wales. All trading, contracting, and invoicing runs through the parent entity.",
       "companyDetails": "▸ Company Details",
@@ -235,15 +285,31 @@
       "vatStatusValue": "On request"
     },
     "principles": {
-      "eyebrow": "◇ Principles",
+      "eyebrow": "Principles",
       "title": "Operating values",
       "body": "Four constants that every project, hire, and decision is measured against."
     },
     "values": [
-      { "code": "V-01", "title": "Precision", "text": "Mathematics over aesthetics. Every pixel, every line, every abstraction serves a structural purpose." },
-      { "code": "V-02", "title": "Function", "text": "We build instruments, not toys. UI is for control, not decoration." },
-      { "code": "V-03", "title": "Integrity", "text": "Direct communication. Transparent architecture. Unwavering quality." },
-      { "code": "V-04", "title": "Legacy", "text": "Rooted in Scandinavian and British industrial design principles." }
+      {
+        "code": "V-01",
+        "title": "Precision",
+        "text": "Mathematics over aesthetics. Every pixel, every line, every abstraction serves a structural purpose."
+      },
+      {
+        "code": "V-02",
+        "title": "Function",
+        "text": "We build instruments, not toys. UI is for control, not decoration."
+      },
+      {
+        "code": "V-03",
+        "title": "Integrity",
+        "text": "Direct communication. Transparent architecture. Unwavering quality."
+      },
+      {
+        "code": "V-04",
+        "title": "Legacy",
+        "text": "Rooted in Scandinavian and British industrial design principles."
+      }
     ]
   },
   "projectsPage": {
@@ -252,7 +318,7 @@
       "archive": "ENGINEERING ARCHIVE",
       "active": "ACTIVE ENTRIES · 05"
     },
-    "eyebrow": "◇ Engineering Archive",
+    "eyebrow": "Engineering Archive",
     "titleLine1": "Active",
     "titleLine2": "Deployments",
     "body": "A catalog of precision software instruments developed for global scale. Industrial-grade reliability, minimalist interfaces, engineering-first execution.",
@@ -346,7 +412,7 @@
       "capabilityIndex": "CAPABILITY INDEX",
       "entries": "ENTRIES · 0{count}"
     },
-    "eyebrow": "◇ Capabilities",
+    "eyebrow": "Capabilities",
     "titleLine1": "Engineering",
     "titleLine2": "Services",
     "body": "Four capability groups. Each with a defined scope, stack, and pricing tier — every engagement scoped against a signed SOW.",
@@ -366,17 +432,17 @@
       "liveLabel": "Currently accepting"
     },
     "scope": {
-      "eyebrow": "◇ Scope",
+      "eyebrow": "Scope",
       "title": "Services"
     },
     "stack": {
-      "eyebrow": "◇ Instrumentation",
+      "eyebrow": "Instrumentation",
       "title": "Technology stack",
       "body": "The full surface we deploy across this capability. Chosen per project — not every tool fits every brief.",
       "itemsCount": "{count} items"
     },
     "pricing": {
-      "eyebrow": "◇ Engagement",
+      "eyebrow": "Engagement",
       "title": "Pricing",
       "body": "Starting ranges in GBP. Final quotes depend on scope, timeline, and support level. Every engagement is a signed SOW with fixed milestones.",
       "tier": "TIER · 0{n}",
@@ -384,7 +450,7 @@
       "requestBrief": "Request brief"
     },
     "cta": {
-      "eyebrow": "◇ Contact Us",
+      "eyebrow": "Contact Us",
       "title": "Open a channel.",
       "body": "Briefs are reviewed within one working day. Tell us the objective, timeline, and constraints — we'll come back with a scope, price, and a plan.",
       "sendBrief": "Send brief",
@@ -394,19 +460,68 @@
     },
     "brief": "▸ Brief"
   },
+  "howWeWorkIndex": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 03 / HOW WE WORK",
+      "principlesIndex": "ENGAGEMENT TERMS",
+      "entries": "ENTRIES · 0{count}"
+    },
+    "eyebrow": "How we work",
+    "titleLine1": "What holds true",
+    "titleLine2": "on every engagement",
+    "body": "Four commitments, each written out in full — what it means in practice, what you actually receive, and where the limits are.",
+    "sectionsCount": "{count} sections",
+    "readMore": "Read in full"
+  },
+  "howWeWorkDetail": {
+    "rail": {
+      "indexTpl": "◆ SIMNETIQ / 03 / {code}",
+      "principle": "ENGAGEMENT TERM"
+    },
+    "hero": {
+      "ctaContact": "Book a call",
+      "ctaAll": "All four",
+      "specsLabel": "At a glance"
+    },
+    "sections": {
+      "eyebrow": "In practice",
+      "title": "What this means"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Common questions"
+    },
+    "cta": {
+      "eyebrow": "Contact Us",
+      "title": "Still have a question?",
+      "body": "Ask it before you commit to anything. Briefs and questions are answered within one working day, by the engineer who would do the work.",
+      "sendBrief": "Send brief",
+      "previous": "← Previous",
+      "next": "Next →"
+    }
+  },
   "legal": {
     "rail": {
       "index": "◆ SIMNETIQ / 03 / LEGAL",
       "compliance": "REGULATORY COMPLIANCE",
       "rev": "REV · APR 2026"
     },
-    "eyebrow": "◇ Legal Framework",
+    "eyebrow": "Legal Framework",
     "title": "Legal documentation",
     "tocLabel": "▸ Index",
     "tocSections": [
-      { "number": "01", "label": "Impressum" },
-      { "number": "02", "label": "Privacy Policy" },
-      { "number": "03", "label": "Terms of Service" }
+      {
+        "number": "01",
+        "label": "Impressum"
+      },
+      {
+        "number": "02",
+        "label": "Privacy Policy"
+      },
+      {
+        "number": "03",
+        "label": "Terms of Service"
+      }
     ],
     "documentLabel": "▸ Document",
     "revision": "Revision",
@@ -417,35 +532,86 @@
       "tag": "Entity disclosure",
       "title": "Impressum",
       "rows": [
-        { "label": "Entity", "value": "Simnetiq Ltd" },
-        { "label": "Activity", "value": "Engineering & Systems Architecture" },
-        { "label": "Registered office", "value": "2 Frederick Street, Kings Cross, London, WC1X 0ND, England & Wales" },
-        { "label": "Company number", "value": "16861177" },
-        { "label": "Managing director", "value": "Roman Pochtman" },
-        { "label": "Responsible for content", "value": "Roman Pochtman" },
-        { "label": "Contact", "value": "support@simnetiq.store" }
+        {
+          "label": "Entity",
+          "value": "Simnetiq Ltd"
+        },
+        {
+          "label": "Activity",
+          "value": "Engineering & Systems Architecture"
+        },
+        {
+          "label": "Registered office",
+          "value": "2 Frederick Street, Kings Cross, London, WC1X 0ND, England & Wales"
+        },
+        {
+          "label": "Company number",
+          "value": "16861177"
+        },
+        {
+          "label": "Managing director",
+          "value": "Roman Pochtman"
+        },
+        {
+          "label": "Responsible for content",
+          "value": "Roman Pochtman"
+        },
+        {
+          "label": "Contact",
+          "value": "support@simnetiq.store"
+        }
       ]
     },
     "privacy": {
       "tag": "Data protection",
       "title": "Privacy Policy",
       "blocks": [
-        { "title": "Data Controller", "body": "The data controller for this website is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store." },
-        { "title": "Data Collection", "body": "We collect data you voluntarily provide through our contact form (name, email address, message content) and account deletion request form (identity information, optional reason). We may also collect basic analytics data such as page views, browser type, and approximate geographic location through standard web server logs." },
-        { "title": "Legal Basis (GDPR)", "body": "Processing of contact form data is based on your consent (Art. 6(1)(a) GDPR) and our legitimate interest in responding to inquiries (Art. 6(1)(f) GDPR). Analytics data processing is based on our legitimate interest in understanding website usage patterns." },
-        { "title": "Data Retention", "body": "Contact form submissions are retained for the duration necessary to respond to your inquiry, typically no longer than 12 months. Account deletion requests are processed within 30 days and associated data is purged from our systems. Web server logs are automatically deleted after 90 days." },
-        { "title": "Your Rights", "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk." },
-        { "title": "Cookies & Tracking", "body": "This website does not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only." }
+        {
+          "title": "Data Controller",
+          "body": "The data controller for this website is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store."
+        },
+        {
+          "title": "Data Collection",
+          "body": "We collect data you voluntarily provide through our contact form (name, email address, message content) and account deletion request form (identity information, optional reason). We may also collect basic analytics data such as page views, browser type, and approximate geographic location through standard web server logs."
+        },
+        {
+          "title": "Legal Basis (GDPR)",
+          "body": "Processing of contact form data is based on your consent (Art. 6(1)(a) GDPR) and our legitimate interest in responding to inquiries (Art. 6(1)(f) GDPR). Analytics data processing is based on our legitimate interest in understanding website usage patterns."
+        },
+        {
+          "title": "Data Retention",
+          "body": "Contact form submissions are retained for the duration necessary to respond to your inquiry, typically no longer than 12 months. Account deletion requests are processed within 30 days and associated data is purged from our systems. Web server logs are automatically deleted after 90 days."
+        },
+        {
+          "title": "Your Rights",
+          "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk."
+        },
+        {
+          "title": "Cookies & Tracking",
+          "body": "This website does not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only."
+        }
       ]
     },
     "terms": {
       "tag": "Terms of service",
       "title": "Terms of Service",
       "blocks": [
-        { "title": "Scope of Operations", "body": "By accessing the Simnetiq website (simnetiq.store), you agree to these Terms of Service. This website provides information about Simnetiq Ltd and its products. The content is provided \"as is\" without warranty of any kind, express or implied." },
-        { "title": "Intellectual Property", "body": "All content on this website, including text, graphics, logos, design elements, and software, is the intellectual property of Simnetiq Ltd and is protected by applicable copyright and trademark laws. Unauthorized reproduction or distribution is prohibited." },
-        { "title": "Limitation of Liability", "body": "Simnetiq Ltd shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of this website. Our total liability shall not exceed the amount paid by you, if any, for accessing this website." },
-        { "title": "Governing Law", "body": "These Terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales." }
+        {
+          "title": "Scope of Operations",
+          "body": "By accessing the Simnetiq website (simnetiq.store), you agree to these Terms of Service. This website provides information about Simnetiq Ltd and its products. The content is provided \"as is\" without warranty of any kind, express or implied."
+        },
+        {
+          "title": "Intellectual Property",
+          "body": "All content on this website, including text, graphics, logos, design elements, and software, is the intellectual property of Simnetiq Ltd and is protected by applicable copyright and trademark laws. Unauthorized reproduction or distribution is prohibited."
+        },
+        {
+          "title": "Limitation of Liability",
+          "body": "Simnetiq Ltd shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of this website. Our total liability shall not exceed the amount paid by you, if any, for accessing this website."
+        },
+        {
+          "title": "Governing Law",
+          "body": "These Terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales."
+        }
       ]
     }
   },
@@ -455,7 +621,7 @@
       "policy": "DATA PROTECTION POLICY",
       "rev": "REV · APR 2026"
     },
-    "eyebrow": "◇ Legal Framework",
+    "eyebrow": "Legal Framework",
     "title": "Privacy Policy",
     "documentLabel": "▸ Document",
     "contactLabel": "▸ Contact",
@@ -466,17 +632,50 @@
     "entries": "Entries",
     "kingsCross": "Kings Cross, London",
     "blocks": [
-      { "title": "Data Controller", "body": "The data controller is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store." },
-      { "title": "Data Collection", "body": "We collect data you voluntarily provide through our contact form (name, email address, message content) and account deletion request form (identity information, optional reason). We may also collect basic analytics data such as page views, browser type, and approximate geographic location through standard web server logs." },
-      { "title": "Mobile Application Data", "body": "The Simnetiq eSIM application collects the following data to provide its services: account information (email, name) for authentication; device information necessary for eSIM provisioning; purchase history for order management; and optional push notification tokens. All data is processed in accordance with this policy and stored securely using industry-standard encryption." },
-      { "title": "Legal Basis (GDPR)", "body": "Processing of contact form data is based on your consent (Art. 6(1)(a) GDPR) and our legitimate interest in responding to inquiries (Art. 6(1)(f) GDPR). Processing of account and purchase data is necessary for the performance of a contract (Art. 6(1)(b) GDPR). Analytics data processing is based on our legitimate interest in understanding usage patterns." },
-      { "title": "Data Sharing", "body": "We do not sell your personal data. We may share data with: eSIM providers for the purpose of activating your connectivity plans; payment processors (Stripe, Apple, Google) to process transactions; and hosting providers (Vercel, Supabase) for infrastructure. All third-party processors are bound by data processing agreements compliant with GDPR." },
-      { "title": "Data Retention", "body": "Contact form submissions are retained for the duration necessary to respond to your inquiry, typically no longer than 12 months. Account data is retained for the duration of your account and deleted within 30 days of an account deletion request. Purchase records may be retained for up to 7 years for tax and legal compliance. Web server logs are automatically deleted after 90 days." },
-      { "title": "Your Rights", "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You may also request account deletion directly through our app or at simnetiq.store/delete-account. You have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk." },
-      { "title": "Cookies & Tracking", "body": "This website and our mobile applications do not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only." },
-      { "title": "Children's Privacy", "body": "Our services are not directed to children under 13. We do not knowingly collect personal data from children. If we become aware that we have collected data from a child under 13, we will delete it promptly." },
-      { "title": "Changes to This Policy", "body": "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Your continued use of our services after changes constitutes acceptance of the updated policy." },
-      { "title": "Contact", "body": "For any questions or concerns about this Privacy Policy or our data practices, contact us at support@simnetiq.store or write to: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom." }
+      {
+        "title": "Data Controller",
+        "body": "The data controller is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store."
+      },
+      {
+        "title": "Data Collection",
+        "body": "We collect data you voluntarily provide through our contact form (name, email address, message content) and account deletion request form (identity information, optional reason). We may also collect basic analytics data such as page views, browser type, and approximate geographic location through standard web server logs."
+      },
+      {
+        "title": "Mobile Application Data",
+        "body": "The Simnetiq eSIM application collects the following data to provide its services: account information (email, name) for authentication; device information necessary for eSIM provisioning; purchase history for order management; and optional push notification tokens. All data is processed in accordance with this policy and stored securely using industry-standard encryption."
+      },
+      {
+        "title": "Legal Basis (GDPR)",
+        "body": "Processing of contact form data is based on your consent (Art. 6(1)(a) GDPR) and our legitimate interest in responding to inquiries (Art. 6(1)(f) GDPR). Processing of account and purchase data is necessary for the performance of a contract (Art. 6(1)(b) GDPR). Analytics data processing is based on our legitimate interest in understanding usage patterns."
+      },
+      {
+        "title": "Data Sharing",
+        "body": "We do not sell your personal data. We may share data with: eSIM providers for the purpose of activating your connectivity plans; payment processors (Stripe, Apple, Google) to process transactions; and hosting providers (Vercel, Supabase) for infrastructure. All third-party processors are bound by data processing agreements compliant with GDPR."
+      },
+      {
+        "title": "Data Retention",
+        "body": "Contact form submissions are retained for the duration necessary to respond to your inquiry, typically no longer than 12 months. Account data is retained for the duration of your account and deleted within 30 days of an account deletion request. Purchase records may be retained for up to 7 years for tax and legal compliance. Web server logs are automatically deleted after 90 days."
+      },
+      {
+        "title": "Your Rights",
+        "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You may also request account deletion directly through our app or at simnetiq.store/delete-account. You have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk."
+      },
+      {
+        "title": "Cookies & Tracking",
+        "body": "This website and our mobile applications do not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only."
+      },
+      {
+        "title": "Children's Privacy",
+        "body": "Our services are not directed to children under 13. We do not knowingly collect personal data from children. If we become aware that we have collected data from a child under 13, we will delete it promptly."
+      },
+      {
+        "title": "Changes to This Policy",
+        "body": "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Your continued use of our services after changes constitutes acceptance of the updated policy."
+      },
+      {
+        "title": "Contact",
+        "body": "For any questions or concerns about this Privacy Policy or our data practices, contact us at support@simnetiq.store or write to: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom."
+      }
     ]
   },
   "deleteAccount": {
@@ -485,7 +684,7 @@
       "protocol": "DE-PROVISIONING PROTOCOL",
       "status": "STATUS 410 · GONE"
     },
-    "eyebrow": "◇ Account Lifecycle",
+    "eyebrow": "Account Lifecycle",
     "title": "System exit",
     "body": "Permanent account dissolution for Simnetiq eSIM app users. Submit the de-provisioning request below. All associated data will be purged from production within 30 days.",
     "operationLabel": "▸ Operation",
@@ -498,7 +697,7 @@
     "reversible": "Reversible",
     "reversibleValue": "No",
     "applicable": {
-      "eyebrow": "◇ Applicable",
+      "eyebrow": "Applicable",
       "title": "Products",
       "body": "This protocol applies to account holders of the Simnetiq eSIM application on iOS and Android.",
       "iosTitle": "Simnetiq — Travel eSIM Data",
@@ -532,7 +731,7 @@
       "tag": "CASE STUDY",
       "status": "VLESS · REALITY · LIVE"
     },
-    "eyebrow": "◇ Privacy · Censorship-resistant · Native",
+    "eyebrow": "Privacy · Censorship-resistant · Native",
     "titleLine1": "Works where",
     "titleLine2": "other VPNs don't.",
     "body": "Doppler VPN is a censorship-resistant VPN built on VLESS-Reality. Your traffic looks like ordinary HTTPS — undetectable by deep packet inspection. No registration, no logs, no tracking. Native apps on iOS, Android, macOS, and Windows.",
@@ -541,13 +740,34 @@
     "specsLabel": "▸ Specification",
     "figureCaption": "Fig. 01 · Doppler iOS client",
     "specs": [
-      { "label": "Status", "value": "Launched · Live" },
-      { "label": "Deployed", "value": "2025" },
-      { "label": "Protocol", "value": "VLESS · Reality" },
-      { "label": "Infrastructure", "value": "Marzban · self-hosted" },
-      { "label": "Regions", "value": "Five · Global" },
-      { "label": "Devices", "value": "Up to 10" },
-      { "label": "Logs", "value": "None · by design" }
+      {
+        "label": "Status",
+        "value": "Launched · Live"
+      },
+      {
+        "label": "Deployed",
+        "value": "2025"
+      },
+      {
+        "label": "Protocol",
+        "value": "VLESS · Reality"
+      },
+      {
+        "label": "Infrastructure",
+        "value": "Marzban · self-hosted"
+      },
+      {
+        "label": "Regions",
+        "value": "Five · Global"
+      },
+      {
+        "label": "Devices",
+        "value": "Up to 10"
+      },
+      {
+        "label": "Logs",
+        "value": "None · by design"
+      }
     ],
     "aboutEyebrow": "§ 01 · About",
     "aboutTitleA": "A VPN that",
@@ -575,10 +795,26 @@
     "insideTitle": "Four moving parts.",
     "insideEntry": "ENTRY",
     "insideItems": [
-      { "figure": "TLS", "label": "DPI bypass", "body": "VLESS-Reality performs a genuine TLS handshake against a real site certificate. Deep packet inspection sees ordinary HTTPS, not a VPN tunnel — nothing to classify, nothing to block." },
-      { "figure": "ID-0", "label": "No registration", "body": "The device is the account. No email, no phone number, no personal information. A subscription key unlocks connectivity — accounts we never create can't be breached, subpoenaed, or leaked." },
-      { "figure": "RT", "label": "Smart routing", "body": "Traffic is routed by destination, not by server list. The client picks the fastest healthy path automatically — no manual server hopping, no stale hops when a region is under load." },
-      { "figure": "DNS", "label": "Encrypted DNS", "body": "Every query is encrypted end-to-end and discarded after resolution. Tracker and malware domains are filtered at the DNS layer across every app on the device, not just the browser." }
+      {
+        "figure": "TLS",
+        "label": "DPI bypass",
+        "body": "VLESS-Reality performs a genuine TLS handshake against a real site certificate. Deep packet inspection sees ordinary HTTPS, not a VPN tunnel — nothing to classify, nothing to block."
+      },
+      {
+        "figure": "ID-0",
+        "label": "No registration",
+        "body": "The device is the account. No email, no phone number, no personal information. A subscription key unlocks connectivity — accounts we never create can't be breached, subpoenaed, or leaked."
+      },
+      {
+        "figure": "RT",
+        "label": "Smart routing",
+        "body": "Traffic is routed by destination, not by server list. The client picks the fastest healthy path automatically — no manual server hopping, no stale hops when a region is under load."
+      },
+      {
+        "figure": "DNS",
+        "label": "Encrypted DNS",
+        "body": "Every query is encrypted end-to-end and discarded after resolution. Tracker and malware domains are filtered at the DNS layer across every app on the device, not just the browser."
+      }
     ],
     "infraEyebrow": "§ 04 · Infrastructure",
     "infraTitleA": "How it",
@@ -586,12 +822,42 @@
     "infraBody": "The stack is deliberately small. A self-hosted Marzban control plane issues subscriptions and rotates keys. Edge nodes run VLESS-Reality behind real third-party certificates. Nothing logs. Every layer is picked because it either contributes to unobservability or it doesn't ship.",
     "infraStackLabel": "▸ Stack",
     "infrastructure": [
-      { "id": "I-01", "label": "Protocol", "title": "VLESS-Reality", "body": "XTLS-Reality over VLESS. Zero TLS fingerprint, genuine certificate from a third-party front site, resistant to active probing." },
-      { "id": "I-02", "label": "Control plane", "title": "Marzban", "body": "Self-hosted Marzban orchestrates inbound nodes, subscription issuance, and key rotation across every region — no third-party SaaS in the auth path." },
-      { "id": "I-03", "label": "Edge", "title": "Frankfurt · Paris · Moscow · Tokyo · Tel Aviv", "body": "Five geo-distributed inbound nodes running the same dual-protocol stack. Failover is automatic; smart routing selects the lowest-latency healthy hop for each destination." },
-      { "id": "I-04", "label": "Data policy", "title": "Zero-log architecture", "body": "No browsing logs. No IP logs. No DNS query storage. No account database. Privacy isn't policy text — it's what the system is physically able to store." },
-      { "id": "I-05", "label": "Obfuscation", "title": "Anti-TSPU · Anti-DPI", "body": "Defeats TSPU, TLS fingerprinting, and active probing — the stack used by Russia, China, and Iran to block commercial VPNs. Domain on Roskomnadzor blocklist; service still operational via Telegram bot." },
-      { "id": "I-06", "label": "Billing", "title": "Card · Crypto · Stores", "body": "Pay through the App Store, Google Play, web checkout, or with BTC, ETH, USDT and USDC. One subscription, up to ten devices, no auto-renewal." }
+      {
+        "id": "I-01",
+        "label": "Protocol",
+        "title": "VLESS-Reality",
+        "body": "XTLS-Reality over VLESS. Zero TLS fingerprint, genuine certificate from a third-party front site, resistant to active probing."
+      },
+      {
+        "id": "I-02",
+        "label": "Control plane",
+        "title": "Marzban",
+        "body": "Self-hosted Marzban orchestrates inbound nodes, subscription issuance, and key rotation across every region — no third-party SaaS in the auth path."
+      },
+      {
+        "id": "I-03",
+        "label": "Edge",
+        "title": "Frankfurt · Paris · Moscow · Tokyo · Tel Aviv",
+        "body": "Five geo-distributed inbound nodes running the same dual-protocol stack. Failover is automatic; smart routing selects the lowest-latency healthy hop for each destination."
+      },
+      {
+        "id": "I-04",
+        "label": "Data policy",
+        "title": "Zero-log architecture",
+        "body": "No browsing logs. No IP logs. No DNS query storage. No account database. Privacy isn't policy text — it's what the system is physically able to store."
+      },
+      {
+        "id": "I-05",
+        "label": "Obfuscation",
+        "title": "Anti-TSPU · Anti-DPI",
+        "body": "Defeats TSPU, TLS fingerprinting, and active probing — the stack used by Russia, China, and Iran to block commercial VPNs. Domain on Roskomnadzor blocklist; service still operational via Telegram bot."
+      },
+      {
+        "id": "I-06",
+        "label": "Billing",
+        "title": "Card · Crypto · Stores",
+        "body": "Pay through the App Store, Google Play, web checkout, or with BTC, ETH, USDT and USDC. One subscription, up to ten devices, no auto-renewal."
+      }
     ],
     "designEyebrow": "§ 05 · Design system",
     "designTitleA": "Cinematic dark,",
@@ -600,21 +866,48 @@
     "paletteLabel": "▸ Palette",
     "typographyLabel": "▸ Typography pairing",
     "typographyCards": [
-      { "code": "01 · Hero", "sample": "Aa Bb 01", "name": "Instrument Serif — Transitional serif, italic", "body": "Reserved for the landing hero headline on dopplervpn.org. Italic, low contrast, oversized — carries all of the brand warmth without a logotype." },
-      { "code": "02 · Body", "sample": "Works where other VPNs get blocked.", "name": "Space Grotesk — Geometric sans", "body": "Default for sections, navigation, UI copy and pricing. Weights 400, 500, 600, 700." },
-      { "code": "03 · Cyrillic", "sample": "Работает там, где нет VPN.", "name": "Rubik — Cyrillic companion", "body": "Active on ru and uk locales. Matches Space Grotesk's metrics while shipping a full Cyrillic glyph set." }
+      {
+        "code": "01 · Hero",
+        "sample": "Aa Bb 01",
+        "name": "Instrument Serif — Transitional serif, italic",
+        "body": "Reserved for the landing hero headline on dopplervpn.org. Italic, low contrast, oversized — carries all of the brand warmth without a logotype."
+      },
+      {
+        "code": "02 · Body",
+        "sample": "Works where other VPNs get blocked.",
+        "name": "Space Grotesk — Geometric sans",
+        "body": "Default for sections, navigation, UI copy and pricing. Weights 400, 500, 600, 700."
+      },
+      {
+        "code": "03 · Cyrillic",
+        "sample": "Работает там, где нет VPN.",
+        "name": "Rubik — Cyrillic companion",
+        "body": "Active on ru and uk locales. Matches Space Grotesk's metrics while shipping a full Cyrillic glyph set."
+      }
     ],
     "platformsEyebrow": "§ 06 · Platforms",
     "platformsTitle": "Native everywhere.",
     "platformsBody": "Native apps on every supported platform — SwiftUI on iOS and macOS, Kotlin on Android, a signed Windows client for x64 and ARM64. One subscription covers up to ten devices. Status syncs across them via a device-bound token, never via an email address.",
     "platforms": [
-      { "id": "01", "name": "iOS" },
-      { "id": "02", "name": "Android" },
-      { "id": "03", "name": "macOS" },
-      { "id": "04", "name": "Windows" }
+      {
+        "id": "01",
+        "name": "iOS"
+      },
+      {
+        "id": "02",
+        "name": "Android"
+      },
+      {
+        "id": "03",
+        "name": "macOS"
+      },
+      {
+        "id": "04",
+        "name": "Windows"
+      }
     ],
     "live": "LIVE",
-    "ctaEyebrow": "◇ Continue",
+    "ctaEyebrow": "Continue",
     "ctaTitle": "Try the network.",
     "ctaBody": "Three-day free trial on iOS. Subscription unlocks every region and every platform. Pay by card, by IAP, or with crypto.",
     "ctaPrimary": "Visit site"
@@ -625,7 +918,7 @@
       "tag": "CASE STUDY",
       "status": "CLASSICAL MECHANICS · LIVE"
     },
-    "eyebrow": "◇ Education · Open · Interactive",
+    "eyebrow": "Education · Open · Interactive",
     "titleLine1": "Physics,",
     "titleLine2": "taught visually.",
     "body": "Physics.explained is an open-source, interactive physics encyclopedia. Live simulations, a cross-linked concept graph, physicist profiles, and an AI tutor at /ask — all six branches of physics under one roof, all shipped.",
@@ -634,13 +927,34 @@
     "specsLabel": "▸ Specification",
     "figureCaption": "Fig. 01 · Interactive mechanics visualisation",
     "specs": [
-      { "label": "Status", "value": "Launched · Live" },
-      { "label": "Deployed", "value": "2026" },
-      { "label": "License", "value": "Open source" },
-      { "label": "Stack", "value": "Next.js · WebGL · MathJax" },
-      { "label": "Solvers", "value": "ODEX · Newton–Raphson" },
-      { "label": "AI Tutor", "value": "/ask · Live" },
-      { "label": "Coverage", "value": "Six branches · Live" }
+      {
+        "label": "Status",
+        "value": "Launched · Live"
+      },
+      {
+        "label": "Deployed",
+        "value": "2026"
+      },
+      {
+        "label": "License",
+        "value": "Open source"
+      },
+      {
+        "label": "Stack",
+        "value": "Next.js · WebGL · MathJax"
+      },
+      {
+        "label": "Solvers",
+        "value": "ODEX · Newton–Raphson"
+      },
+      {
+        "label": "AI Tutor",
+        "value": "/ask · Live"
+      },
+      {
+        "label": "Coverage",
+        "value": "Six branches · Live"
+      }
     ],
     "aboutEyebrow": "§ 01 · About",
     "aboutTitleA": "A physics library",
@@ -668,10 +982,26 @@
     "insideTitle": "Four moving parts.",
     "insideEntry": "ENTRY",
     "insideItems": [
-      { "figure": "/ask", "label": "AI tutor", "body": "Ask any physics question and get a derivation, a diagram, and cross-links back to the encyclopedia. The tutor is grounded in the same concept graph that drives the simulations, so answers stay inside the library." },
-      { "figure": "ODE", "label": "Simulations", "body": "Every diagram is a live simulation. Unit-tested ordinary differential equation integrators run in the browser — drag initial conditions, nudge parameters, watch the physics respond." },
-      { "figure": "DICT", "label": "Concept graph", "body": "A searchable, cross-linked encyclopedia of physics concepts — first principles through modern formulations — each entry bound to the simulations that demonstrate it and the physicists who shaped it." },
-      { "figure": "BIO", "label": "Physicist profiles", "body": "Biographical dossiers for the scientists behind every result, wired into the concept graph so derivations, diagrams, and history sit one click apart." }
+      {
+        "figure": "/ask",
+        "label": "AI tutor",
+        "body": "Ask any physics question and get a derivation, a diagram, and cross-links back to the encyclopedia. The tutor is grounded in the same concept graph that drives the simulations, so answers stay inside the library."
+      },
+      {
+        "figure": "ODE",
+        "label": "Simulations",
+        "body": "Every diagram is a live simulation. Unit-tested ordinary differential equation integrators run in the browser — drag initial conditions, nudge parameters, watch the physics respond."
+      },
+      {
+        "figure": "DICT",
+        "label": "Concept graph",
+        "body": "A searchable, cross-linked encyclopedia of physics concepts — first principles through modern formulations — each entry bound to the simulations that demonstrate it and the physicists who shaped it."
+      },
+      {
+        "figure": "BIO",
+        "label": "Physicist profiles",
+        "body": "Biographical dossiers for the scientists behind every result, wired into the concept graph so derivations, diagrams, and history sit one click apart."
+      }
     ],
     "designEyebrow": "§ 04 · Design system",
     "designTitleA": "Instrument,",
@@ -680,24 +1010,57 @@
     "paletteLabel": "▸ Palette",
     "typographyLabel": "▸ Typography pairing",
     "typographyCards": [
-      { "code": "01 · Display", "sample": "Aa Bb 01", "name": "Space Grotesk — Geometric modular sans", "body": "Used for headlines, figures, and swatch names on physics.it.com. Stands in for Archive Grotesk / General Sans." },
-      { "code": "02 · Body", "sample": "The quick brown fox integrates over dt.", "name": "Inter — Neo-grotesque sans", "body": "Carries long-form reading at 14–17 px. Weights 300, 400, 500, 700." },
-      { "code": "03 · Eyebrow / Mono", "sample": "/* dt = 1/60s; solve(...) */", "name": "JetBrains Mono — Code & labels", "body": "Reserved for labels, coordinates, code excerpts, and metadata rails." }
+      {
+        "code": "01 · Display",
+        "sample": "Aa Bb 01",
+        "name": "Space Grotesk — Geometric modular sans",
+        "body": "Used for headlines, figures, and swatch names on physics.it.com. Stands in for Archive Grotesk / General Sans."
+      },
+      {
+        "code": "02 · Body",
+        "sample": "The quick brown fox integrates over dt.",
+        "name": "Inter — Neo-grotesque sans",
+        "body": "Carries long-form reading at 14–17 px. Weights 300, 400, 500, 700."
+      },
+      {
+        "code": "03 · Eyebrow / Mono",
+        "sample": "/* dt = 1/60s; solve(...) */",
+        "name": "JetBrains Mono — Code & labels",
+        "body": "Reserved for labels, coordinates, code excerpts, and metadata rails."
+      }
     ],
     "branchesEyebrow": "§ 05 · Branches",
     "branchesTitleA": "All six,",
     "branchesTitleB": "all live.",
     "branchesBody": "One solver stack powers every branch — the same numerics that integrate a pendulum also run Maxwell's equations, thermal gradients, Lorentz transforms, Schrödinger evolution, and the modern-physics capstones. Every branch ships with its simulations, its concept entries, and its physicist profiles already wired into /ask.",
     "branches": [
-      { "id": "01", "name": "Classical Mechanics" },
-      { "id": "02", "name": "Electromagnetism" },
-      { "id": "03", "name": "Thermodynamics" },
-      { "id": "04", "name": "Relativity" },
-      { "id": "05", "name": "Quantum Mechanics" },
-      { "id": "06", "name": "Modern Physics" }
+      {
+        "id": "01",
+        "name": "Classical Mechanics"
+      },
+      {
+        "id": "02",
+        "name": "Electromagnetism"
+      },
+      {
+        "id": "03",
+        "name": "Thermodynamics"
+      },
+      {
+        "id": "04",
+        "name": "Relativity"
+      },
+      {
+        "id": "05",
+        "name": "Quantum Mechanics"
+      },
+      {
+        "id": "06",
+        "name": "Modern Physics"
+      }
     ],
     "live": "LIVE",
-    "ctaEyebrow": "◇ Continue",
+    "ctaEyebrow": "Continue",
     "ctaTitle": "Open the library.",
     "ctaBody": "Every concept, every physicist, every simulation, plus the AI tutor at /ask — all live, all free, all open source."
   },
@@ -707,7 +1070,7 @@
       "tag": "CASE STUDY",
       "status": "MARKETING SITE · LIVE / SCAN API · IN DEV"
     },
-    "eyebrow": "◇ Legal-tech · Editorial · In development",
+    "eyebrow": "Legal-tech · Editorial · In development",
     "titleLine1": "Get your contract",
     "titleLine2": "green-flagged before you sign.",
     "body": "Green Flagged is an AI contract reviewer for freelancers and small teams. Drop a PDF or paste contract text and get a plain-language verdict — flagged clauses, severity grades, and suggested redlines — in under eight minutes. Marketing site live; scanning engine in development.",
@@ -716,13 +1079,34 @@
     "specsLabel": "▸ Specification",
     "figureCaption": "Fig. 01 · Green Flagged homepage · drop-zone hero",
     "specs": [
-      { "label": "Status", "value": "In development" },
-      { "label": "Stage", "value": "Pre-launch · First scan free" },
-      { "label": "Site", "value": "greenflagged.com" },
-      { "label": "Audience", "value": "Freelancers · Agencies · SMBs" },
-      { "label": "Verdict time", "value": "Under 8 min" },
-      { "label": "Pricing", "value": "Free · $3/contract · $25/mo" },
-      { "label": "Retention", "value": "30 / 60 / 90 days · auto-delete" }
+      {
+        "label": "Status",
+        "value": "In development"
+      },
+      {
+        "label": "Stage",
+        "value": "Pre-launch · First scan free"
+      },
+      {
+        "label": "Site",
+        "value": "greenflagged.com"
+      },
+      {
+        "label": "Audience",
+        "value": "Freelancers · Agencies · SMBs"
+      },
+      {
+        "label": "Verdict time",
+        "value": "Under 8 min"
+      },
+      {
+        "label": "Pricing",
+        "value": "Free · $3/contract · $25/mo"
+      },
+      {
+        "label": "Retention",
+        "value": "30 / 60 / 90 days · auto-delete"
+      }
     ],
     "aboutEyebrow": "§ 01 · About",
     "aboutTitleA": "A contract reviewer",
@@ -737,10 +1121,26 @@
     "insideTitle": "Four moving parts.",
     "insideEntry": "ENTRY",
     "insideItems": [
-      { "figure": "PDF", "label": "Drop-zone", "body": "Paste contract text or drop a PDF/DOCX. The scanner returns a single verdict with a risk grade in under eight minutes — no account theatrics, no upload queue." },
-      { "figure": "EN", "label": "Plain language", "body": "Every flagged clause gets a plain-language explanation. No legalese, no hedging — what the clause says, what it costs you, and whether the standard market terms agree." },
-      { "figure": "EDIT", "label": "Suggested redlines", "body": "Each flagged clause ships with a suggested redline edit you can paste straight back to counterparty. Freelancer tier and up gets side-by-side comparison against your standard contract." },
-      { "figure": "TAX", "label": "Clause taxonomy", "body": "Scans for IP ownership, payment terms, termination, NDA scope, liability caps, jurisdiction, auto-renewal, kill fees, and exclusivity — the clauses that actually move money when something goes wrong." }
+      {
+        "figure": "PDF",
+        "label": "Drop-zone",
+        "body": "Paste contract text or drop a PDF/DOCX. The scanner returns a single verdict with a risk grade in under eight minutes — no account theatrics, no upload queue."
+      },
+      {
+        "figure": "EN",
+        "label": "Plain language",
+        "body": "Every flagged clause gets a plain-language explanation. No legalese, no hedging — what the clause says, what it costs you, and whether the standard market terms agree."
+      },
+      {
+        "figure": "EDIT",
+        "label": "Suggested redlines",
+        "body": "Each flagged clause ships with a suggested redline edit you can paste straight back to counterparty. Freelancer tier and up gets side-by-side comparison against your standard contract."
+      },
+      {
+        "figure": "TAX",
+        "label": "Clause taxonomy",
+        "body": "Scans for IP ownership, payment terms, termination, NDA scope, liability caps, jurisdiction, auto-renewal, kill fees, and exclusivity — the clauses that actually move money when something goes wrong."
+      }
     ],
     "designEyebrow": "§ 04 · Design system",
     "designTitleA": "Editorial spec-sheet,",
@@ -749,27 +1149,69 @@
     "paletteLabel": "▸ Palette",
     "typographyLabel": "▸ Typography pairing",
     "typographyCards": [
-      { "code": "01 · Display", "sample": "GREEN FLAGGED", "name": "Inter — Display, uppercase with negative tracking", "body": "Reserved for hero and section headlines. Uppercase, tight tracking, oversized — carries the editorial weight without a wordmark." },
-      { "code": "02 · Body", "sample": "Get your contract green-flagged before you sign.", "name": "Inter — Body", "body": "Default for paragraphs, scan results, and explanations. Weights 400 and 500." },
-      { "code": "03 · Mono", "sample": "// CLAUSE 04 · IP OWNERSHIP", "name": "JetBrains Mono — Labels & spec rows", "body": "Reserved for eyebrows, severity tags, dot-leader spec rows, and code-style labels across the report." }
+      {
+        "code": "01 · Display",
+        "sample": "GREEN FLAGGED",
+        "name": "Inter — Display, uppercase with negative tracking",
+        "body": "Reserved for hero and section headlines. Uppercase, tight tracking, oversized — carries the editorial weight without a wordmark."
+      },
+      {
+        "code": "02 · Body",
+        "sample": "Get your contract green-flagged before you sign.",
+        "name": "Inter — Body",
+        "body": "Default for paragraphs, scan results, and explanations. Weights 400 and 500."
+      },
+      {
+        "code": "03 · Mono",
+        "sample": "// CLAUSE 04 · IP OWNERSHIP",
+        "name": "JetBrains Mono — Labels & spec rows",
+        "body": "Reserved for eyebrows, severity tags, dot-leader spec rows, and code-style labels across the report."
+      }
     ],
     "taxonomyEyebrow": "§ 05 · Clause taxonomy",
     "taxonomyTitleA": "Nine clauses that",
     "taxonomyTitleB": "actually move money.",
     "taxonomyBody": "Green Flagged scans for the clauses that decide who owns what, who pays when, and who gets stuck if it goes wrong. Each one is rendered as a single row with severity, a plain-language summary, and a suggested redline.",
     "taxonomy": [
-      { "id": "01", "name": "IP ownership" },
-      { "id": "02", "name": "Payment terms" },
-      { "id": "03", "name": "Termination" },
-      { "id": "04", "name": "NDA scope" },
-      { "id": "05", "name": "Liability caps" },
-      { "id": "06", "name": "Jurisdiction" },
-      { "id": "07", "name": "Auto-renewal" },
-      { "id": "08", "name": "Kill fees" },
-      { "id": "09", "name": "Exclusivity" }
+      {
+        "id": "01",
+        "name": "IP ownership"
+      },
+      {
+        "id": "02",
+        "name": "Payment terms"
+      },
+      {
+        "id": "03",
+        "name": "Termination"
+      },
+      {
+        "id": "04",
+        "name": "NDA scope"
+      },
+      {
+        "id": "05",
+        "name": "Liability caps"
+      },
+      {
+        "id": "06",
+        "name": "Jurisdiction"
+      },
+      {
+        "id": "07",
+        "name": "Auto-renewal"
+      },
+      {
+        "id": "08",
+        "name": "Kill fees"
+      },
+      {
+        "id": "09",
+        "name": "Exclusivity"
+      }
     ],
     "inDev": "IN DEV",
-    "ctaEyebrow": "◇ Continue",
+    "ctaEyebrow": "Continue",
     "ctaTitle": "First scan, free.",
     "ctaBody": "Marketing site is live at greenflagged.com. The scanning engine is in development — early users get their first contract review free at launch.",
     "ctaPrimary": "Visit site"
@@ -780,7 +1222,7 @@
       "tag": "CASE STUDY",
       "status": "WEB · LIVE / iOS · ANDROID · LIVE"
     },
-    "eyebrow": "◇ Telecom · Privacy · Live",
+    "eyebrow": "Telecom · Privacy · Live",
     "titleLine1": "A number for the sign-up.",
     "titleLine2": "Not for life.",
     "body": "Every sign-up wants a phone number, and every number handed over is one more row in a database you will never see. SMS Activate rents you a real carrier number for exactly as long as it takes a verification code to arrive — then retires it.",
@@ -789,12 +1231,30 @@
     "specsLabel": "▸ Specification",
     "figureCaption": "Fig. 01 · SMS Activate homepage · service and country picker",
     "specs": [
-      { "label": "Status", "value": "Live" },
-      { "label": "Countries", "value": "50+ · real carrier networks" },
-      { "label": "Services", "value": "35+ · Telegram to PayPal" },
-      { "label": "Delivery", "value": "~30 seconds to code" },
-      { "label": "Billing", "value": "One-time credits · No auto-renew" },
-      { "label": "Platforms", "value": "Web · iOS · Android" }
+      {
+        "label": "Status",
+        "value": "Live"
+      },
+      {
+        "label": "Countries",
+        "value": "50+ · real carrier networks"
+      },
+      {
+        "label": "Services",
+        "value": "35+ · Telegram to PayPal"
+      },
+      {
+        "label": "Delivery",
+        "value": "~30 seconds to code"
+      },
+      {
+        "label": "Billing",
+        "value": "One-time credits · No auto-renew"
+      },
+      {
+        "label": "Platforms",
+        "value": "Web · iOS · Android"
+      }
     ],
     "aboutEyebrow": "§ 01 · About",
     "aboutTitleA": "Verification without",
@@ -861,18 +1321,45 @@
     "taxonomyTitleB": "people actually sign up for.",
     "taxonomyBody": "Thirty-five and counting. Each one is a maintained integration rather than a generic number pool — a service is only listed once its codes are landing reliably on the carrier ranges we hold.",
     "taxonomy": [
-      { "id": "01", "name": "Telegram" },
-      { "id": "02", "name": "WhatsApp" },
-      { "id": "03", "name": "Google" },
-      { "id": "04", "name": "Instagram" },
-      { "id": "05", "name": "TikTok" },
-      { "id": "06", "name": "Discord" },
-      { "id": "07", "name": "PayPal" },
-      { "id": "08", "name": "Steam" },
-      { "id": "09", "name": "Apple" }
+      {
+        "id": "01",
+        "name": "Telegram"
+      },
+      {
+        "id": "02",
+        "name": "WhatsApp"
+      },
+      {
+        "id": "03",
+        "name": "Google"
+      },
+      {
+        "id": "04",
+        "name": "Instagram"
+      },
+      {
+        "id": "05",
+        "name": "TikTok"
+      },
+      {
+        "id": "06",
+        "name": "Discord"
+      },
+      {
+        "id": "07",
+        "name": "PayPal"
+      },
+      {
+        "id": "08",
+        "name": "Steam"
+      },
+      {
+        "id": "09",
+        "name": "Apple"
+      }
     ],
     "live": "LIVE",
-    "ctaEyebrow": "◇ Continue",
+    "ctaEyebrow": "Continue",
     "ctaTitle": "Keep your number to yourself.",
     "ctaBody": "Pick a service, pick a country, take the code. Credit packs start at a single activation, never expire, and never auto-renew.",
     "ctaPrimary": "Visit site"
@@ -883,7 +1370,7 @@
       "tag": "CASE STUDY",
       "status": "WEB · LIVE / FREE TO START"
     },
-    "eyebrow": "◇ Travel-tech · Multi-passport · Live",
+    "eyebrow": "Travel-tech · Multi-passport · Live",
     "titleLine1": "One profile for",
     "titleLine2": "every visa journey.",
     "body": "Hold two passports and every visa question doubles. VisaPassage compares the routes across every citizenship and residency you hold, ranks them by paperwork, wait, and cost, then builds the document package for the one you pick.",
@@ -892,12 +1379,30 @@
     "specsLabel": "▸ Specification",
     "figureCaption": "Fig. 01 · VisaPassage homepage · one profile, every passport",
     "specs": [
-      { "label": "Status", "value": "Live" },
-      { "label": "Profile", "value": "Passports · Residencies · Documents" },
-      { "label": "Engine", "value": "Least paperwork · Shortest wait · Lowest cost" },
-      { "label": "Vault", "value": "Versioned · Tagged · Expiry-aware" },
-      { "label": "Security", "value": "Encrypted at rest · Access logged" },
-      { "label": "Pricing", "value": "Free to start · No card required" }
+      {
+        "label": "Status",
+        "value": "Live"
+      },
+      {
+        "label": "Profile",
+        "value": "Passports · Residencies · Documents"
+      },
+      {
+        "label": "Engine",
+        "value": "Least paperwork · Shortest wait · Lowest cost"
+      },
+      {
+        "label": "Vault",
+        "value": "Versioned · Tagged · Expiry-aware"
+      },
+      {
+        "label": "Security",
+        "value": "Encrypted at rest · Access logged"
+      },
+      {
+        "label": "Pricing",
+        "value": "Free to start · No card required"
+      }
     ],
     "aboutEyebrow": "§ 01 · About",
     "aboutTitleA": "The best route is",
@@ -964,14 +1469,29 @@
     "taxonomyTitleB": "entered once.",
     "taxonomyBody": "The profile is the unit of work. Everything downstream — comparison, checklist, forms, reminders — reads from it, which is why the passport number is typed exactly once.",
     "taxonomy": [
-      { "id": "01", "name": "Create your encrypted profile" },
-      { "id": "02", "name": "Add passports and residencies" },
-      { "id": "03", "name": "Compare routes side by side" },
-      { "id": "04", "name": "Generate the document package" },
-      { "id": "05", "name": "Submit and track appointments" }
+      {
+        "id": "01",
+        "name": "Create your encrypted profile"
+      },
+      {
+        "id": "02",
+        "name": "Add passports and residencies"
+      },
+      {
+        "id": "03",
+        "name": "Compare routes side by side"
+      },
+      {
+        "id": "04",
+        "name": "Generate the document package"
+      },
+      {
+        "id": "05",
+        "name": "Submit and track appointments"
+      }
     ],
     "live": "LIVE",
-    "ctaEyebrow": "◇ Continue",
+    "ctaEyebrow": "Continue",
     "ctaTitle": "Start with the passport you already hold.",
     "ctaBody": "Free to start, no card required. VisaPassage does not guarantee visa outcomes — official government rules and consular decisions prevail.",
     "ctaPrimary": "Visit site"

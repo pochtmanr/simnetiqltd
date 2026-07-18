@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Panel } from "@/components/panel";
+import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
@@ -127,13 +128,23 @@ export function RecentWorkSection({
               <Panel
                 key={project.id}
                 innerClassName="p-6 lg:p-8 h-full flex flex-col"
-                corners
                 hover
               >
-                <div className="flex items-start justify-between mb-6">
-                  <span className="text-mono text-[var(--color-text-faint)]">
-                    {project.id}
-                  </span>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  {/* min-height keeps the header row aligned across cards
+                      whose project has no supplied mark. */}
+                  <div className="flex items-center gap-3 min-h-9">
+                    {hasProjectLogo(project.key) && (
+                      <ProjectLogo
+                        project={project.key}
+                        alt={meta.title}
+                        size={30}
+                      />
+                    )}
+                    <span className="text-mono text-[var(--color-text-faint)]">
+                      {project.id}
+                    </span>
+                  </div>
                   <span className="text-label-sm text-[var(--color-primary-glow)]">
                     {meta.badge}
                   </span>

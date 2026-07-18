@@ -3,6 +3,11 @@ import {
   getServiceFullTitle,
   type Service,
 } from "@/lib/services";
+import {
+  getHowWeWork,
+  getHowWeWorkFullTitle,
+  type HowWeWork,
+} from "@/lib/how-we-work";
 import { ROUTE_COPY } from "@/lib/seo-meta";
 import type { Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
@@ -78,6 +83,10 @@ type Phrasebook = {
   taglineLabel: string;
   urlLabel: string;
   titleLabel: string;
+  howWeWorkHeading: string;
+  howWeWorkOverview: string;
+  howWeWorkPageHeading: string;
+  faqLabel: string;
 };
 
 const PHRASEBOOK: Record<Locale, Phrasebook> = {
@@ -213,6 +222,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     taglineLabel: "Tagline",
     urlLabel: "URL",
     titleLabel: "Title",
+    howWeWorkHeading: "How we work",
+    howWeWorkOverview: "How we work — engagement terms",
+    howWeWorkPageHeading: "How we work",
+    faqLabel: "FAQ",
   },
   he: {
     intro:
@@ -346,6 +359,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     taglineLabel: "כותרת משנה",
     urlLabel: "כתובת",
     titleLabel: "כותרת",
+    howWeWorkHeading: "איך אנחנו עובדים",
+    howWeWorkOverview: "איך אנחנו עובדים — תנאי התקשרות",
+    howWeWorkPageHeading: "איך אנחנו עובדים",
+    faqLabel: "שאלות נפוצות",
   },
   ru: {
     intro:
@@ -480,6 +497,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     taglineLabel: "Слоган",
     urlLabel: "URL",
     titleLabel: "Заголовок",
+    howWeWorkHeading: "Как мы работаем",
+    howWeWorkOverview: "Как мы работаем — условия сотрудничества",
+    howWeWorkPageHeading: "Как мы работаем",
+    faqLabel: "Частые вопросы",
   },
 };
 
@@ -528,6 +549,35 @@ ${meta}
 `;
 }
 
+function renderHowWeWork(e: HowWeWork, locale: Locale, p: Phrasebook): string {
+  const fullTitle = getHowWeWorkFullTitle(e);
+  const url = `${SITE_URL}/${locale}/how-we-work/${e.slug}`;
+
+  const sections = e.sections
+    .map((s) => `### ${s.heading}\n${s.body}`)
+    .join("\n\n");
+
+  const faq = e.faq.map((f) => `**${f.q}**\n${f.a}`).join("\n\n");
+
+  const meta = e.meta.map((m) => `- **${m.label}**: ${m.value}`).join("\n");
+
+  return `## ${fullTitle} (${e.code})
+${p.urlLabel}: ${url}
+${p.badgeLabel}: ${e.badge}
+${p.taglineLabel}: ${e.tagline}
+
+${e.summary}
+
+${sections}
+
+### ${p.faqLabel}
+${faq}
+
+### ${p.metaLabel}
+${meta}
+`;
+}
+
 export function buildLlmsTxt(locale: Locale): string {
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
@@ -537,6 +587,13 @@ export function buildLlmsTxt(locale: Locale): string {
     .map((s) => {
       const title = getServiceFullTitle(s);
       return `- [${title}](${localeUrl(`/services/${s.slug}`)}): ${s.tagline}`;
+    })
+    .join("\n");
+
+  const howWeWorkLinks = getHowWeWork(locale)
+    .map((e) => {
+      const title = getHowWeWorkFullTitle(e);
+      return `- [${title}](${localeUrl(`/how-we-work/${e.slug}`)}): ${e.tagline}`;
     })
     .join("\n");
 
@@ -554,11 +611,16 @@ ${serviceLinks}
 
 ${p.projectLines(localeUrl).join("\n")}
 
+## ${p.howWeWorkHeading}
+
+${howWeWorkLinks}
+
 ## ${p.companyHeading}
 
 - [${p.about}](${localeUrl("/about")})
 - [${p.servicesOverview}](${localeUrl("/services")})
 - [${p.projectsIndex}](${localeUrl("/projects")})
+- [${p.howWeWorkOverview}](${localeUrl("/how-we-work")})
 
 ## ${p.contactHeading}
 
@@ -673,6 +735,42 @@ export function buildServiceMarkdown(
 ${renderService(service, locale, p)}`;
 }
 
+export function buildHowWeWorkIndexMarkdown(locale: Locale): string {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const entries = getHowWeWork(locale);
+  const copy = ROUTE_COPY.howWeWork[locale];
+
+  const entryLinks = entries
+    .map((e) => {
+      const title = getHowWeWorkFullTitle(e);
+      return `- [${title}](${localeUrl(`/how-we-work/${e.slug}`)}) — ${e.tagline}`;
+    })
+    .join("\n");
+
+  return `${buildHeader(p, copy.title, localeUrl("/how-we-work"))}
+${copy.description}
+
+## ${p.howWeWorkHeading}
+
+${entryLinks}
+`;
+}
+
+export function buildHowWeWorkMarkdown(
+  locale: Locale,
+  slug: string
+): string | null {
+  const p = PHRASEBOOK[locale];
+  const entry = getHowWeWork(locale).find((e) => e.slug === slug);
+  if (!entry) return null;
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const title = getHowWeWorkFullTitle(entry);
+
+  return `${buildHeader(p, title, localeUrl(`/how-we-work/${slug}`))}
+${renderHowWeWork(entry, locale, p)}`;
+}
+
 export function buildProjectsIndexMarkdown(locale: Locale): string {
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
@@ -771,6 +869,11 @@ export function buildLlmsFullTxt(locale: Locale): string {
     .map((s) => renderService(s, locale, p))
     .join("\n---\n\n");
 
+  const howWeWorkCopy = ROUTE_COPY.howWeWork[locale];
+  const howWeWorkSection = getHowWeWork(locale)
+    .map((e) => renderHowWeWork(e, locale, p))
+    .join("\n---\n\n");
+
   return `# ${p.fullTitle}
 
 > ${p.fullIntro}
@@ -824,6 +927,17 @@ ${p.titleLabel}: ${servicesCopy.title}
 ${servicesCopy.description}
 
 ${servicesSection}
+
+---
+
+# ${p.howWeWorkPageHeading}
+
+${p.urlLabel}: ${localeUrl("/how-we-work")}
+${p.titleLabel}: ${howWeWorkCopy.title}
+
+${howWeWorkCopy.description}
+
+${howWeWorkSection}
 
 ---
 

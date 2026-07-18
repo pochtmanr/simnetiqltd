@@ -99,22 +99,8 @@ export function Navigation({
   const [mobileExpanded, setMobileExpanded] = useState<DropdownName | null>(
     null,
   );
-  const [clock, setClock] = useState("—");
   const openTimer = useRef<number | null>(null);
   const closeTimer = useRef<number | null>(null);
-
-  useEffect(() => {
-    function tick() {
-      const d = new Date();
-      const utc = `${String(d.getUTCHours()).padStart(2, "0")}:${String(
-        d.getUTCMinutes()
-      ).padStart(2, "0")}:${String(d.getUTCSeconds()).padStart(2, "0")} UTC`;
-      setClock(utc);
-    }
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
 
   // Close everything on route change. React 19 prefers deriving this during
   // render over a useEffect — synchronously closing avoids a flash of the
@@ -213,23 +199,6 @@ export function Navigation({
           : "backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)]"
       }`}
     >
-      {/* Technical top rail — status + clock only */}
-      <div className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <div className="flex items-center justify-between h-7 font-[family-name:var(--font-mono)] text-[10.5px] tracking-[0.18em] uppercase">
-            <div className="flex items-center gap-3 sm:gap-6">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                {dict.rail.online}
-              </span>
-              <span className="hidden sm:inline">51.5074°N · 0.1278°W</span>
-              <span className="hidden md:inline">{dict.rail.operations}</span>
-            </div>
-            <span suppressHydrationWarning>{clock}</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main nav — bottom border belongs to the bar in its resting state, but
           when a mega-menu opens we hide it so the nav and dropdown panel read
           as one continuous surface (the panel carries its own bottom border). */}

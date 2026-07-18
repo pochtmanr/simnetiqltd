@@ -11,15 +11,19 @@ type ProjectId =
   | "smsactivate"
   | "visapassage";
 type ThemeValue = "system" | "light" | "dark";
+type WhyCard = "people" | "scope" | "ownership" | "support";
 
 export type AnalyticsEvent =
   | { name: "hero_cta_click"; props: { cta: "primary" | "secondary"; locale: Locale } }
   | { name: "service_card_view"; props: { service: ServiceCode; index: number; locale: Locale } }
   | { name: "service_card_click"; props: { service: ServiceCode; locale: Locale } }
   | { name: "project_card_click"; props: { project_id: ProjectId; locale: Locale } }
+  | { name: "why_card_view"; props: { card: WhyCard; index: number; locale: Locale } }
+  | { name: "why_card_click"; props: { card: WhyCard; locale: Locale } }
   | { name: "theme_change"; props: { from: ThemeValue; to: ThemeValue } }
   | { name: "locale_change"; props: { from: Locale; to: Locale } }
   | { name: "contact_section_view"; props: { locale: Locale } }
+  | { name: "booking_widget_opened"; props: { locale: Locale } }
   | { name: "booking_widget_loaded"; props: { locale: Locale; tz_hint: string } }
   | { name: "booking_completed"; props: { locale: Locale; tz: string; event_type: string } }
   | { name: "message_form_submit"; props: { locale: Locale } }

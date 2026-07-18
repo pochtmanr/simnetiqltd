@@ -1,39 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { HeroCircuit } from "@/components/hero-circuit";
 import { Panel, Rail, SpecRow } from "@/components/panel";
 import { SectionFrame } from "@/components/section-frame";
 import { OfferedServicesSection } from "@/components/sections/offered-services-section";
+import { WhyUsSection } from "@/components/sections/why-us-section";
 import { RecentWorkSection } from "@/components/sections/recent-work-section";
 import { ContactDisclosure } from "@/components/contact-disclosure";
+import { BookingCta } from "@/components/booking-cta";
 import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
-
-// BookingPanel pulls in @calcom/embed-react and the Cal embed runtime.
-// It sits below the fold, so deferring its bundle keeps the initial HTML
-// + JS payload smaller without affecting first paint. Reserve the
-// minimum height so the contact section doesn't shift when it mounts.
-const BookingPanel = dynamic(
-  () =>
-    import("@/components/booking-panel").then((m) => ({
-      default: m.BookingPanel,
-    })),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        style={{ minHeight: 560 }}
-        className="mx-auto max-w-3xl"
-        aria-hidden
-      />
-    ),
-  }
-);
 
 type CapKey = "mobile" | "web" | "aiAutomation";
 
@@ -46,7 +26,6 @@ type HomeDict = {
   };
   hero: {
     rail: { index: string; tagline: string; established: string };
-    eyebrow: string;
     titleLine1: string;
     titleLine2: string;
     body: string;
@@ -92,6 +71,16 @@ type HomeDict = {
     viewService: string;
     items: Record<CapKey, { title: string; text: string }>;
   };
+  whyUs: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    cta: string;
+    items: Record<
+      "people" | "scope" | "ownership" | "support",
+      { title: string; text: string }
+    >;
+  };
   contact: {
     eyebrow: string;
     title: string;
@@ -106,6 +95,7 @@ type HomeDict = {
     bookingSubtitle: string;
     bookingRail: string[];
     bookingFooter: string;
+    bookingCta: string;
     formHeading: string;
     name: string;
     namePlaceholder: string;
@@ -194,10 +184,7 @@ export function HomePageClient({
 
             <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col justify-between gap-8">
               <div>
-                <p className="text-label text-[var(--color-primary-glow)]">
-                  {dict.hero.eyebrow}
-                </p>
-                <h1 className="text-display mt-6">
+                <h1 className="text-display">
                   <TextReveal
                     as="span"
                     className="block"
@@ -297,6 +284,11 @@ export function HomePageClient({
           locale={locale}
           dict={{ capabilities: dict.capabilities }}
         />
+      </SectionFrame>
+
+      {/* WHY WORK WITH US */}
+      <SectionFrame id="why" className="scroll-mt-24">
+        <WhyUsSection locale={locale} dict={{ whyUs: dict.whyUs }} />
       </SectionFrame>
 
       {/* RECENT WORK */}
@@ -435,7 +427,7 @@ export function HomePageClient({
                 {dict.contact.bookingSubtitle}
               </p>
               <Rail items={dict.contact.bookingRail} className="mb-3" />
-              <BookingPanel locale={locale} dict={dict} />
+              <BookingCta locale={locale} label={dict.contact.bookingCta} />
               <p className="text-mono text-[var(--color-text-faint)] mt-3">
                 {dict.contact.bookingFooter}
               </p>
