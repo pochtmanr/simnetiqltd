@@ -70,6 +70,9 @@ export function BookingPanel({ locale }: BookingPanelProps) {
   // Initialize lazily from the DOM so the very first render already carries
   // the resolved Simnetiq theme. Cal's removeChild crashes are tied to its
   // internal cleanup running on a config-driven re-render right after mount.
+  // ThemeProvider's pre-paint inline script has already written data-theme and
+  // data-theme-choice before hydration, so this initializer sees the final
+  // value and the effect below only has to subscribe to later changes.
   const [theme, setTheme] = useState<CalTheme>(() => readSiteTheme());
   const tz = locale === "he" ? "Asia/Jerusalem" : "Europe/Berlin";
   const calLink = process.env.NEXT_PUBLIC_CAL_LINK ?? "simnetiq/30min";
@@ -79,7 +82,6 @@ export function BookingPanel({ locale }: BookingPanelProps) {
 
   useEffect(() => {
     const html = document.documentElement;
-    setTheme(readSiteTheme());
     const obs = new MutationObserver(() => {
       const next = readSiteTheme();
       setTheme((prev) => (prev === next ? prev : next));

@@ -1,3 +1,5 @@
+import { SITE_URL as SITE } from "@/lib/site";
+
 export type AutoReplyLocale = "en" | "he" | "ru";
 
 type AutoReplyInput = {
@@ -26,8 +28,6 @@ const COLORS = {
   primary: "#B2451E",
   ctaBorder: "rgba(255,255,255,0.18)",
 } as const;
-
-const SITE = "https://simnetiq.store";
 
 function escapeHtml(value: string): string {
   return value

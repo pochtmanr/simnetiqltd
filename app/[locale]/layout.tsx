@@ -27,6 +27,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -79,7 +80,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-const SITE_URL = "https://simnetiq.store";
 const SITE_NAME = "Simnetiq";
 const DEFAULT_TITLE = "Simnetiq — London Software Engineering Studio";
 const DEFAULT_DESCRIPTION =

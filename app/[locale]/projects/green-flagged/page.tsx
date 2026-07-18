@@ -10,8 +10,8 @@ import {
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = "https://simnetiq.store";
 const PROJECT_URL = "https://greenflagged.vercel.app/";
 
 const GREENFLAGGED_KEYWORDS = [

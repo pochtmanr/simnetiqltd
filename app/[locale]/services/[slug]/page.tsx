@@ -15,8 +15,7 @@ import {
 import { ServiceHeroVisual } from "@/components/service-hero-visual";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
-
-const SITE_URL = "https://simnetiq.store";
+import { SITE_URL } from "@/lib/site";
 
 const slugKeywords: Record<string, string[]> = {
   "mobile-desktop": [

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LOCALES, LOCALE_HTML_LANG, type Locale } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 
-export const SITE_URL = "https://simnetiq.store";
 export const SITE_NAME = "Simnetiq";
 
 const OG_LOCALE: Record<Locale, string> = {
@@ -107,42 +107,6 @@ const CASE_DOPPLER: RouteCopy = {
   },
 };
 
-const SUBSCRIBE: RouteCopy = {
-  en: {
-    title: "Subscribe — Simnetiq Briefings",
-    description:
-      "Subscribe to Simnetiq briefings — quiet, infrequent updates from a London engineering studio: shipping notes, infrastructure tear-downs, and the occasional capability announcement. Double opt-in. One click to unsubscribe.",
-  },
-  he: {
-    title: "הרשמה — תדריכי סימנטיק",
-    description:
-      "הירשמו לתדריכי סימנטיק — עדכונים נדירים ושקטים מאולפן הנדסה לונדוני: הערות שיגור, פירוקי תשתית והכרזות יכולת מדי פעם. הצטרפות בשני שלבים. ביטול בלחיצה אחת.",
-  },
-  ru: {
-    title: "Подписка — рассылка Simnetiq",
-    description:
-      "Подпишитесь на рассылку Simnetiq — редкие, тихие обновления из лондонской инженерной студии: заметки о релизах, разборы инфраструктуры и иногда — новые услуги. Двойное подтверждение. Отписка в один клик.",
-  },
-};
-
-const UNSUBSCRIBE: RouteCopy = {
-  en: {
-    title: "Unsubscribe — Simnetiq",
-    description:
-      "Unsubscribe from Simnetiq emails. One click and we'll never write again.",
-  },
-  he: {
-    title: "ביטול הרשמה — סימנטיק",
-    description:
-      "ביטול הרשמה למיילים של סימנטיק. לחיצה אחת ולא נכתוב שוב.",
-  },
-  ru: {
-    title: "Отписаться — Simnetiq",
-    description:
-      "Отписка от писем Simnetiq. Один клик — и мы больше не пишем.",
-  },
-};
-
 const CASE_PHYSICS: RouteCopy = {
   en: {
     title: "Physics.explained — Case Study",
@@ -220,8 +184,6 @@ export const ROUTE_COPY = {
   about: ABOUT,
   projects: PROJECTS,
   services: SERVICES,
-  subscribe: SUBSCRIBE,
-  unsubscribe: UNSUBSCRIBE,
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
   caseStudyGreenFlagged: CASE_GREENFLAGGED,

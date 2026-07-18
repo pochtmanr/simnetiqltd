@@ -5,8 +5,7 @@ import {
 } from "@/lib/services";
 import { ROUTE_COPY } from "@/lib/seo-meta";
 import type { Locale } from "@/lib/i18n";
-
-const SITE_URL = "https://simnetiq.store";
+import { SITE_URL } from "@/lib/site";
 
 type Phrasebook = {
   intro: string;
@@ -579,8 +578,9 @@ ${p.alternateLocaleLines.join("\n")}
 
 // ─── Per-page Markdown builders ───────────────────────────────────────────
 // These return self-contained MD documents for each MD-supported route.
-// Used by app/[locale]/*/markdown/route.ts handlers and indirectly by
-// proxy.ts during Accept: text/markdown content negotiation.
+// Used by the app/[locale]/*/markdown/route.ts handlers. Every page that
+// advertises a `text/markdown` alternate must have a matching handler here —
+// see lib/seo-meta.ts `markdownAlternate`.
 
 function buildHeader(p: Phrasebook, title: string, url: string): string {
   return `# ${title}

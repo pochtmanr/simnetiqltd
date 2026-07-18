@@ -6,8 +6,7 @@ import { BreadcrumbSchema } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
-
-const SITE_URL = "https://simnetiq.store";
+import { SITE_URL } from "@/lib/site";
 
 const ABOUT_KEYWORDS = [
   "About Simnetiq",

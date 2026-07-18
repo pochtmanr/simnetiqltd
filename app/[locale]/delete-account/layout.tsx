@@ -5,8 +5,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
-
-const SITE_URL = "https://simnetiq.store";
+import { SITE_URL } from "@/lib/site";
 
 const DELETE_KEYWORDS = [
   "Simnetiq delete account",

@@ -1,6 +1,5 @@
 import type { Locale } from "@/lib/i18n";
-
-const BASE_URL = "https://simnetiq.store";
+import { SITE_URL as BASE_URL } from "@/lib/site";
 
 const organization = {
   "@context": "https://schema.org",

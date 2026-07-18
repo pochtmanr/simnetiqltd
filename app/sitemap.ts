@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllServiceSlugs } from "@/lib/services";
 import { LOCALES, LOCALE_HTML_LANG } from "@/lib/i18n";
-
-const SITE_URL = "https://simnetiq.store";
+import { SITE_URL } from "@/lib/site";
 
 type ChangeFreq = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 

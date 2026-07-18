@@ -1,7 +1,7 @@
+import { SITE_URL } from "@/lib/site";
+
 export const dynamic = "force-static";
 export const revalidate = 86400;
-
-const SITE_URL = "https://simnetiq.store";
 
 // Only the API surface is blocked. Next's static chunks must stay crawlable:
 // the homepage renders through a client component, so a crawler that can't
