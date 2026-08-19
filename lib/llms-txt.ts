@@ -50,6 +50,9 @@ type Phrasebook = {
   operatingPrinciples: string[];
   servicesPageHeading: string;
   projectsPageHeading: string;
+  argusHeading: string;
+  argusStack: string;
+  argusStatus: string;
   dopplerHeading: string;
   dopplerStack: string;
   dopplerStatus: string;
@@ -98,6 +101,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     servicesHeading: "Services",
     projectsHeading: "Projects",
     projectLines: (url) => [
+      `- [Argus Browser](${url("/projects/argus-browser")}): Anti-detect browser on a custom C++ Chromium fork. Hundreds of isolated profiles, each with its own fingerprint, per-profile proxy and cookie jar, automated on a schedule from an Electron control plane. macOS and Windows, drivable over MCP and a local HTTP API.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Censorship-resistant VPN on VLESS-Reality with native iOS, Android, macOS and Windows clients. Zero-log, zero-registration, indistinguishable from HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source interactive physics encyclopedia with unit-tested ODE solvers, WebGL visualisations and an AI tutor at /ask grounded in the library.`,
       `- [SMS Activate by SIMNETIQ](${url("/projects/sms-activate")}): Virtual numbers for sign-up verification. Real carrier numbers in 50+ countries across 35+ services, codes in about thirty seconds, one-time credit packs with no subscription. Web, iOS and Android.`,
@@ -134,6 +138,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     liveDeploymentsHeading:
       "Live deployments referenced from the homepage",
     liveDeployments: () => [
+      `- **Argus Browser** (https://www.browserargus.com) — Anti-detect browser on a custom Chromium fork, with a desktop control plane for profiles, proxies, automations, schedules and datasets. macOS and Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source interactive physics learning platform with accurate ODE solvers and a concepts dictionary.`,
       `- **SMS Activate by SIMNETIQ** (https://simnetiq.xyz/) — Virtual numbers for sign-up verification. Real carrier numbers in 50+ countries, 35+ services, codes in about thirty seconds. Web, iOS and Android.`,
@@ -169,6 +174,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     servicesPageHeading: "Services",
     projectsPageHeading: "Projects",
+    argusHeading: "Argus Browser",
+    argusStack:
+      "Stack: C++ / Chromium fork (browser), Electron + React + Vite (desktop control plane), Next.js + Supabase + Revolut Merchant API (site, auth, checkout).",
+    argusStatus:
+      "Status: Production. Live at browserargus.com, v1.0.77, signed and notarised builds for macOS (Apple Silicon) and Windows 10/11. Anti-detect browser: fingerprint, WebRTC address and cookie jar applied inside the engine rather than injected into the page. Hundreds of isolated profiles per workspace, a shared proxy library with live health checks, step-tree automations on a schedule, workspace-owned datasets, and an AI assistant that runs on the customer's own provider keys. Drivable over MCP and a local HTTP API.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "Stack: Swift (iOS), Kotlin (Android), Go (server), Marzban control plane, VLESS-Reality protocol.",
@@ -235,6 +245,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     servicesHeading: "שירותים",
     projectsHeading: "פרויקטים",
     projectLines: (url) => [
+      `- [Argus Browser](${url("/projects/argus-browser")}): דפדפן אנטי-דיטקט על fork ייעודי של Chromium ב-C++. מאות פרופילים מבודדים, לכל אחד טביעת אצבע, פרוקסי ומאגר עוגיות משלו, עם אוטומציה על לוח זמנים מלוח בקרה ב-Electron. ל-macOS ול-Windows, וניתן להנעה דרך MCP ו-API מקומי.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): VPN עמיד לצנזורה על VLESS-Reality עם לקוחות מקוריים ל-iOS, Android, macOS ו-Windows. ללא לוגים, ללא רישום, בלתי ניתן להבחנה מ-HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL ומורה AI ב-/ask המבוסס על הספרייה.`,
       `- [SMS Activate מבית SIMNETIQ](${url("/projects/sms-activate")}): מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-50 מדינות ויותר מ-35 שירותים, קודים תוך כשלושים שניות, חבילות קרדיט חד-פעמיות ללא מנוי. ווב, iOS ואנדרואיד.`,
@@ -270,6 +281,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     homeHeading: "בית",
     liveDeploymentsHeading: "פריסות חיות בעמוד הבית",
     liveDeployments: () => [
+      `- **Argus Browser** (https://www.browserargus.com) — דפדפן אנטי-דיטקט על fork ייעודי של Chromium, עם לוח בקרה שולחני לפרופילים, פרוקסי, אוטומציות, לוחות זמנים ומאגרי נתונים. ל-macOS ול-Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — VPN VLESS-Reality מותאם אישית עם צמתים גיאו-מבוזרים ללא לוגים. לקוחות מקוריים ל-iOS ו-Android.`,
       `- **Physics.explained** (https://physics.it.com/) — פלטפורמת לימוד פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE מדויקים ומילון מושגים.`,
       `- **SMS Activate מבית SIMNETIQ** (https://simnetiq.xyz/) — מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-50 מדינות, יותר מ-35 שירותים, קודים תוך כשלושים שניות. ווב, iOS ואנדרואיד.`,
@@ -305,6 +317,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     servicesPageHeading: "שירותים",
     projectsPageHeading: "פרויקטים",
+    argusHeading: "Argus Browser",
+    argusStack:
+      "סטאק: C++ / fork של Chromium (הדפדפן), Electron + React + Vite (לוח בקרה שולחני), Next.js + Supabase + Revolut Merchant API (אתר, הזדהות, תשלום).",
+    argusStatus:
+      "סטטוס: ייצור. פעיל ב-browserargus.com, גרסה v1.0.77, בניות חתומות ומאושרות ל-macOS (Apple Silicon) ול-Windows 10/11. דפדפן אנטי-דיטקט: טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות מוחלים בתוך המנוע ולא מוזרקים לדף. מאות פרופילים מבודדים בכל סביבת עבודה, ספריית פרוקסי משותפת עם בדיקות תקינות חיות, אוטומציות מבוססות עץ שלבים על לוח זמנים, מאגרי נתונים בבעלות סביבת העבודה, ועוזר AI שרץ על מפתחות הספק של הלקוח עצמו. ניתן להנעה דרך MCP ו-API מקומי.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "סטאק: Swift (iOS), Kotlin (Android), Go (שרת), בקרת Marzban, פרוטוקול VLESS-Reality.",
@@ -372,6 +389,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     servicesHeading: "Услуги",
     projectsHeading: "Проекты",
     projectLines: (url) => [
+      `- [Argus Browser](${url("/projects/argus-browser")}): Анти-детект браузер на собственном форке Chromium (C++). Сотни изолированных профилей, у каждого свой отпечаток, прокси и хранилище cookie, с автоматизацией по расписанию из панели управления на Electron. macOS и Windows, управляется через MCP и локальный HTTP API.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Устойчивый к цензуре VPN на VLESS-Reality с нативными клиентами для iOS, Android, macOS и Windows. Без логов, без регистрации, неотличим от HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source интерактивная энциклопедия физики с покрытыми тестами решателями ОДУ, WebGL-визуализациями и AI-репетитором на /ask, основанным на материалах библиотеки.`,
       `- [SMS Activate от SIMNETIQ](${url("/projects/sms-activate")}): Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 50+ странах для 35+ сервисов, код примерно за тридцать секунд, разовые пакеты кредитов без подписки. Веб, iOS и Android.`,
@@ -408,6 +426,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     liveDeploymentsHeading:
       "Живые продакшен-, упомянутые на главной",
     liveDeployments: () => [
+      `- **Argus Browser** (https://www.browserargus.com) — Анти-детект браузер на собственном форке Chromium с настольной панелью управления профилями, прокси, автоматизациями, расписаниями и таблицами данных. macOS и Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — Кастомный VPN на VLESS-Reality с гео-распределёнными нодами без логов. Нативные клиенты для iOS и Android.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source интерактивная платформа изучения физики с точными решателями ОДУ и словарём концепций.`,
       `- **SMS Activate от SIMNETIQ** (https://simnetiq.xyz/) — Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 50+ странах, 35+ сервисов, код примерно за тридцать секунд. Веб, iOS и Android.`,
@@ -443,6 +462,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     servicesPageHeading: "Услуги",
     projectsPageHeading: "Проекты",
+    argusHeading: "Argus Browser",
+    argusStack:
+      "Стек: C++ / форк Chromium (браузер), Electron + React + Vite (настольная панель управления), Next.js + Supabase + Revolut Merchant API (сайт, авторизация, оплата).",
+    argusStatus:
+      "Статус: продакшен. Работает на browserargus.com, версия v1.0.77, подписанные и нотаризованные сборки для macOS (Apple Silicon) и Windows 10/11. Анти-детект браузер: отпечаток, адрес WebRTC и хранилище cookie применяются внутри движка, а не внедряются в страницу. Сотни изолированных профилей в рабочем пространстве, общая библиотека прокси с живыми проверками доступности, автоматизации в виде дерева шагов по расписанию, таблицы данных во владении пространства и AI-ассистент, работающий на собственных ключах клиента. Управляется через MCP и локальный HTTP API.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "Стек: Swift (iOS), Kotlin (Android), Go (сервер), control plane Marzban, протокол VLESS-Reality.",
@@ -792,6 +816,17 @@ export function buildProjectMarkdown(
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
 
+  if (slug === "argus-browser") {
+    const c = ROUTE_COPY.caseStudyArgus[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/argus-browser"))}
+Live: https://www.browserargus.com
+
+${c.description}
+
+${p.argusStack}
+${p.argusStatus}
+`;
+  }
   if (slug === "doppler-vpn") {
     const c = ROUTE_COPY.caseStudyDoppler[locale];
     return `${buildHeader(p, c.title, localeUrl("/projects/doppler-vpn"))}
@@ -859,6 +894,7 @@ export function buildLlmsFullTxt(locale: Locale): string {
   const about = ROUTE_COPY.about[locale];
   const projects = ROUTE_COPY.projects[locale];
   const servicesCopy = ROUTE_COPY.services[locale];
+  const argus = ROUTE_COPY.caseStudyArgus[locale];
   const doppler = ROUTE_COPY.caseStudyDoppler[locale];
   const physics = ROUTE_COPY.caseStudyPhysics[locale];
   const greenFlagged = ROUTE_COPY.caseStudyGreenFlagged[locale];
@@ -947,6 +983,17 @@ ${p.urlLabel}: ${localeUrl("/projects")}
 ${p.titleLabel}: ${projects.title}
 
 ${projects.description}
+
+## ${p.argusHeading}
+
+${p.urlLabel}: ${localeUrl("/projects/argus-browser")}
+Live: https://www.browserargus.com
+${p.titleLabel}: ${argus.title}
+
+${argus.description}
+
+${p.argusStack}
+${p.argusStatus}
 
 ## ${p.dopplerHeading}
 

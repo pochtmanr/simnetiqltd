@@ -53,6 +53,7 @@ type HomeDict = {
     visit: string;
     caseStudy: string;
     items: Record<
+      | "argus"
       | "physics"
       | "doppler"
       | "creator"

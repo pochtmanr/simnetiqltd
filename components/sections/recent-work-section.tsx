@@ -8,6 +8,7 @@ import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
 type ProjectKey =
+  | "argus"
   | "physics"
   | "doppler"
   | "creator"
@@ -26,49 +27,56 @@ type ProjectDef = {
 
 const PROJECTS: ProjectDef[] = [
   {
-    key: "physics",
+    key: "argus",
     id: "01",
+    href: "https://www.browserargus.com/",
+    caseStudy: "/projects/argus-browser",
+    stack: "C++ · Chromium · Electron · React · Supabase",
+  },
+  {
+    key: "physics",
+    id: "02",
     href: "https://physics.it.com/",
     caseStudy: "/projects/physics-explained",
     stack: "Next.js · WebGL · MathJax · odex",
   },
   {
     key: "doppler",
-    id: "02",
+    id: "03",
     href: "https://dopplervpn.org",
     caseStudy: "/projects/doppler-vpn",
     stack: "Swift · Kotlin · Go · Marzban",
   },
   {
     key: "smsactivate",
-    id: "03",
+    id: "04",
     href: "https://simnetiq.xyz/",
     caseStudy: "/projects/sms-activate",
     stack: "Next.js · React · Tailwind · iOS & Android",
   },
   {
     key: "visapassage",
-    id: "04",
+    id: "05",
     href: "https://visapassage.com/",
     caseStudy: "/projects/visapassage",
     stack: "Next.js · React · Supabase · Tailwind",
   },
   {
     key: "greenflagged",
-    id: "05",
+    id: "06",
     href: "https://greenflagged.vercel.app/",
     caseStudy: "/projects/green-flagged",
     stack: "Next.js 16 · React 19 · Tailwind v4 · GSAP",
   },
   {
     key: "delivery",
-    id: "06",
+    id: "07",
     href: "https://www.isrshipping.com",
     stack: "Next.js · Node · PostgreSQL",
   },
   {
     key: "creator",
-    id: "07",
+    id: "08",
     href: "https://www.creatorai.art/en",
     stack: "Swift · Kotlin · Python · Supabase",
   },

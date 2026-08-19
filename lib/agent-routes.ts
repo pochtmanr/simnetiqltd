@@ -21,6 +21,7 @@ export type MdRoute = {
 };
 
 const PROJECT_SLUGS = [
+  "argus-browser",
   "doppler-vpn",
   "physics-explained",
   "green-flagged",

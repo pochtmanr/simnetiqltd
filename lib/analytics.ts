@@ -3,6 +3,7 @@ import type { Locale } from "@/lib/i18n";
 
 type ServiceCode = "mobile" | "web" | "aiAutomation";
 type ProjectId =
+  | "argus"
   | "physics"
   | "doppler"
   | "creator"

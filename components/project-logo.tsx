@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 export type ProjectLogoKey =
+  | "argus"
   | "physics"
   | "doppler"
   | "smsactivate"
@@ -29,6 +30,18 @@ type LogoDef = {
 );
 
 const LOGOS: Record<ProjectLogoKey, LogoDef> = {
+  // The only portrait mark in the set. Left on the area rule it would stand a
+  // third taller than its neighbours and break the card header line, so — as
+  // with VisaPassage, for the opposite reason — opticalScale = sqrt(aspect)
+  // cancels the rule exactly and pins height === size. Width falls out at
+  // size x aspect, which is narrower than every other mark and correct: a tall
+  // silhouette reads at its HEIGHT.
+  argus: {
+    kind: "mono",
+    src: "/logos/argus.svg",
+    aspect: 874 / 1124,
+    opticalScale: Math.sqrt(874 / 1124),
+  },
   physics: {
     kind: "pair",
     light: "/logos/physics-light.svg",

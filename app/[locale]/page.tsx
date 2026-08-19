@@ -63,7 +63,17 @@ export async function generateMetadata({
   });
 }
 
+// Mirrors the card order in components/sections/recent-work-section.tsx.
+// Both this and the /projects page emit an ItemList under the same @id, so the
+// two must agree — they drifted once already, when SMS Activate, VisaPassage
+// and Green Flagged were added to the cards but not to this list.
 const portfolioItems = [
+  {
+    name: "Argus Browser",
+    url: "https://www.browserargus.com/",
+    description:
+      "Anti-detect browser built on a custom Chromium fork, with a desktop control plane for profiles, proxies, automations, schedules and datasets.",
+  },
   {
     name: "Physics.explained",
     url: "https://physics.it.com/",
@@ -77,16 +87,34 @@ const portfolioItems = [
       "Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.",
   },
   {
-    name: "Creator AI",
-    url: "https://www.creatorai.art/en",
+    name: "SMS Activate by SIMNETIQ",
+    url: "https://simnetiq.xyz/",
     description:
-      "Neural content synthesis platform. Multi-language editorial pipelines on Anthropic and OpenAI.",
+      "Virtual numbers for sign-up verification. Real carrier numbers in 50+ countries across 35+ services, with codes in about thirty seconds. Web, iOS and Android.",
+  },
+  {
+    name: "VisaPassage",
+    url: "https://visapassage.com/",
+    description:
+      "Multi-passport visa intelligence. Compare visa routes across every passport and residency you hold from one encrypted profile.",
+  },
+  {
+    name: "Green Flagged",
+    url: "https://greenflagged.vercel.app/",
+    description:
+      "AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades and suggested redlines.",
   },
   {
     name: "Go Delivery (ISR Shipping)",
     url: "https://www.isrshipping.com",
     description:
       "Logistics platform with real-time GPS driver tracking, route optimisation and order lifecycle management.",
+  },
+  {
+    name: "Creator AI",
+    url: "https://www.creatorai.art/en",
+    description:
+      "Neural content synthesis platform. Multi-language editorial pipelines on Anthropic and OpenAI.",
   },
 ];
 

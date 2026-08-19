@@ -179,6 +179,24 @@ const CASE_VISAPASSAGE: RouteCopy = {
   },
 };
 
+const CASE_ARGUS: RouteCopy = {
+  en: {
+    title: "Argus Browser — Case Study",
+    description:
+      "Argus Browser is an anti-detect browser built on a custom Chromium fork. The identity — fingerprint, WebRTC address and cookie jar — is applied below the page, inside the engine, where a script cannot read around it. A desktop control plane owns the profiles, proxies, cookie sets, automations, schedules and datasets, and hands each browser session one launch payload and nothing more. Signed and notarised builds for macOS (Apple Silicon) and Windows, with MCP and a local HTTP API for driving it from your own tooling.",
+  },
+  he: {
+    title: "Argus Browser — מקרה בוחן",
+    description:
+      "Argus Browser הוא דפדפן אנטי-דיטקט הבנוי על fork ייעודי של Chromium. הזהות — טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות — מוחלת מתחת לדף, בתוך המנוע עצמו, במקום שסקריפט אינו יכול לעקוף. אפליקציית שליטה שולחנית מחזיקה את הפרופילים, הפרוקסי, ערכות העוגיות, האוטומציות, לוחות הזמנים ומאגרי הנתונים, ומוסרת לכל הפעלת דפדפן מטען שיגור אחד בלבד ולא יותר מכך. גרסאות חתומות ומאושרות ל-macOS (Apple Silicon) ול-Windows, עם MCP ו-API מקומי להנעת המערכת מתוך הכלים שלכם.",
+  },
+  ru: {
+    title: "Argus Browser — кейс",
+    description:
+      "Argus Browser — анти-детект браузер на собственном форке Chromium. Личность профиля — отпечаток, адрес WebRTC и хранилище cookie — применяется под страницей, внутри самого движка, где скрипт не может её обойти. Настольная панель управления владеет профилями, прокси, наборами cookie, автоматизациями, расписаниями и таблицами данных и передаёт каждой сессии браузера ровно один стартовый пакет и ничего сверх того. Подписанные и нотаризованные сборки для macOS (Apple Silicon) и Windows, с MCP и локальным HTTP API для управления из собственных инструментов.",
+  },
+};
+
 const HOW_WE_WORK: RouteCopy = {
   en: {
     title: "How We Work — Scope, Ownership, Support",
@@ -279,6 +297,7 @@ export const ROUTE_COPY = {
   howWeWorkScope: HWW_SCOPE,
   howWeWorkOwnership: HWW_OWNERSHIP,
   howWeWorkSupport: HWW_SUPPORT,
+  caseStudyArgus: CASE_ARGUS,
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
   caseStudyGreenFlagged: CASE_GREENFLAGGED,

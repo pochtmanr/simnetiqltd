@@ -10,7 +10,7 @@ import { NavMegaMenu, type NavMegaItem } from "@/components/nav-mega-menu";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type ProjectKey = "physics" | "doppler" | "creator" | "delivery";
+type ProjectKey = "argus" | "physics" | "doppler" | "creator" | "delivery";
 type CapKey = "mobile" | "web" | "aiAutomation";
 
 type NavDict = {
@@ -71,10 +71,11 @@ const PROJECT_META: {
   href: string;
   external: boolean;
 }[] = [
-  { key: "physics", code: "01", href: "/projects/physics-explained", external: false },
-  { key: "doppler", code: "02", href: "/projects/doppler-vpn", external: false },
-  { key: "creator", code: "03", href: "https://www.creatorai.art/en", external: true },
-  { key: "delivery", code: "04", href: "https://www.isrshipping.com", external: true },
+  { key: "argus", code: "01", href: "/projects/argus-browser", external: false },
+  { key: "physics", code: "02", href: "/projects/physics-explained", external: false },
+  { key: "doppler", code: "03", href: "/projects/doppler-vpn", external: false },
+  { key: "creator", code: "04", href: "https://www.creatorai.art/en", external: true },
+  { key: "delivery", code: "05", href: "https://www.isrshipping.com", external: true },
 ];
 
 const SERVICE_META: { key: CapKey; code: string; href: string }[] = [

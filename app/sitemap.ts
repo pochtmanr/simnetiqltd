@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const localizedRoutes: { path: string; freq: ChangeFreq; priority: number }[] = [
     { path: "", freq: "weekly", priority: 1 },
     { path: "/projects", freq: "monthly", priority: 0.9 },
+    { path: "/projects/argus-browser", freq: "monthly", priority: 0.85 },
     { path: "/projects/doppler-vpn", freq: "monthly", priority: 0.85 },
     { path: "/projects/physics-explained", freq: "monthly", priority: 0.85 },
     { path: "/projects/green-flagged", freq: "monthly", priority: 0.8 },

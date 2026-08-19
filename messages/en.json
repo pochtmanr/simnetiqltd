@@ -97,11 +97,16 @@
   "projects": {
     "eyebrow": "Selected work",
     "title": "Recent work",
-    "body": "Production deployments from our London studio — four live in the wild, one in development. Built with an engineering-first mindset: reliable, well-structured, made to last.",
+    "body": "Production deployments from our London studio — six live in the wild, one in development. Built with an engineering-first mindset: reliable, well-structured, made to last.",
     "stack": "Stack",
     "visit": "Visit site",
     "caseStudy": "Case study",
     "items": {
+      "argus": {
+        "title": "Argus Browser",
+        "badge": "Browser engineering · Live",
+        "description": "An anti-detect browser on a custom Chromium fork. Hundreds of isolated profiles, each with its own fingerprint, proxy and cookie jar, run and automated from one desktop control plane."
+      },
       "physics": {
         "title": "Physics.explained",
         "badge": "Education · Open",
@@ -316,7 +321,7 @@
     "rail": {
       "index": "◆ SIMNETIQ / 01 / PROJECTS",
       "archive": "ENGINEERING ARCHIVE",
-      "active": "ACTIVE ENTRIES · 05"
+      "active": "ACTIVE ENTRIES · 08"
     },
     "eyebrow": "Engineering Archive",
     "titleLine1": "Active",
@@ -327,6 +332,17 @@
     "visitSite": "Visit site",
     "inDev": "IN DEV",
     "items": {
+      "argus": {
+        "title": "Argus Browser",
+        "badge": "BROWSER ENGINEERING · LIVE",
+        "description": "An anti-detect browser built on a custom Chromium fork. The identity — fingerprint, WebRTC address and cookie jar — is applied below the page, inside the engine, where a script cannot read around it. A desktop control plane owns the profiles, proxies, automations, schedules and datasets, and hands each session one launch payload and nothing more.",
+        "engine": "Engine",
+        "engineValue": "Custom Chromium fork · C++",
+        "platforms": "Platforms",
+        "platformsValue": "macOS (Apple Silicon) · Windows 10/11",
+        "scope": "Scope",
+        "scopeValue": "Agencies · Commerce · Research"
+      },
       "physics": {
         "title": "Physics.explained",
         "badge": "EDUCATION · OPEN",
@@ -724,6 +740,138 @@
     "cancel": "Cancel process",
     "successMessage": "▸ Deletion request submitted. Your account and all associated data will be permanently removed within 30 days.",
     "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.store."
+  },
+  "caseStudyArgus": {
+    "rail": {
+      "index": "◆ SIMNETIQ / 01 / PROJECTS / ARGUS",
+      "tag": "CASE STUDY",
+      "status": "DESKTOP · LIVE / MACOS & WINDOWS"
+    },
+    "eyebrow": "Browser engineering · Anti-detect · Live",
+    "titleLine1": "A hundred identities,",
+    "titleLine2": "one machine.",
+    "body": "Argus is an anti-detect browser: a custom Chromium fork that carries a different, coherent device identity in every window, and a desktop control plane that decides what each of those windows is allowed to know.",
+    "visitSite": "Visit site",
+    "download": "Download",
+    "specsLabel": "▸ Specification",
+    "figureCaption": "Fig. 01 · Argus Browser · a hundred identities, one machine",
+    "specs": [
+      {
+        "label": "Status",
+        "value": "Live · v1.0.77"
+      },
+      {
+        "label": "Engine",
+        "value": "Custom Chromium fork · C++"
+      },
+      {
+        "label": "Control plane",
+        "value": "Electron · React · Vite"
+      },
+      {
+        "label": "Platforms",
+        "value": "macOS (Apple Silicon) · Windows 10/11"
+      },
+      {
+        "label": "Backend",
+        "value": "Supabase · Revolut Merchant API"
+      },
+      {
+        "label": "Interfaces",
+        "value": "MCP · Local HTTP API"
+      }
+    ],
+    "aboutEyebrow": "§ 01 · About",
+    "aboutTitleA": "You cannot fake a browser",
+    "aboutTitleB": "from inside the page.",
+    "aboutBody": [
+      "A browser identity is not one value. It is a few hundred of them — canvas and WebGL output, audio characteristics, installed fonts, screen metrics, timezone, language, hardware concurrency — and they are all expected to agree with one another. Change some and leave the rest, and the disagreement is itself the signal.",
+      "The usual approach is to patch those values from inside the page, with an extension or an injected script. That works until something asks the question a different way. A property that has been overwritten in JavaScript does not look like a property that was always that value, and checking for the overwrite is cheaper than checking the value.",
+      "So the identity had to move below the page. Argus ships its own Chromium fork, with the spoofing compiled into the engine and driven by launch flags the page never sees. There is nothing in the JavaScript environment to find, because nothing in the JavaScript environment was changed.",
+      "That one decision is what makes this a compiler and toolchain project rather than a web project — and it is why it takes a build pipeline across three repositories rather than a bundle."
+    ],
+    "insideEyebrow": "§ 02 · What's inside",
+    "insideTitle": "Four decisions that shaped the build",
+    "insideEntry": "DECISION",
+    "insideItems": [
+      {
+        "figure": "C++",
+        "label": "Engine",
+        "body": "Fingerprint, WebRTC policy and locale are applied in the browser process, below anything a page can reach. A script cannot read around the identity because the identity is not implemented in script."
+      },
+      {
+        "figure": "1 : 1",
+        "label": "Isolation",
+        "body": "One profile, one on-disk Chromium directory, one cookie jar, one proxy. Every session starts from its own directory with nothing carried over from any other."
+      },
+      {
+        "figure": "1,000",
+        "label": "Scale",
+        "body": "A workspace holds up to a thousand profiles across twenty-five seats, with a shared proxy library under live health checks rather than a text field on every profile."
+      },
+      {
+        "figure": "MCP",
+        "label": "Interfaces",
+        "body": "The app speaks the Model Context Protocol, so an agent that already knows how to use tools can drive profiles without being taught an API. A loopback HTTP bridge covers everything else."
+      }
+    ],
+    "designEyebrow": "§ 03 · Design system",
+    "designTitleA": "Achromatic paper,",
+    "designTitleB": "one cyan that means buy.",
+    "designBody": "Every neutral in the interface is a grey with no hue in it, so the only colour on screen carries meaning. Cyan marks the commercial path; green and red are signal-only. Both themes ship together, and nothing hardcodes a colour — a component that needs a value takes a token, and the token resolves per theme.",
+    "paletteLabel": "▸ Palette · light theme",
+    "typographyLabel": "▸ Typography",
+    "typographyCards": [
+      {
+        "code": "T-01",
+        "sample": "Argus",
+        "name": "Geist · 700 · −0.03em",
+        "body": "Hero and section headlines, set tight. The ladder clamps between 34 and 52 pixels so a headline never wraps at an awkward width."
+      },
+      {
+        "code": "T-02",
+        "sample": "Run the accounts.",
+        "name": "Geist · 400 · 14px / 1.5",
+        "body": "Body, subtitles and table copy. One family across the whole interface keeps the chrome quiet and the product loud."
+      },
+      {
+        "code": "T-03",
+        "sample": "--argus-fingerprint",
+        "name": "Geist Mono · 400",
+        "body": "Launch flags, proxy strings, API routes — anything the user is expected to copy exactly."
+      }
+    ],
+    "taxonomyEyebrow": "§ 04 · Surfaces",
+    "taxonomyTitleA": "Five surfaces,",
+    "taxonomyTitleB": "one workspace.",
+    "taxonomyBody": "The control plane is organised around what a session needs before it opens and what it leaves behind once it closes. Each surface owns one of those, and an automation can reach across all of them.",
+    "taxonomy": [
+      {
+        "id": "P-01",
+        "name": "Profiles"
+      },
+      {
+        "id": "P-02",
+        "name": "Proxies"
+      },
+      {
+        "id": "P-03",
+        "name": "Automations"
+      },
+      {
+        "id": "P-04",
+        "name": "Schedule"
+      },
+      {
+        "id": "P-05",
+        "name": "Datasets"
+      }
+    ],
+    "live": "LIVE",
+    "ctaEyebrow": "§ 05 · Try it",
+    "ctaTitle": "Run a profile yourself.",
+    "ctaBody": "Argus is free to start — five profiles, no card. Signed and notarised builds for macOS on Apple Silicon and for Windows 10 and 11.",
+    "ctaPrimary": "Open browserargus.com"
   },
   "caseStudyDoppler": {
     "rail": {

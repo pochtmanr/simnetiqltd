@@ -14,6 +14,13 @@ import { SITE_URL } from "@/lib/site";
 
 const PROJECTS_KEYWORDS = [
   "Simnetiq projects",
+  "Argus Browser",
+  "browserargus.com",
+  "anti-detect browser",
+  "Chromium fork",
+  "browser fingerprinting",
+  "multi-account browser",
+  "browser automation platform",
   "Simnetiq portfolio",
   "Simnetiq case studies",
   "Simnetiq deployments",
@@ -69,6 +76,7 @@ export async function generateMetadata({
 }
 
 type ProjectKey =
+  | "argus"
   | "physics"
   | "doppler"
   | "creator"
@@ -89,8 +97,21 @@ type ProjectStruct = {
 
 const projectsList: ProjectStruct[] = [
   {
-    key: "physics",
+    key: "argus",
     id: "01",
+    tags: ["C++", "CHROMIUM", "ELECTRON", "REACT", "SUPABASE"],
+    link: { kind: "internal", href: "/projects/argus-browser", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://www.browserargus.com/", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "engine", valueKey: "engineValue" },
+      { labelKey: "platforms", valueKey: "platformsValue" },
+      { labelKey: "scope", valueKey: "scopeValue" },
+    ],
+    status: "live",
+  },
+  {
+    key: "physics",
+    id: "02",
     tags: ["NEXT.JS", "WEBGL", "MATHJAX", "AI"],
     link: { kind: "internal", href: "/projects/physics-explained", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://physics.it.com/", labelKey: "visitSite" },
@@ -102,7 +123,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "doppler",
-    id: "02",
+    id: "03",
     tags: ["SWIFT", "KOTLIN", "GO", "MARZBAN"],
     link: { kind: "internal", href: "/projects/doppler-vpn", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://dopplervpn.org", labelKey: "visitSite" },
@@ -114,7 +135,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "smsactivate",
-    id: "03",
+    id: "04",
     tags: ["NEXT.JS", "REACT", "TAILWIND", "iOS", "ANDROID"],
     link: { kind: "internal", href: "/projects/sms-activate", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://simnetiq.xyz/", labelKey: "visitSite" },
@@ -127,7 +148,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "visapassage",
-    id: "04",
+    id: "05",
     tags: ["NEXT.JS", "REACT", "SUPABASE", "TAILWIND"],
     link: { kind: "internal", href: "/projects/visapassage", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://visapassage.com/", labelKey: "visitSite" },
@@ -140,7 +161,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "greenflagged",
-    id: "05",
+    id: "06",
     tags: ["NEXT.JS 16", "REACT 19", "TAILWIND V4", "GSAP"],
     link: { kind: "internal", href: "/projects/green-flagged", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://greenflagged.vercel.app/", labelKey: "visitSite" },
@@ -153,7 +174,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "delivery",
-    id: "06",
+    id: "07",
     tags: ["NEXT.JS", "REACT", "NODE", "POSTGRES"],
     link: { kind: "external", href: "https://www.isrshipping.com", labelKey: "visitSite" },
     metaKeys: [
@@ -164,7 +185,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "creator",
-    id: "07",
+    id: "08",
     tags: ["SWIFT", "KOTLIN", "PYTHON", "SUPABASE"],
     link: { kind: "external", href: "https://www.creatorai.art/en", labelKey: "visitSite" },
     metaKeys: [
