@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import {
   Inter,
-  Space_Grotesk,
+  Bricolage_Grotesque,
   JetBrains_Mono,
   Instrument_Serif,
   Rubik,
@@ -16,7 +16,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
-import { BuildRail } from "@/components/build-rail";
 import { ThemeProvider, type ThemeChoice } from "@/components/theme-provider";
 import { ThemeInitScript } from "@/components/theme-init-script";
 import { getDictionary } from "@/lib/dictionaries";
@@ -35,9 +34,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const spaceGrotesk = Space_Grotesk({
+// Display voice. Variable (opsz/wdth/wght) — next/font ships the variable
+// file when no explicit weight is given.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
 });
 
@@ -282,7 +282,7 @@ export default async function RootLayout({
       dir={dir}
       data-theme={dataTheme}
       style={colorSchemeStyle}
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} h-full`}
+      className={`${inter.variable} ${bricolage.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
@@ -320,7 +320,6 @@ export default async function RootLayout({
             }}
           />
           <main className="flex-1">{children}</main>
-          <BuildRail />
           <Footer locale={locale} dict={dict.footer} />
           <Analytics />
         </ThemeProvider>

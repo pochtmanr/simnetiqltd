@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { HeroCircuit } from "@/components/hero-circuit";
 import { Panel, Rail, SpecRow } from "@/components/panel";
 import { SectionFrame } from "@/components/section-frame";
 import { OfferedServicesSection } from "@/components/sections/offered-services-section";
 import { WhyUsSection } from "@/components/sections/why-us-section";
 import { RecentWorkSection } from "@/components/sections/recent-work-section";
+import { HeroGraph } from "@/components/hero-graph";
+import { HeroNavSentinel } from "@/components/hero-nav-sentinel";
 import { ContactDisclosure } from "@/components/contact-disclosure";
 import { BookingCta } from "@/components/booking-cta";
-import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
@@ -25,25 +25,12 @@ type HomeDict = {
     contact: { number: string; slug: string };
   };
   hero: {
-    rail: { index: string; tagline: string; established: string };
     titleLine1: string;
     titleLine2: string;
     body: string;
     ctaPrimary: string;
     ctaSecondary: string;
-    manifest: {
-      label: string;
-      founded: string;
-      founded_value: string;
-      hq: string;
-      hq_value: string;
-      verticals: string;
-      verticals_value: string;
-      status: string;
-      status_value: string;
-    };
     accolade: { label: string; value: string };
-    field: { label: string; wave: string; signal: string };
   };
   projects: {
     eyebrow: string;
@@ -155,129 +142,81 @@ export function HomePageClient({
 
   return (
     <>
-      {/* HERO */}
-      <SectionFrame noTop>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-8 lg:py-10">
-          <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-            <Panel
-              className="order-2 lg:order-1 lg:col-span-7 aspect-square lg:aspect-auto lg:min-h-[620px]"
-              innerClassName="h-full"
-              corners
+      {/* HERO — composition and seam maths live in app/globals.css .hero-field */}
+      <section className="hero-field">
+        <div className="hero-field__inner">
+          <h1 className="hero-field__title">
+            <span className="block">{dict.hero.titleLine1}</span>
+            <span className="block">{dict.hero.titleLine2}</span>
+          </h1>
+
+          <p className="hero-field__body">{dict.hero.body}</p>
+
+          <div className="hero-field__actions">
+            {/* Icons are bare <svg>, not wrapped in a <span>: .btn-primary >
+                span:last-child is the site's hover-arrow rule, and a wrapper
+                would make the icon slide instead of the arrow. Both glyphs are
+                non-directional so they survive the RTL flip unmirrored. */}
+            <a
+              href="#contact"
+              onClick={() => track("hero_cta_click", { cta: "primary", locale })}
+              className="btn-primary"
             >
-              <div className="absolute inset-0">
-                <HeroCircuit />
-              </div>
-              <div className="relative z-10 flex flex-col justify-between h-full p-6 lg:p-10">
-                <div className="flex items-start justify-between text-mono">
-                  <span>{dict.hero.field.label}</span>
-                  <span>{dict.hero.field.wave}</span>
-                </div>
-                <div className="flex items-end justify-between text-mono">
-                  <span>LAT 51.5074°</span>
-                  <span className="flex items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                    {dict.hero.field.signal}
-                  </span>
-                  <span>LON -0.1278°</span>
-                </div>
-              </div>
-            </Panel>
-
-            <div className="order-1 lg:order-2 lg:col-span-5 flex flex-col justify-between gap-8">
-              <div>
-                <h1 className="text-display">
-                  <TextReveal
-                    as="span"
-                    className="block"
-                    text={dict.hero.titleLine1}
-                    trigger="mount"
-                    step={35}
-                  />
-                  <TextReveal
-                    as="span"
-                    className="block text-[var(--color-text-dim)]"
-                    text={dict.hero.titleLine2}
-                    trigger="mount"
-                    step={35}
-                    delay={dict.hero.titleLine1.split(/\s+/).length * 35 + 120}
-                  />
-                </h1>
-                <p className="text-body mt-6 max-w-md">{dict.hero.body}</p>
-
-                {/* App Store accolade — Top 30 Israel developers (desktop only) */}
-                <div className="mt-7 hidden md:inline-flex items-center gap-3 border border-[var(--color-border-strong)] px-3.5 py-2.5 max-w-fit">
-                  <span
-                    aria-hidden="true"
-                    className="inline-flex w-5 h-5 items-center justify-center text-[var(--color-primary-glow)]"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                      <path d="M17.5 13.5c-.02-2.4 1.96-3.55 2.05-3.6-1.12-1.64-2.86-1.86-3.48-1.89-1.48-.15-2.89.87-3.64.87-.76 0-1.92-.85-3.16-.83-1.62.02-3.12.94-3.95 2.4-1.69 2.93-.43 7.27 1.21 9.65.81 1.16 1.77 2.46 3.04 2.41 1.22-.05 1.68-.79 3.16-.79 1.47 0 1.89.79 3.18.77 1.31-.02 2.14-1.18 2.94-2.34.93-1.34 1.31-2.65 1.33-2.72-.03-.01-2.55-.98-2.58-3.93zM15.05 6.45c.66-.81 1.11-1.93.99-3.05-.96.04-2.13.64-2.82 1.45-.62.71-1.16 1.86-1.02 2.95 1.07.08 2.18-.55 2.85-1.35z" />
-                    </svg>
-                  </span>
-                  <div className="flex flex-col leading-tight">
-                    <span className="text-body-strong text-[var(--color-text)]">
-                      {dict.hero.accolade.value}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <a
-                    href="#contact"
-                    onClick={() =>
-                      track("hero_cta_click", { cta: "primary", locale })
-                    }
-                    className="btn-primary btn-tracer"
-                  >
-                    {dict.hero.ctaPrimary}
-                    <span aria-hidden="true" className="btn-arrow">
-                      →
-                    </span>
-                  </a>
-                  <Link
-                    href={localizePath(locale, "/services")}
-                    onClick={() =>
-                      track("hero_cta_click", { cta: "secondary", locale })
-                    }
-                    className="btn-secondary btn-tracer"
-                  >
-                    {dict.hero.ctaSecondary}
-                    <span aria-hidden="true" className="btn-arrow">
-                      →
-                    </span>
-                  </Link>
-                </div>
-              </div>
-
-              <Panel className="hidden lg:block" innerClassName="p-6" corners>
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  {dict.hero.manifest.label}
-                </p>
-                <SpecRow
-                  label={dict.hero.manifest.founded}
-                  value={dict.hero.manifest.founded_value}
-                />
-                <SpecRow
-                  label={dict.hero.manifest.hq}
-                  value={dict.hero.manifest.hq_value}
-                />
-                <SpecRow
-                  label={dict.hero.manifest.verticals}
-                  value={dict.hero.manifest.verticals_value}
-                />
-                <SpecRow
-                  label={dict.hero.manifest.status}
-                  value={
-                    <span className="text-[var(--color-primary-glow)]">
-                      {dict.hero.manifest.status_value}
-                    </span>
-                  }
-                />
-              </Panel>
-            </div>
+              <svg
+                viewBox="0 0 24 24"
+                width="17"
+                height="17"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="16" rx="3" />
+                <path d="M8 2.75v4M16 2.75v4M3 10h18M9.4 15.4l1.9 1.9 3.4-3.7" />
+              </svg>
+              {dict.hero.ctaPrimary}
+            </a>
+            <Link
+              href={localizePath(locale, "/projects")}
+              onClick={() => track("hero_cta_click", { cta: "secondary", locale })}
+              className="btn-secondary"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="17"
+                height="17"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3.25" y="3.25" width="7.5" height="7.5" rx="2" />
+                <rect x="13.25" y="3.25" width="7.5" height="7.5" rx="2" />
+                <rect x="3.25" y="13.25" width="7.5" height="7.5" rx="2" />
+                <rect x="13.25" y="13.25" width="7.5" height="7.5" rx="2" />
+              </svg>
+              {dict.hero.ctaSecondary}
+            </Link>
           </div>
+
+          <p className="hero-field__proof">
+            <span aria-hidden="true" className="hero-field__proof-mark">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+                <path d="M17.5 13.5c-.02-2.4 1.96-3.55 2.05-3.6-1.12-1.64-2.86-1.86-3.48-1.89-1.48-.15-2.89.87-3.64.87-.76 0-1.92-.85-3.16-.83-1.62.02-3.12.94-3.95 2.4-1.69 2.93-.43 7.27 1.21 9.65.81 1.16 1.77 2.46 3.04 2.41 1.22-.05 1.68-.79 3.16-.79 1.47 0 1.89.79 3.18.77 1.31-.02 2.14-1.18 2.94-2.34.93-1.34 1.31-2.65 1.33-2.72-.03-.01-2.55-.98-2.58-3.93zM15.05 6.45c.66-.81 1.11-1.93.99-3.05-.96.04-2.13.64-2.82 1.45-.62.71-1.16 1.86-1.02 2.95 1.07.08 2.18-.55 2.85-1.35z" />
+              </svg>
+            </span>
+            <span className="sr-only">{dict.hero.accolade.label}: </span>
+            {dict.hero.accolade.value}
+          </p>
         </div>
-      </SectionFrame>
+
+        <HeroGraph />
+
+        <HeroNavSentinel />
+      </section>
 
       {/* OFFERED SERVICES — moved BEFORE recent work */}
       <SectionFrame id="services" className="scroll-mt-24">
@@ -309,10 +248,7 @@ export function HomePageClient({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-5 flex flex-col gap-8">
               <div>
-                <p className="text-label text-[var(--color-primary-glow)]">
-                  {dict.contact.eyebrow}
-                </p>
-                <h2 className="text-headline mt-5">{dict.contact.title}</h2>
+                <h2 className="text-headline">{dict.contact.title}</h2>
                 <p className="text-body mt-6 max-w-sm">{dict.contact.body}</p>
                 <div className="mt-10">
                   <Panel innerClassName="p-6">
@@ -353,7 +289,7 @@ export function HomePageClient({
                         onChange={(e) =>
                           setForm({ ...form, name: e.target.value })
                         }
-                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary-glow)] transition-colors"
+                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors"
                         placeholder={dict.contact.namePlaceholder}
                       />
                     </div>
@@ -368,7 +304,7 @@ export function HomePageClient({
                         onChange={(e) =>
                           setForm({ ...form, email: e.target.value })
                         }
-                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary-glow)] transition-colors"
+                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors"
                         placeholder={dict.contact.emailPlaceholder}
                       />
                     </div>
@@ -383,7 +319,7 @@ export function HomePageClient({
                         onChange={(e) =>
                           setForm({ ...form, message: e.target.value })
                         }
-                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary-glow)] transition-colors resize-none"
+                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors resize-none"
                         placeholder={dict.contact.messagePlaceholder}
                       />
                     </div>
@@ -407,7 +343,7 @@ export function HomePageClient({
                       </button>
                     </div>
                     {status === "sent" && (
-                      <p className="text-label-sm text-[var(--color-primary-glow)]">
+                      <p className="text-label-sm text-[var(--color-text)]">
                         {dict.contact.successMessage}
                       </p>
                     )}

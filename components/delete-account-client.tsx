@@ -91,7 +91,7 @@ export function DeleteAccountClient({
           />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-8">
-              <p className="text-label text-[var(--color-primary-glow)]">
+              <p className="text-label text-[var(--color-text-dim)]">
                 {dict.eyebrow}
               </p>
               <h1 className="text-display mt-6">{dict.title}</h1>
@@ -117,7 +117,7 @@ export function DeleteAccountClient({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
+              <p className="text-label text-[var(--color-text-dim)]">
                 {dict.applicable.eyebrow}
               </p>
               <h2 className="text-headline mt-5">{dict.applicable.title}</h2>
@@ -125,7 +125,7 @@ export function DeleteAccountClient({
             </div>
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Panel innerClassName="p-6">
-                <p className="text-label-sm text-[var(--color-primary-glow)] mb-3">
+                <p className="text-label-sm text-[var(--color-text-dim)] mb-3">
                   ▸ iOS
                 </p>
                 <p className="text-title mb-1">{dict.applicable.iosTitle}</p>
@@ -136,13 +136,13 @@ export function DeleteAccountClient({
                   href="https://apps.apple.com/pl/app/simnetiq-travel-esim-data/id6755963262"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-label-sm text-[var(--color-text)] hover:text-[var(--color-primary-glow)] transition-colors"
+                  className="text-label-sm text-[var(--color-text)] hover:text-[var(--color-text)] transition-colors"
                 >
                   {common.openAppStore} <span>→</span>
                 </Link>
               </Panel>
               <Panel innerClassName="p-6">
-                <p className="text-label-sm text-[var(--color-primary-glow)] mb-3">
+                <p className="text-label-sm text-[var(--color-text-dim)] mb-3">
                   ▸ Android
                 </p>
                 <p className="text-title mb-1">
@@ -155,7 +155,7 @@ export function DeleteAccountClient({
                   href="https://play.google.com/store/apps/details?id=com.simnetiq.storeAndroid&hl=gsw"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-label-sm text-[var(--color-text)] hover:text-[var(--color-primary-glow)] transition-colors"
+                  className="text-label-sm text-[var(--color-text)] hover:text-[var(--color-text)] transition-colors"
                 >
                   {common.openGooglePlay} <span>→</span>
                 </Link>
@@ -214,7 +214,7 @@ export function DeleteAccountClient({
                       onChange={(e) =>
                         setForm({ ...form, identity: e.target.value })
                       }
-                      className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary-glow)] transition-colors"
+                      className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors"
                       placeholder="your-email@example.com"
                     />
                     <p className="text-label-sm text-[var(--color-text-faint)] mt-2">
@@ -231,7 +231,7 @@ export function DeleteAccountClient({
                       onChange={(e) =>
                         setForm({ ...form, reason: e.target.value })
                       }
-                      className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-primary-glow)] transition-colors resize-none"
+                      className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors resize-none"
                       placeholder={dict.reasonPlaceholder}
                     />
                   </div>
@@ -252,8 +252,8 @@ export function DeleteAccountClient({
                     </button>
                   </div>
                   {status === "sent" && (
-                    <div className="border-l-2 border-[var(--color-primary-glow)] pl-4 py-2">
-                      <p className="text-label-sm text-[var(--color-primary-glow)]">
+                    <div className="border-l border-[var(--color-border-strong)] pl-4 py-2">
+                      <p className="text-label-sm text-[var(--color-text-dim)]">
                         {dict.successMessage}
                       </p>
                     </div>

@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   experimental: {
     globalNotFound: true,
   },
+  // Without this the optimizer defaults to WebP only, so every .avif in
+  // public/ is re-encoded LARGER than the source it was given.
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   async redirects() {
     return [
       {

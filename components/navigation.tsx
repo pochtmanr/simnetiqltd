@@ -53,35 +53,33 @@ type DropdownName = "projects" | "services";
 type NavLink = {
   key: "home" | "projects" | "services";
   href: string;
-  code: string;
   dropdown?: DropdownName;
 };
 
 const linkDefs: readonly NavLink[] = [
-  { key: "home", href: "/", code: "00" },
-  { key: "projects", href: "/projects", code: "01", dropdown: "projects" },
-  { key: "services", href: "/services", code: "02", dropdown: "services" },
+  { key: "home", href: "/" },
+  { key: "projects", href: "/projects", dropdown: "projects" },
+  { key: "services", href: "/services", dropdown: "services" },
 ];
 
 // Internal hrefs for case studies live at /projects/{slug}; items without a
 // dedicated case study link out to the live product instead.
 const PROJECT_META: {
   key: ProjectKey;
-  code: string;
   href: string;
   external: boolean;
 }[] = [
-  { key: "argus", code: "01", href: "/projects/argus-browser", external: false },
-  { key: "physics", code: "02", href: "/projects/physics-explained", external: false },
-  { key: "doppler", code: "03", href: "/projects/doppler-vpn", external: false },
-  { key: "creator", code: "04", href: "https://www.creatorai.art/en", external: true },
-  { key: "delivery", code: "05", href: "https://www.isrshipping.com", external: true },
+  { key: "argus", href: "/projects/argus-browser", external: false },
+  { key: "physics", href: "/projects/physics-explained", external: false },
+  { key: "doppler", href: "/projects/doppler-vpn", external: false },
+  { key: "creator", href: "https://www.creatorai.art/en", external: true },
+  { key: "delivery", href: "https://www.isrshipping.com", external: true },
 ];
 
-const SERVICE_META: { key: CapKey; code: string; href: string }[] = [
-  { key: "mobile", code: "C-01", href: "/services/mobile-desktop" },
-  { key: "web", code: "C-02", href: "/services/web-platforms" },
-  { key: "aiAutomation", code: "C-03", href: "/services/ai-automation" },
+const SERVICE_META: { key: CapKey; href: string }[] = [
+  { key: "mobile", href: "/services/mobile-desktop" },
+  { key: "web", href: "/services/web-platforms" },
+  { key: "aiAutomation", href: "/services/ai-automation" },
 ];
 
 const HOVER_OPEN_DELAY = 100;
@@ -166,7 +164,6 @@ export function Navigation({
         const meta = dict.dropdowns.projects.items[p.key];
         return {
           key: p.key,
-          code: p.code,
           badge: meta.badge,
           title: meta.title,
           body: meta.description,
@@ -183,7 +180,6 @@ export function Navigation({
         const meta = dict.dropdowns.services.items[s.key];
         return {
           key: s.key,
-          code: s.code,
           title: meta.title,
           body: meta.text,
           href: localizePath(locale, s.href),
@@ -193,7 +189,13 @@ export function Navigation({
   );
 
   return (
+    /* data-menu-open force-exits the transparent-over-hero state: the
+       mega-menu and the mobile panel are opaque --color-bg surfaces, so they
+       must never hang off a see-through bar, and their contents must not
+       inherit the overlay's white text. */
     <header
+      data-site-header=""
+      data-menu-open={openDropdown || open ? "" : undefined}
       className={`sticky top-0 z-40 bg-[var(--color-bg)] ${
         openDropdown
           ? ""
@@ -249,15 +251,6 @@ export function Navigation({
                     <span
                       className={
                         active || isOpen
-                          ? "text-[var(--color-primary-glow)]"
-                          : "text-[var(--color-text-faint)]"
-                      }
-                    >
-                      {link.code}
-                    </span>
-                    <span
-                      className={
-                        active || isOpen
                           ? "text-[var(--color-text)]"
                           : "text-[var(--color-text-dim)] group-hover:text-[var(--color-text)]"
                       }
@@ -271,7 +264,7 @@ export function Navigation({
                           isOpen ? "rotate-180" : ""
                         } ${
                           isOpen
-                            ? "text-[var(--color-primary-glow)]"
+                            ? "text-[var(--color-text)]"
                             : "text-[var(--color-text-faint)]"
                         }`}
                       >
@@ -367,9 +360,6 @@ export function Navigation({
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-3 flex-1"
                       >
-                        <span className="text-[var(--color-text-faint)] text-label-sm">
-                          {link.code}
-                        </span>
                         <span
                           className={`text-label ${
                             active
@@ -405,7 +395,7 @@ export function Navigation({
                         <span
                           className={`text-label ${
                             active
-                              ? "text-[var(--color-primary-glow)]"
+                              ? "text-[var(--color-text)]"
                               : "text-[var(--color-text-faint)]"
                           } btn-arrow`}
                         >
@@ -436,15 +426,12 @@ export function Navigation({
                               }}
                               className="flex items-baseline gap-3"
                             >
-                              <span className="text-mono text-[var(--color-text-faint)]">
-                                {item.code}
-                              </span>
                               <span className="text-body-strong text-[var(--color-text)]">
                                 {item.title}
                               </span>
                               <span
                                 aria-hidden="true"
-                                className="ms-auto text-[var(--color-primary-glow)] btn-arrow"
+                                className="ms-auto text-[var(--color-text-dim)] btn-arrow"
                               >
                                 {item.external ? "↗" : "→"}
                               </span>

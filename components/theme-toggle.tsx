@@ -87,7 +87,7 @@ export function ThemeToggle({
                 "px-3 py-1.5 text-label-sm transition-colors",
                 i > 0 ? "border-l border-[var(--color-border-strong)]" : "",
                 active
-                  ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-glow)]"
+                  ? "bg-[var(--color-surface-sunk)] text-[var(--color-text)]"
                   : "text-[var(--color-text-dim)] hover:text-[var(--color-text)]",
               ].join(" ")}
               suppressHydrationWarning
@@ -136,7 +136,7 @@ export function ThemeToggle({
       <span
         aria-hidden="true"
         suppressHydrationWarning
-        className={`pointer-events-none absolute left-0 top-[2px] bottom-[2px] w-[20px] bg-[var(--color-primary)]/25 border border-[var(--color-primary-glow)]/60 transition-transform duration-200 ease-out ${
+        className={`pointer-events-none absolute left-0 top-[2px] bottom-[2px] w-[20px] bg-[color-mix(in_srgb,var(--color-text)_14%,transparent)] border border-[var(--color-border-strong)] transition-transform duration-200 ease-out ${
           isDark ? "translate-x-[24px]" : "translate-x-[2px]"
         }`}
       />

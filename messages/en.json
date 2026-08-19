@@ -45,35 +45,14 @@
     }
   },
   "hero": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 00 / Home",
-      "tagline": "Software studio · London",
-      "established": "Est. 2025 · London"
-    },
-    "titleLine1": "Simnetiq",
-    "titleLine2": "Engineering",
-    "body": "We design and ship reliable software — mobile apps, web platforms, AI features, and the network plumbing behind them. Calm interfaces, careful engineering, no filler.",
+    "titleLine1": "You talk to the engineers",
+    "titleLine2": "who build it.",
+    "body": "Simnetiq is a London studio building mobile apps, web platforms and AI systems.",
     "ctaPrimary": "Book a call",
-    "ctaSecondary": "View services",
-    "manifest": {
-      "label": "Studio at a glance",
-      "founded": "Founded",
-      "founded_value": "2025",
-      "hq": "HQ",
-      "hq_value": "London, UK",
-      "verticals": "Active projects",
-      "verticals_value": "4",
-      "status": "Status",
-      "status_value": "Accepting briefs"
-    },
+    "ctaSecondary": "See our works",
     "accolade": {
       "label": "Recognition",
       "value": "Top 30 · Israel · Apple App Store"
-    },
-    "field": {
-      "label": "Field · 01",
-      "wave": "Signal · steady",
-      "signal": "Online"
     }
   },
   "frame": {

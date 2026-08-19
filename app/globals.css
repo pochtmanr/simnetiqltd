@@ -135,8 +135,11 @@
   }
 }
 
-* {
-  border-radius: 2px;
+
+:root {
+    --radius-control: 2px;
+  --radius-surface: 2px;
+  --radius-media: 2px;
 }
 
 html,
@@ -163,7 +166,7 @@ body {
 /* ------------------------------------------------------------------ */
 
 .text-display {
-  font-family: var(--font-sans);
+  font-family: var(--font-display), var(--font-sans);
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 500;
   letter-spacing: -0.03em;
@@ -172,7 +175,7 @@ body {
 }
 
 .text-headline {
-  font-family: var(--font-sans);
+  font-family: var(--font-display), var(--font-sans);
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 500;
   letter-spacing: -0.025em;
@@ -189,16 +192,16 @@ body {
 }
 
 .text-body {
-  font-size: 0.875rem;
-  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 400;
   letter-spacing: 0;
   line-height: 1.625;
   color: var(--color-text-muted);
 }
 
 .text-body-strong {
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
   letter-spacing: 0;
   line-height: 1.625;
   color: var(--color-text);
@@ -243,15 +246,17 @@ body {
 .btn-primary,
 .btn-secondary {
   position: relative;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 14px 24px;
-  font-size: 0.75rem;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 13px 24px;
+  font-size: 0.9375rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: var(--radius-control);
   cursor: pointer;
   transition:
     background-color 180ms ease,
@@ -268,32 +273,18 @@ body {
 .btn-primary:hover {
   background-color: color-mix(in srgb, var(--color-primary) 92%, white);
   border-color: color-mix(in srgb, var(--color-primary) 92%, white);
-  box-shadow:
-    0 8px 32px -8px color-mix(in srgb, var(--color-primary) 60%, transparent),
-    0 0 48px color-mix(in srgb, var(--color-primary-glow) 25%, transparent);
 }
-[data-theme="light"] .btn-primary {
-  box-shadow:
-    0 1px 0 0 color-mix(in srgb, var(--color-primary) 60%, black) inset,
-    0 6px 18px -8px color-mix(in srgb, var(--color-primary) 45%, transparent);
-}
+
 [data-theme="light"] .btn-primary:hover {
   background-color: color-mix(in srgb, var(--color-primary) 92%, black);
   border-color: color-mix(in srgb, var(--color-primary) 92%, black);
-  box-shadow:
-    0 1px 0 0 color-mix(in srgb, var(--color-primary) 60%, black) inset,
-    0 10px 28px -8px color-mix(in srgb, var(--color-primary) 55%, transparent),
-    0 0 32px color-mix(in srgb, var(--color-primary-glow) 30%, transparent);
 }
 [data-theme="light"] .btn-secondary {
   border-color: rgba(0, 0, 0, 0.18);
 }
 [data-theme="light"] .btn-secondary:hover {
   background-color: rgba(0, 0, 0, 0.04);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  box-shadow:
-    0 6px 18px -8px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  border-color: var(--color-text-dim);
 }
 .btn-primary:disabled {
   opacity: 0.5;
@@ -306,39 +297,9 @@ body {
   border: 1px solid var(--color-border-strong);
 }
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: var(--color-primary-glow);
-  color: var(--color-primary-glow);
-  box-shadow:
-    0 8px 32px -8px color-mix(in srgb, var(--color-primary-glow) 35%, transparent);
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-text-dim);
 }
-/* Tracer: top-edge stroke that draws in on hover. */
-.btn-primary::before,
-.btn-secondary::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--color-primary-glow);
-  pointer-events: none;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-.btn-primary:hover::before,
-.btn-secondary:hover::before {
-  transform: scaleX(1);
-}
-.btn-primary:disabled::before {
-  display: none;
-}
-[dir="rtl"] .btn-primary::before,
-[dir="rtl"] .btn-secondary::before {
-  transform-origin: 100% 50%;
-}
-
 /* Arrow / chevron that nudges on hover. Targets explicit .btn-arrow
  * AND any trailing <span> child, so legacy CTAs ( <span>→</span> )
  * animate without callsite changes. */
@@ -429,7 +390,7 @@ body {
 /* ------------------------------------------------------------------ */
 
 input, textarea, select {
-  border-radius: 2px !important;
+  border-radius: var(--radius-control) !important;
   background-color: transparent;
   color: var(--color-text);
   font-family: var(--font-sans);
@@ -445,7 +406,7 @@ input::placeholder, textarea::placeholder {
 .gradient-shell {
   position: relative;
   padding: 1px;
-  border-radius: 2px;
+  border-radius: var(--radius-surface);
   background: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.18) 0%,
@@ -476,40 +437,8 @@ a:hover > .gradient-shell,
 }
 
 /* ------------------------------------------------------------------ */
-/* Corner markers — tiny L shapes on panel corners                     */
 /* ------------------------------------------------------------------ */
 
-.corners > .corner {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  pointer-events: none;
-  color: rgba(255, 255, 255, 0.55);
-}
-.corners > .corner.tl {
-  top: -1px;
-  left: -1px;
-  border-top: 1px solid currentColor;
-  border-left: 1px solid currentColor;
-}
-.corners > .corner.tr {
-  top: -1px;
-  right: -1px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-}
-.corners > .corner.bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 1px solid currentColor;
-  border-left: 1px solid currentColor;
-}
-.corners > .corner.br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-}
 
 /* ------------------------------------------------------------------ */
 /* Technical rail (metadata strips: coordinates, timestamps, etc.)     */
@@ -563,14 +492,8 @@ a:hover > .gradient-shell,
 }
 .breathe { animation: breathe 4s ease-in-out infinite; }
 
-@keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.6); opacity: 0.4; }
-}
-.pulse-dot { animation: pulse-dot 2.2s ease-in-out infinite; }
-
 @media (prefers-reduced-motion: reduce) {
-  .breathe, .pulse-dot { animation: none !important; }
+  .breathe { animation: none !important; }
 }
 
 /* ------------------------------------------------------------------ */
@@ -584,8 +507,6 @@ a:hover > .gradient-shell,
   letter-spacing: 0.06em;
 }
 
-/* Flip the gradient-shell highlight so it lights the top-RIGHT corner */
-/* (the "reading start" corner) when in RTL, matching LTR behavior.    */
 [dir="rtl"] .gradient-shell {
   background: linear-gradient(
     -145deg,
@@ -650,9 +571,6 @@ a:hover > .gradient-shell,
   );
 }
 
-[data-theme="light"] .corners > .corner {
-  color: rgba(0, 0, 0, 0.45);
-}
 
 [data-theme="light"] ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.18);
@@ -742,99 +660,9 @@ a:hover > .gradient-shell,
 /* Greptile frame system — site backdrop, section frame, build rail   */
 /* ------------------------------------------------------------------ */
 
-/* Dashed-rule utility classes — reusable inside any layout */
-.dash-rule-h {
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--color-border-strong) 0 6px,
-    transparent 6px 10px
-  );
-}
-.dash-rule-v {
-  background-image: repeating-linear-gradient(
-    0deg,
-    var(--color-border-strong) 0 6px,
-    transparent 6px 10px
-  );
-}
-
-/* Section frame — dashed 4-sided enclosure, no pill */
+/* Section frame — spacing and a single hairline carry section separation now. */
 .section-frame {
   position: relative;
-}
-.section-frame__rule {
-  position: absolute;
-  pointer-events: none;
-}
-.section-frame__rule--top {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--color-border-strong) 0 6px,
-    transparent 6px 10px
-  );
-}
-.section-frame__rule--bottom {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--color-border-strong) 0 6px,
-    transparent 6px 10px
-  );
-}
-.section-frame__rule--left {
-  top: 0;
-  bottom: 0;
-  inset-inline-start: 0;
-  width: 1px;
-  background-image: repeating-linear-gradient(
-    0deg,
-    var(--color-border-strong) 0 6px,
-    transparent 6px 10px
-  );
-}
-.section-frame__rule--right {
-  top: 0;
-  bottom: 0;
-  inset-inline-end: 0;
-  width: 1px;
-  background-image: repeating-linear-gradient(
-    0deg,
-    var(--color-border-strong) 0 6px,
-    transparent 6px 10px
-  );
-}
-
-/* Build rail */
-.build-rail {
-  display: none;
-  position: sticky;
-  bottom: 0;
-  z-index: 30;
-  background: color-mix(in srgb, var(--color-bg) 92%, transparent);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-top: 1px solid var(--color-border);
-  font: 400 10px/1 var(--font-mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-text-faint);
-  padding: 8px 24px;
-}
-.build-rail > * + * {
-  margin-inline-start: 12px;
-}
-@media (min-width: 768px) {
-  .build-rail {
-    display: flex;
-    align-items: center;
-  }
 }
 
 /* Sticky header stacks above body content so the mega-menu renders above main. */
@@ -908,5 +736,258 @@ body > header {
   }
   :root:not([data-theme]) .logo-when-light {
     display: block;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero field — the homepage's one owned surface                       */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Background is an Obsidian-style knowledge graph (components/hero-graph.tsx):
+ * clustered nodes and links drawn as ONE CENTRED FIGURE, sized to about the
+ * copy column and cleared in the middle so the display type sits on the page
+ * ground rather than on the graph. Monochrome, with the brand orange reserved
+ * for hubs and their spokes.
+ *
+ * The canvas is transparent and the section carries the page ground, so the
+ * hero follows the theme with no fixed-colour band fighting light mode.
+ * Contrast: dark #07090D gives 17.9:1 for the display and 7.8:1 for body;
+ * light #F4F5F7 gives 19:1 and 6.9:1.
+ */
+.hero-field {
+  --field-fg: #f4f4f5;
+  --field-fg-soft: #a1a1aa;
+  --field-fg-quiet: #8a8a93;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  /* Pull under the sticky 4rem header so the nav floats over the field. */
+  margin-top: -4rem;
+  padding-top: 4rem;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+}
+
+[data-theme="light"] .hero-field {
+  --field-fg: #09090b;
+  --field-fg-soft: #52525b;
+  --field-fg-quiet: #6e6e70;
+}
+
+.hero-field__canvas,
+.hero-field__fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/*
+ * DOM fallback when canvas is unavailable: a static dot cluster, masked to the
+ * same centred annulus the drawn graph occupies — cleared in the middle, faded
+ * at the rim — so the composition survives even without the canvas.
+ */
+.hero-field__fallback {
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--field-fg) 45%, transparent) 1.6px,
+    transparent 2.2px
+  );
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 48% 36% at 50% 50%,
+    transparent 38%,
+    #000 62%,
+    #000 82%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 48% 36% at 50% 50%,
+    transparent 38%,
+    #000 62%,
+    #000 82%,
+    transparent 100%
+  );
+}
+
+/*
+ * Links span the figure and pass BENEATH the copy on purpose. This scrim only
+ * damps them there — enough that the display type stays the brightest thing on
+ * screen, not so much that the crossing links disappear. It sits inside the
+ * inner's stacking context, so it covers the canvas but not the type.
+ */
+.hero-field__inner::before {
+  content: "";
+  position: absolute;
+  inset: -12% -10%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--color-bg) 74%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 42%, transparent) 50%,
+    transparent 76%
+  );
+}
+
+.hero-field__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.hero-field__title {
+  font-family: var(--font-display), var(--font-sans);
+  font-size: clamp(2.5rem, 6.1vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.028em;
+  color: var(--field-fg);
+  text-wrap: balance;
+}
+
+.hero-field__body {
+  margin: 1.5rem auto 0;
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--field-fg-soft);
+}
+
+.hero-field__actions {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.hero-field__proof {
+  margin-top: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--field-fg-quiet);
+}
+.hero-field__proof-mark {
+  display: inline-flex;
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------------ */
+/* Navigation over the homepage hero                                   */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The base state — scroll 0, homepage, no menu open — is selected purely in
+ * CSS via :has() on the hero sentinel, so the server-rendered HTML already
+ * paints it and there is no hydration flash. JavaScript only ever switches
+ * AWAY from it, once the sentinel reports the seam has reached the bar.
+ *
+ * Rather than adding light-on-dark variants to every element in the bar, this
+ * redefines the palette custom properties on <header>. Descendants inherit,
+ * which is what reaches components/logo.tsx — its colour is an INLINE style
+ * (`var(--color-text)`), otherwise unreachable without !important.
+ *
+ * These rules are unlayered, so they beat Tailwind's @layer utilities on
+ * cascade-layer precedence regardless of specificity.
+ */
+[data-site-header] {
+  transition: background-color 180ms ease, backdrop-filter 180ms ease;
+}
+
+body:has(#hero-nav-sentinel:not([data-passed]))
+  [data-site-header]:not([data-menu-open]) {
+  /* transparent here neutralises BOTH bg-[var(--color-bg)] and the
+     color-mix(...85%, transparent) backdrop variant in one go. The rest of
+     the palette is left alone: the field follows the theme, so the bar's own
+     themed colours already read correctly against it. */
+  --color-bg: transparent;
+  --color-border: transparent;
+
+  background-color: transparent;
+  /* Set directly by backdrop-blur, so it needs its own reset or the
+     photograph blurs under the bar. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-site-header] {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* RTL corrections for the hero                                        */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Negative tracking is a Latin optical fix. Applied to Lunasima (the Hebrew
+ * face) at display scale it crowds the glyphs. The mono and label sizes
+ * already had this correction; the display sizes never did.
+ */
+[dir="rtl"] .hero-field__title,
+[dir="rtl"] .text-display,
+[dir="rtl"] .text-headline {
+  letter-spacing: 0;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* Browser surfaces                                                    */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The parts we didn't draw still carry the design. Caret, focus ring and
+ * numeral rendering ship with defaults that belong to no design system.
+ */
+:root {
+  caret-color: var(--color-primary);
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+
+/* The hero's focus ring has to read against the field, not the page. */
+.hero-field :where(a, button):focus-visible {
+  outline-color: var(--field-fg);
+}
+
+/* Lines of figures should align in columns. */
+.spec-value,
+.text-mono,
+.rail {
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Disclosure chevron. The transition lives here rather than inline because
+ * motion's useReducedMotion() resolves to null during SSR and to a boolean on
+ * the client, which made the inline style a hydration mismatch.
+ */
+.disclosure-icon {
+  transition: transform 0.32s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .disclosure-icon {
+    transition: none;
   }
 }

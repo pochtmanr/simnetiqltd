@@ -8,7 +8,6 @@ import { track } from "@/lib/analytics";
 
 export type NavMegaItem = {
   key: string;
-  code: string;
   badge?: string;
   title: string;
   body: string;
@@ -54,7 +53,9 @@ export function NavMegaMenu({
         <>
           <motion.div
             key={`${name}-backdrop`}
-            className="fixed inset-x-0 bottom-0 top-[91px] z-30 bg-black/30 backdrop-blur-[2px]"
+            /* Blur only — no tint. The panel carries its own surface, so the
+               scrim just has to soften what is behind it, not dim the page. */
+            className="fixed inset-x-0 bottom-0 top-[91px] z-30 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -76,7 +77,7 @@ export function NavMegaMenu({
             className="absolute left-0 right-0 top-[calc(100%-1px)] z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]"
           >
             <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-6 lg:py-8">
-              <p className="text-label text-[var(--color-primary-glow)] mb-5">
+              <p className="text-label text-[var(--color-text-dim)] mb-5">
                 {eyebrow}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
@@ -98,18 +99,14 @@ export function NavMegaMenu({
                     <Panel
                       innerClassName="p-5 lg:p-6 h-full flex flex-col"
                       hover
-                      corners
                     >
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-mono text-[var(--color-text-faint)]">
-                          {item.code}
-                        </span>
-                        {item.badge && (
-                          <span className="text-label-sm text-[var(--color-primary-glow)]">
+                      {item.badge && (
+                        <div className="mb-3">
+                          <span className="text-label-sm text-[var(--color-text-dim)]">
                             {item.badge}
                           </span>
-                        )}
-                      </div>
+                        </div>
+                      )}
                       <h3 className="text-title mb-2">{item.title}</h3>
                       <p className="text-body mb-5 flex-1 line-clamp-2">
                         {item.body}

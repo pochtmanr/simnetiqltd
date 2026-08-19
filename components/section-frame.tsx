@@ -2,6 +2,14 @@
 
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
 
+/*
+ * Was a four-sided dashed enclosure with optional corner L-marks — blueprint
+ * chrome that decorated every section without encoding anything. Sections are
+ * now separated by spacing and a single hairline rule.
+ *
+ * `corners` and `noTop` are kept as accepted-and-ignored props so the ~60
+ * existing call sites don't all have to change in one pass.
+ */
 type SectionFrameOwnProps = {
   corners?: boolean;
   noTop?: boolean;
@@ -15,7 +23,6 @@ type Props<T extends ElementType> = SectionFrameOwnProps & {
 
 export function SectionFrame<T extends ElementType = "section">({
   as,
-  corners,
   noTop,
   className,
   children,
@@ -23,21 +30,13 @@ export function SectionFrame<T extends ElementType = "section">({
 }: Props<T>) {
   const Tag = (as ?? "section") as ElementType;
   return (
-    <Tag className={`section-frame ${className ?? ""}`.trim()} {...rest}>
-      {!noTop && (
-        <span aria-hidden="true" className="section-frame__rule section-frame__rule--top" />
-      )}
-      <span aria-hidden="true" className="section-frame__rule section-frame__rule--left" />
-      <span aria-hidden="true" className="section-frame__rule section-frame__rule--right" />
+    <Tag
+      className={`section-frame ${
+        noTop ? "" : "border-t border-[var(--color-border)]"
+      } ${className ?? ""}`.trim()}
+      {...rest}
+    >
       {children}
-      {corners && (
-        <span aria-hidden="true" className="corners">
-          <span className="corner tl" />
-          <span className="corner tr" />
-          <span className="corner bl" />
-          <span className="corner br" />
-        </span>
-      )}
     </Tag>
   );
 }

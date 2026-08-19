@@ -106,8 +106,8 @@ export function Footer({
                           href={line.href}
                           className={
                             line.strong
-                              ? "block text-body-strong text-[var(--color-text)] hover:text-[var(--color-primary-glow)] transition-colors"
-                              : "block text-body hover:text-[var(--color-primary-glow)] transition-colors"
+                              ? "block text-body-strong text-[var(--color-text)] hover:text-[var(--color-text)] transition-colors"
+                              : "block text-body hover:text-[var(--color-text)] transition-colors"
                           }
                         >
                           {line.text}
@@ -143,7 +143,7 @@ export function Footer({
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-label-sm text-[var(--color-text-dim)] hover:text-[var(--color-primary-glow)] transition-colors"
+                className="text-label-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors"
               >
                 {s.label}
               </Link>

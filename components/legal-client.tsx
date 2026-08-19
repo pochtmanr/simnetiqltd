@@ -65,7 +65,7 @@ export function LegalClient({
             items={[dict.rail.index, dict.rail.compliance, dict.rail.rev]}
             className="mb-10"
           />
-          <p className="text-label text-[var(--color-primary-glow)]">
+          <p className="text-label text-[var(--color-text-dim)]">
             {dict.eyebrow}
           </p>
           <h1 className="text-display mt-6 max-w-3xl">{dict.title}</h1>
@@ -100,7 +100,7 @@ export function LegalClient({
                           <span
                             className={`text-mono ${
                               isActive
-                                ? "text-[var(--color-primary-glow)]"
+                                ? "text-[var(--color-text-dim)]"
                                 : "text-[var(--color-text-faint)]"
                             }`}
                           >
@@ -108,9 +108,6 @@ export function LegalClient({
                           </span>
                           <span className="text-label-sm">{s.label}</span>
                         </span>
-                        {isActive && (
-                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                        )}
                       </a>
                     );
                   })}
@@ -139,7 +136,7 @@ export function LegalClient({
               {/* Impressum */}
               <article id="impressum" className="scroll-mt-32">
                 <div className="flex items-center justify-between mb-5">
-                  <span className="text-mono text-[var(--color-primary-glow)]">
+                  <span className="text-mono text-[var(--color-text-dim)]">
                     [01]
                   </span>
                   <span className="text-label-sm text-[var(--color-text-faint)]">
@@ -157,7 +154,7 @@ export function LegalClient({
               {/* Privacy */}
               <article id="privacy" className="scroll-mt-32">
                 <div className="flex items-center justify-between mb-5">
-                  <span className="text-mono text-[var(--color-primary-glow)]">
+                  <span className="text-mono text-[var(--color-text-dim)]">
                     [02]
                   </span>
                   <span className="text-label-sm text-[var(--color-text-faint)]">
@@ -180,7 +177,7 @@ export function LegalClient({
               {/* Terms */}
               <article id="terms" className="scroll-mt-32">
                 <div className="flex items-center justify-between mb-5">
-                  <span className="text-mono text-[var(--color-primary-glow)]">
+                  <span className="text-mono text-[var(--color-text-dim)]">
                     [03]
                   </span>
                   <span className="text-label-sm text-[var(--color-text-faint)]">
