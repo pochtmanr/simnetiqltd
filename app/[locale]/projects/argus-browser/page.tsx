@@ -48,6 +48,8 @@ export async function generateMetadata({
     path: "/projects/argus-browser",
     keywords: ARGUS_KEYWORDS,
     ogImage: "/argus-header.avif",
+    ogImageWidth: 1600,
+    ogImageHeight: 900,
     ogType: "article",
     markdownAlternate: true,
   });
@@ -166,7 +168,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
                 <div className="relative w-full overflow-hidden aspect-[16/9]">
                   <Image
                     src="/argus-header.avif"
-                    alt="Argus Browser — anti-detect browser on a custom Chromium fork, a hundred identities on one machine"
+                    alt="Argus Browser key art — the Argus helmet over a dithered night cityscape, captioned “The New Era of Agentic Browsing by Simnetiq”"
                     fill
                     priority
                     sizes="(min-width: 1440px) 896px, (min-width: 1024px) 66vw, 100vw"

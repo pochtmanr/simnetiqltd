@@ -320,6 +320,14 @@ type BuildMetaInput = {
   keywords?: string[];
   /** Override the default OG/Twitter card image. */
   ogImage?: string;
+  /**
+   * Intrinsic size of `ogImage`. Defaults to the 1200x630 the shared card and
+   * the case-study headers use; pass explicitly for artwork of another shape,
+   * because a declared size that disagrees with the file makes scrapers lay
+   * the card out against the wrong box.
+   */
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   ogType?: "website" | "article";
   /** When true, advertise a Markdown alternate at `${url}/markdown` for AI agents. */
   markdownAlternate?: boolean;
@@ -331,6 +339,8 @@ export function buildLocalizedMetadata({
   path,
   keywords,
   ogImage,
+  ogImageWidth = 1200,
+  ogImageHeight = 630,
   ogType = "website",
   markdownAlternate = false,
 }: BuildMetaInput): Metadata {
@@ -347,6 +357,15 @@ export function buildLocalizedMetadata({
   );
 
   const image = ogImage ?? DEFAULT_OG_IMAGE;
+  // The case-study headers are AVIF while the shared fallback card is PNG.
+  // Declaring the wrong type here is not fatal, but scrapers do read it.
+  const imageType = image.endsWith(".avif")
+    ? "image/avif"
+    : image.endsWith(".webp")
+      ? "image/webp"
+      : image.endsWith(".jpg") || image.endsWith(".jpeg")
+        ? "image/jpeg"
+        : "image/png";
 
   return {
     title: { absolute: copy.title },
@@ -370,10 +389,10 @@ export function buildLocalizedMetadata({
       images: [
         {
           url: image,
-          width: 1200,
-          height: 630,
+          width: ogImageWidth,
+          height: ogImageHeight,
           alt: copy.title,
-          type: "image/png",
+          type: imageType,
         },
       ],
     },
