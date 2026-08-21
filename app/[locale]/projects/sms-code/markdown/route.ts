@@ -15,7 +15,7 @@ export async function GET(
 ) {
   const { locale } = await params;
   if (!isLocale(locale)) return new Response("Not found", { status: 404 });
-  const md = buildProjectMarkdown(locale, "sms-activate");
+  const md = buildProjectMarkdown(locale, "sms-code");
   if (!md) return new Response("Not found", { status: 404 });
   return markdownResponse(md);
 }

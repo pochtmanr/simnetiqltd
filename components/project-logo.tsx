@@ -4,7 +4,7 @@ export type ProjectLogoKey =
   | "argus"
   | "physics"
   | "doppler"
-  | "smsactivate"
+  | "smscode"
   | "visapassage"
   | "greenflagged";
 
@@ -51,7 +51,7 @@ const LOGOS: Record<ProjectLogoKey, LogoDef> = {
   // Source SVG, with the viewBox shifted right to drop the clipped partial
   // stroke and shallow opening arc that read as dead space at card size.
   doppler: { kind: "mono", src: "/logos/doppler.svg", aspect: 856 / 411 },
-  smsactivate: { kind: "color", src: "/logos/smsactivate.png", aspect: 256 / 254 },
+  smscode: { kind: "color", src: "/logos/smscode.svg", aspect: 1 },
   // Two overlapping roundels read at their DIAMETER, so this mark is pinned to
   // full height instead of equal area. opticalScale = √aspect cancels the area
   // rule exactly, giving height === size (50×30 at size 30, level with Physics).

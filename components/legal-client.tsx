@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
 
 type LegalRow = { label: string; value: string };
 type LegalBlock = { title: string; body: string };
 
 export type LegalDict = {
-  rail: { index: string; compliance: string; rev: string };
   eyebrow: string;
   title: string;
   tocLabel: string;
@@ -61,10 +60,6 @@ export function LegalClient({
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
-          <Rail
-            items={[dict.rail.index, dict.rail.compliance, dict.rail.rev]}
-            className="mb-10"
-          />
           <p className="text-label text-[var(--color-text-dim)]">
             {dict.eyebrow}
           </p>

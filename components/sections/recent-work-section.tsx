@@ -13,7 +13,7 @@ type ProjectKey =
   | "creator"
   | "delivery"
   | "greenflagged"
-  | "smsactivate"
+  | "smscode"
   | "visapassage";
 
 type ProjectDef = {
@@ -52,12 +52,12 @@ const PROJECTS: ProjectDef[] = [
     stack: "Swift · Kotlin · Go · Marzban",
   },
   {
-    key: "smsactivate",
-    image: "/smsactivate-header.avif",
+    key: "smscode",
+    image: "/smscode-header.avif",
     id: "04",
     href: "https://simnetiq.xyz/",
-    caseStudy: "/projects/sms-activate",
-    stack: "Next.js · React · Tailwind · iOS & Android",
+    caseStudy: "/projects/sms-code",
+    stack: "Next.js · React · Tailwind · iOS",
   },
   {
     key: "visapassage",

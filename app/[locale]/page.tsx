@@ -87,10 +87,10 @@ const portfolioItems = [
       "Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.",
   },
   {
-    name: "SMS Activate by SIMNETIQ",
+    name: "SMS Code by SIMNETIQ",
     url: "https://simnetiq.xyz/",
     description:
-      "Virtual numbers for sign-up verification. Real carrier numbers in 50+ countries across 35+ services, with codes in about thirty seconds. Web, iOS and Android.",
+      "Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries across 100+ services, with codes in about thirty seconds. Web and iOS.",
   },
   {
     name: "VisaPassage",

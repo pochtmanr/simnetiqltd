@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
@@ -42,6 +42,7 @@ const PROJECTS_KEYWORDS = [
   "AI contract review",
   "contract reviewer for freelancers",
   "legal-tech case study",
+  "SMS Code",
   "SMS Activate",
   "simnetiq.xyz",
   "virtual numbers",
@@ -82,7 +83,7 @@ type ProjectKey =
   | "creator"
   | "delivery"
   | "greenflagged"
-  | "smsactivate"
+  | "smscode"
   | "visapassage";
 
 type ProjectStruct = {
@@ -134,10 +135,10 @@ const projectsList: ProjectStruct[] = [
     ],
   },
   {
-    key: "smsactivate",
+    key: "smscode",
     id: "04",
-    tags: ["NEXT.JS", "REACT", "TAILWIND", "iOS", "ANDROID"],
-    link: { kind: "internal", href: "/projects/sms-activate", labelKey: "readCaseStudy" },
+    tags: ["NEXT.JS", "REACT", "TAILWIND", "iOS"],
+    link: { kind: "internal", href: "/projects/sms-code", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://simnetiq.xyz/", labelKey: "visitSite" },
     metaKeys: [
       { labelKey: "coverage", valueKey: "coverageValue" },
@@ -229,10 +230,6 @@ export default async function ProjectsPage({ params }: { params: Params }) {
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <Rail
-            items={[p.rail.index, p.rail.archive, p.rail.active]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">

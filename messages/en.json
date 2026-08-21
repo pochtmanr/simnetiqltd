@@ -6,8 +6,6 @@
     "lastRevisionApr2026": "Last revision: April 2026 · Protocol 1.0.0",
     "endOfDocument": "END OF DOCUMENT · SIMNETIQ LTD © {year} · ALL RIGHTS RESERVED",
     "viewOnGoogleMaps": "View on Google Maps →",
-    "openAppStore": "Open App Store →",
-    "openGooglePlay": "Open Google Play →",
     "back": "Back",
     "next": "Next",
     "previous": "Previous",
@@ -112,8 +110,8 @@
         "badge": "Legal-tech · In dev",
         "description": "AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades, and suggested redlines in under eight minutes."
       },
-      "smsactivate": {
-        "title": "SMS Activate by SIMNETIQ",
+      "smscode": {
+        "title": "SMS Code by SIMNETIQ",
         "badge": "Telecom · Live",
         "description": "Virtual numbers for sign-ups. Pick a service and a country, get a real carrier number in about thirty seconds, and keep your own number out of someone else's database."
       },
@@ -227,11 +225,6 @@
     "bottom": "© {year} Simnetiq Ltd · All rights reserved"
   },
   "about": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 02 / ABOUT",
-      "context": "MISSION CONTEXT",
-      "dossier": "DOSSIER · V1.0"
-    },
     "eyebrow": "Mission Context",
     "title": "We build the kinetic blueprint for industrial software.",
     "body": "Simnetiq is a technical design and engineering collective. We reject decorative trends in favour of functional precision and geometric absolutism — software that reads as an instrument, not a decoration.",
@@ -297,11 +290,6 @@
     ]
   },
   "projectsPage": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 01 / PROJECTS",
-      "archive": "ENGINEERING ARCHIVE",
-      "active": "ACTIVE ENTRIES · 08"
-    },
     "eyebrow": "Engineering Archive",
     "titleLine1": "Active",
     "titleLine2": "Deployments",
@@ -377,16 +365,16 @@
         "stack": "Stack",
         "stackValue": "Next.js 16 · React 19 · Tailwind v4"
       },
-      "smsactivate": {
-        "title": "SMS Activate by SIMNETIQ",
+      "smscode": {
+        "title": "SMS Code by SIMNETIQ",
         "badge": "TELECOM · LIVE",
-        "description": "Virtual numbers for sign-up verification. Pick one of 35+ services and one of 50+ countries, get a real carrier number, and the code lands in about thirty seconds. Single-use numbers, cancellable activations, and one-time credit packs that never expire — no SIM, no eSIM, no identity contract, no auto-renew.",
+        "description": "Virtual numbers for sign-up verification. Pick one of 100+ services and one of 150+ countries, get a real carrier number, and the code lands in about thirty seconds. Single-use numbers, cancellable activations, and one-time coin packs that never expire — no SIM, no eSIM, no identity contract, no auto-renew.",
         "coverage": "Coverage",
-        "coverageValue": "50+ countries · 35+ services",
+        "coverageValue": "150+ countries · 100+ services",
         "billing": "Billing",
-        "billingValue": "One-time credits · No subscription",
+        "billingValue": "One-time coins · No subscription",
         "platforms": "Platforms",
-        "platformsValue": "Web · iOS · Android"
+        "platformsValue": "Web · iOS"
       },
       "visapassage": {
         "title": "VisaPassage",
@@ -402,11 +390,6 @@
     }
   },
   "servicesIndex": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 02 / SERVICES",
-      "capabilityIndex": "CAPABILITY INDEX",
-      "entries": "ENTRIES · 0{count}"
-    },
     "eyebrow": "Capabilities",
     "titleLine1": "Engineering",
     "titleLine2": "Services",
@@ -415,10 +398,6 @@
     "viewBrief": "View brief"
   },
   "serviceDetail": {
-    "rail": {
-      "indexTpl": "◆ SIMNETIQ / 02 / {code}",
-      "brief": "CAPABILITY BRIEF"
-    },
     "hero": {
       "ctaPricing": "See pricing",
       "ctaContact": "Book a call",
@@ -456,11 +435,6 @@
     "brief": "▸ Brief"
   },
   "howWeWorkIndex": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 03 / HOW WE WORK",
-      "principlesIndex": "ENGAGEMENT TERMS",
-      "entries": "ENTRIES · 0{count}"
-    },
     "eyebrow": "How we work",
     "titleLine1": "What holds true",
     "titleLine2": "on every engagement",
@@ -469,10 +443,6 @@
     "readMore": "Read in full"
   },
   "howWeWorkDetail": {
-    "rail": {
-      "indexTpl": "◆ SIMNETIQ / 03 / {code}",
-      "principle": "ENGAGEMENT TERM"
-    },
     "hero": {
       "ctaContact": "Book a call",
       "ctaAll": "All four",
@@ -496,11 +466,6 @@
     }
   },
   "legal": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 03 / LEGAL",
-      "compliance": "REGULATORY COMPLIANCE",
-      "rev": "REV · APR 2026"
-    },
     "eyebrow": "Legal Framework",
     "title": "Legal documentation",
     "tocLabel": "▸ Index",
@@ -611,11 +576,6 @@
     }
   },
   "privacy": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 03.02 / PRIVACY",
-      "policy": "DATA PROTECTION POLICY",
-      "rev": "REV · APR 2026"
-    },
     "eyebrow": "Legal Framework",
     "title": "Privacy Policy",
     "documentLabel": "▸ Document",
@@ -637,7 +597,7 @@
       },
       {
         "title": "Mobile Application Data",
-        "body": "The Simnetiq eSIM application collects the following data to provide its services: account information (email, name) for authentication; device information necessary for eSIM provisioning; purchase history for order management; and optional push notification tokens. All data is processed in accordance with this policy and stored securely using industry-standard encryption."
+        "body": "Simnetiq's mobile applications collect the following data to provide their services: account information (email, name) for authentication; device information necessary for provisioning; purchase history for order management; and optional push notification tokens. All data is processed in accordance with this policy and stored securely using industry-standard encryption."
       },
       {
         "title": "Legal Basis (GDPR)",
@@ -645,7 +605,7 @@
       },
       {
         "title": "Data Sharing",
-        "body": "We do not sell your personal data. We may share data with: eSIM providers for the purpose of activating your connectivity plans; payment processors (Stripe, Apple, Google) to process transactions; and hosting providers (Vercel, Supabase) for infrastructure. All third-party processors are bound by data processing agreements compliant with GDPR."
+        "body": "We do not sell your personal data. We may share data with: connectivity and telecom providers for the purpose of provisioning the numbers or plans you purchase; payment processors (Stripe, Apple, Google) to process transactions; and hosting providers (Vercel, Supabase) for infrastructure. All third-party processors are bound by data processing agreements compliant with GDPR."
       },
       {
         "title": "Data Retention",
@@ -674,14 +634,9 @@
     ]
   },
   "deleteAccount": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 04 / EXIT",
-      "protocol": "DE-PROVISIONING PROTOCOL",
-      "status": "STATUS 410 · GONE"
-    },
     "eyebrow": "Account Lifecycle",
     "title": "System exit",
-    "body": "Permanent account dissolution for Simnetiq eSIM app users. Submit the de-provisioning request below. All associated data will be purged from production within 30 days.",
+    "body": "Permanent account dissolution for Simnetiq account holders. Submit the de-provisioning request below. All associated data will be purged from production within 30 days.",
     "operationLabel": "▸ Operation",
     "statusCode": "Status code",
     "statusCodeValue": "410 · Gone",
@@ -691,21 +646,12 @@
     "scopeValue": "All account data",
     "reversible": "Reversible",
     "reversibleValue": "No",
-    "applicable": {
-      "eyebrow": "Applicable",
-      "title": "Products",
-      "body": "This protocol applies to account holders of the Simnetiq eSIM application on iOS and Android.",
-      "iosTitle": "Simnetiq — Travel eSIM Data",
-      "iosDistribution": "App Store distribution",
-      "androidTitle": "Simnetiq — Travel eSIM Data",
-      "androidDistribution": "Google Play distribution"
-    },
     "warningLabel": "⚠ Final confirmation required",
-    "warningBody": "This action is permanent and cannot be undone. All data associated with your account — including eSIM profiles, purchase history, and authentication credentials — will be permanently deleted from the Simnetiq production environment.",
+    "warningBody": "This action is permanent and cannot be undone. All data associated with your account — including service profiles, purchase history, and authentication credentials — will be permanently deleted from the Simnetiq production environment.",
     "willBeDeletedLabel": "▸ What will be deleted",
     "willBeDeletedItems": [
       "Account and authentication data (Google or Apple Sign-In link)",
-      "eSIM profiles and associated carrier data",
+      "Service profiles and associated carrier data",
       "Purchase and transaction history",
       "Usage analytics and preferences"
     ],
@@ -721,11 +667,6 @@
     "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.store."
   },
   "caseStudyArgus": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 01 / PROJECTS / ARGUS",
-      "tag": "CASE STUDY",
-      "status": "DESKTOP · LIVE / MACOS & WINDOWS"
-    },
     "eyebrow": "Browser engineering · Anti-detect · Live",
     "titleLine1": "A hundred identities,",
     "titleLine2": "one machine.",
@@ -853,11 +794,6 @@
     "ctaPrimary": "Open browserargus.com"
   },
   "caseStudyDoppler": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 02 / PROJECTS / DOPPLER-VPN",
-      "tag": "CASE STUDY",
-      "status": "VLESS · REALITY · LIVE"
-    },
     "eyebrow": "Privacy · Censorship-resistant · Native",
     "titleLine1": "Works where",
     "titleLine2": "other VPNs don't.",
@@ -1040,11 +976,6 @@
     "ctaPrimary": "Visit site"
   },
   "caseStudyPhysics": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 01 / PROJECTS / PHYSICS.EXPLAINED",
-      "tag": "CASE STUDY",
-      "status": "CLASSICAL MECHANICS · LIVE"
-    },
     "eyebrow": "Education · Open · Interactive",
     "titleLine1": "Physics,",
     "titleLine2": "taught visually.",
@@ -1192,11 +1123,6 @@
     "ctaBody": "Every concept, every physicist, every simulation, plus the AI tutor at /ask — all live, all free, all open source."
   },
   "caseStudyGreenFlagged": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 05 / PROJECTS / GREEN-FLAGGED",
-      "tag": "CASE STUDY",
-      "status": "MARKETING SITE · LIVE / SCAN API · IN DEV"
-    },
     "eyebrow": "Legal-tech · Editorial · In development",
     "titleLine1": "Get your contract",
     "titleLine2": "green-flagged before you sign.",
@@ -1343,20 +1269,15 @@
     "ctaBody": "Marketing site is live at greenflagged.com. The scanning engine is in development — early users get their first contract review free at launch.",
     "ctaPrimary": "Visit site"
   },
-  "caseStudySmsActivate": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 03 / PROJECTS / SMS-ACTIVATE",
-      "tag": "CASE STUDY",
-      "status": "WEB · LIVE / iOS · ANDROID · LIVE"
-    },
+  "caseStudySmsCode": {
     "eyebrow": "Telecom · Privacy · Live",
     "titleLine1": "A number for the sign-up.",
     "titleLine2": "Not for life.",
-    "body": "Every sign-up wants a phone number, and every number handed over is one more row in a database you will never see. SMS Activate rents you a real carrier number for exactly as long as it takes a verification code to arrive — then retires it.",
+    "body": "Every sign-up wants a phone number, and every number handed over is one more row in a database you will never see. SMS Code hands you a real carrier number for exactly as long as it takes a verification code to arrive — then retires it.",
     "visitSite": "Visit site",
     "tryFree": "Get the app",
     "specsLabel": "▸ Specification",
-    "figureCaption": "Fig. 01 · SMS Activate homepage · service and country picker",
+    "figureCaption": "Fig. 01 · SMS Code by SIMNETIQ · brand card from the August 2026 rebrand",
     "specs": [
       {
         "label": "Status",
@@ -1364,11 +1285,11 @@
       },
       {
         "label": "Countries",
-        "value": "50+ · real carrier networks"
+        "value": "150+ · real carrier networks"
       },
       {
         "label": "Services",
-        "value": "35+ · Telegram to PayPal"
+        "value": "100+ · Telegram to Steam"
       },
       {
         "label": "Delivery",
@@ -1376,11 +1297,11 @@
       },
       {
         "label": "Billing",
-        "value": "One-time credits · No auto-renew"
+        "value": "One-time coin packs · No auto-renew"
       },
       {
         "label": "Platforms",
-        "value": "Web · iOS · Android"
+        "value": "Web · iOS"
       }
     ],
     "aboutEyebrow": "§ 01 · About",
@@ -1388,23 +1309,24 @@
     "aboutTitleB": "the lifetime contract.",
     "aboutBody": [
       "The phone number became the default identity key of the consumer internet without anyone deciding it should. It is a permanent identifier, tied to a carrier contract and a legal name, and it is requested by every service that wants proof you are not a bot — including services that have no business knowing it.",
-      "SMS Activate separates the one thing a sign-up actually needs, a code that arrives once, from the thing it usually takes, a number you keep for a decade. You pick a service and a country, you get a live number on a real carrier network, and the code lands in the app for one-tap copying. The number is single-use and is retired afterwards; it is never recycled back to another customer for the same service.",
-      "There is no SIM to post, no eSIM profile to install, and no identity contract to sign. Billing is one-time credit packs — one, five, or ten activations — that never expire and never auto-renew. A pending activation that never receives a code can be cancelled.",
-      "Numbers come from real carrier ranges in more than fifty countries rather than the VOIP blocks most services silently reject, which is the difference between a code arriving and a sign-up form telling you the number is invalid."
+      "SMS Code separates the one thing a sign-up actually needs, a code that arrives once, from the thing it usually takes, a number you keep for a decade. You pick a service and a country, you get a live number on a real carrier network, and the code lands in the app for one-tap copying. The number is single-use and is retired afterwards; it is never recycled back to another customer for the same service.",
+      "There is no SIM to post, no eSIM profile to install, and no identity contract to sign. Billing runs on coins bought in one-time packs — twenty, fifty-five, a hundred and twenty, two hundred and fifty or seven hundred — that never expire and never auto-renew. Every country carries its exact coin price next to it before you commit, and coins from an activation that never receives a code return to your balance.",
+      "Numbers come from real carrier ranges in more than a hundred and fifty countries rather than the VOIP blocks most services silently reject, which is the difference between a code arriving and a sign-up form telling you the number is invalid.",
+      "The product shipped as SMS Activate. In August 2026 it was rebranded to SMS Code — a new mark, a rebuilt marketing site, and a new iOS app on the App Store."
     ],
     "insideEyebrow": "§ 03 · What's inside",
     "insideTitle": "Four numbers.",
     "insideEntry": "ENTRY",
     "insideItems": [
       {
-        "figure": "50+",
+        "figure": "150+",
         "label": "Countries",
-        "body": "Numbers on real carrier networks rather than VOIP ranges — the blocks that major services actually accept, across more than fifty countries."
+        "body": "Numbers on real carrier networks rather than VOIP ranges — the blocks that major services actually accept, across more than a hundred and fifty countries."
       },
       {
-        "figure": "35+",
+        "figure": "100+",
         "label": "Services",
-        "body": "Telegram, WhatsApp, Google, Instagram, TikTok, Discord, Steam, PayPal, Apple, Uber, Binance and the rest of the long tail."
+        "body": "Telegram, WhatsApp, Google, Instagram, TikTok, Discord, Steam, PayPal, Apple, Uber, Binance and the rest of the long tail — each with its own guide and country list."
       },
       {
         "figure": "~30s",
@@ -1414,27 +1336,27 @@
       {
         "figure": "0",
         "label": "Subscriptions",
-        "body": "One-time credit packs of one, five, or ten activations. Credits never expire, nothing auto-renews, and pending activations can be cancelled."
+        "body": "One-time coin packs from twenty coins up. Coins never expire, nothing auto-renews, pending activations can be cancelled, and a failed activation refunds itself."
       }
     ],
     "designEyebrow": "§ 04 · Design system",
-    "designTitleA": "System neutrals,",
-    "designTitleB": "one signal blue.",
-    "designBody": "The interface is a utility, not a destination — you open it, you take a code, you leave. The palette is built from a near-black to near-white greyscale with a single saturated blue reserved for the action that matters: get the number. Nothing else on the page competes for that colour.",
+    "designTitleA": "Cool paper,",
+    "designTitleB": "one blue ramp.",
+    "designBody": "The interface is a utility, not a destination — you open it, you take a code, you leave. The rebrand kept that discipline and gave it a warmer surface: a cool paper greyscale for canvas and cards, and a single blue ramp running from the light tone that opens the logo gradient down to the deep one the display type is set in. Nothing outside that ramp competes for attention.",
     "paletteLabel": "▸ Palette",
     "typographyLabel": "▸ Typography pairing",
     "typographyCards": [
       {
         "code": "01 · Display",
-        "sample": "SMS ACTIVATE",
+        "sample": "A number for the sign-up.",
         "name": "Inter — Display, tight tracking",
-        "body": "Hero and section headlines. Large, tightly tracked, and set without a wordmark so the sentence carries the brand."
+        "body": "Hero and interface. Large, tightly tracked and set in sentence case, so the line carries the brand rather than a wordmark."
       },
       {
-        "code": "02 · Body",
-        "sample": "A number for the sign-up. Not for life.",
-        "name": "Inter — Body",
-        "body": "Product copy, service and country lists, billing explanations. Weights 400 and 500."
+        "code": "02 · Accent",
+        "sample": "150+",
+        "name": "Cormorant Garamond — Light",
+        "body": "Introduced by the rebrand. Set at weight 300 for section headings and the coverage figures — the one warm note in an otherwise system-neutral interface."
       },
       {
         "code": "03 · Mono",
@@ -1446,7 +1368,7 @@
     "taxonomyEyebrow": "§ 05 · Service catalogue",
     "taxonomyTitleA": "The services",
     "taxonomyTitleB": "people actually sign up for.",
-    "taxonomyBody": "Thirty-five and counting. Each one is a maintained integration rather than a generic number pool — a service is only listed once its codes are landing reliably on the carrier ranges we hold.",
+    "taxonomyBody": "A hundred and counting. Each one is a maintained integration rather than a generic number pool — a service is only listed once its codes are landing reliably on the carrier ranges we hold, and each carries its own country list and live coin price.",
     "taxonomy": [
       {
         "id": "01",
@@ -1488,15 +1410,10 @@
     "live": "LIVE",
     "ctaEyebrow": "Continue",
     "ctaTitle": "Keep your number to yourself.",
-    "ctaBody": "Pick a service, pick a country, take the code. Credit packs start at a single activation, never expire, and never auto-renew.",
+    "ctaBody": "Pick a service, pick a country, take the code. Coin packs start at twenty coins, never expire, and never auto-renew.",
     "ctaPrimary": "Visit site"
   },
   "caseStudyVisaPassage": {
-    "rail": {
-      "index": "◆ SIMNETIQ / 04 / PROJECTS / VISAPASSAGE",
-      "tag": "CASE STUDY",
-      "status": "WEB · LIVE / FREE TO START"
-    },
     "eyebrow": "Travel-tech · Multi-passport · Live",
     "titleLine1": "One profile for",
     "titleLine2": "every visa journey.",

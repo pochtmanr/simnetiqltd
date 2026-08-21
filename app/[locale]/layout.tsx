@@ -10,6 +10,7 @@ import {
   Lunasima,
   Geist,
   Geist_Mono,
+  Cormorant_Garamond,
 } from "next/font/google";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -78,6 +79,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-geist-mono",
+});
+
+// SMS Code reference font — used on /projects/sms-code design-system section.
+// Light only: the brand sets it at 300 for section headings and stat figures.
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300"],
+  variable: "--font-cormorant",
 });
 
 const SITE_NAME = "Simnetiq";
@@ -282,7 +291,7 @@ export default async function RootLayout({
       dir={dir}
       data-theme={dataTheme}
       style={colorSchemeStyle}
-      className={`${inter.variable} ${bricolage.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} h-full`}
+      className={`${inter.variable} ${bricolage.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} ${cormorantGaramond.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">

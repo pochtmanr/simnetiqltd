@@ -143,21 +143,21 @@ const CASE_GREENFLAGGED: RouteCopy = {
   },
 };
 
-const CASE_SMSACTIVATE: RouteCopy = {
+const CASE_SMSCODE: RouteCopy = {
   en: {
-    title: "SMS Activate — Case Study",
+    title: "SMS Code — Case Study",
     description:
-      "SMS Activate by SIMNETIQ rents you a real carrier number in 50+ countries for exactly as long as a verification code takes to arrive. 35+ services from Telegram to PayPal, codes in about thirty seconds, single-use numbers, and one-time credit packs that never expire — no SIM, no eSIM, no subscription, no personal number handed over. Web, iOS and Android.",
+      "SMS Code by SIMNETIQ hands you a real carrier number in 150+ countries for exactly as long as a verification code takes to arrive. 100+ services from Telegram to Steam, codes in about thirty seconds, single-use numbers, and one-time coin packs that never expire — no SIM, no eSIM, no subscription, no personal number handed over. Formerly SMS Activate. Web and iOS.",
   },
   he: {
-    title: "SMS Activate — מקרה בוחן",
+    title: "SMS Code — מקרה בוחן",
     description:
-      "SMS Activate מבית SIMNETIQ משכיר לך מספר אמיתי ברשת סלולרית ביותר מ-50 מדינות בדיוק לפרק הזמן שלוקח לקוד אימות להגיע. יותר מ-35 שירותים — מטלגרם ועד PayPal, קודים בתוך כשלושים שניות, מספרים לשימוש חד-פעמי וחבילות קרדיט חד-פעמיות שאינן פגות תוקף — בלי SIM, בלי eSIM, בלי מנוי ובלי למסור את המספר האישי. ווב, iOS ואנדרואיד.",
+      "SMS Code מבית SIMNETIQ נותן לך מספר אמיתי ברשת סלולרית ביותר מ-150 מדינות בדיוק לפרק הזמן שלוקח לקוד אימות להגיע. יותר מ-100 שירותים — מטלגרם ועד סטים, קודים בתוך כשלושים שניות, מספרים לשימוש חד-פעמי וחבילות מטבעות חד-פעמיות שאינן פגות תוקף — בלי SIM, בלי eSIM, בלי מנוי ובלי למסור את המספר האישי. לשעבר SMS Activate. ווב ו-iOS.",
   },
   ru: {
-    title: "SMS Activate — кейс",
+    title: "SMS Code — кейс",
     description:
-      "SMS Activate от SIMNETIQ выдаёт настоящий номер оператора в 50+ странах ровно на то время, которое нужно коду подтверждения. 35+ сервисов — от Telegram до PayPal, код приходит примерно за тридцать секунд, номера одноразовые, а разовые пакеты кредитов не сгорают — без SIM, без eSIM, без подписки и без передачи личного номера. Веб, iOS и Android.",
+      "SMS Code от SIMNETIQ выдаёт настоящий номер оператора в 150+ странах ровно на то время, которое нужно коду подтверждения. 100+ сервисов — от Telegram до Steam, код приходит примерно за тридцать секунд, номера одноразовые, а разовые пакеты монет не сгорают — без SIM, без eSIM, без подписки и без передачи личного номера. Ранее — SMS Activate. Веб и iOS.",
   },
 };
 
@@ -301,7 +301,7 @@ export const ROUTE_COPY = {
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
   caseStudyGreenFlagged: CASE_GREENFLAGGED,
-  caseStudySmsActivate: CASE_SMSACTIVATE,
+  caseStudySmsCode: CASE_SMSCODE,
   caseStudyVisaPassage: CASE_VISAPASSAGE,
 } as const;
 

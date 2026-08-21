@@ -10,7 +10,7 @@ import { SITE_URL } from "@/lib/site";
 const DELETE_KEYWORDS = [
   "Simnetiq delete account",
   "Simnetiq data deletion",
-  "Simnetiq eSIM delete account",
+  "Simnetiq app delete account",
   "account deletion request",
   "GDPR data deletion",
   "App Store data deletion compliance",
@@ -24,17 +24,17 @@ const DELETE_COPY: Record<
   en: {
     title: "Delete Account — Simnetiq Data Deletion Request",
     description:
-      "Request permanent account and data deletion from Simnetiq services, including the Simnetiq eSIM app. GDPR-compliant deletion flow, App Store and Google Play policy compliant. Processed within 30 days.",
+      "Request permanent account and data deletion from Simnetiq services. GDPR-compliant deletion flow, App Store and Google Play policy compliant. Processed within 30 days.",
   },
   he: {
     title: "מחיקת חשבון — בקשת מחיקת נתונים מסימנטיק",
     description:
-      "בקשת מחיקה קבועה של חשבון ונתונים משירותי סימנטיק, כולל יישום ה-eSIM של סימנטיק. תהליך תואם GDPR, תואם מדיניות App Store ו-Google Play. מטופל תוך 30 יום.",
+      "בקשת מחיקה קבועה של חשבון ונתונים משירותי סימנטיק. תהליך תואם GDPR, תואם מדיניות App Store ו-Google Play. מטופל תוך 30 יום.",
   },
   ru: {
     title: "Удаление аккаунта — запрос на удаление данных Simnetiq",
     description:
-      "Запрос на безвозвратное удаление аккаунта и данных из сервисов Simnetiq, включая приложение Simnetiq eSIM. Соответствует требованиям GDPR, политикам App Store и Google Play. Обрабатывается в течение 30 дней.",
+      "Запрос на безвозвратное удаление аккаунта и данных из сервисов Simnetiq. Соответствует требованиям GDPR, политикам App Store и Google Play. Обрабатывается в течение 30 дней.",
   },
 };
 

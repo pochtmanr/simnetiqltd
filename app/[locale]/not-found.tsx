@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rail, SpecRow } from "@/components/panel";
+import { SpecRow } from "@/components/panel";
 import { NotFoundActions } from "@/components/not-found-actions";
 
 export const metadata: Metadata = {
@@ -15,14 +15,6 @@ export default function NotFound() {
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <Rail
-            items={[
-              "◆ SIMNETIQ / ERR / 404",
-              "SIGNAL LOST",
-              "ROUTE · UNRESOLVED",
-            ]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">

@@ -68,9 +68,9 @@ type Phrasebook = {
   greenFlaggedHeading: string;
   greenFlaggedStatus: string;
   greenFlaggedStack: string;
-  smsActivateHeading: string;
-  smsActivateStatus: string;
-  smsActivateStack: string;
+  smsCodeHeading: string;
+  smsCodeStatus: string;
+  smsCodeStack: string;
   visaPassageHeading: string;
   visaPassageStatus: string;
   visaPassageStack: string;
@@ -104,7 +104,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- [Argus Browser](${url("/projects/argus-browser")}): Anti-detect browser on a custom C++ Chromium fork. Hundreds of isolated profiles, each with its own fingerprint, per-profile proxy and cookie jar, automated on a schedule from an Electron control plane. macOS and Windows, drivable over MCP and a local HTTP API.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Censorship-resistant VPN on VLESS-Reality with native iOS, Android, macOS and Windows clients. Zero-log, zero-registration, indistinguishable from HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source interactive physics encyclopedia with unit-tested ODE solvers, WebGL visualisations and an AI tutor at /ask grounded in the library.`,
-      `- [SMS Activate by SIMNETIQ](${url("/projects/sms-activate")}): Virtual numbers for sign-up verification. Real carrier numbers in 50+ countries across 35+ services, codes in about thirty seconds, one-time credit packs with no subscription. Web, iOS and Android.`,
+      `- [SMS Code by SIMNETIQ](${url("/projects/sms-code")}): Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries across 100+ services, codes in about thirty seconds, one-time coin packs with no subscription. Web and iOS.`,
       `- [VisaPassage](${url("/projects/visapassage")}): Multi-passport visa intelligence. One encrypted profile compares every visa route across all your passports and residencies, then generates checklists and auto-fills government forms.`,
       `- [Green Flagged](${url("/projects/green-flagged")}): AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades and suggested redlines in under eight minutes. Marketing site live, scanning engine in development.`,
       `- [Creator AI](https://www.creatorai.art/en): Multi-language LLM content platform on Anthropic and OpenAI. Editorial pipelines, native iOS and Android clients.`,
@@ -141,7 +141,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- **Argus Browser** (https://www.browserargus.com) — Anti-detect browser on a custom Chromium fork, with a desktop control plane for profiles, proxies, automations, schedules and datasets. macOS and Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source interactive physics learning platform with accurate ODE solvers and a concepts dictionary.`,
-      `- **SMS Activate by SIMNETIQ** (https://simnetiq.xyz/) — Virtual numbers for sign-up verification. Real carrier numbers in 50+ countries, 35+ services, codes in about thirty seconds. Web, iOS and Android.`,
+      `- **SMS Code by SIMNETIQ** (https://simnetiq.xyz/) — Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries, 100+ services, codes in about thirty seconds. Web and iOS.`,
       `- **VisaPassage** (https://visapassage.com/) — Multi-passport visa intelligence. Compare visa routes across every passport and residency you hold from one encrypted profile.`,
       `- **Creator AI** (https://www.creatorai.art/en) — Neural content synthesis platform. Multi-language editorial pipelines on Anthropic and OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Logistics platform with real-time GPS driver tracking, route optimisation and order lifecycle management.`,
@@ -202,10 +202,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "Status: In development. Marketing site live at greenflagged.com; scan API not yet wired. Pre-launch, first scan free.",
     greenFlaggedStack:
       "Stack: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Radix UI primitives, GSAP, pnpm.",
-    smsActivateHeading: "SMS Activate by SIMNETIQ",
-    smsActivateStatus:
-      "Status: Production. Live at simnetiq.xyz with native iOS and Android clients. Virtual numbers in 50+ countries across 35+ services; codes arrive in about thirty seconds. Single-use numbers, cancellable activations, one-time credit packs that never expire. No SIM, no eSIM, no subscription.",
-    smsActivateStack: "Stack: Next.js, React, Tailwind CSS, Vercel; iOS and Android clients.",
+    smsCodeHeading: "SMS Code by SIMNETIQ",
+    smsCodeStatus:
+      "Status: Production. Live at simnetiq.xyz with a native iOS client; rebranded from SMS Activate in August 2026. Virtual numbers in 150+ countries across 100+ services; codes arrive in about thirty seconds. Single-use numbers, cancellable activations, one-time coin packs that never expire. No SIM, no eSIM, no subscription.",
+    smsCodeStack: "Stack: Next.js, React, Tailwind CSS, Vercel; native iOS client.",
     visaPassageHeading: "VisaPassage",
     visaPassageStatus:
       "Status: Production. Live at visapassage.com. Multi-passport visa comparison from a single encrypted profile; routes ranked by least paperwork, shortest wait and lowest cost. Country-specific checklists, auto-filled government forms, versioned expiry-aware document vault. Free to start. Does not guarantee visa outcomes — official government rules and consular decisions prevail.",
@@ -248,7 +248,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- [Argus Browser](${url("/projects/argus-browser")}): דפדפן אנטי-דיטקט על fork ייעודי של Chromium ב-C++. מאות פרופילים מבודדים, לכל אחד טביעת אצבע, פרוקסי ומאגר עוגיות משלו, עם אוטומציה על לוח זמנים מלוח בקרה ב-Electron. ל-macOS ול-Windows, וניתן להנעה דרך MCP ו-API מקומי.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): VPN עמיד לצנזורה על VLESS-Reality עם לקוחות מקוריים ל-iOS, Android, macOS ו-Windows. ללא לוגים, ללא רישום, בלתי ניתן להבחנה מ-HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL ומורה AI ב-/ask המבוסס על הספרייה.`,
-      `- [SMS Activate מבית SIMNETIQ](${url("/projects/sms-activate")}): מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-50 מדינות ויותר מ-35 שירותים, קודים תוך כשלושים שניות, חבילות קרדיט חד-פעמיות ללא מנוי. ווב, iOS ואנדרואיד.`,
+      `- [SMS Code מבית SIMNETIQ](${url("/projects/sms-code")}): מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-150 מדינות ויותר מ-100 שירותים, קודים תוך כשלושים שניות, חבילות מטבעות חד-פעמיות ללא מנוי. ווב ו-iOS.`,
       `- [VisaPassage](${url("/projects/visapassage")}): מודיעין ויזות לבעלי דרכונים מרובים. פרופיל מוצפן אחד משווה כל מסלול ויזה על פני כל הדרכונים והתושבויות שלכם, ואז מייצר רשימות מסמכים וממלא אוטומטית טפסים ממשלתיים.`,
       `- [Green Flagged](${url("/projects/green-flagged")}): סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות. אתר השיווק עלה, מנוע הסריקה בפיתוח.`,
       `- [Creator AI](https://www.creatorai.art/en): פלטפורמת תוכן LLM רב-לשונית על Anthropic ו-OpenAI. צנרת עריכה, לקוחות מקוריים ל-iOS ו-Android.`,
@@ -284,7 +284,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- **Argus Browser** (https://www.browserargus.com) — דפדפן אנטי-דיטקט על fork ייעודי של Chromium, עם לוח בקרה שולחני לפרופילים, פרוקסי, אוטומציות, לוחות זמנים ומאגרי נתונים. ל-macOS ול-Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — VPN VLESS-Reality מותאם אישית עם צמתים גיאו-מבוזרים ללא לוגים. לקוחות מקוריים ל-iOS ו-Android.`,
       `- **Physics.explained** (https://physics.it.com/) — פלטפורמת לימוד פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE מדויקים ומילון מושגים.`,
-      `- **SMS Activate מבית SIMNETIQ** (https://simnetiq.xyz/) — מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-50 מדינות, יותר מ-35 שירותים, קודים תוך כשלושים שניות. ווב, iOS ואנדרואיד.`,
+      `- **SMS Code מבית SIMNETIQ** (https://simnetiq.xyz/) — מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-150 מדינות, יותר מ-100 שירותים, קודים תוך כשלושים שניות. ווב ו-iOS.`,
       `- **VisaPassage** (https://visapassage.com/) — מודיעין ויזות לבעלי דרכונים מרובים. השוואת מסלולי ויזה על פני כל דרכון ותושבות שברשותכם מתוך פרופיל מוצפן אחד.`,
       `- **Creator AI** (https://www.creatorai.art/en) — פלטפורמת סינתזת תוכן נוירונית. צנרת עריכה רב-לשונית על Anthropic ו-OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה.`,
@@ -345,11 +345,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "סטטוס: בפיתוח. אתר השיווק עלה ב-greenflagged.com; API הסריקה עוד לא חובר. טרום-השקה, סריקה ראשונה חינם.",
     greenFlaggedStack:
       "סטאק: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, רכיבי Radix UI, GSAP, pnpm.",
-    smsActivateHeading: "SMS Activate מבית SIMNETIQ",
-    smsActivateStatus:
-      "סטטוס: ייצור. חי ב-simnetiq.xyz עם אפליקציות מקוריות ל-iOS ואנדרואיד. מספרים וירטואליים ביותר מ-50 מדינות ויותר מ-35 שירותים; הקוד מגיע תוך כשלושים שניות. מספרים לשימוש חד-פעמי, אפשרות לבטל הפעלה ממתינה, וחבילות קרדיט חד-פעמיות שאינן פגות תוקף. בלי SIM, בלי eSIM, בלי מנוי.",
-    smsActivateStack:
-      "סטאק: Next.js, React, Tailwind CSS, Vercel; אפליקציות ל-iOS ואנדרואיד.",
+    smsCodeHeading: "SMS Code מבית SIMNETIQ",
+    smsCodeStatus:
+      "סטטוס: ייצור. חי ב-simnetiq.xyz עם אפליקציה מקורית ל-iOS; עבר מיתוג מחדש מ-SMS Activate באוגוסט 2026. מספרים וירטואליים ביותר מ-150 מדינות ויותר מ-100 שירותים; הקוד מגיע תוך כשלושים שניות. מספרים לשימוש חד-פעמי, אפשרות לבטל הפעלה ממתינה, וחבילות מטבעות חד-פעמיות שאינן פגות תוקף. בלי SIM, בלי eSIM, בלי מנוי.",
+    smsCodeStack:
+      "סטאק: Next.js, React, Tailwind CSS, Vercel; אפליקציה מקורית ל-iOS.",
     visaPassageHeading: "VisaPassage",
     visaPassageStatus:
       "סטטוס: ייצור. חי ב-visapassage.com. השוואת ויזות לבעלי דרכונים מרובים מתוך פרופיל מוצפן אחד; המסלולים מדורגים לפי מינימום ניירת, זמן המתנה קצר ועלות נמוכה. רשימות מסמכים ייעודיות למדינה, מילוי אוטומטי של טפסים ממשלתיים וכספת מסמכים עם ניהול גרסאות ומעקב תפוגה. התחלה חינם. אינה מבטיחה קבלת ויזה — כללי הממשלה והחלטות הקונסוליה גוברים.",
@@ -392,7 +392,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- [Argus Browser](${url("/projects/argus-browser")}): Анти-детект браузер на собственном форке Chromium (C++). Сотни изолированных профилей, у каждого свой отпечаток, прокси и хранилище cookie, с автоматизацией по расписанию из панели управления на Electron. macOS и Windows, управляется через MCP и локальный HTTP API.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Устойчивый к цензуре VPN на VLESS-Reality с нативными клиентами для iOS, Android, macOS и Windows. Без логов, без регистрации, неотличим от HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source интерактивная энциклопедия физики с покрытыми тестами решателями ОДУ, WebGL-визуализациями и AI-репетитором на /ask, основанным на материалах библиотеки.`,
-      `- [SMS Activate от SIMNETIQ](${url("/projects/sms-activate")}): Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 50+ странах для 35+ сервисов, код примерно за тридцать секунд, разовые пакеты кредитов без подписки. Веб, iOS и Android.`,
+      `- [SMS Code от SIMNETIQ](${url("/projects/sms-code")}): Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 150+ странах для 100+ сервисов, код примерно за тридцать секунд, разовые пакеты монет без подписки. Веб и iOS.`,
       `- [VisaPassage](${url("/projects/visapassage")}): Визовая аналитика для владельцев нескольких паспортов. Один зашифрованный профиль сравнивает все визовые маршруты по всем вашим паспортам и видам на жительство, затем формирует чек-листы и заполняет государственные формы.`,
       `- [Green Flagged](${url("/projects/green-flagged")}): AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут. Маркетинговый сайт запущен, движок сканирования в разработке.`,
       `- [Creator AI](https://www.creatorai.art/en): Многоязычная LLM-платформа контента на Anthropic и OpenAI. Редакторские пайплайны, нативные клиенты iOS и Android.`,
@@ -429,7 +429,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- **Argus Browser** (https://www.browserargus.com) — Анти-детект браузер на собственном форке Chromium с настольной панелью управления профилями, прокси, автоматизациями, расписаниями и таблицами данных. macOS и Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — Кастомный VPN на VLESS-Reality с гео-распределёнными нодами без логов. Нативные клиенты для iOS и Android.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source интерактивная платформа изучения физики с точными решателями ОДУ и словарём концепций.`,
-      `- **SMS Activate от SIMNETIQ** (https://simnetiq.xyz/) — Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 50+ странах, 35+ сервисов, код примерно за тридцать секунд. Веб, iOS и Android.`,
+      `- **SMS Code от SIMNETIQ** (https://simnetiq.xyz/) — Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 150+ странах, 100+ сервисов, код примерно за тридцать секунд. Веб и iOS.`,
       `- **VisaPassage** (https://visapassage.com/) — Визовая аналитика для владельцев нескольких паспортов. Сравнение визовых маршрутов по всем вашим паспортам и видам на жительство из одного зашифрованного профиля.`,
       `- **Creator AI** (https://www.creatorai.art/en) — Платформа нейросетевого синтеза контента. Многоязычные редакторские пайплайны на Anthropic и OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и управлением жизненным циклом заказа.`,
@@ -490,11 +490,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "Статус: В разработке. Маркетинговый сайт запущен на greenflagged.com; API сканирования ещё не подключён. Пред-релиз, первая проверка бесплатно.",
     greenFlaggedStack:
       "Стек: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, примитивы Radix UI, GSAP, pnpm.",
-    smsActivateHeading: "SMS Activate от SIMNETIQ",
-    smsActivateStatus:
-      "Статус: Продакшен. Работает на simnetiq.xyz, есть нативные клиенты для iOS и Android. Виртуальные номера в 50+ странах для 35+ сервисов; код приходит примерно за тридцать секунд. Номера одноразовые, ожидающую активацию можно отменить, разовые пакеты кредитов не сгорают. Без SIM, без eSIM, без подписки.",
-    smsActivateStack:
-      "Стек: Next.js, React, Tailwind CSS, Vercel; клиенты для iOS и Android.",
+    smsCodeHeading: "SMS Code от SIMNETIQ",
+    smsCodeStatus:
+      "Статус: Продакшен. Работает на simnetiq.xyz, есть нативный клиент для iOS; ребрендинг из SMS Activate в августе 2026 года. Виртуальные номера в 150+ странах для 100+ сервисов; код приходит примерно за тридцать секунд. Номера одноразовые, ожидающую активацию можно отменить, разовые пакеты монет не сгорают. Без SIM, без eSIM, без подписки.",
+    smsCodeStack:
+      "Стек: Next.js, React, Tailwind CSS, Vercel; нативный клиент для iOS.",
     visaPassageHeading: "VisaPassage",
     visaPassageStatus:
       "Статус: Продакшен. Работает на visapassage.com. Сравнение виз для владельцев нескольких паспортов из одного зашифрованного профиля; маршруты ранжируются по объёму бумаг, сроку ожидания и стоимости. Чек-листы под конкретную страну, автозаполнение государственных форм, хранилище документов с версиями и контролем сроков. Начать бесплатно. Не гарантирует получение визы — официальные правила и решения консульства имеют приоритет.",
@@ -860,15 +860,15 @@ ${p.greenFlaggedStack}
 ${p.greenFlaggedStatus}
 `;
   }
-  if (slug === "sms-activate") {
-    const c = ROUTE_COPY.caseStudySmsActivate[locale];
-    return `${buildHeader(p, c.title, localeUrl("/projects/sms-activate"))}
+  if (slug === "sms-code") {
+    const c = ROUTE_COPY.caseStudySmsCode[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/sms-code"))}
 Live: https://simnetiq.xyz
 
 ${c.description}
 
-${p.smsActivateStack}
-${p.smsActivateStatus}
+${p.smsCodeStack}
+${p.smsCodeStatus}
 `;
   }
   if (slug === "visapassage") {
@@ -898,7 +898,7 @@ export function buildLlmsFullTxt(locale: Locale): string {
   const doppler = ROUTE_COPY.caseStudyDoppler[locale];
   const physics = ROUTE_COPY.caseStudyPhysics[locale];
   const greenFlagged = ROUTE_COPY.caseStudyGreenFlagged[locale];
-  const smsActivate = ROUTE_COPY.caseStudySmsActivate[locale];
+  const smsCode = ROUTE_COPY.caseStudySmsCode[locale];
   const visaPassage = ROUTE_COPY.caseStudyVisaPassage[locale];
 
   const servicesSection = services
@@ -1017,16 +1017,16 @@ ${physics.description}
 ${p.physicsStack}
 ${p.physicsStatus}
 
-## ${p.smsActivateHeading}
+## ${p.smsCodeHeading}
 
-${p.urlLabel}: ${localeUrl("/projects/sms-activate")}
+${p.urlLabel}: ${localeUrl("/projects/sms-code")}
 Live: https://simnetiq.xyz
-${p.titleLabel}: ${smsActivate.title}
+${p.titleLabel}: ${smsCode.title}
 
-${smsActivate.description}
+${smsCode.description}
 
-${p.smsActivateStack}
-${p.smsActivateStatus}
+${p.smsCodeStack}
+${p.smsCodeStatus}
 
 ## ${p.visaPassageHeading}
 

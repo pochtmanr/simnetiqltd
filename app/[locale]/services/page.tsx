@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, Rail } from "@/components/panel";
+import { Panel } from "@/components/panel";
 import { getServices } from "@/lib/services";
 import { BreadcrumbSchema } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
@@ -81,14 +81,6 @@ export default async function ServicesIndexPage({
       />
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
-          <Rail
-            items={[
-              s.rail.index,
-              s.rail.capabilityIndex,
-              s.rail.entries.replace("{count}", String(services.length)),
-            ]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-8">
               <p className="text-label text-[var(--color-primary-glow)]">

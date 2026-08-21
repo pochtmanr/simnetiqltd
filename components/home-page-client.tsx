@@ -46,7 +46,7 @@ type HomeDict = {
       | "creator"
       | "delivery"
       | "greenflagged"
-      | "smsactivate"
+      | "smscode"
       | "visapassage",
       { title: string; badge: string; description: string; accolade?: string }
     >;

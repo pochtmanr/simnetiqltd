@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
 import { ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
@@ -14,11 +14,14 @@ import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
 
 const PROJECT_URL = "https://simnetiq.xyz/";
-const APP_STORE_URL = "https://apps.apple.com/us/app/sms-activate/id6768591062";
+const APP_STORE_URL = "https://apps.apple.com/us/app/id6803515179";
 
-const SMSACTIVATE_KEYWORDS = [
+const SMSCODE_KEYWORDS = [
+  "SMS Code",
+  "SMS Code by SIMNETIQ",
+  // The app shipped as SMS Activate until the Aug 2026 rebrand; the old name
+  // still carries search volume and the old slug still redirects here.
   "SMS Activate",
-  "SMS Activate by SIMNETIQ",
   "simnetiq.xyz",
   "virtual numbers",
   "virtual phone number",
@@ -33,7 +36,7 @@ const SMSACTIVATE_KEYWORDS = [
   "privacy phone number",
   "no subscription virtual number",
   "carrier network numbers",
-  "Simnetiq case study SMS Activate",
+  "Simnetiq case study SMS Code",
   "telecom case study",
   "virtual number iOS app",
   "virtual number Android app",
@@ -48,42 +51,68 @@ export async function generateMetadata({
   const locale: Locale = isLocale(rawLocale) ? (rawLocale as Locale) : "en";
   return buildLocalizedMetadata({
     locale,
-    routeKey: "caseStudySmsActivate",
-    path: "/projects/sms-activate",
-    keywords: SMSACTIVATE_KEYWORDS,
-    ogImage: "/smsactivate-header.avif",
+    routeKey: "caseStudySmsCode",
+    path: "/projects/sms-code",
+    keywords: SMSCODE_KEYWORDS,
+    ogImage: "/smscode-header.avif",
     ogType: "article",
     markdownAlternate: true,
   });
 }
 
-// SMS Activate design system — referenced on this Simnetiq page as case-study
-// content. Named tokens lifted from the live simnetiq.xyz stylesheet: a
-// system greyscale with a single saturated blue reserved for the primary action.
-const smsActivatePalette = [
-  { name: "Pure White", hex: "#FDFDFD", role: "Background" },
-  { name: "Off White", hex: "#F2F2F4", role: "Surface" },
-  { name: "Signal Blue", hex: "#0071E3", role: "Accent" },
-  { name: "Ash Gray", hex: "#8F8F8F", role: "Muted" },
-  { name: "Steel Gray", hex: "#5E5E5E", role: "Secondary text" },
-  { name: "Off Black", hex: "#0F1012", role: "Foreground", onDark: true },
-  { name: "Pure Black", hex: "#020201", role: "Contrast", onDark: true },
+// SMS Code design system — referenced on this Simnetiq page as case-study
+// content. Token names and hexes lifted verbatim from the live simnetiq.xyz
+// stylesheet after the Aug 2026 rebrand: a cool paper greyscale carrying one
+// blue ramp, from the light accent that opens the logo gradient down to the
+// deep tone the display type is set in.
+const smsCodePalette = [
+  { name: "Canvas", hex: "#EFF1F5", role: "Background" },
+  { name: "Card", hex: "#FFFFFF", role: "Surface" },
+  { name: "Panel Strong", hex: "#C8DCF7", role: "Panel" },
+  { name: "Accent", hex: "#59A1FC", role: "Gradient start" },
+  { name: "Accent Dark", hex: "#276CC5", role: "Gradient end" },
+  { name: "Accent Deep", hex: "#1E5AA8", role: "Display type", onDark: true },
+  { name: "Ink", hex: "#23262C", role: "Foreground", onDark: true },
 ];
 
-const typographyFontFamilies = [
-  "var(--font-inter), system-ui, sans-serif",
-  "var(--font-inter), system-ui, sans-serif",
-  "var(--font-jetbrains), ui-monospace, monospace",
-];
+// 01 Inter carries the hero and the interface; 02 Cormorant Garamond is the
+// display accent the rebrand introduced, set light for section headings and
+// the big coverage figures; 03 mono is reserved for copyable strings.
+// Specimens were index-keyed while all three cards were Inter cuts. Now that
+// each card is a different family with its own optical size, they carry their
+// own settings.
+const typographySpecs = [
+  {
+    fontFamily: "var(--font-inter), system-ui, sans-serif",
+    fontSize: "clamp(2rem, 3.2vw, 2.75rem)",
+    fontWeight: 500,
+    letterSpacing: "-0.04em",
+    lineHeight: 0.95,
+  },
+  {
+    fontFamily: "var(--font-cormorant), ui-serif, Georgia, serif",
+    fontSize: "clamp(2.5rem, 4vw, 3.25rem)",
+    fontWeight: 300,
+    letterSpacing: "-0.03em",
+    lineHeight: 1,
+  },
+  {
+    fontFamily: "var(--font-jetbrains), ui-monospace, monospace",
+    fontSize: "clamp(1rem, 1.2vw, 1.125rem)",
+    fontWeight: 400,
+    letterSpacing: "0.04em",
+    lineHeight: 1.45,
+  },
+] as const;
 
 type Params = Promise<{ locale: string }>;
 
-export default async function SmsActivatePage({ params }: { params: Params }) {
+export default async function SmsCodePage({ params }: { params: Params }) {
   const { locale: rawLocale } = await params;
   if (!isLocale(rawLocale)) notFound();
   const locale = rawLocale as Locale;
   const dict = await getDictionary(locale);
-  const c = dict.caseStudySmsActivate;
+  const c = dict.caseStudySmsCode;
 
   return (
     <>
@@ -92,34 +121,30 @@ export default async function SmsActivatePage({ params }: { params: Params }) {
           { name: "Home", url: `${SITE_URL}/${locale}` },
           { name: "Projects", url: `${SITE_URL}/${locale}/projects` },
           {
-            name: "SMS Activate",
-            url: `${SITE_URL}/${locale}/projects/sms-activate`,
+            name: "SMS Code",
+            url: `${SITE_URL}/${locale}/projects/sms-code`,
           },
         ]}
       />
       <CaseStudyArticleSchema
         headline={`${c.titleLine1} ${c.titleLine2}`.trim()}
-        path="/projects/sms-activate"
+        path="/projects/sms-code"
         description={c.body}
-        image="/smsactivate-header.avif"
+        image="/smscode-header.avif"
         locale={locale}
         datePublished="2026-07-16"
         dateModified={new Date().toISOString().slice(0, 10)}
-        keywords={SMSACTIVATE_KEYWORDS}
+        keywords={SMSCODE_KEYWORDS}
       />
 
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <Rail
-            items={[c.rail.index, c.rail.tag, c.rail.status]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <ProjectLogo
-                project="smsactivate"
-                alt="SMS Activate"
+                project="smscode"
+                alt="SMS Code"
                 size={56}
                 className="mb-6"
               />
@@ -168,8 +193,8 @@ export default async function SmsActivatePage({ params }: { params: Params }) {
               <Panel innerClassName="p-2" corners>
                 <div className="relative w-full overflow-hidden aspect-[16/9]">
                   <Image
-                    src="/smsactivate-header.avif"
-                    alt="SMS Activate — virtual numbers for SMS verification in 50+ countries"
+                    src="/smscode-header.avif"
+                    alt="SMS Code by SIMNETIQ — virtual numbers for SMS verification in 150+ countries"
                     fill
                     priority
                     sizes="(min-width: 1440px) 896px, (min-width: 1024px) 66vw, 100vw"
@@ -292,7 +317,7 @@ export default async function SmsActivatePage({ params }: { params: Params }) {
             {c.paletteLabel}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {smsActivatePalette.map((s) => (
+            {smsCodePalette.map((s) => (
               <Panel key={s.hex} innerClassName="p-0 overflow-hidden">
                 <div
                   className="relative aspect-[4/3] w-full"
@@ -335,19 +360,8 @@ export default async function SmsActivatePage({ params }: { params: Params }) {
                 </div>
                 <div
                   style={{
-                    fontFamily: typographyFontFamilies[i],
-                    fontSize:
-                      i === 0
-                        ? "clamp(2rem, 3.2vw, 2.75rem)"
-                        : i === 1
-                          ? "clamp(1.25rem, 1.8vw, 1.5rem)"
-                          : "clamp(1rem, 1.2vw, 1.125rem)",
-                    fontWeight: i === 0 ? 600 : i === 1 ? 400 : 400,
-                    letterSpacing:
-                      i === 0 ? "-0.04em" : i === 1 ? "-0.005em" : "0.04em",
-                    lineHeight: i === 0 ? 0.95 : i === 1 ? 1.35 : 1.45,
+                    ...typographySpecs[i],
                     color: "var(--color-text)",
-                    textTransform: i === 0 ? "uppercase" : "none",
                     direction: "ltr",
                     unicodeBidi: "isolate",
                   }}

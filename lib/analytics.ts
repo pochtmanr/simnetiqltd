@@ -9,7 +9,7 @@ type ProjectId =
   | "creator"
   | "delivery"
   | "greenflagged"
-  | "smsactivate"
+  | "smscode"
   | "visapassage";
 type ThemeValue = "system" | "light" | "dark";
 type WhyCard = "people" | "scope" | "ownership" | "support";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
 import { getDictionary } from "@/lib/dictionaries";
 import {
   LOCALES,
@@ -12,11 +12,11 @@ import { SITE_URL } from "@/lib/site";
 
 const PRIVACY_KEYWORDS = [
   "Simnetiq privacy policy",
-  "Simnetiq eSIM privacy policy",
+  "Simnetiq app privacy policy",
   "GDPR privacy policy UK",
   "Simnetiq Ltd data controller",
   "UK ICO privacy policy",
-  "eSIM app privacy policy",
+  "mobile app privacy policy UK",
   "Simnetiq data retention",
   "Simnetiq data rights",
 ];
@@ -28,17 +28,17 @@ const PRIVACY_COPY: Record<
   en: {
     title: "Privacy Policy — Simnetiq Ltd",
     description:
-      "Privacy Policy for Simnetiq Ltd and its products including the Simnetiq eSIM app. GDPR-aligned processing, UK ICO oversight, data controller at 2 Frederick Street, Kings Cross, London. Details on data collection, retention, rights, sharing with eSIM and payment processors, cookies, and children's privacy.",
+      "Privacy Policy for Simnetiq Ltd and its products. GDPR-aligned processing, UK ICO oversight, data controller at 2 Frederick Street, Kings Cross, London. Details on data collection, retention, rights, sharing with connectivity and payment processors, cookies, and children's privacy.",
   },
   he: {
     title: "מדיניות פרטיות — Simnetiq Ltd",
     description:
-      "מדיניות פרטיות של Simnetiq Ltd ושל מוצריה, כולל יישום ה-eSIM של סימנטיק. עיבוד תואם GDPR, פיקוח של ICO הבריטית, אחראי על המידע בכתובת 2 Frederick Street, Kings Cross, London. פרטי איסוף מידע, שמירה, זכויות, שיתוף עם ספקי eSIM ועיבוד תשלומים, עוגיות ופרטיות ילדים.",
+      "מדיניות פרטיות של Simnetiq Ltd ושל מוצריה. עיבוד תואם GDPR, פיקוח של ICO הבריטית, אחראי על המידע בכתובת 2 Frederick Street, Kings Cross, London. פרטי איסוף מידע, שמירה, זכויות, שיתוף עם ספקי קישוריות ועיבוד תשלומים, עוגיות ופרטיות ילדים.",
   },
   ru: {
     title: "Политика конфиденциальности — Simnetiq Ltd",
     description:
-      "Политика конфиденциальности Simnetiq Ltd и её продуктов, включая приложение Simnetiq eSIM. Обработка данных в соответствии с GDPR, надзор UK ICO, контролёр данных по адресу 2 Frederick Street, Kings Cross, London. Подробности о сборе данных, сроках хранения, правах, передаче eSIM- и платёжным процессорам, cookie и конфиденциальности детей.",
+      "Политика конфиденциальности Simnetiq Ltd и её продуктов. Обработка данных в соответствии с GDPR, надзор UK ICO, контролёр данных по адресу 2 Frederick Street, Kings Cross, London. Подробности о сборе данных, сроках хранения, правах, передаче операторам связи и платёжным процессорам, cookie и конфиденциальности детей.",
   },
 };
 
@@ -92,10 +92,6 @@ export default async function PrivacyPolicyPage({
     <>
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
-          <Rail
-            items={[p.rail.index, p.rail.policy, p.rail.rev]}
-            className="mb-10"
-          />
           <p className="text-label text-[var(--color-primary-glow)]">
             {p.eyebrow}
           </p>

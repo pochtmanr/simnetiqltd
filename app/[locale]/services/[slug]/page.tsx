@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
 import {
   getAllServiceSlugs,
   getService,
@@ -220,14 +220,6 @@ export default async function ServicePage({
       {/* ============================================================ */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <Rail
-            items={[
-              sd.rail.indexTpl.replace("{code}", service.code),
-              service.badge,
-              sd.rail.brief,
-            ]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">

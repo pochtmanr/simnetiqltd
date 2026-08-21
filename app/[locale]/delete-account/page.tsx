@@ -16,12 +16,6 @@ export default async function DeleteAccountPage({
   const dict = await getDictionary(locale);
 
   return (
-    <DeleteAccountClient
-      dict={dict.deleteAccount}
-      common={{
-        openAppStore: dict.common.openAppStore,
-        openGooglePlay: dict.common.openGooglePlay,
-      }}
-    />
+    <DeleteAccountClient dict={dict.deleteAccount} />
   );
 }

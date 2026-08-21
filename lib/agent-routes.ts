@@ -25,7 +25,7 @@ const PROJECT_SLUGS = [
   "doppler-vpn",
   "physics-explained",
   "green-flagged",
-  "sms-activate",
+  "sms-code",
   "visapassage",
 ] as const;
 
