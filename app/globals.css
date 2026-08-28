@@ -19,10 +19,10 @@
   --color-border-faint: rgba(255, 255, 255, 0.04);
 
   /* Accents */
-  --color-primary: #B2451E;
-  --color-primary-dim: #7D3015;
-  --color-primary-glow: #C8795D;
-  --color-secondary: #FFB38A;
+  --color-primary: #5473A1;
+  --color-primary-dim: #3B5071;
+  --color-primary-glow: #8AA2C7;
+  --color-secondary: #A5C2E9;
   --color-tertiary: #C1BB19;
   --color-error: #FF6B5B;
 
@@ -76,10 +76,10 @@
   --color-border-faint: rgba(0, 0, 0, 0.04);
 
   /* Accents — light-theme tuned: brighter primary for contrast on cool bg */
-  --color-primary: #C84F23;
-  --color-primary-dim: #8E3614;
-  --color-primary-glow: #E06A3A;
-  --color-secondary: #C84F23;
+  --color-primary: #5473A1;
+  --color-primary-dim: #3B5071;
+  --color-primary-glow: #6E8DBB;
+  --color-secondary: #5473A1;
   --color-tertiary: #8B8612;
   --color-error: #C2392E;
 
@@ -112,10 +112,10 @@
     --color-border-strong: rgba(0, 0, 0, 0.22);
     --color-border-faint: rgba(0, 0, 0, 0.04);
 
-    --color-primary: #C84F23;
-    --color-primary-dim: #8E3614;
-    --color-primary-glow: #E06A3A;
-    --color-secondary: #C84F23;
+    --color-primary: #5473A1;
+    --color-primary-dim: #3B5071;
+    --color-primary-glow: #6E8DBB;
+    --color-secondary: #5473A1;
     --color-tertiary: #8B8612;
     --color-error: #C2392E;
 
@@ -346,7 +346,7 @@ body {
 }
 
 /*
- * Slide-fill CTA — text label that grows an orange fill from the
+ * Slide-fill CTA — text label that grows a brand-blue fill from the
  * leading edge on parent .group hover (right edge in RTL).
  */
 .cta-fill {
@@ -430,7 +430,7 @@ a:hover > .gradient-shell,
 .gradient-shell.is-hover:hover {
   background: linear-gradient(
     145deg,
-    rgba(255, 179, 138, 0.38) 0%,
+    rgba(165, 194, 233, 0.38) 0%,
     rgba(255, 255, 255, 0.08) 40%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -520,7 +520,7 @@ a:hover > .gradient-shell,
 [dir="rtl"] .gradient-shell.is-hover:hover {
   background: linear-gradient(
     -145deg,
-    rgba(255, 179, 138, 0.38) 0%,
+    rgba(165, 194, 233, 0.38) 0%,
     rgba(255, 255, 255, 0.08) 40%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -547,7 +547,7 @@ a:hover > .gradient-shell,
 [data-theme="light"] .gradient-shell.is-hover:hover {
   background: linear-gradient(
     145deg,
-    rgba(178, 69, 30, 0.32) 0%,
+    rgba(84, 115, 161, 0.32) 0%,
     rgba(0, 0, 0, 0.06) 40%,
     rgba(0, 0, 0, 0) 100%
   );
@@ -565,7 +565,7 @@ a:hover > .gradient-shell,
 [data-theme="light"][dir="rtl"] .gradient-shell.is-hover:hover {
   background: linear-gradient(
     -145deg,
-    rgba(178, 69, 30, 0.32) 0%,
+    rgba(84, 115, 161, 0.32) 0%,
     rgba(0, 0, 0, 0.06) 40%,
     rgba(0, 0, 0, 0) 100%
   );
@@ -747,7 +747,7 @@ body > header {
  * Background is an Obsidian-style knowledge graph (components/hero-graph.tsx):
  * clustered nodes and links drawn as ONE CENTRED FIGURE, sized to about the
  * copy column and cleared in the middle so the display type sits on the page
- * ground rather than on the graph. Monochrome, with the brand orange reserved
+ * ground rather than on the graph. Monochrome, with the brand blue reserved
  * for hubs and their spokes.
  *
  * The canvas is transparent and the section carries the page ground, so the

@@ -16,7 +16,7 @@ import { useEffect, useRef } from "react";
  * 2, density scaled down on small viewports, rendering paused while off-screen
  * or the tab is hidden, and a single static frame under `prefers-reduced-motion`.
  *
- * Palette is monochrome + the brand orange (--color-primary family), per theme.
+ * Palette is monochrome + the brand blue (--color-primary family), per theme.
  */
 
 const TAU = Math.PI * 2;
@@ -26,7 +26,7 @@ type Node = {
   y: number;
   r: number; // radius in graph units
   z: number; // 0 far … 1 near — drives parallax, size and alpha
-  hub: boolean; // orange: a hub, or one of the scattered accent notes
+  hub: boolean; // accent: a hub, or one of the scattered accent notes
   glow: boolean; // only the true hubs carry a halo
 
   phase: number;

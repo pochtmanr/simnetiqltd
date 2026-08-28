@@ -24,8 +24,8 @@ const COLORS = {
   text: "#EBEBEB",
   muted: "#9A9A9A",
   faint: "#6A6A6A",
-  accent: "#C8795D",
-  primary: "#B2451E",
+  accent: "#8AA2C7",
+  primary: "#5473A1",
   ctaBorder: "rgba(255,255,255,0.18)",
 } as const;
 

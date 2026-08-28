@@ -23,8 +23,8 @@ function readSiteTheme(): CalTheme {
 }
 
 const SIMNETIQ_DARK_VARS = {
-  "--cal-brand": "#C8795D",
-  "--cal-brand-emphasis": "#B2451E",
+  "--cal-brand": "#8AA2C7",
+  "--cal-brand-emphasis": "#5473A1",
   "--cal-brand-text": "#FFFFFF",
   "--cal-bg": "#07090D",
   "--cal-bg-muted": "#0F1115",
@@ -45,8 +45,8 @@ const SIMNETIQ_DARK_VARS = {
 };
 
 const SIMNETIQ_LIGHT_VARS = {
-  "--cal-brand": "#C84F23",
-  "--cal-brand-emphasis": "#8E3614",
+  "--cal-brand": "#5473A1",
+  "--cal-brand-emphasis": "#3B5071",
   "--cal-brand-text": "#FFFFFF",
   "--cal-bg": "#FFFFFF",
   "--cal-bg-muted": "#FAFAFC",
