@@ -9,9 +9,8 @@ import {
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, type Locale } from "@/lib/i18n";
-import { buildLocalizedMetadata } from "@/lib/seo-meta";
+import { buildLocalizedMetadata, SITE_URL } from "@/lib/seo-meta";
 
-const SITE_URL = "https://simnetiq.store";
 const PROJECT_URL = "https://greenflagged.vercel.app/";
 
 const GREENFLAGGED_KEYWORDS = [

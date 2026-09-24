@@ -6,9 +6,7 @@ import { getServices } from "@/lib/services";
 import { BreadcrumbSchema } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
-import { buildLocalizedMetadata } from "@/lib/seo-meta";
-
-const SITE_URL = "https://simnetiq.store";
+import { buildLocalizedMetadata, SITE_URL } from "@/lib/seo-meta";
 
 const SERVICES_KEYWORDS = [
   "Simnetiq services",

@@ -1,6 +1,6 @@
-export const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no";
+import { SITE_URL } from "@/lib/seo-meta";
 
-const SITE_URL = "https://simnetiq.store";
+export const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no";
 
 const STATIC_LINKS: string[] = [
   `<${SITE_URL}/llms.txt>; rel="alternate"; type="text/markdown"`,
@@ -76,6 +76,7 @@ export function markdownResponseHeaders(body: string): HeadersInit {
     "Content-Type": "text/markdown; charset=utf-8",
     "Vary": "Accept",
     "Content-Signal": CONTENT_SIGNAL,
+    "X-Robots-Tag": "noindex",
     "x-markdown-tokens": String(estimateTokens(body)),
     "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
     "Link": [

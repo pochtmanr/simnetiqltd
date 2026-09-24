@@ -103,7 +103,7 @@ export default function GlobalNotFound() {
                       <SpecRow label="Status" value="404 · Not Found" />
                       <SpecRow label="Method" value="GET" />
                       <SpecRow label="Route" value="unresolved" />
-                      <SpecRow label="Host" value="simnetiq.store" />
+                      <SpecRow label="Host" value="simnetiq.com" />
                       <div className="mt-6 flex items-center gap-2">
                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
                         <span className="text-mono text-[var(--color-primary-glow)]">

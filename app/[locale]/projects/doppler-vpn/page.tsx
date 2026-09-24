@@ -9,9 +9,7 @@ import {
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, type Locale } from "@/lib/i18n";
-import { buildLocalizedMetadata } from "@/lib/seo-meta";
-
-const SITE_URL = "https://simnetiq.store";
+import { buildLocalizedMetadata, SITE_URL } from "@/lib/seo-meta";
 
 const DOPPLER_KEYWORDS = [
   "Doppler VPN",
@@ -50,6 +48,7 @@ export async function generateMetadata({
     keywords: DOPPLER_KEYWORDS,
     ogImage: "/doppler-header.avif",
     ogType: "article",
+    markdownAlternate: true,
   });
 }
 

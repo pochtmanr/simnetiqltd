@@ -8,8 +8,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
-
-const SITE_URL = "https://simnetiq.store";
+import { SITE_URL } from "@/lib/seo-meta";
 
 const PRIVACY_KEYWORDS = [
   "Simnetiq privacy policy",
@@ -64,6 +63,7 @@ export async function generateMetadata({
     description: c.description,
     keywords: PRIVACY_KEYWORDS,
     alternates: { canonical: url, languages },
+    robots: { index: false, follow: true },
     openGraph: {
       title: c.title,
       description: c.description,

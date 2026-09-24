@@ -3,10 +3,8 @@ import {
   getServiceFullTitle,
   type Service,
 } from "@/lib/services";
-import { ROUTE_COPY } from "@/lib/seo-meta";
+import { ROUTE_COPY, SITE_URL } from "@/lib/seo-meta";
 import type { Locale } from "@/lib/i18n";
-
-const SITE_URL = "https://simnetiq.store";
 
 type Phrasebook = {
   intro: string;
@@ -110,7 +108,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     sitemapLine: "Sitemap",
     fullTitle: "Simnetiq — Full Content (llms-full.txt)",
     fullIntro:
-      "Inlined content of every primary page on simnetiq.store, in Markdown, for single-fetch consumption by AI agents.",
+      "Inlined content of every primary page on simnetiq.com, in Markdown, for single-fetch consumption by AI agents.",
     fullCanonical: "Canonical site",
     fullLastGenerated: "Last generated",
     fullSeeAlso: "See also",
@@ -231,7 +229,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     sitemapLine: "מפת אתר",
     fullTitle: "Simnetiq — תוכן מלא (llms-full.txt)",
     fullIntro:
-      "תוכן משובץ של כל עמוד עיקרי ב-simnetiq.store, ב-Markdown, לצריכה בבקשה אחת על ידי סוכני AI.",
+      "תוכן משובץ של כל עמוד עיקרי ב-simnetiq.com, ב-Markdown, לצריכה בבקשה אחת על ידי סוכני AI.",
     fullCanonical: "אתר קנוני",
     fullLastGenerated: "נוצר לאחרונה",
     fullSeeAlso: "ראו גם",
@@ -351,7 +349,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     sitemapLine: "Карта сайта",
     fullTitle: "Simnetiq — Полный контент (llms-full.txt)",
     fullIntro:
-      "Встроенный контент каждой основной страницы simnetiq.store в Markdown — для одного запроса AI-агентами.",
+      "Встроенный контент каждой основной страницы simnetiq.com в Markdown — для одного запроса AI-агентами.",
     fullCanonical: "Канонический сайт",
     fullLastGenerated: "Последняя генерация",
     fullSeeAlso: "См. также",

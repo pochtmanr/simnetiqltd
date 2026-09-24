@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LOCALES, LOCALE_HTML_LANG, type Locale } from "@/lib/i18n";
 
-export const SITE_URL = "https://simnetiq.store";
+export const SITE_URL = "https://simnetiq.com";
 export const SITE_NAME = "Simnetiq";
 
 const OG_LOCALE: Record<Locale, string> = {
