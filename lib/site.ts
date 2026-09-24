@@ -6,4 +6,4 @@
  *
  * No trailing slash. Callers append their own leading-slash paths.
  */
-export const SITE_URL = "https://simnetiq.store";
+export const SITE_URL = "https://simnetiq.com";

@@ -60,7 +60,7 @@ const COPY = {
     ctaPrimary: "Book a call",
     ctaSecondary: "View recent work",
     address: "Simnetiq · Berlin, Germany",
-    why: "You're receiving this because you contacted us at simnetiq.store.",
+    why: "You're receiving this because you contacted us at simnetiq.com.",
     optOut: "Reply to this email with STOP if you'd rather not hear back.",
     rights: "Simnetiq",
     textGreeting: (firstName: string) => `Hi ${firstName},`,
@@ -69,7 +69,7 @@ const COPY = {
     textP3: "We'll respond within one business day.",
     textBookHref: "Book a call: ",
     textWorkHref: "View recent work: ",
-    textWhy: "You're receiving this because you contacted us at simnetiq.store.",
+    textWhy: "You're receiving this because you contacted us at simnetiq.com.",
   },
   he: {
     subject: "תודה שפנית ל-Simnetiq",
@@ -80,7 +80,7 @@ const COPY = {
     ctaPrimary: "הזמנת שיחה",
     ctaSecondary: "עבודות אחרונות",
     address: "Simnetiq · ברלין, גרמניה",
-    why: "קיבלת את ההודעה הזו כי יצרת קשר דרך simnetiq.store.",
+    why: "קיבלת את ההודעה הזו כי יצרת קשר דרך simnetiq.com.",
     optOut: "השב/י על המייל הזה עם המילה STOP אם את/ה מעדיף/ה לא לקבל תגובה.",
     rights: "Simnetiq",
     textGreeting: (firstName: string) => `שלום ${firstName},`,
@@ -89,7 +89,7 @@ const COPY = {
     textP3: "נחזור אליך תוך יום עסקים אחד.",
     textBookHref: "הזמנת שיחה: ",
     textWorkHref: "עבודות אחרונות: ",
-    textWhy: "קיבלת את ההודעה הזו כי יצרת קשר דרך simnetiq.store.",
+    textWhy: "קיבלת את ההודעה הזו כי יצרת קשר דרך simnetiq.com.",
   },
   ru: {
     subject: "Спасибо, что написали в Simnetiq",
@@ -100,7 +100,7 @@ const COPY = {
     ctaPrimary: "Записаться на звонок",
     ctaSecondary: "Свежие проекты",
     address: "Simnetiq · Берлин, Германия",
-    why: "Вы получили это письмо, потому что обратились к нам на simnetiq.store.",
+    why: "Вы получили это письмо, потому что обратились к нам на simnetiq.com.",
     optOut: "Ответьте на это письмо словом STOP, если не хотите получать ответ.",
     rights: "Simnetiq",
     textGreeting: (firstName: string) => `Здравствуйте, ${firstName}!`,
@@ -109,7 +109,7 @@ const COPY = {
     textP3: "Ответим в течение одного рабочего дня.",
     textBookHref: "Записаться на звонок: ",
     textWorkHref: "Свежие проекты: ",
-    textWhy: "Вы получили это письмо, потому что обратились к нам на simnetiq.store.",
+    textWhy: "Вы получили это письмо, потому что обратились к нам на simnetiq.com.",
   },
 } as const;
 

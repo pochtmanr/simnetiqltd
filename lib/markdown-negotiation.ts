@@ -13,6 +13,7 @@ function markdownResponseHeaders(body: string): HeadersInit {
     "Content-Type": "text/markdown; charset=utf-8",
     "Vary": "Accept",
     "Content-Signal": CONTENT_SIGNAL,
+    "X-Robots-Tag": "noindex",
     "x-markdown-tokens": String(estimateTokens(body)),
     "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
     "Link": [

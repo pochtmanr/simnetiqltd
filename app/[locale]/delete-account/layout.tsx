@@ -59,7 +59,7 @@ export async function generateMetadata({
     description: c.description,
     keywords: DELETE_KEYWORDS,
     alternates: { canonical: url, languages },
-    robots: { index: true, follow: true },
+    robots: { index: false, follow: true },
     openGraph: {
       title: c.title,
       description: c.description,

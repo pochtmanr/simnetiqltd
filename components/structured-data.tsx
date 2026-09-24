@@ -147,7 +147,7 @@ const professionalService = {
               "@type": "Service",
               name: "iOS and Android Application Development",
               serviceType: "Mobile app development",
-              url: `${BASE_URL}/services/mobile-desktop`,
+              url: `${BASE_URL}/en/services/mobile-desktop`,
             },
             priceCurrency: "GBP",
             price: "1000",
@@ -170,7 +170,7 @@ const professionalService = {
               "@type": "Service",
               name: "AI features, n8n pipelines, agentic workflows",
               serviceType: "AI engineering and automation",
-              url: `${BASE_URL}/services/ai-automation`,
+              url: `${BASE_URL}/en/services/ai-automation`,
             },
             priceCurrency: "GBP",
             price: "1500",
@@ -187,7 +187,7 @@ const professionalService = {
               "@type": "Service",
               name: "Landing Pages, SaaS Platforms, Billing and Auth",
               serviceType: "Web development",
-              url: `${BASE_URL}/services/web-platforms`,
+              url: `${BASE_URL}/en/services/web-platforms`,
             },
             priceCurrency: "GBP",
             price: "800",
@@ -329,7 +329,7 @@ export function ServiceSchema({
   serviceTypes,
   priceFrom,
 }: ServiceSchemaInput) {
-  const url = `${BASE_URL}/services/${slug}`;
+  const url = `${BASE_URL}/en/services/${slug}`;
   const data = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -432,7 +432,7 @@ export function PortfolioSchema({ items }: { items: ProjectItem[] }) {
   const data = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": `${BASE_URL}/projects#portfolio`,
+    "@id": `${BASE_URL}/en/projects#portfolio`,
     name: "Simnetiq deployments",
     itemListElement: items.map((p, i) => ({
       "@type": "ListItem",
