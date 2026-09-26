@@ -1,0 +1,19 @@
+<svg width="709" height="709" viewBox="157 156.5 708.5 708.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main bubble runs #59A1FC -> #276CC5 across its own width (x 204..782 in
+         the 1024 grid). userSpaceOnUse, not objectBoundingBox, so the tight-crop
+         viewBox in brand-logo.svg renders identically to the full 1024 one. -->
+    <linearGradient id="bubble" gradientUnits="userSpaceOnUse" x1="204" y1="0" x2="782" y2="0">
+      <stop offset="0" stop-color="#59A1FC"/>
+      <stop offset="1" stop-color="#276CC5"/>
+    </linearGradient>
+  </defs>
+  <path fill="#C8DCF7" d="M226 294 H666 A69 69 0 0 1 735 363 V658 A69 69 0 0 1 666 727 H358 L230 857 V727 H226 A69 69 0 0 1 157 658 V363 A69 69 0 0 1 226 294 Z"/>
+  <path fill="url(#bubble)" d="M273 247 H713 A69 69 0 0 1 782 316 V611 A69 69 0 0 1 713 680 H405 L277 810 V680 H273 A69 69 0 0 1 204 611 V316 A69 69 0 0 1 273 247 Z"/>
+  <g fill="#C8DCF7">
+    <circle cx="348.5" cy="463.5" r="48"/>
+    <circle cx="493" cy="463.5" r="48"/>
+    <circle cx="637.5" cy="463.5" r="48"/>
+    <circle cx="782.5" cy="246.5" r="83"/>
+  </g>
+</svg>

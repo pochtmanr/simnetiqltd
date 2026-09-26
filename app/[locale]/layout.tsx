@@ -3,18 +3,20 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import {
   Inter,
-  Space_Grotesk,
+  Bricolage_Grotesque,
   JetBrains_Mono,
   Instrument_Serif,
   Rubik,
   Lunasima,
+  Geist,
+  Geist_Mono,
+  Cormorant_Garamond,
 } from "next/font/google";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
-import { BuildRail } from "@/components/build-rail";
 import { ThemeProvider, type ThemeChoice } from "@/components/theme-provider";
 import { ThemeInitScript } from "@/components/theme-init-script";
 import { getDictionary } from "@/lib/dictionaries";
@@ -25,7 +27,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
-import { SITE_URL } from "@/lib/seo-meta";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,9 +35,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const spaceGrotesk = Space_Grotesk({
+// Display voice. Variable (opsz/wdth/wght) — next/font ships the variable
+// file when no explicit weight is given.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
 });
 
@@ -63,6 +66,27 @@ const lunasima = Lunasima({
   subsets: ["latin", "hebrew"],
   weight: ["400", "700"],
   variable: "--font-lunasima",
+});
+
+// VisaPassage reference fonts — used on /projects/visapassage design-system section.
+const geist = Geist({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-geist",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-geist-mono",
+});
+
+// SMS Code reference font — used on /projects/sms-code design-system section.
+// Light only: the brand sets it at 300 for section headings and stat figures.
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300"],
+  variable: "--font-cormorant",
 });
 
 const SITE_NAME = "Simnetiq";
@@ -267,7 +291,7 @@ export default async function RootLayout({
       dir={dir}
       data-theme={dataTheme}
       style={colorSchemeStyle}
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} h-full`}
+      className={`${inter.variable} ${bricolage.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} ${cormorantGaramond.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
@@ -305,7 +329,6 @@ export default async function RootLayout({
             }}
           />
           <main className="flex-1">{children}</main>
-          <BuildRail />
           <Footer locale={locale} dict={dict.footer} />
           <Analytics />
         </ThemeProvider>

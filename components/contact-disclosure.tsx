@@ -38,18 +38,13 @@ export function ContactDisclosure({
         onClick={toggle}
         aria-expanded={open}
         aria-controls="contact-form-panel"
-        className="w-full flex items-center justify-between gap-4 py-4 text-left text-mono uppercase tracking-[0.18em] text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors focus:outline-none focus-visible:text-[var(--color-primary-glow)]"
+        className="w-full flex items-center justify-between gap-4 py-4 text-left text-mono uppercase tracking-[0.18em] text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors focus:outline-none focus-visible:text-[var(--color-text)]"
       >
         <span>{heading}</span>
         <span
           aria-hidden="true"
-          className="inline-flex items-center justify-center w-5 h-5 text-[var(--color-primary-glow)]"
-          style={{
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-            transition: prefersReducedMotion
-              ? "none"
-              : "transform 0.32s ease-out",
-          }}
+          className="disclosure-icon inline-flex items-center justify-center w-5 h-5 text-[var(--color-text-dim)]"
+          style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
         >
           <svg
             viewBox="0 0 16 16"

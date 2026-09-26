@@ -3,8 +3,14 @@ import {
   getServiceFullTitle,
   type Service,
 } from "@/lib/services";
-import { ROUTE_COPY, SITE_URL } from "@/lib/seo-meta";
+import {
+  getHowWeWork,
+  getHowWeWorkFullTitle,
+  type HowWeWork,
+} from "@/lib/how-we-work";
+import { ROUTE_COPY } from "@/lib/seo-meta";
 import type { Locale } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 
 type Phrasebook = {
   intro: string;
@@ -44,6 +50,9 @@ type Phrasebook = {
   operatingPrinciples: string[];
   servicesPageHeading: string;
   projectsPageHeading: string;
+  argusHeading: string;
+  argusStack: string;
+  argusStatus: string;
   dopplerHeading: string;
   dopplerStack: string;
   dopplerStatus: string;
@@ -59,6 +68,12 @@ type Phrasebook = {
   greenFlaggedHeading: string;
   greenFlaggedStatus: string;
   greenFlaggedStack: string;
+  smsCodeHeading: string;
+  smsCodeStatus: string;
+  smsCodeStack: string;
+  visaPassageHeading: string;
+  visaPassageStatus: string;
+  visaPassageStack: string;
   contactBookingHeading: string;
   contactLines: (url: string) => string[];
   machineRefsHeading: string;
@@ -71,6 +86,10 @@ type Phrasebook = {
   taglineLabel: string;
   urlLabel: string;
   titleLabel: string;
+  howWeWorkHeading: string;
+  howWeWorkOverview: string;
+  howWeWorkPageHeading: string;
+  faqLabel: string;
 };
 
 const PHRASEBOOK: Record<Locale, Phrasebook> = {
@@ -82,8 +101,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     servicesHeading: "Services",
     projectsHeading: "Projects",
     projectLines: (url) => [
+      `- [Argus Browser](${url("/projects/argus-browser")}): Anti-detect browser on a custom C++ Chromium fork. Hundreds of isolated profiles, each with its own fingerprint, per-profile proxy and cookie jar, automated on a schedule from an Electron control plane. macOS and Windows, drivable over MCP and a local HTTP API.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Censorship-resistant VPN on VLESS-Reality with native iOS, Android, macOS and Windows clients. Zero-log, zero-registration, indistinguishable from HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source interactive physics encyclopedia with unit-tested ODE solvers, WebGL visualisations and an AI tutor at /ask grounded in the library.`,
+      `- [SMS Code by SIMNETIQ](${url("/projects/sms-code")}): Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries across 100+ services, codes in about thirty seconds, one-time coin packs with no subscription. Web and iOS.`,
+      `- [VisaPassage](${url("/projects/visapassage")}): Multi-passport visa intelligence. One encrypted profile compares every visa route across all your passports and residencies, then generates checklists and auto-fills government forms.`,
       `- [Green Flagged](${url("/projects/green-flagged")}): AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades and suggested redlines in under eight minutes. Marketing site live, scanning engine in development.`,
       `- [Creator AI](https://www.creatorai.art/en): Multi-language LLM content platform on Anthropic and OpenAI. Editorial pipelines, native iOS and Android clients.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): Logistics platform with real-time GPS driver tracking, route optimisation and full order lifecycle management.`,
@@ -116,8 +138,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     liveDeploymentsHeading:
       "Live deployments referenced from the homepage",
     liveDeployments: () => [
+      `- **Argus Browser** (https://www.browserargus.com) — Anti-detect browser on a custom Chromium fork, with a desktop control plane for profiles, proxies, automations, schedules and datasets. macOS and Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source interactive physics learning platform with accurate ODE solvers and a concepts dictionary.`,
+      `- **SMS Code by SIMNETIQ** (https://simnetiq.xyz/) — Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries, 100+ services, codes in about thirty seconds. Web and iOS.`,
+      `- **VisaPassage** (https://visapassage.com/) — Multi-passport visa intelligence. Compare visa routes across every passport and residency you hold from one encrypted profile.`,
       `- **Creator AI** (https://www.creatorai.art/en) — Neural content synthesis platform. Multi-language editorial pipelines on Anthropic and OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Logistics platform with real-time GPS driver tracking, route optimisation and order lifecycle management.`,
     ],
@@ -149,6 +174,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     servicesPageHeading: "Services",
     projectsPageHeading: "Projects",
+    argusHeading: "Argus Browser",
+    argusStack:
+      "Stack: C++ / Chromium fork (browser), Electron + React + Vite (desktop control plane), Next.js + Supabase + Revolut Merchant API (site, auth, checkout).",
+    argusStatus:
+      "Status: Production. Live at browserargus.com, v1.0.77, signed and notarised builds for macOS (Apple Silicon) and Windows 10/11. Anti-detect browser: fingerprint, WebRTC address and cookie jar applied inside the engine rather than injected into the page. Hundreds of isolated profiles per workspace, a shared proxy library with live health checks, step-tree automations on a schedule, workspace-owned datasets, and an AI assistant that runs on the customer's own provider keys. Drivable over MCP and a local HTTP API.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "Stack: Swift (iOS), Kotlin (Android), Go (server), Marzban control plane, VLESS-Reality protocol.",
@@ -172,6 +202,14 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "Status: In development. Marketing site live at greenflagged.com; scan API not yet wired. Pre-launch, first scan free.",
     greenFlaggedStack:
       "Stack: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Radix UI primitives, GSAP, pnpm.",
+    smsCodeHeading: "SMS Code by SIMNETIQ",
+    smsCodeStatus:
+      "Status: Production. Live at simnetiq.xyz with a native iOS client; rebranded from SMS Activate in August 2026. Virtual numbers in 150+ countries across 100+ services; codes arrive in about thirty seconds. Single-use numbers, cancellable activations, one-time coin packs that never expire. No SIM, no eSIM, no subscription.",
+    smsCodeStack: "Stack: Next.js, React, Tailwind CSS, Vercel; native iOS client.",
+    visaPassageHeading: "VisaPassage",
+    visaPassageStatus:
+      "Status: Production. Live at visapassage.com. Multi-passport visa comparison from a single encrypted profile; routes ranked by least paperwork, shortest wait and lowest cost. Country-specific checklists, auto-filled government forms, versioned expiry-aware document vault. Free to start. Does not guarantee visa outcomes — official government rules and consular decisions prevail.",
+    visaPassageStack: "Stack: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "Contact & booking",
     contactLines: (url) => [
       `- **Book an intro call:** Cal.com widget on ${url}`,
@@ -194,6 +232,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     taglineLabel: "Tagline",
     urlLabel: "URL",
     titleLabel: "Title",
+    howWeWorkHeading: "How we work",
+    howWeWorkOverview: "How we work — engagement terms",
+    howWeWorkPageHeading: "How we work",
+    faqLabel: "FAQ",
   },
   he: {
     intro:
@@ -203,8 +245,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     servicesHeading: "שירותים",
     projectsHeading: "פרויקטים",
     projectLines: (url) => [
+      `- [Argus Browser](${url("/projects/argus-browser")}): דפדפן אנטי-דיטקט על fork ייעודי של Chromium ב-C++. מאות פרופילים מבודדים, לכל אחד טביעת אצבע, פרוקסי ומאגר עוגיות משלו, עם אוטומציה על לוח זמנים מלוח בקרה ב-Electron. ל-macOS ול-Windows, וניתן להנעה דרך MCP ו-API מקומי.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): VPN עמיד לצנזורה על VLESS-Reality עם לקוחות מקוריים ל-iOS, Android, macOS ו-Windows. ללא לוגים, ללא רישום, בלתי ניתן להבחנה מ-HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL ומורה AI ב-/ask המבוסס על הספרייה.`,
+      `- [SMS Code מבית SIMNETIQ](${url("/projects/sms-code")}): מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-150 מדינות ויותר מ-100 שירותים, קודים תוך כשלושים שניות, חבילות מטבעות חד-פעמיות ללא מנוי. ווב ו-iOS.`,
+      `- [VisaPassage](${url("/projects/visapassage")}): מודיעין ויזות לבעלי דרכונים מרובים. פרופיל מוצפן אחד משווה כל מסלול ויזה על פני כל הדרכונים והתושבויות שלכם, ואז מייצר רשימות מסמכים וממלא אוטומטית טפסים ממשלתיים.`,
       `- [Green Flagged](${url("/projects/green-flagged")}): סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות. אתר השיווק עלה, מנוע הסריקה בפיתוח.`,
       `- [Creator AI](https://www.creatorai.art/en): פלטפורמת תוכן LLM רב-לשונית על Anthropic ו-OpenAI. צנרת עריכה, לקוחות מקוריים ל-iOS ו-Android.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה מלא.`,
@@ -236,8 +281,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     homeHeading: "בית",
     liveDeploymentsHeading: "פריסות חיות בעמוד הבית",
     liveDeployments: () => [
+      `- **Argus Browser** (https://www.browserargus.com) — דפדפן אנטי-דיטקט על fork ייעודי של Chromium, עם לוח בקרה שולחני לפרופילים, פרוקסי, אוטומציות, לוחות זמנים ומאגרי נתונים. ל-macOS ול-Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — VPN VLESS-Reality מותאם אישית עם צמתים גיאו-מבוזרים ללא לוגים. לקוחות מקוריים ל-iOS ו-Android.`,
       `- **Physics.explained** (https://physics.it.com/) — פלטפורמת לימוד פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE מדויקים ומילון מושגים.`,
+      `- **SMS Code מבית SIMNETIQ** (https://simnetiq.xyz/) — מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-150 מדינות, יותר מ-100 שירותים, קודים תוך כשלושים שניות. ווב ו-iOS.`,
+      `- **VisaPassage** (https://visapassage.com/) — מודיעין ויזות לבעלי דרכונים מרובים. השוואת מסלולי ויזה על פני כל דרכון ותושבות שברשותכם מתוך פרופיל מוצפן אחד.`,
       `- **Creator AI** (https://www.creatorai.art/en) — פלטפורמת סינתזת תוכן נוירונית. צנרת עריכה רב-לשונית על Anthropic ו-OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה.`,
     ],
@@ -269,6 +317,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     servicesPageHeading: "שירותים",
     projectsPageHeading: "פרויקטים",
+    argusHeading: "Argus Browser",
+    argusStack:
+      "סטאק: C++ / fork של Chromium (הדפדפן), Electron + React + Vite (לוח בקרה שולחני), Next.js + Supabase + Revolut Merchant API (אתר, הזדהות, תשלום).",
+    argusStatus:
+      "סטטוס: ייצור. פעיל ב-browserargus.com, גרסה v1.0.77, בניות חתומות ומאושרות ל-macOS (Apple Silicon) ול-Windows 10/11. דפדפן אנטי-דיטקט: טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות מוחלים בתוך המנוע ולא מוזרקים לדף. מאות פרופילים מבודדים בכל סביבת עבודה, ספריית פרוקסי משותפת עם בדיקות תקינות חיות, אוטומציות מבוססות עץ שלבים על לוח זמנים, מאגרי נתונים בבעלות סביבת העבודה, ועוזר AI שרץ על מפתחות הספק של הלקוח עצמו. ניתן להנעה דרך MCP ו-API מקומי.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "סטאק: Swift (iOS), Kotlin (Android), Go (שרת), בקרת Marzban, פרוטוקול VLESS-Reality.",
@@ -292,6 +345,15 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "סטטוס: בפיתוח. אתר השיווק עלה ב-greenflagged.com; API הסריקה עוד לא חובר. טרום-השקה, סריקה ראשונה חינם.",
     greenFlaggedStack:
       "סטאק: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, רכיבי Radix UI, GSAP, pnpm.",
+    smsCodeHeading: "SMS Code מבית SIMNETIQ",
+    smsCodeStatus:
+      "סטטוס: ייצור. חי ב-simnetiq.xyz עם אפליקציה מקורית ל-iOS; עבר מיתוג מחדש מ-SMS Activate באוגוסט 2026. מספרים וירטואליים ביותר מ-150 מדינות ויותר מ-100 שירותים; הקוד מגיע תוך כשלושים שניות. מספרים לשימוש חד-פעמי, אפשרות לבטל הפעלה ממתינה, וחבילות מטבעות חד-פעמיות שאינן פגות תוקף. בלי SIM, בלי eSIM, בלי מנוי.",
+    smsCodeStack:
+      "סטאק: Next.js, React, Tailwind CSS, Vercel; אפליקציה מקורית ל-iOS.",
+    visaPassageHeading: "VisaPassage",
+    visaPassageStatus:
+      "סטטוס: ייצור. חי ב-visapassage.com. השוואת ויזות לבעלי דרכונים מרובים מתוך פרופיל מוצפן אחד; המסלולים מדורגים לפי מינימום ניירת, זמן המתנה קצר ועלות נמוכה. רשימות מסמכים ייעודיות למדינה, מילוי אוטומטי של טפסים ממשלתיים וכספת מסמכים עם ניהול גרסאות ומעקב תפוגה. התחלה חינם. אינה מבטיחה קבלת ויזה — כללי הממשלה והחלטות הקונסוליה גוברים.",
+    visaPassageStack: "סטאק: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "יצירת קשר והזמנה",
     contactLines: (url) => [
       `- **הזמנת שיחת היכרות:** ווידג'ט Cal.com ב-${url}`,
@@ -314,6 +376,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     taglineLabel: "כותרת משנה",
     urlLabel: "כתובת",
     titleLabel: "כותרת",
+    howWeWorkHeading: "איך אנחנו עובדים",
+    howWeWorkOverview: "איך אנחנו עובדים — תנאי התקשרות",
+    howWeWorkPageHeading: "איך אנחנו עובדים",
+    faqLabel: "שאלות נפוצות",
   },
   ru: {
     intro:
@@ -323,8 +389,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     servicesHeading: "Услуги",
     projectsHeading: "Проекты",
     projectLines: (url) => [
+      `- [Argus Browser](${url("/projects/argus-browser")}): Анти-детект браузер на собственном форке Chromium (C++). Сотни изолированных профилей, у каждого свой отпечаток, прокси и хранилище cookie, с автоматизацией по расписанию из панели управления на Electron. macOS и Windows, управляется через MCP и локальный HTTP API.`,
       `- [Doppler VPN](${url("/projects/doppler-vpn")}): Устойчивый к цензуре VPN на VLESS-Reality с нативными клиентами для iOS, Android, macOS и Windows. Без логов, без регистрации, неотличим от HTTPS.`,
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source интерактивная энциклопедия физики с покрытыми тестами решателями ОДУ, WebGL-визуализациями и AI-репетитором на /ask, основанным на материалах библиотеки.`,
+      `- [SMS Code от SIMNETIQ](${url("/projects/sms-code")}): Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 150+ странах для 100+ сервисов, код примерно за тридцать секунд, разовые пакеты монет без подписки. Веб и iOS.`,
+      `- [VisaPassage](${url("/projects/visapassage")}): Визовая аналитика для владельцев нескольких паспортов. Один зашифрованный профиль сравнивает все визовые маршруты по всем вашим паспортам и видам на жительство, затем формирует чек-листы и заполняет государственные формы.`,
       `- [Green Flagged](${url("/projects/green-flagged")}): AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут. Маркетинговый сайт запущен, движок сканирования в разработке.`,
       `- [Creator AI](https://www.creatorai.art/en): Многоязычная LLM-платформа контента на Anthropic и OpenAI. Редакторские пайплайны, нативные клиенты iOS и Android.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и полным циклом управления заказами.`,
@@ -357,8 +426,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     liveDeploymentsHeading:
       "Живые продакшен-, упомянутые на главной",
     liveDeployments: () => [
+      `- **Argus Browser** (https://www.browserargus.com) — Анти-детект браузер на собственном форке Chromium с настольной панелью управления профилями, прокси, автоматизациями, расписаниями и таблицами данных. macOS и Windows.`,
       `- **Doppler VPN** (https://dopplervpn.org) — Кастомный VPN на VLESS-Reality с гео-распределёнными нодами без логов. Нативные клиенты для iOS и Android.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source интерактивная платформа изучения физики с точными решателями ОДУ и словарём концепций.`,
+      `- **SMS Code от SIMNETIQ** (https://simnetiq.xyz/) — Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 150+ странах, 100+ сервисов, код примерно за тридцать секунд. Веб и iOS.`,
+      `- **VisaPassage** (https://visapassage.com/) — Визовая аналитика для владельцев нескольких паспортов. Сравнение визовых маршрутов по всем вашим паспортам и видам на жительство из одного зашифрованного профиля.`,
       `- **Creator AI** (https://www.creatorai.art/en) — Платформа нейросетевого синтеза контента. Многоязычные редакторские пайплайны на Anthropic и OpenAI.`,
       `- **Go Delivery / ISR Shipping** (https://www.isrshipping.com) — Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и управлением жизненным циклом заказа.`,
     ],
@@ -390,6 +462,11 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     servicesPageHeading: "Услуги",
     projectsPageHeading: "Проекты",
+    argusHeading: "Argus Browser",
+    argusStack:
+      "Стек: C++ / форк Chromium (браузер), Electron + React + Vite (настольная панель управления), Next.js + Supabase + Revolut Merchant API (сайт, авторизация, оплата).",
+    argusStatus:
+      "Статус: продакшен. Работает на browserargus.com, версия v1.0.77, подписанные и нотаризованные сборки для macOS (Apple Silicon) и Windows 10/11. Анти-детект браузер: отпечаток, адрес WebRTC и хранилище cookie применяются внутри движка, а не внедряются в страницу. Сотни изолированных профилей в рабочем пространстве, общая библиотека прокси с живыми проверками доступности, автоматизации в виде дерева шагов по расписанию, таблицы данных во владении пространства и AI-ассистент, работающий на собственных ключах клиента. Управляется через MCP и локальный HTTP API.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "Стек: Swift (iOS), Kotlin (Android), Go (сервер), control plane Marzban, протокол VLESS-Reality.",
@@ -413,6 +490,15 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "Статус: В разработке. Маркетинговый сайт запущен на greenflagged.com; API сканирования ещё не подключён. Пред-релиз, первая проверка бесплатно.",
     greenFlaggedStack:
       "Стек: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, примитивы Radix UI, GSAP, pnpm.",
+    smsCodeHeading: "SMS Code от SIMNETIQ",
+    smsCodeStatus:
+      "Статус: Продакшен. Работает на simnetiq.xyz, есть нативный клиент для iOS; ребрендинг из SMS Activate в августе 2026 года. Виртуальные номера в 150+ странах для 100+ сервисов; код приходит примерно за тридцать секунд. Номера одноразовые, ожидающую активацию можно отменить, разовые пакеты монет не сгорают. Без SIM, без eSIM, без подписки.",
+    smsCodeStack:
+      "Стек: Next.js, React, Tailwind CSS, Vercel; нативный клиент для iOS.",
+    visaPassageHeading: "VisaPassage",
+    visaPassageStatus:
+      "Статус: Продакшен. Работает на visapassage.com. Сравнение виз для владельцев нескольких паспортов из одного зашифрованного профиля; маршруты ранжируются по объёму бумаг, сроку ожидания и стоимости. Чек-листы под конкретную страну, автозаполнение государственных форм, хранилище документов с версиями и контролем сроков. Начать бесплатно. Не гарантирует получение визы — официальные правила и решения консульства имеют приоритет.",
+    visaPassageStack: "Стек: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "Контакты и запись",
     contactLines: (url) => [
       `- **Запись на ознакомительный звонок:** виджет Cal.com на ${url}`,
@@ -435,6 +521,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     taglineLabel: "Слоган",
     urlLabel: "URL",
     titleLabel: "Заголовок",
+    howWeWorkHeading: "Как мы работаем",
+    howWeWorkOverview: "Как мы работаем — условия сотрудничества",
+    howWeWorkPageHeading: "Как мы работаем",
+    faqLabel: "Частые вопросы",
   },
 };
 
@@ -483,6 +573,35 @@ ${meta}
 `;
 }
 
+function renderHowWeWork(e: HowWeWork, locale: Locale, p: Phrasebook): string {
+  const fullTitle = getHowWeWorkFullTitle(e);
+  const url = `${SITE_URL}/${locale}/how-we-work/${e.slug}`;
+
+  const sections = e.sections
+    .map((s) => `### ${s.heading}\n${s.body}`)
+    .join("\n\n");
+
+  const faq = e.faq.map((f) => `**${f.q}**\n${f.a}`).join("\n\n");
+
+  const meta = e.meta.map((m) => `- **${m.label}**: ${m.value}`).join("\n");
+
+  return `## ${fullTitle} (${e.code})
+${p.urlLabel}: ${url}
+${p.badgeLabel}: ${e.badge}
+${p.taglineLabel}: ${e.tagline}
+
+${e.summary}
+
+${sections}
+
+### ${p.faqLabel}
+${faq}
+
+### ${p.metaLabel}
+${meta}
+`;
+}
+
 export function buildLlmsTxt(locale: Locale): string {
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
@@ -492,6 +611,13 @@ export function buildLlmsTxt(locale: Locale): string {
     .map((s) => {
       const title = getServiceFullTitle(s);
       return `- [${title}](${localeUrl(`/services/${s.slug}`)}): ${s.tagline}`;
+    })
+    .join("\n");
+
+  const howWeWorkLinks = getHowWeWork(locale)
+    .map((e) => {
+      const title = getHowWeWorkFullTitle(e);
+      return `- [${title}](${localeUrl(`/how-we-work/${e.slug}`)}): ${e.tagline}`;
     })
     .join("\n");
 
@@ -509,11 +635,16 @@ ${serviceLinks}
 
 ${p.projectLines(localeUrl).join("\n")}
 
+## ${p.howWeWorkHeading}
+
+${howWeWorkLinks}
+
 ## ${p.companyHeading}
 
 - [${p.about}](${localeUrl("/about")})
 - [${p.servicesOverview}](${localeUrl("/services")})
 - [${p.projectsIndex}](${localeUrl("/projects")})
+- [${p.howWeWorkOverview}](${localeUrl("/how-we-work")})
 
 ## ${p.contactHeading}
 
@@ -533,8 +664,9 @@ ${p.alternateLocaleLines.join("\n")}
 
 // ─── Per-page Markdown builders ───────────────────────────────────────────
 // These return self-contained MD documents for each MD-supported route.
-// Used by app/[locale]/*/markdown/route.ts handlers and indirectly by
-// proxy.ts during Accept: text/markdown content negotiation.
+// Used by the app/[locale]/*/markdown/route.ts handlers. Every page that
+// advertises a `text/markdown` alternate must have a matching handler here —
+// see lib/seo-meta.ts `markdownAlternate`.
 
 function buildHeader(p: Phrasebook, title: string, url: string): string {
   return `# ${title}
@@ -627,6 +759,42 @@ export function buildServiceMarkdown(
 ${renderService(service, locale, p)}`;
 }
 
+export function buildHowWeWorkIndexMarkdown(locale: Locale): string {
+  const p = PHRASEBOOK[locale];
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const entries = getHowWeWork(locale);
+  const copy = ROUTE_COPY.howWeWork[locale];
+
+  const entryLinks = entries
+    .map((e) => {
+      const title = getHowWeWorkFullTitle(e);
+      return `- [${title}](${localeUrl(`/how-we-work/${e.slug}`)}) — ${e.tagline}`;
+    })
+    .join("\n");
+
+  return `${buildHeader(p, copy.title, localeUrl("/how-we-work"))}
+${copy.description}
+
+## ${p.howWeWorkHeading}
+
+${entryLinks}
+`;
+}
+
+export function buildHowWeWorkMarkdown(
+  locale: Locale,
+  slug: string
+): string | null {
+  const p = PHRASEBOOK[locale];
+  const entry = getHowWeWork(locale).find((e) => e.slug === slug);
+  if (!entry) return null;
+  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
+  const title = getHowWeWorkFullTitle(entry);
+
+  return `${buildHeader(p, title, localeUrl(`/how-we-work/${slug}`))}
+${renderHowWeWork(entry, locale, p)}`;
+}
+
 export function buildProjectsIndexMarkdown(locale: Locale): string {
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
@@ -648,6 +816,17 @@ export function buildProjectMarkdown(
   const p = PHRASEBOOK[locale];
   const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
 
+  if (slug === "argus-browser") {
+    const c = ROUTE_COPY.caseStudyArgus[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/argus-browser"))}
+Live: https://www.browserargus.com
+
+${c.description}
+
+${p.argusStack}
+${p.argusStatus}
+`;
+  }
   if (slug === "doppler-vpn") {
     const c = ROUTE_COPY.caseStudyDoppler[locale];
     return `${buildHeader(p, c.title, localeUrl("/projects/doppler-vpn"))}
@@ -681,6 +860,28 @@ ${p.greenFlaggedStack}
 ${p.greenFlaggedStatus}
 `;
   }
+  if (slug === "sms-code") {
+    const c = ROUTE_COPY.caseStudySmsCode[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/sms-code"))}
+Live: https://simnetiq.xyz
+
+${c.description}
+
+${p.smsCodeStack}
+${p.smsCodeStatus}
+`;
+  }
+  if (slug === "visapassage") {
+    const c = ROUTE_COPY.caseStudyVisaPassage[locale];
+    return `${buildHeader(p, c.title, localeUrl("/projects/visapassage"))}
+Live: https://visapassage.com
+
+${c.description}
+
+${p.visaPassageStack}
+${p.visaPassageStatus}
+`;
+  }
   return null;
 }
 
@@ -693,12 +894,20 @@ export function buildLlmsFullTxt(locale: Locale): string {
   const about = ROUTE_COPY.about[locale];
   const projects = ROUTE_COPY.projects[locale];
   const servicesCopy = ROUTE_COPY.services[locale];
+  const argus = ROUTE_COPY.caseStudyArgus[locale];
   const doppler = ROUTE_COPY.caseStudyDoppler[locale];
   const physics = ROUTE_COPY.caseStudyPhysics[locale];
   const greenFlagged = ROUTE_COPY.caseStudyGreenFlagged[locale];
+  const smsCode = ROUTE_COPY.caseStudySmsCode[locale];
+  const visaPassage = ROUTE_COPY.caseStudyVisaPassage[locale];
 
   const servicesSection = services
     .map((s) => renderService(s, locale, p))
+    .join("\n---\n\n");
+
+  const howWeWorkCopy = ROUTE_COPY.howWeWork[locale];
+  const howWeWorkSection = getHowWeWork(locale)
+    .map((e) => renderHowWeWork(e, locale, p))
     .join("\n---\n\n");
 
   return `# ${p.fullTitle}
@@ -757,12 +966,34 @@ ${servicesSection}
 
 ---
 
+# ${p.howWeWorkPageHeading}
+
+${p.urlLabel}: ${localeUrl("/how-we-work")}
+${p.titleLabel}: ${howWeWorkCopy.title}
+
+${howWeWorkCopy.description}
+
+${howWeWorkSection}
+
+---
+
 # ${p.projectsPageHeading}
 
 ${p.urlLabel}: ${localeUrl("/projects")}
 ${p.titleLabel}: ${projects.title}
 
 ${projects.description}
+
+## ${p.argusHeading}
+
+${p.urlLabel}: ${localeUrl("/projects/argus-browser")}
+Live: https://www.browserargus.com
+${p.titleLabel}: ${argus.title}
+
+${argus.description}
+
+${p.argusStack}
+${p.argusStatus}
 
 ## ${p.dopplerHeading}
 
@@ -785,6 +1016,28 @@ ${physics.description}
 
 ${p.physicsStack}
 ${p.physicsStatus}
+
+## ${p.smsCodeHeading}
+
+${p.urlLabel}: ${localeUrl("/projects/sms-code")}
+Live: https://simnetiq.xyz
+${p.titleLabel}: ${smsCode.title}
+
+${smsCode.description}
+
+${p.smsCodeStack}
+${p.smsCodeStatus}
+
+## ${p.visaPassageHeading}
+
+${p.urlLabel}: ${localeUrl("/projects/visapassage")}
+Live: https://visapassage.com
+${p.titleLabel}: ${visaPassage.title}
+
+${visaPassage.description}
+
+${p.visaPassageStack}
+${p.visaPassageStatus}
 
 ## ${p.greenFlaggedHeading}
 

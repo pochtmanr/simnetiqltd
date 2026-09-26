@@ -1,21 +1,21 @@
 import type { Locale } from "@/lib/i18n";
-import { SITE_URL } from "@/lib/seo-meta";
+import { SITE_URL as BASE_URL } from "@/lib/site";
 
 const organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": `${SITE_URL}/#organization`,
+  "@id": `${BASE_URL}/#organization`,
   name: "Simnetiq",
   legalName: "Simnetiq Ltd",
   alternateName: ["Simnetiq Ltd", "Simnetiq Technology Studio", "SIMNETIQ"],
-  url: SITE_URL,
+  url: BASE_URL,
   logo: {
     "@type": "ImageObject",
-    url: `${SITE_URL}/icon-512.png`,
+    url: `${BASE_URL}/icon-512.png`,
     width: 512,
     height: 512,
   },
-  image: `${SITE_URL}/icon-512.png`,
+  image: `${BASE_URL}/icon-512.png`,
   description:
     "Simnetiq is a London-based software engineering studio building high-integrity mobile apps, web platforms, AI systems, and VPN infrastructure for global clients.",
   foundingDate: "2025",
@@ -65,11 +65,11 @@ const organization = {
 const professionalService = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "@id": `${SITE_URL}/#service`,
+  "@id": `${BASE_URL}/#service`,
   name: "Simnetiq — Software Engineering Studio",
-  url: SITE_URL,
-  image: `${SITE_URL}/icon-512.png`,
-  logo: `${SITE_URL}/icon-512.png`,
+  url: BASE_URL,
+  image: `${BASE_URL}/icon-512.png`,
+  logo: `${BASE_URL}/icon-512.png`,
   description:
     "End-to-end product studio: iOS, Android, macOS, Windows and Linux applications; Next.js web platforms; LLM and AI integration; VPN and network infrastructure.",
   priceRange: "£££",
@@ -147,7 +147,7 @@ const professionalService = {
               "@type": "Service",
               name: "iOS and Android Application Development",
               serviceType: "Mobile app development",
-              url: `${SITE_URL}/en/services/mobile-desktop`,
+              url: `${BASE_URL}/en/services/mobile-desktop`,
             },
             priceCurrency: "GBP",
             price: "1000",
@@ -170,7 +170,7 @@ const professionalService = {
               "@type": "Service",
               name: "AI features, n8n pipelines, agentic workflows",
               serviceType: "AI engineering and automation",
-              url: `${SITE_URL}/en/services/ai-automation`,
+              url: `${BASE_URL}/en/services/ai-automation`,
             },
             priceCurrency: "GBP",
             price: "1500",
@@ -187,7 +187,7 @@ const professionalService = {
               "@type": "Service",
               name: "Landing Pages, SaaS Platforms, Billing and Auth",
               serviceType: "Web development",
-              url: `${SITE_URL}/en/services/web-platforms`,
+              url: `${BASE_URL}/en/services/web-platforms`,
             },
             priceCurrency: "GBP",
             price: "800",
@@ -196,18 +196,18 @@ const professionalService = {
       },
     ],
   },
-  parentOrganization: { "@id": `${SITE_URL}/#organization` },
+  parentOrganization: { "@id": `${BASE_URL}/#organization` },
 };
 
 const website = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${SITE_URL}/#website`,
-  url: SITE_URL,
+  "@id": `${BASE_URL}/#website`,
+  url: BASE_URL,
   name: "Simnetiq",
   description:
     "London software engineering studio. Mobile, web, AI and infrastructure.",
-  publisher: { "@id": `${SITE_URL}/#organization` },
+  publisher: { "@id": `${BASE_URL}/#organization` },
   inLanguage: "en-GB",
 };
 
@@ -273,6 +273,47 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   );
 }
 
+type FaqSchemaInput = {
+  items: { q: string; a: string }[];
+  /** Path after the locale segment, e.g. "/how-we-work/code-ownership". */
+  path: string;
+  locale: Locale;
+};
+
+/**
+ * FAQPage markup for a page whose questions and answers are visible on the page
+ * itself — Google requires the marked-up text to be present in the rendered HTML.
+ *
+ * The `@id` carries the locale (matching CaseStudyArticleSchema) so the three
+ * language variants of a page don't collide on one identifier.
+ */
+export function FaqSchema({ items, path, locale }: FaqSchemaInput) {
+  const url = `${BASE_URL}/${locale}${path}`;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    url,
+    inLanguage: locale,
+    isPartOf: { "@id": `${BASE_URL}/#website` },
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+  return (
+    <script
+      id={`ld-faq-${locale}${path.replace(/\//g, "-")}`}
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 type ServiceSchemaInput = {
   name: string;
   slug: string;
@@ -288,7 +329,7 @@ export function ServiceSchema({
   serviceTypes,
   priceFrom,
 }: ServiceSchemaInput) {
-  const url = `${SITE_URL}/en/services/${slug}`;
+  const url = `${BASE_URL}/en/services/${slug}`;
   const data = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -296,7 +337,7 @@ export function ServiceSchema({
     name: `${name} — Simnetiq`,
     description: summary,
     url,
-    provider: { "@id": `${SITE_URL}/#organization` },
+    provider: { "@id": `${BASE_URL}/#organization` },
     areaServed: [
       { "@type": "Country", name: "United Kingdom" },
       { "@type": "Country", name: "Germany" },
@@ -351,10 +392,10 @@ export function CaseStudyArticleSchema({
   dateModified,
   keywords,
 }: CaseStudySchemaInput) {
-  const url = `${SITE_URL}/${locale}${path}`;
+  const url = `${BASE_URL}/${locale}${path}`;
   const absoluteImage = image.startsWith("http")
     ? image
-    : `${SITE_URL}${image}`;
+    : `${BASE_URL}${image}`;
   const data = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -366,9 +407,9 @@ export function CaseStudyArticleSchema({
     datePublished,
     dateModified: dateModified ?? datePublished,
     inLanguage: { en: "en-GB", he: "he-IL", ru: "ru-RU" }[locale],
-    author: { "@id": `${SITE_URL}/#organization` },
-    publisher: { "@id": `${SITE_URL}/#organization` },
-    isPartOf: { "@id": `${SITE_URL}/#website` },
+    author: { "@id": `${BASE_URL}/#organization` },
+    publisher: { "@id": `${BASE_URL}/#organization` },
+    isPartOf: { "@id": `${BASE_URL}/#website` },
     keywords: keywords?.join(", "),
     url,
   };
@@ -391,7 +432,7 @@ export function PortfolioSchema({ items }: { items: ProjectItem[] }) {
   const data = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": `${SITE_URL}/en/projects#portfolio`,
+    "@id": `${BASE_URL}/en/projects#portfolio`,
     name: "Simnetiq deployments",
     itemListElement: items.map((p, i) => ({
       "@type": "ListItem",
@@ -401,7 +442,7 @@ export function PortfolioSchema({ items }: { items: ProjectItem[] }) {
         name: p.name,
         url: p.url,
         description: p.description,
-        creator: { "@id": `${SITE_URL}/#organization` },
+        creator: { "@id": `${BASE_URL}/#organization` },
       },
     })),
   };

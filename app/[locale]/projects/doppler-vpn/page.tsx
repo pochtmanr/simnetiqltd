@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
+import { ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, type Locale } from "@/lib/i18n";
-import { buildLocalizedMetadata, SITE_URL } from "@/lib/seo-meta";
+import { buildLocalizedMetadata } from "@/lib/seo-meta";
+import { SITE_URL } from "@/lib/site";
 
 const DOPPLER_KEYWORDS = [
   "Doppler VPN",
@@ -110,12 +112,14 @@ export default async function DopplerVpnPage({ params }: { params: Params }) {
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <Rail
-            items={[c.rail.index, c.rail.tag, c.rail.status]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
+              <ProjectLogo
+                project="doppler"
+                alt="Doppler VPN"
+                size={56}
+                className="mb-6"
+              />
               <p className="text-label text-[var(--color-primary-glow)]">
                 {c.eyebrow}
               </p>

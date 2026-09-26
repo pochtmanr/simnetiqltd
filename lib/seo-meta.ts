@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LOCALES, LOCALE_HTML_LANG, type Locale } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 
-export const SITE_URL = "https://simnetiq.com";
 export const SITE_NAME = "Simnetiq";
 
 const OG_LOCALE: Record<Locale, string> = {
@@ -107,42 +107,6 @@ const CASE_DOPPLER: RouteCopy = {
   },
 };
 
-const SUBSCRIBE: RouteCopy = {
-  en: {
-    title: "Subscribe — Simnetiq Briefings",
-    description:
-      "Subscribe to Simnetiq briefings — quiet, infrequent updates from a London engineering studio: shipping notes, infrastructure tear-downs, and the occasional capability announcement. Double opt-in. One click to unsubscribe.",
-  },
-  he: {
-    title: "הרשמה — תדריכי סימנטיק",
-    description:
-      "הירשמו לתדריכי סימנטיק — עדכונים נדירים ושקטים מאולפן הנדסה לונדוני: הערות שיגור, פירוקי תשתית והכרזות יכולת מדי פעם. הצטרפות בשני שלבים. ביטול בלחיצה אחת.",
-  },
-  ru: {
-    title: "Подписка — рассылка Simnetiq",
-    description:
-      "Подпишитесь на рассылку Simnetiq — редкие, тихие обновления из лондонской инженерной студии: заметки о релизах, разборы инфраструктуры и иногда — новые услуги. Двойное подтверждение. Отписка в один клик.",
-  },
-};
-
-const UNSUBSCRIBE: RouteCopy = {
-  en: {
-    title: "Unsubscribe — Simnetiq",
-    description:
-      "Unsubscribe from Simnetiq emails. One click and we'll never write again.",
-  },
-  he: {
-    title: "ביטול הרשמה — סימנטיק",
-    description:
-      "ביטול הרשמה למיילים של סימנטיק. לחיצה אחת ולא נכתוב שוב.",
-  },
-  ru: {
-    title: "Отписаться — Simnetiq",
-    description:
-      "Отписка от писем Simnetiq. Один клик — и мы больше не пишем.",
-  },
-};
-
 const CASE_PHYSICS: RouteCopy = {
   en: {
     title: "Physics.explained — Case Study",
@@ -179,16 +143,166 @@ const CASE_GREENFLAGGED: RouteCopy = {
   },
 };
 
+const CASE_SMSCODE: RouteCopy = {
+  en: {
+    title: "SMS Code — Case Study",
+    description:
+      "SMS Code by SIMNETIQ hands you a real carrier number in 150+ countries for exactly as long as a verification code takes to arrive. 100+ services from Telegram to Steam, codes in about thirty seconds, single-use numbers, and one-time coin packs that never expire — no SIM, no eSIM, no subscription, no personal number handed over. Formerly SMS Activate. Web and iOS.",
+  },
+  he: {
+    title: "SMS Code — מקרה בוחן",
+    description:
+      "SMS Code מבית SIMNETIQ נותן לך מספר אמיתי ברשת סלולרית ביותר מ-150 מדינות בדיוק לפרק הזמן שלוקח לקוד אימות להגיע. יותר מ-100 שירותים — מטלגרם ועד סטים, קודים בתוך כשלושים שניות, מספרים לשימוש חד-פעמי וחבילות מטבעות חד-פעמיות שאינן פגות תוקף — בלי SIM, בלי eSIM, בלי מנוי ובלי למסור את המספר האישי. לשעבר SMS Activate. ווב ו-iOS.",
+  },
+  ru: {
+    title: "SMS Code — кейс",
+    description:
+      "SMS Code от SIMNETIQ выдаёт настоящий номер оператора в 150+ странах ровно на то время, которое нужно коду подтверждения. 100+ сервисов — от Telegram до Steam, код приходит примерно за тридцать секунд, номера одноразовые, а разовые пакеты монет не сгорают — без SIM, без eSIM, без подписки и без передачи личного номера. Ранее — SMS Activate. Веб и iOS.",
+  },
+};
+
+const CASE_VISAPASSAGE: RouteCopy = {
+  en: {
+    title: "VisaPassage — Case Study",
+    description:
+      "VisaPassage is multi-passport visa intelligence. One encrypted profile holds every passport, residency and document; the comparison engine ranks routes across all of them by least paperwork, shortest wait and lowest cost, then generates a country-specific checklist and auto-fills the government forms. Versioned, expiry-aware document vault with access logging. Free to start, no card required.",
+  },
+  he: {
+    title: "VisaPassage — מקרה בוחן",
+    description:
+      "VisaPassage היא פלטפורמת מודיעין ויזות לבעלי דרכונים מרובים. פרופיל מוצפן אחד מחזיק כל דרכון, תושבות ומסמך; מנוע ההשוואה מדרג מסלולים על פני כולם לפי מינימום ניירת, זמן ההמתנה הקצר ביותר והעלות הנמוכה ביותר, ואז מייצר רשימת מסמכים ייעודית למדינה וממלא אוטומטית את הטפסים הממשלתיים. כספת מסמכים עם ניהול גרסאות, מעקב תפוגה ותיעוד גישה. התחלה חינם, ללא כרטיס אשראי.",
+  },
+  ru: {
+    title: "VisaPassage — кейс",
+    description:
+      "VisaPassage — визовая аналитика для владельцев нескольких паспортов. Один зашифрованный профиль хранит все паспорта, виды на жительство и документы; движок сравнения ранжирует маршруты по всем из них — меньше бумаг, короче ожидание, ниже стоимость, — затем формирует чек-лист под конкретную страну и автоматически заполняет государственные формы. Хранилище документов с версиями, контролем сроков и журналом доступа. Начать бесплатно, без карты.",
+  },
+};
+
+const CASE_ARGUS: RouteCopy = {
+  en: {
+    title: "Argus Browser — Case Study",
+    description:
+      "Argus Browser is an anti-detect browser built on a custom Chromium fork. The identity — fingerprint, WebRTC address and cookie jar — is applied below the page, inside the engine, where a script cannot read around it. A desktop control plane owns the profiles, proxies, cookie sets, automations, schedules and datasets, and hands each browser session one launch payload and nothing more. Signed and notarised builds for macOS (Apple Silicon) and Windows, with MCP and a local HTTP API for driving it from your own tooling.",
+  },
+  he: {
+    title: "Argus Browser — מקרה בוחן",
+    description:
+      "Argus Browser הוא דפדפן אנטי-דיטקט הבנוי על fork ייעודי של Chromium. הזהות — טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות — מוחלת מתחת לדף, בתוך המנוע עצמו, במקום שסקריפט אינו יכול לעקוף. אפליקציית שליטה שולחנית מחזיקה את הפרופילים, הפרוקסי, ערכות העוגיות, האוטומציות, לוחות הזמנים ומאגרי הנתונים, ומוסרת לכל הפעלת דפדפן מטען שיגור אחד בלבד ולא יותר מכך. גרסאות חתומות ומאושרות ל-macOS (Apple Silicon) ול-Windows, עם MCP ו-API מקומי להנעת המערכת מתוך הכלים שלכם.",
+  },
+  ru: {
+    title: "Argus Browser — кейс",
+    description:
+      "Argus Browser — анти-детект браузер на собственном форке Chromium. Личность профиля — отпечаток, адрес WebRTC и хранилище cookie — применяется под страницей, внутри самого движка, где скрипт не может её обойти. Настольная панель управления владеет профилями, прокси, наборами cookie, автоматизациями, расписаниями и таблицами данных и передаёт каждой сессии браузера ровно один стартовый пакет и ничего сверх того. Подписанные и нотаризованные сборки для macOS (Apple Silicon) и Windows, с MCP и локальным HTTP API для управления из собственных инструментов.",
+  },
+};
+
+const HOW_WE_WORK: RouteCopy = {
+  en: {
+    title: "How We Work — Scope, Ownership, Support",
+    description:
+      "How a Simnetiq engagement actually runs: you work directly with the engineers, the price is fixed against a signed SOW before work starts, you own the source and infrastructure from day one, and support continues past launch. Four commitments, written out in full.",
+  },
+  he: {
+    title: "איך אנחנו עובדים — אפיון, בעלות, תמיכה",
+    description:
+      "איך התקשרות עם סימנטיק באמת מתנהלת: אתם עובדים ישירות מול המהנדסים, המחיר קבוע מול SOW חתום לפני תחילת העבודה, הקוד והתשתית בבעלותכם מהיום הראשון, והתמיכה נמשכת אחרי ההשקה. ארבע התחייבויות, כתובות במלואן.",
+  },
+  ru: {
+    title: "Как мы работаем — объём, права, поддержка",
+    description:
+      "Как на самом деле устроен проект с Simnetiq: вы работаете напрямую с инженерами, цена фиксируется по подписанному SOW до старта, код и инфраструктура принадлежат вам с первого дня, а поддержка продолжается после запуска. Четыре обязательства, расписанные полностью.",
+  },
+};
+
+const HWW_ENGINEERS: RouteCopy = {
+  en: {
+    title: "Work Directly With the Engineers Who Build It",
+    description:
+      "No account managers and no handoff to juniors after the pitch. Simnetiq is two owner-operators registered in England and Wales — the engineer who scopes your project is the one who writes it. What that changes about the estimate, and how the continuity risk of a two-person studio is handled.",
+  },
+  he: {
+    title: "עובדים ישירות מול המהנדסים שבונים",
+    description:
+      "בלי מנהלי לקוח ובלי העברה למפתחים זוטרים אחרי הפגישה. סימנטיק היא שני בעלים־מפעילים הרשומים באנגליה ובוויילס — המהנדס שמאפיין את הפרויקט הוא זה שכותב אותו. מה זה משנה בהערכה, ואיך מטופל סיכון ההמשכיות של סטודיו בן שני אנשים.",
+  },
+  ru: {
+    title: "Работа напрямую с инженерами, которые пишут код",
+    description:
+      "Без аккаунт-менеджеров и без передачи джуниорам после презентации. Simnetiq — это два владельца-практика, зарегистрированных в Англии и Уэльсе: тот, кто оценивает проект, тот его и пишет. Что это меняет в оценке и как закрывается риск непрерывности студии из двух человек.",
+  },
+};
+
+const HWW_SCOPE: RouteCopy = {
+  en: {
+    title: "Fixed-Price Development Against a Signed SOW",
+    description:
+      "Every Simnetiq engagement is priced in GBP against a signed statement of work: deliverables, timeline and price agreed before any code is written. What the SOW contains, why fixed price beats time and materials, how change requests are quoted, and where a fixed price genuinely does not fit.",
+  },
+  he: {
+    title: "מחיר קבוע מול מסמך עבודה חתום",
+    description:
+      "כל התקשרות עם סימנטיק מתומחרת בליש\"ט מול מסמך עבודה חתום: תוצרים, לוח זמנים ומחיר שסוכמו לפני שנכתבה שורת קוד. מה יש ב־SOW, למה מחיר קבוע עדיף על חיוב שעתי, איך מתומחרים שינויים, ואיפה מחיר קבוע באמת לא מתאים.",
+  },
+  ru: {
+    title: "Фиксированная цена по подписанному SOW",
+    description:
+      "Каждый проект Simnetiq оценивается в фунтах по подписанному SOW: результаты, сроки и цена согласованы до первой строки кода. Что входит в SOW, почему фиксированная цена лучше почасовой оплаты, как оцениваются изменения и где фиксированная цена действительно не работает.",
+  },
+};
+
+const HWW_OWNERSHIP: RouteCopy = {
+  en: {
+    title: "Who Owns the Code When You Hire an Agency",
+    description:
+      "At Simnetiq the source sits in your repository from the first commit, infrastructure and App Store accounts are billed to you, and there is no licence fee to keep using what we built. Includes the honest edge cases: hosted VPS arrangements, third-party service costs, and reused components.",
+  },
+  he: {
+    title: "למי שייך הקוד כשמעסיקים סוכנות פיתוח",
+    description:
+      "בסימנטיק הקוד יושב במאגר שלכם מהקומיט הראשון, התשתית וחשבונות ה־App Store מחויבים אליכם, ואין דמי רישיון כדי להמשיך להשתמש במה שבנינו. כולל את מקרי הקצה הכנים: שרתים שאנחנו מתפעלים, עלויות שירותי צד שלישי ורכיבים בשימוש חוזר.",
+  },
+  ru: {
+    title: "Кому принадлежит код, если нанять агентство",
+    description:
+      "В Simnetiq исходный код лежит в вашем репозитории с первого коммита, инфраструктура и аккаунты App Store оформлены на вас, и нет лицензионной платы за дальнейшее использование. Включая честные пограничные случаи: наш хостинг VPS, расходы на сторонние сервисы и переиспользуемые компоненты.",
+  },
+};
+
+const HWW_SUPPORT: RouteCopy = {
+  en: {
+    title: "Software Support and Maintenance After Launch",
+    description:
+      "Every Simnetiq build ships with error tracking, uptime monitoring and CI/CD from day one. What maintenance covers — defects, dependency and security updates, iOS and Android platform churn, App Store resubmission — what counts as new work, and what happens if a support period ends.",
+  },
+  he: {
+    title: "תמיכה ותחזוקת תוכנה אחרי ההשקה",
+    description:
+      "כל פרויקט של סימנטיק עולה לאוויר עם מעקב שגיאות, ניטור זמינות ו־CI/CD מהיום הראשון. מה התחזוקה מכסה — תקלות, עדכוני תלויות ואבטחה, שינויי פלטפורמה ב־iOS ובאנדרואיד, הגשה מחדש ל־App Store — מה נחשב עבודה חדשה, ומה קורה כשתקופת תמיכה מסתיימת.",
+  },
+  ru: {
+    title: "Поддержка и сопровождение софта после запуска",
+    description:
+      "Каждый проект Simnetiq выходит в прод с трекингом ошибок, мониторингом доступности и CI/CD с первого дня. Что покрывает поддержка — дефекты, обновления зависимостей и безопасности, изменения платформ iOS и Android, повторная подача в App Store, — что считается новой работой и что происходит, когда период поддержки заканчивается.",
+  },
+};
+
 export const ROUTE_COPY = {
   home: HOME,
   about: ABOUT,
   projects: PROJECTS,
   services: SERVICES,
-  subscribe: SUBSCRIBE,
-  unsubscribe: UNSUBSCRIBE,
+  howWeWork: HOW_WE_WORK,
+  howWeWorkEngineers: HWW_ENGINEERS,
+  howWeWorkScope: HWW_SCOPE,
+  howWeWorkOwnership: HWW_OWNERSHIP,
+  howWeWorkSupport: HWW_SUPPORT,
+  caseStudyArgus: CASE_ARGUS,
   caseStudyDoppler: CASE_DOPPLER,
   caseStudyPhysics: CASE_PHYSICS,
   caseStudyGreenFlagged: CASE_GREENFLAGGED,
+  caseStudySmsCode: CASE_SMSCODE,
+  caseStudyVisaPassage: CASE_VISAPASSAGE,
 } as const;
 
 export type RouteKey = keyof typeof ROUTE_COPY;
@@ -206,6 +320,14 @@ type BuildMetaInput = {
   keywords?: string[];
   /** Override the default OG/Twitter card image. */
   ogImage?: string;
+  /**
+   * Intrinsic size of `ogImage`. Defaults to the 1200x630 the shared card and
+   * the case-study headers use; pass explicitly for artwork of another shape,
+   * because a declared size that disagrees with the file makes scrapers lay
+   * the card out against the wrong box.
+   */
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   ogType?: "website" | "article";
   /** When true, advertise a Markdown alternate at `${url}/markdown` for AI agents. */
   markdownAlternate?: boolean;
@@ -217,6 +339,8 @@ export function buildLocalizedMetadata({
   path,
   keywords,
   ogImage,
+  ogImageWidth = 1200,
+  ogImageHeight = 630,
   ogType = "website",
   markdownAlternate = false,
 }: BuildMetaInput): Metadata {
@@ -233,6 +357,15 @@ export function buildLocalizedMetadata({
   );
 
   const image = ogImage ?? DEFAULT_OG_IMAGE;
+  // The case-study headers are AVIF while the shared fallback card is PNG.
+  // Declaring the wrong type here is not fatal, but scrapers do read it.
+  const imageType = image.endsWith(".avif")
+    ? "image/avif"
+    : image.endsWith(".webp")
+      ? "image/webp"
+      : image.endsWith(".jpg") || image.endsWith(".jpeg")
+        ? "image/jpeg"
+        : "image/png";
 
   return {
     title: { absolute: copy.title },
@@ -256,10 +389,10 @@ export function buildLocalizedMetadata({
       images: [
         {
           url: image,
-          width: 1200,
-          height: 630,
+          width: ogImageWidth,
+          height: ogImageHeight,
           alt: copy.title,
-          type: "image/png",
+          type: imageType,
         },
       ],
     },

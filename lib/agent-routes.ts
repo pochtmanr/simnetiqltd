@@ -1,3 +1,4 @@
+import { getAllHowWeWorkSlugs } from "@/lib/how-we-work";
 import { getAllServiceSlugs } from "@/lib/services";
 import { LOCALES, type Locale } from "@/lib/i18n";
 
@@ -7,20 +8,25 @@ export type MdRouteKind =
   | "servicesIndex"
   | "service"
   | "projectsIndex"
-  | "project";
+  | "project"
+  | "howWeWorkIndex"
+  | "howWeWork";
 
 export type MdRoute = {
   /** Path AFTER the locale segment, e.g. "/about" or "/services/mobile-desktop". Empty string for the home route. */
   path: string;
   kind: MdRouteKind;
-  /** When kind === "service" or "project". */
+  /** When kind === "service", "project" or "howWeWork". */
   slug?: string;
 };
 
 const PROJECT_SLUGS = [
+  "argus-browser",
   "doppler-vpn",
   "physics-explained",
   "green-flagged",
+  "sms-code",
+  "visapassage",
 ] as const;
 
 function buildRoutes(): MdRoute[] {
@@ -29,9 +35,13 @@ function buildRoutes(): MdRoute[] {
     { path: "/about", kind: "about" },
     { path: "/services", kind: "servicesIndex" },
     { path: "/projects", kind: "projectsIndex" },
+    { path: "/how-we-work", kind: "howWeWorkIndex" },
   ];
   for (const slug of getAllServiceSlugs()) {
     out.push({ path: `/services/${slug}`, kind: "service", slug });
+  }
+  for (const slug of getAllHowWeWorkSlugs()) {
+    out.push({ path: `/how-we-work/${slug}`, kind: "howWeWork", slug });
   }
   for (const slug of PROJECT_SLUGS) {
     out.push({ path: `/projects/${slug}`, kind: "project", slug });

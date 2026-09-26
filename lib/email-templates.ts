@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/seo-meta";
+import { SITE_URL as SITE } from "@/lib/site";
 
 export type AutoReplyLocale = "en" | "he" | "ru";
 
@@ -24,8 +24,8 @@ const COLORS = {
   text: "#EBEBEB",
   muted: "#9A9A9A",
   faint: "#6A6A6A",
-  accent: "#C8795D",
-  primary: "#B2451E",
+  accent: "#8AA2C7",
+  primary: "#5473A1",
   ctaBorder: "rgba(255,255,255,0.18)",
 } as const;
 
@@ -128,8 +128,8 @@ export function renderAutoReplyEmail({
   const safeMessage = escapeHtml(truncatedMessage).replace(/\n/g, "<br />");
   const year = new Date().getFullYear();
 
-  const bookHref = `${SITE_URL}/${locale}#contact`;
-  const workHref = `${SITE_URL}/${locale}#recent-work`;
+  const bookHref = `${SITE}/${locale}#contact`;
+  const workHref = `${SITE}/${locale}#recent-work`;
 
   const html = `<!DOCTYPE html>
 <html dir="${dir}" lang="${locale}">

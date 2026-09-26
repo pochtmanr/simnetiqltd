@@ -1,17 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Panel } from "@/components/panel";
-import { TextReveal } from "@/components/text-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
 type ProjectKey =
+  | "argus"
   | "physics"
   | "doppler"
   | "creator"
   | "delivery"
-  | "greenflagged";
+  | "greenflagged"
+  | "smscode"
+  | "visapassage";
 
 type ProjectDef = {
   key: ProjectKey;
@@ -19,39 +22,68 @@ type ProjectDef = {
   href: string;
   caseStudy?: string;
   stack: string;
+  /** Case-study header art. The last two projects have no mark or shot yet. */
+  image?: string;
 };
 
 const PROJECTS: ProjectDef[] = [
   {
-    key: "physics",
+    key: "argus",
+    image: "/argus-header.avif",
     id: "01",
+    href: "https://www.browserargus.com/",
+    caseStudy: "/projects/argus-browser",
+    stack: "C++ · Chromium · Electron · React · Supabase",
+  },
+  {
+    key: "physics",
+    image: "/physics-header.avif",
+    id: "02",
     href: "https://physics.it.com/",
     caseStudy: "/projects/physics-explained",
     stack: "Next.js · WebGL · MathJax · odex",
   },
   {
     key: "doppler",
-    id: "02",
+    image: "/doppler-header.avif",
+    id: "03",
     href: "https://dopplervpn.org",
     caseStudy: "/projects/doppler-vpn",
     stack: "Swift · Kotlin · Go · Marzban",
   },
   {
+    key: "smscode",
+    image: "/smscode-header.avif",
+    id: "04",
+    href: "https://simnetiq.xyz/",
+    caseStudy: "/projects/sms-code",
+    stack: "Next.js · React · Tailwind · iOS",
+  },
+  {
+    key: "visapassage",
+    image: "/visapassage-header.avif",
+    id: "05",
+    href: "https://visapassage.com/",
+    caseStudy: "/projects/visapassage",
+    stack: "Next.js · React · Supabase · Tailwind",
+  },
+  {
     key: "greenflagged",
-    id: "03",
+    image: "/greenflagged-header.avif",
+    id: "06",
     href: "https://greenflagged.vercel.app/",
     caseStudy: "/projects/green-flagged",
     stack: "Next.js 16 · React 19 · Tailwind v4 · GSAP",
   },
   {
     key: "delivery",
-    id: "04",
+    id: "07",
     href: "https://www.isrshipping.com",
     stack: "Next.js · Node · PostgreSQL",
   },
   {
     key: "creator",
-    id: "05",
+    id: "08",
     href: "https://www.creatorai.art/en",
     stack: "Swift · Kotlin · Python · Supabase",
   },
@@ -84,19 +116,7 @@ export function RecentWorkSection({
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-14">
           <div className="lg:col-span-4">
-            <TextReveal
-              as="p"
-              className="text-label text-[var(--color-primary-glow)]"
-              text={dict.projects.eyebrow}
-              step={25}
-            />
-            <TextReveal
-              as="h2"
-              className="text-headline mt-5"
-              text={dict.projects.title}
-              step={35}
-              delay={120}
-            />
+            <h2 className="text-headline">{dict.projects.title}</h2>
           </div>
           <div className="lg:col-span-6 lg:col-start-7 self-end">
             <p className="text-body max-w-md">{dict.projects.body}</p>
@@ -111,31 +131,33 @@ export function RecentWorkSection({
               <Panel
                 key={project.id}
                 innerClassName="p-6 lg:p-8 h-full flex flex-col"
-                corners
                 hover
               >
-                <div className="flex items-start justify-between mb-6">
-                  <span className="text-mono text-[var(--color-text-faint)]">
-                    {project.id}
-                  </span>
-                  <span className="text-label-sm text-[var(--color-primary-glow)]">
-                    {meta.badge}
-                  </span>
-                </div>
+                {project.image && (
+                  <div className="relative -m-6 lg:-m-8 mb-6 lg:mb-8 aspect-[16/9] overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 45vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <h3 className="text-headline mb-3">{meta.title}</h3>
                 {meta.accolade && (
-                  <div className="mb-3 inline-flex items-center gap-2 border border-[var(--color-primary-glow)]/40 px-2.5 py-1 max-w-fit">
+                  <div className="mb-3 inline-flex items-center gap-2 border border-[var(--color-border-strong)] px-2.5 py-1 max-w-fit">
                     <svg
                       viewBox="0 0 24 24"
                       width="12"
                       height="12"
                       fill="currentColor"
                       aria-hidden="true"
-                      className="text-[var(--color-primary-glow)]"
+                      className="text-[var(--color-text-dim)]"
                     >
                       <path d="M17.5 13.5c-.02-2.4 1.96-3.55 2.05-3.6-1.12-1.64-2.86-1.86-3.48-1.89-1.48-.15-2.89.87-3.64.87-.76 0-1.92-.85-3.16-.83-1.62.02-3.12.94-3.95 2.4-1.69 2.93-.43 7.27 1.21 9.65.81 1.16 1.77 2.46 3.04 2.41 1.22-.05 1.68-.79 3.16-.79 1.47 0 1.89.79 3.18.77 1.31-.02 2.14-1.18 2.94-2.34.93-1.34 1.31-2.65 1.33-2.72-.03-.01-2.55-.98-2.58-3.93zM15.05 6.45c.66-.81 1.11-1.93.99-3.05-.96.04-2.13.64-2.82 1.45-.62.71-1.16 1.86-1.02 2.95 1.07.08 2.18-.55 2.85-1.35z" />
                     </svg>
-                    <span className="text-label-sm text-[var(--color-primary-glow)]">
+                    <span className="text-label-sm text-[var(--color-text-dim)]">
                       {meta.accolade}
                     </span>
                   </div>

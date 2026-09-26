@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, Rail, SpecRow } from "@/components/panel";
+import { Panel, SpecRow } from "@/components/panel";
+import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
   PortfolioSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
-import { buildLocalizedMetadata, SITE_URL } from "@/lib/seo-meta";
+import { buildLocalizedMetadata } from "@/lib/seo-meta";
+import { SITE_URL } from "@/lib/site";
 
 const PROJECTS_KEYWORDS = [
   "Simnetiq projects",
+  "Argus Browser",
+  "browserargus.com",
+  "anti-detect browser",
+  "Chromium fork",
+  "browser fingerprinting",
+  "multi-account browser",
+  "browser automation platform",
   "Simnetiq portfolio",
   "Simnetiq case studies",
   "Simnetiq deployments",
@@ -33,6 +42,17 @@ const PROJECTS_KEYWORDS = [
   "AI contract review",
   "contract reviewer for freelancers",
   "legal-tech case study",
+  "SMS Code",
+  "SMS Activate",
+  "simnetiq.xyz",
+  "virtual numbers",
+  "SMS verification numbers",
+  "temporary phone number",
+  "VisaPassage",
+  "visapassage.com",
+  "multi-passport visa comparison",
+  "visa requirements comparison",
+  "visa document checklist",
   "London software portfolio",
   "production app case studies",
   "iOS app portfolio UK",
@@ -57,11 +77,14 @@ export async function generateMetadata({
 }
 
 type ProjectKey =
+  | "argus"
   | "physics"
   | "doppler"
   | "creator"
   | "delivery"
-  | "greenflagged";
+  | "greenflagged"
+  | "smscode"
+  | "visapassage";
 
 type ProjectStruct = {
   key: ProjectKey;
@@ -75,8 +98,21 @@ type ProjectStruct = {
 
 const projectsList: ProjectStruct[] = [
   {
-    key: "physics",
+    key: "argus",
     id: "01",
+    tags: ["C++", "CHROMIUM", "ELECTRON", "REACT", "SUPABASE"],
+    link: { kind: "internal", href: "/projects/argus-browser", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://www.browserargus.com/", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "engine", valueKey: "engineValue" },
+      { labelKey: "platforms", valueKey: "platformsValue" },
+      { labelKey: "scope", valueKey: "scopeValue" },
+    ],
+    status: "live",
+  },
+  {
+    key: "physics",
+    id: "02",
     tags: ["NEXT.JS", "WEBGL", "MATHJAX", "AI"],
     link: { kind: "internal", href: "/projects/physics-explained", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://physics.it.com/", labelKey: "visitSite" },
@@ -88,7 +124,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "doppler",
-    id: "02",
+    id: "03",
     tags: ["SWIFT", "KOTLIN", "GO", "MARZBAN"],
     link: { kind: "internal", href: "/projects/doppler-vpn", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://dopplervpn.org", labelKey: "visitSite" },
@@ -99,8 +135,34 @@ const projectsList: ProjectStruct[] = [
     ],
   },
   {
+    key: "smscode",
+    id: "04",
+    tags: ["NEXT.JS", "REACT", "TAILWIND", "iOS"],
+    link: { kind: "internal", href: "/projects/sms-code", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://simnetiq.xyz/", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "coverage", valueKey: "coverageValue" },
+      { labelKey: "billing", valueKey: "billingValue" },
+      { labelKey: "platforms", valueKey: "platformsValue" },
+    ],
+    status: "live",
+  },
+  {
+    key: "visapassage",
+    id: "05",
+    tags: ["NEXT.JS", "REACT", "SUPABASE", "TAILWIND"],
+    link: { kind: "internal", href: "/projects/visapassage", labelKey: "readCaseStudy" },
+    secondaryLink: { kind: "external", href: "https://visapassage.com/", labelKey: "visitSite" },
+    metaKeys: [
+      { labelKey: "engine", valueKey: "engineValue" },
+      { labelKey: "scope", valueKey: "scopeValue" },
+      { labelKey: "stack", valueKey: "stackValue" },
+    ],
+    status: "live",
+  },
+  {
     key: "greenflagged",
-    id: "03",
+    id: "06",
     tags: ["NEXT.JS 16", "REACT 19", "TAILWIND V4", "GSAP"],
     link: { kind: "internal", href: "/projects/green-flagged", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://greenflagged.vercel.app/", labelKey: "visitSite" },
@@ -113,7 +175,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "delivery",
-    id: "04",
+    id: "07",
     tags: ["NEXT.JS", "REACT", "NODE", "POSTGRES"],
     link: { kind: "external", href: "https://www.isrshipping.com", labelKey: "visitSite" },
     metaKeys: [
@@ -124,7 +186,7 @@ const projectsList: ProjectStruct[] = [
   },
   {
     key: "creator",
-    id: "05",
+    id: "08",
     tags: ["SWIFT", "KOTLIN", "PYTHON", "SUPABASE"],
     link: { kind: "external", href: "https://www.creatorai.art/en", labelKey: "visitSite" },
     metaKeys: [
@@ -168,10 +230,6 @@ export default async function ProjectsPage({ params }: { params: Params }) {
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <Rail
-            items={[p.rail.index, p.rail.archive, p.rail.active]}
-            className="mb-10"
-          />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <p className="text-label text-[var(--color-primary-glow)]">
@@ -215,10 +273,21 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                 <Panel innerClassName="p-6 lg:p-10" corners>
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     <div className="lg:col-span-7">
-                      <div className="flex items-center justify-between mb-8">
-                        <span className="text-mono text-[var(--color-text-faint)]">
-                          {proj.id} · ENTRY
-                        </span>
+                      <div className="flex items-center justify-between gap-4 mb-8">
+                        {/* min-height keeps the header row aligned across
+                            entries whose project has no supplied mark. */}
+                        <div className="flex items-center gap-3 min-h-9">
+                          {hasProjectLogo(proj.key) && (
+                            <ProjectLogo
+                              project={proj.key}
+                              alt={item.title}
+                              size={30}
+                            />
+                          )}
+                          <span className="text-mono text-[var(--color-text-faint)]">
+                            {proj.id} · ENTRY
+                          </span>
+                        </div>
                         <span className="text-label-sm text-[var(--color-primary-glow)]">
                           {item.badge}
                         </span>

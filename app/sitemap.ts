@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
+import { getAllHowWeWorkSlugs } from "@/lib/how-we-work";
 import { getAllServiceSlugs } from "@/lib/services";
 import { LOCALES, LOCALE_HTML_LANG } from "@/lib/i18n";
-import { SITE_URL } from "@/lib/seo-meta";
+import { SITE_URL } from "@/lib/site";
 
 type ChangeFreq = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
@@ -32,11 +33,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const localizedRoutes: { path: string; freq: ChangeFreq; priority: number }[] = [
     { path: "", freq: "weekly", priority: 1 },
     { path: "/projects", freq: "monthly", priority: 0.9 },
+    { path: "/projects/argus-browser", freq: "monthly", priority: 0.85 },
     { path: "/projects/doppler-vpn", freq: "monthly", priority: 0.85 },
     { path: "/projects/physics-explained", freq: "monthly", priority: 0.85 },
     { path: "/projects/green-flagged", freq: "monthly", priority: 0.8 },
+    { path: "/projects/sms-code", freq: "monthly", priority: 0.85 },
+    { path: "/projects/visapassage", freq: "monthly", priority: 0.85 },
     { path: "/services", freq: "monthly", priority: 0.9 },
+    { path: "/how-we-work", freq: "monthly", priority: 0.85 },
     { path: "/about", freq: "monthly", priority: 0.8 },
+    { path: "/privacy-policy", freq: "yearly", priority: 0.4 },
+    { path: "/delete-account", freq: "yearly", priority: 0.4 },
   ];
 
   const staticEntries: MetadataRoute.Sitemap = localizedRoutes.flatMap((r) =>
@@ -47,5 +54,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (slug) => buildEntry(`/services/${slug}`, "monthly", 0.8, now)
   );
 
-  return [...staticEntries, ...serviceEntries];
+  const howWeWorkEntries: MetadataRoute.Sitemap =
+    getAllHowWeWorkSlugs().flatMap((slug) =>
+      buildEntry(`/how-we-work/${slug}`, "monthly", 0.8, now)
+    );
+
+  return [...staticEntries, ...serviceEntries, ...howWeWorkEntries];
 }

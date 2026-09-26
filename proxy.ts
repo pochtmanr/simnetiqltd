@@ -12,8 +12,6 @@ const KNOWN_PATHS = new Set<string>([
   "/legal",
   "/privacy-policy",
   "/delete-account",
-  "/subscribe",
-  "/unsubscribe",
 ]);
 
 function pickLocaleFromAcceptLanguage(header: string | null): Locale {

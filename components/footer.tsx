@@ -15,6 +15,7 @@ type FooterDict = {
     companyNumber: string;
     jurisdiction: string;
     about: string;
+    howWeWork: string;
     legal: string;
     privacy: string;
     deletion: string;
@@ -58,6 +59,7 @@ export function Footer({
       label: dict.columns.documents,
       lines: [
         { text: dict.lines.about, href: localizePath(locale, "/about"), strong: true },
+        { text: dict.lines.howWeWork, href: localizePath(locale, "/how-we-work") },
         { text: dict.lines.legal, href: localizePath(locale, "/legal") },
         { text: dict.lines.privacy, href: localizePath(locale, "/privacy-policy") },
         { text: dict.lines.deletion, href: localizePath(locale, "/delete-account") },
@@ -104,8 +106,8 @@ export function Footer({
                           href={line.href}
                           className={
                             line.strong
-                              ? "block text-body-strong text-[var(--color-text)] hover:text-[var(--color-primary-glow)] transition-colors"
-                              : "block text-body hover:text-[var(--color-primary-glow)] transition-colors"
+                              ? "block text-body-strong text-[var(--color-text)] hover:text-[var(--color-text)] transition-colors"
+                              : "block text-body hover:text-[var(--color-text)] transition-colors"
                           }
                         >
                           {line.text}
@@ -141,7 +143,7 @@ export function Footer({
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-label-sm text-[var(--color-text-dim)] hover:text-[var(--color-primary-glow)] transition-colors"
+                className="text-label-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors"
               >
                 {s.label}
               </Link>

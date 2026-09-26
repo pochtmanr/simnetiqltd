@@ -10,7 +10,7 @@ import { NavMegaMenu, type NavMegaItem } from "@/components/nav-mega-menu";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type ProjectKey = "physics" | "doppler" | "creator" | "delivery";
+type ProjectKey = "argus" | "physics" | "doppler" | "creator" | "delivery";
 type CapKey = "mobile" | "web" | "aiAutomation";
 
 type NavDict = {
@@ -53,34 +53,33 @@ type DropdownName = "projects" | "services";
 type NavLink = {
   key: "home" | "projects" | "services";
   href: string;
-  code: string;
   dropdown?: DropdownName;
 };
 
 const linkDefs: readonly NavLink[] = [
-  { key: "home", href: "/", code: "00" },
-  { key: "projects", href: "/projects", code: "01", dropdown: "projects" },
-  { key: "services", href: "/services", code: "02", dropdown: "services" },
+  { key: "home", href: "/" },
+  { key: "projects", href: "/projects", dropdown: "projects" },
+  { key: "services", href: "/services", dropdown: "services" },
 ];
 
 // Internal hrefs for case studies live at /projects/{slug}; items without a
 // dedicated case study link out to the live product instead.
 const PROJECT_META: {
   key: ProjectKey;
-  code: string;
   href: string;
   external: boolean;
 }[] = [
-  { key: "physics", code: "01", href: "/projects/physics-explained", external: false },
-  { key: "doppler", code: "02", href: "/projects/doppler-vpn", external: false },
-  { key: "creator", code: "03", href: "https://www.creatorai.art/en", external: true },
-  { key: "delivery", code: "04", href: "https://www.isrshipping.com", external: true },
+  { key: "argus", href: "/projects/argus-browser", external: false },
+  { key: "physics", href: "/projects/physics-explained", external: false },
+  { key: "doppler", href: "/projects/doppler-vpn", external: false },
+  { key: "creator", href: "https://www.creatorai.art/en", external: true },
+  { key: "delivery", href: "https://www.isrshipping.com", external: true },
 ];
 
-const SERVICE_META: { key: CapKey; code: string; href: string }[] = [
-  { key: "mobile", code: "C-01", href: "/services/mobile-desktop" },
-  { key: "web", code: "C-02", href: "/services/web-platforms" },
-  { key: "aiAutomation", code: "C-03", href: "/services/ai-automation" },
+const SERVICE_META: { key: CapKey; href: string }[] = [
+  { key: "mobile", href: "/services/mobile-desktop" },
+  { key: "web", href: "/services/web-platforms" },
+  { key: "aiAutomation", href: "/services/ai-automation" },
 ];
 
 const HOVER_OPEN_DELAY = 100;
@@ -99,22 +98,8 @@ export function Navigation({
   const [mobileExpanded, setMobileExpanded] = useState<DropdownName | null>(
     null,
   );
-  const [clock, setClock] = useState("—");
   const openTimer = useRef<number | null>(null);
   const closeTimer = useRef<number | null>(null);
-
-  useEffect(() => {
-    function tick() {
-      const d = new Date();
-      const utc = `${String(d.getUTCHours()).padStart(2, "0")}:${String(
-        d.getUTCMinutes()
-      ).padStart(2, "0")}:${String(d.getUTCSeconds()).padStart(2, "0")} UTC`;
-      setClock(utc);
-    }
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
 
   // Close everything on route change. React 19 prefers deriving this during
   // render over a useEffect — synchronously closing avoids a flash of the
@@ -179,7 +164,6 @@ export function Navigation({
         const meta = dict.dropdowns.projects.items[p.key];
         return {
           key: p.key,
-          code: p.code,
           badge: meta.badge,
           title: meta.title,
           body: meta.description,
@@ -196,7 +180,6 @@ export function Navigation({
         const meta = dict.dropdowns.services.items[s.key];
         return {
           key: s.key,
-          code: s.code,
           title: meta.title,
           body: meta.text,
           href: localizePath(locale, s.href),
@@ -206,30 +189,19 @@ export function Navigation({
   );
 
   return (
+    /* data-menu-open force-exits the transparent-over-hero state: the
+       mega-menu and the mobile panel are opaque --color-bg surfaces, so they
+       must never hang off a see-through bar, and their contents must not
+       inherit the overlay's white text. */
     <header
+      data-site-header=""
+      data-menu-open={openDropdown || open ? "" : undefined}
       className={`sticky top-0 z-40 bg-[var(--color-bg)] ${
         openDropdown
           ? ""
           : "backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--color-bg)_85%,transparent)]"
       }`}
     >
-      {/* Technical top rail — status + clock only */}
-      <div className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          <div className="flex items-center justify-between h-7 font-[family-name:var(--font-mono)] text-[10.5px] tracking-[0.18em] uppercase">
-            <div className="flex items-center gap-3 sm:gap-6">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                {dict.rail.online}
-              </span>
-              <span className="hidden sm:inline">51.5074°N · 0.1278°W</span>
-              <span className="hidden md:inline">{dict.rail.operations}</span>
-            </div>
-            <span suppressHydrationWarning>{clock}</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main nav — bottom border belongs to the bar in its resting state, but
           when a mega-menu opens we hide it so the nav and dropdown panel read
           as one continuous surface (the panel carries its own bottom border). */}
@@ -279,15 +251,6 @@ export function Navigation({
                     <span
                       className={
                         active || isOpen
-                          ? "text-[var(--color-primary-glow)]"
-                          : "text-[var(--color-text-faint)]"
-                      }
-                    >
-                      {link.code}
-                    </span>
-                    <span
-                      className={
-                        active || isOpen
                           ? "text-[var(--color-text)]"
                           : "text-[var(--color-text-dim)] group-hover:text-[var(--color-text)]"
                       }
@@ -301,7 +264,7 @@ export function Navigation({
                           isOpen ? "rotate-180" : ""
                         } ${
                           isOpen
-                            ? "text-[var(--color-primary-glow)]"
+                            ? "text-[var(--color-text)]"
                             : "text-[var(--color-text-faint)]"
                         }`}
                       >
@@ -397,9 +360,6 @@ export function Navigation({
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-3 flex-1"
                       >
-                        <span className="text-[var(--color-text-faint)] text-label-sm">
-                          {link.code}
-                        </span>
                         <span
                           className={`text-label ${
                             active
@@ -435,7 +395,7 @@ export function Navigation({
                         <span
                           className={`text-label ${
                             active
-                              ? "text-[var(--color-primary-glow)]"
+                              ? "text-[var(--color-text)]"
                               : "text-[var(--color-text-faint)]"
                           } btn-arrow`}
                         >
@@ -466,15 +426,12 @@ export function Navigation({
                               }}
                               className="flex items-baseline gap-3"
                             >
-                              <span className="text-mono text-[var(--color-text-faint)]">
-                                {item.code}
-                              </span>
                               <span className="text-body-strong text-[var(--color-text)]">
                                 {item.title}
                               </span>
                               <span
                                 aria-hidden="true"
-                                className="ms-auto text-[var(--color-primary-glow)] btn-arrow"
+                                className="ms-auto text-[var(--color-text-dim)] btn-arrow"
                               >
                                 {item.external ? "↗" : "→"}
                               </span>

@@ -70,7 +70,7 @@ export function LocaleSwitcher({
                 "px-3 py-1.5 text-label-sm transition-colors",
                 "border-l border-[var(--color-border-strong)] first:border-l-0",
                 active
-                  ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-glow)]"
+                  ? "bg-[var(--color-surface-sunk)] text-[var(--color-text)]"
                   : "text-[var(--color-text-dim)] hover:text-[var(--color-text)]",
               ].join(" ")}
             >
@@ -123,7 +123,7 @@ export function LocaleSwitcher({
               }
               className={
                 active
-                  ? "text-[var(--color-primary-glow)] transition-colors"
+                  ? "text-[var(--color-text)] transition-colors"
                   : "text-[var(--color-text-faint)] hover:text-[var(--color-text)] transition-colors"
               }
             >

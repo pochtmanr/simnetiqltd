@@ -87,7 +87,7 @@ export function ThemeToggle({
                 "px-3 py-1.5 text-label-sm transition-colors",
                 i > 0 ? "border-l border-[var(--color-border-strong)]" : "",
                 active
-                  ? "bg-[var(--color-primary)]/10 text-[var(--color-primary-glow)]"
+                  ? "bg-[var(--color-surface-sunk)] text-[var(--color-text)]"
                   : "text-[var(--color-text-dim)] hover:text-[var(--color-text)]",
               ].join(" ")}
               suppressHydrationWarning
@@ -100,27 +100,46 @@ export function ThemeToggle({
     );
   }
 
-  // Icon variant — single tap flips between light and dark based on what's
-  // actually rendered. Aria-label describes the NEXT state. Re-enabling
-  // "Auto" / system mode is done via the segmented variant in the mobile menu.
+  // Icon variant — a squared sliding switch. A single tap flips between light
+  // and dark based on what's actually rendered; aria-label describes the NEXT
+  // state. Re-enabling "Auto" / system mode is done via the segmented variant
+  // in the mobile menu.
   const nextLabel = mounted
     ? resolved === "dark"
       ? labels.cycleToLight
       : labels.cycleToDark
     : labels.generic;
+  // Before mount the rendered markup must match SSR, so the knob parks on the
+  // light position and only slides once the resolved theme is known.
+  const isDark = mounted && resolved === "dark";
 
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={mounted ? isDark : undefined}
       onClick={handleCycleChoice}
       aria-label={nextLabel}
       title={nextLabel}
-      className={`inline-flex items-center justify-center w-6 h-6 text-[var(--color-text-faint)] hover:text-[var(--color-text)] transition-colors ${className}`}
+      className={`group relative inline-flex items-center h-6 w-12 shrink-0 border border-[var(--color-border-strong)] bg-[var(--color-surface-sunk)] transition-colors hover:border-[var(--color-text-faint)] ${className}`}
       suppressHydrationWarning
     >
-      <span suppressHydrationWarning>
-        {!mounted ? <SunIcon /> : resolved === "dark" ? <MoonIcon /> : <SunIcon />}
+      {/* Both glyphs stay visible on the track; the knob highlights the
+          active one as it slides over. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 flex items-center justify-between px-[5px] text-[var(--color-text-faint)]"
+      >
+        <SunIcon />
+        <MoonIcon />
       </span>
+      <span
+        aria-hidden="true"
+        suppressHydrationWarning
+        className={`pointer-events-none absolute left-0 top-[2px] bottom-[2px] w-[20px] bg-[color-mix(in_srgb,var(--color-text)_14%,transparent)] border border-[var(--color-border-strong)] transition-transform duration-200 ease-out ${
+          isDark ? "translate-x-[24px]" : "translate-x-[2px]"
+        }`}
+      />
     </button>
   );
 }

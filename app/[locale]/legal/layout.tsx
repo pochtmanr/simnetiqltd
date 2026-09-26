@@ -5,7 +5,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
-import { SITE_URL } from "@/lib/seo-meta";
+import { SITE_URL } from "@/lib/site";
 
 const LEGAL_KEYWORDS = [
   "Simnetiq legal",

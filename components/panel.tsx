@@ -13,23 +13,14 @@ export function Panel({
   children,
   className = "",
   innerClassName = "",
-  corners = false,
+  // Accepted and ignored: the corner L-marks were decoration, but the prop is
+  // passed at ~60 call sites.
   hover = false,
   as: Tag = "div",
 }: PanelProps) {
   return (
     <Tag className={`gradient-shell ${hover ? "is-hover" : ""} ${className}`}>
-      <div className={`shell-inner relative ${innerClassName}`}>
-        {corners && (
-          <div className="corners pointer-events-none absolute inset-0">
-            <span className="corner tl" />
-            <span className="corner tr" />
-            <span className="corner bl" />
-            <span className="corner br" />
-          </div>
-        )}
-        {children}
-      </div>
+      <div className={`shell-inner relative ${innerClassName}`}>{children}</div>
     </Tag>
   );
 }
