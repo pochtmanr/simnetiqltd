@@ -1,6 +1,6 @@
 import { SITE_URL } from "@/lib/site";
 
-const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no";
+export const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no";
 
 /** Estimated token count for a body — Cloudflare convention is ~4 chars/token. */
 function estimateTokens(body: string): number {
@@ -19,6 +19,7 @@ function markdownResponseHeaders(body: string): HeadersInit {
     "Link": [
       `<${SITE_URL}/llms.txt>; rel="alternate"; type="text/markdown"`,
       `<${SITE_URL}/llms-full.txt>; rel="alternate"; type="text/markdown"`,
+      `<${SITE_URL}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`,
     ].join(", "),
   };
 }
