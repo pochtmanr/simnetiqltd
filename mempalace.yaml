@@ -1,4 +1,4 @@
-wing: simnetiq.store
+wing: simnetiq
 rooms:
 - name: app
   description: Files from app/

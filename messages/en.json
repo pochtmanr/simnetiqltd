@@ -200,7 +200,7 @@
     "transmitted": "Sent",
     "failed": "Didn't go through — retry",
     "successMessage": "Got it — we'll reply within one business day.",
-    "errorMessage": "Something went wrong. Please retry or email support@simnetiq.store."
+    "errorMessage": "Something went wrong. Please retry or email support@simnetiq.com."
   },
   "footer": {
     "tagline": "PRECISION ENGINEERING",
@@ -518,7 +518,7 @@
         },
         {
           "label": "Contact",
-          "value": "support@simnetiq.store"
+          "value": "support@simnetiq.com"
         }
       ]
     },
@@ -528,7 +528,7 @@
       "blocks": [
         {
           "title": "Data Controller",
-          "body": "The data controller for this website is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store."
+          "body": "The data controller for this website is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.com."
         },
         {
           "title": "Data Collection",
@@ -544,7 +544,7 @@
         },
         {
           "title": "Your Rights",
-          "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk."
+          "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.com. You also have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk."
         },
         {
           "title": "Cookies & Tracking",
@@ -589,7 +589,7 @@
     "blocks": [
       {
         "title": "Data Controller",
-        "body": "The data controller is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.store."
+        "body": "The data controller is Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. For data protection inquiries, contact support@simnetiq.com."
       },
       {
         "title": "Data Collection",
@@ -613,7 +613,7 @@
       },
       {
         "title": "Your Rights",
-        "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.store. You may also request account deletion directly through our app or at simnetiq.com/delete-account. You have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk."
+        "body": "Under GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection. To exercise these rights, contact support@simnetiq.com. You may also request account deletion directly through our app or at simnetiq.com/delete-account. You have the right to lodge a complaint with the UK Information Commissioner's Office (ICO) at ico.org.uk."
       },
       {
         "title": "Cookies & Tracking",
@@ -629,7 +629,7 @@
       },
       {
         "title": "Contact",
-        "body": "For any questions or concerns about this Privacy Policy or our data practices, contact us at support@simnetiq.store or write to: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom."
+        "body": "For any questions or concerns about this Privacy Policy or our data practices, contact us at support@simnetiq.com or write to: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom."
       }
     ]
   },
@@ -664,7 +664,7 @@
     "processing": "Processing…",
     "cancel": "Cancel process",
     "successMessage": "▸ Deletion request submitted. Your account and all associated data will be permanently removed within 30 days.",
-    "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.store."
+    "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.com."
   },
   "caseStudyArgus": {
     "eyebrow": "Browser engineering · Anti-detect · Live",

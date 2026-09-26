@@ -200,7 +200,7 @@
     "transmitted": "נשלח",
     "failed": "השליחה לא עברה — נסו שוב",
     "successMessage": "קיבלנו — נחזור אליכם תוך יום עסקים אחד.",
-    "errorMessage": "משהו השתבש. נסו שוב או פנו ל-support@simnetiq.store."
+    "errorMessage": "משהו השתבש. נסו שוב או פנו ל-support@simnetiq.com."
   },
   "footer": {
     "tagline": "הנדסת דיוק",
@@ -518,7 +518,7 @@
         },
         {
           "label": "יצירת קשר",
-          "value": "support@simnetiq.store"
+          "value": "support@simnetiq.com"
         }
       ]
     },
@@ -528,7 +528,7 @@
       "blocks": [
         {
           "title": "אחראי על המידע",
-          "body": "האחראית על המידע באתר זה היא Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, בריטניה. לפניות בנוגע להגנת מידע, פנו ל-support@simnetiq.store."
+          "body": "האחראית על המידע באתר זה היא Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, בריטניה. לפניות בנוגע להגנת מידע, פנו ל-support@simnetiq.com."
         },
         {
           "title": "איסוף מידע",
@@ -544,7 +544,7 @@
         },
         {
           "title": "זכויותיכם",
-          "body": "בהתאם ל-GDPR, יש לכם זכות גישה, תיקון, מחיקה, הגבלת עיבוד, ניידות נתונים והתנגדות. כדי לממש זכויות אלו, פנו ל-support@simnetiq.store. כמו כן, אתם רשאים להגיש תלונה ללשכת נציבת המידע הבריטית (ICO) ב-ico.org.uk."
+          "body": "בהתאם ל-GDPR, יש לכם זכות גישה, תיקון, מחיקה, הגבלת עיבוד, ניידות נתונים והתנגדות. כדי לממש זכויות אלו, פנו ל-support@simnetiq.com. כמו כן, אתם רשאים להגיש תלונה ללשכת נציבת המידע הבריטית (ICO) ב-ico.org.uk."
         },
         {
           "title": "Cookies ומעקב",
@@ -589,7 +589,7 @@
     "blocks": [
       {
         "title": "אחראי על המידע",
-        "body": "האחראית על המידע היא Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, בריטניה. לפניות בנוגע להגנת מידע, פנו ל-support@simnetiq.store."
+        "body": "האחראית על המידע היא Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, בריטניה. לפניות בנוגע להגנת מידע, פנו ל-support@simnetiq.com."
       },
       {
         "title": "איסוף מידע",
@@ -613,7 +613,7 @@
       },
       {
         "title": "זכויותיכם",
-        "body": "בהתאם ל-GDPR, יש לכם זכות גישה, תיקון, מחיקה, הגבלת עיבוד, ניידות נתונים והתנגדות. כדי לממש זכויות אלו, פנו ל-support@simnetiq.store. ניתן גם לבקש מחיקת חשבון ישירות דרך האפליקציה או בכתובת simnetiq.com/delete-account. אתם רשאים להגיש תלונה ללשכת נציבת המידע הבריטית (ICO) ב-ico.org.uk."
+        "body": "בהתאם ל-GDPR, יש לכם זכות גישה, תיקון, מחיקה, הגבלת עיבוד, ניידות נתונים והתנגדות. כדי לממש זכויות אלו, פנו ל-support@simnetiq.com. ניתן גם לבקש מחיקת חשבון ישירות דרך האפליקציה או בכתובת simnetiq.com/delete-account. אתם רשאים להגיש תלונה ללשכת נציבת המידע הבריטית (ICO) ב-ico.org.uk."
       },
       {
         "title": "Cookies ומעקב",
@@ -629,7 +629,7 @@
       },
       {
         "title": "יצירת קשר",
-        "body": "לכל שאלה או דאגה לגבי מדיניות פרטיות זו או הליכי הנתונים שלנו, פנו אלינו ב-support@simnetiq.store או בכתובת: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, בריטניה."
+        "body": "לכל שאלה או דאגה לגבי מדיניות פרטיות זו או הליכי הנתונים שלנו, פנו אלינו ב-support@simnetiq.com או בכתובת: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, בריטניה."
       }
     ]
   },
@@ -664,7 +664,7 @@
     "processing": "מעבד…",
     "cancel": "בטל תהליך",
     "successMessage": "▸ בקשת המחיקה נשלחה. החשבון וכל הנתונים הקשורים יוסרו לצמיתות תוך 30 יום.",
-    "errorMessage": "▸ התהליך נכשל. נסו שוב או פנו ל-support@simnetiq.store."
+    "errorMessage": "▸ התהליך נכשל. נסו שוב או פנו ל-support@simnetiq.com."
   },
   "caseStudyArgus": {
     "eyebrow": "הנדסת דפדפנים · אנטי-דיטקט · פעיל",

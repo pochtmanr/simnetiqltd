@@ -68,7 +68,7 @@ export function Footer({
     {
       label: dict.columns.contact,
       lines: [
-        { text: "support@simnetiq.store", strong: true },
+        { text: "support@simnetiq.com", strong: true },
         { text: dict.lines.studio },
         { text: dict.lines.hours },
       ],

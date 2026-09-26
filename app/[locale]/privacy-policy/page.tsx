@@ -121,7 +121,7 @@ export default async function PrivacyPolicyPage({
                     {p.contactLabel}
                   </p>
                   <p className="text-body-strong text-[var(--color-text)]">
-                    support@simnetiq.store
+                    support@simnetiq.com
                   </p>
                   <p className="text-body mt-2">Simnetiq Ltd</p>
                   <p className="text-body">{p.kingsCross}</p>

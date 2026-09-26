@@ -8,53 +8,36 @@ first round of indexing defects (`22961f6`).
 
 ## 0. DO THIS FIRST — Vercel dashboard, no conversation needed
 
-Serving host and declared canonical still disagree. Every page says its real URL
-is the apex; the apex 307s to www. All 45 sitemap URLs redirect. Nothing else in
-this document matters as much.
+The canonical host is `simnetiq.com`. The old `simnetiq.store` and
+`www.simnetiq.store` hosts must 308 to `https://simnetiq.com` and must not
+serve the site themselves.
 
-Vercel → project → Settings → Domains. **Order matters** — reversing these two
-steps creates a redirect loop.
+Vercel → project → Settings → Domains.
 
-**Step 1 — `simnetiq.store`:**
-- Redirect to Another Domain: `www.simnetiq.store` → change to **No Redirect**
-- Connect to an environment: **Production**
+**`simnetiq.com`:** Production, no redirect. This is the serving host.
 
-**Step 2 — `www.simnetiq.store`:**
-- Redirect to Another Domain: **`simnetiq.store`**
+**`www.simnetiq.com`, `simnetiq.store`, and `www.simnetiq.store`:**
+- Redirect to Another Domain: **`simnetiq.com`**
 - Status code: **308 Permanent Redirect** (not 307)
-
-Between the two steps both hosts serve 200 for a minute. That's harmless.
 
 `simnetiqstore.vercel.app` needs no action. It's Vercel's built-in deployment
 URL, can't be removed, and isn't primary. It serves 200 but its canonical already
-points at `simnetiq.store`, so Google consolidates it.
+points at `simnetiq.com`, so Google consolidates it.
 
-**Why 308 here but 307 in `proxy.ts`:** the www→apex redirect is identical for
+**Why 308 here but 307 in `proxy.ts`:** the host redirect is identical for
 every visitor forever, so permanent is correct and passes ranking signals. The
 locale redirect in `proxy.ts` varies per user (cookie + `Accept-Language`); a 308
 would be permanently browser-cached and trap someone in whichever locale they
 first landed on. Invariant → permanent. Varies → temporary.
 
-**Also pending:** "DNS Change Recommended" on both domains. Records are split
-across two generations of Vercel infrastructure —
-
-```
-simnetiq.store      A     76.76.21.21                              (older generic IP)
-www.simnetiq.store  CNAME 8e6e3bfd7ffb9c38.vercel-dns-017.com      (current)
-```
-
-Vercel's docs say `76.76.21.21` is a generic value and you should inspect the
-specific domain for the right record. Click the "DNS Change Recommended" label,
-or run `vercel domains inspect simnetiq.store`. Matters more once the apex is the
-serving domain rather than a redirect.
-
-### Verify after both steps
+### Verify
 
 ```bash
-curl -sI https://www.simnetiq.store/en | grep -iE '^(HTTP|location)'   # expect 308 -> apex
-curl -sI https://simnetiq.store/en     | grep -i '^HTTP'                # expect 200
-curl -s  https://simnetiq.store/en | grep -oE '<link rel="canonical"[^>]*>'
-# canonical must name the same host that served the page
+curl -sI https://simnetiq.store/en     | grep -iE '^(HTTP|location)'   # expect 308 -> simnetiq.com
+curl -sI https://www.simnetiq.store/en | grep -iE '^(HTTP|location)'   # expect 308 -> simnetiq.com
+curl -sI https://simnetiq.com/en       | grep -i '^HTTP'                # expect 200
+curl -s  https://simnetiq.com/en | grep -oE '<link rel="canonical"[^>]*>'
+# canonical must name simnetiq.com
 ```
 
 ---
@@ -62,7 +45,7 @@ curl -s  https://simnetiq.store/en | grep -oE '<link rel="canonical"[^>]*>'
 ## 1. Core Web Vitals (performance 79 → target 95+)
 
 ```
-Performance work on simnetiq.store (Next.js 16.2.2, App Router, React 19,
+Performance work on simnetiq.com (Next.js 16.2.2, App Router, React 19,
 Tailwind v4, locales en/he/ru under app/[locale]/).
 
 Mobile Lighthouse performance is 79. Read AGENTS.md first — this is Next 16,
@@ -111,7 +94,7 @@ Note: colour contrast is scored under **Accessibility**, not Best Practices —
 they're separate categories. Both are covered below.
 
 ```
-Best Practices and Accessibility pass on simnetiq.store (Next.js 16 App Router,
+Best Practices and Accessibility pass on simnetiq.com (Next.js 16 App Router,
 Tailwind v4 CSS-first, locales en/he/ru, RTL on Hebrew).
 
 Goal: Lighthouse Best Practices 100, and fix real accessibility defects.
@@ -158,7 +141,7 @@ for all four Lighthouse categories.
 ## 3. Content & ranking — the actual long game
 
 ```
-SEO content strategy for simnetiq.store, a London software studio (Next.js 16,
+SEO content strategy for simnetiq.com, a London software studio (Next.js 16,
 locales en/he/ru, copy lives in messages/{en,he,ru}.json and lib/services.ts).
 
 The technical indexing issues are fixed. The remaining problem is that the site
@@ -185,7 +168,7 @@ Push back if you think part of this isn't worth doing.
 ## 4. Cleanup — small, low risk, do when convenient
 
 ```
-Cleanup pass on simnetiq.store:
+Cleanup pass on simnetiq.com:
 
 1. npm run lint fails on two pre-existing issues, and because the script is
    `eslint && npm run check:i18n`, the i18n parity check never runs in CI:
@@ -196,7 +179,7 @@ Cleanup pass on simnetiq.store:
 3. lib/markdown-negotiation.ts exports wantsMarkdown, CONTENT_SIGNAL and
    buildLinkHeader that nothing imports — Accept-header negotiation was designed
    but never wired up. Decide: finish it or delete it.
-4. SITE_URL = "https://simnetiq.store" is duplicated as a literal across 9 files.
+4. SITE_URL = "https://simnetiq.com" is duplicated as a literal across 9 files.
    Consolidate to one exported constant.
 5. Verify every advertised markdown alternate resolves. Some <link rel="alternate"
    type="text/markdown"> URLs have 404'd in production before.
@@ -223,7 +206,7 @@ risks a manual action — a far worse outcome than not ranking. Only mark up
 things that actually happened.
 
 ```
-AI and agentic-browser discoverability for simnetiq.store — a London software
+AI and agentic-browser discoverability for simnetiq.com — a London software
 studio (Simnetiq Ltd, Company No. 16861177) selling to small businesses.
 
 Existing surfaces: app/llms.txt, app/llms-full.txt, per-locale variants under

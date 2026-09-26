@@ -34,7 +34,7 @@ export async function sendEmail({
 
   await transporter.sendMail({
     from,
-    to: "support@simnetiq.store",
+    to: "support@simnetiq.com",
     subject,
     text,
     html,

@@ -35,18 +35,18 @@ existing n8n instance to mirror the contact-form notification flow.
   so that, if we later add server-side reconciliation or audit logging, the
   source of truth is documented.
 
-## Cold outreach — current mode: STAGING (`rpochtman@simnetiq.store`)
+## Cold outreach — current mode: STAGING (`rpochtman@simnetiq.com`)
 
 > **Currently in STAGING mode.** The `simnetiq.xyz` domain hit a Hostinger
 > verification snag, so cold sends are temporarily originating from the
-> existing `rpochtman@simnetiq.store` mailbox. This is a deliberate
+> existing `rpochtman@simnetiq.com` mailbox. This is a deliberate
 > compromise with hard volume caps — see "Staging rules" below. Migration
 > to a proper shadow domain (`simnetiq.com`, planned ~2026-06) will follow
 > the full setup further down this section.
 
 ### Staging rules — DO NOT VIOLATE
 
-`simnetiq.store` is the production sender for transactional confirm emails
+`simnetiq.com` is the production sender for transactional confirm emails
 (the subscribe flow). Cold spam complaints on this domain will degrade those
 legitimate sends too. Tight discipline during staging is the only protection.
 
@@ -54,21 +54,21 @@ legitimate sends too. Tight discipline during staging is the only protection.
 |---|---|
 | **Max 10 cold sends per day** total (5 automated + 5 manual) | Above this, Hostinger's outbound spam scoring trips. Damage compounds. |
 | **Manual hand-picked prospects only** in `outreach_prospects` | No bulk scrape during staging. Pre-prod is for workflow validation, not throughput. |
-| **Use ONLY `rpochtman@simnetiq.store`** for cold sends | Don't send cold from `support@simnetiq.store` — that's the transactional sender; even one cold complaint there fries the confirm-email path. |
+| **Use ONLY `rpochtman@simnetiq.com`** for cold sends | Don't send cold from `support@simnetiq.com` — that's the transactional sender; even one cold complaint there fries the confirm-email path. |
 | **No Cold_Warmup workflow** in staging | The mailbox is already warm via legitimate use; warmup traffic would just look noisy to Hostinger. |
 | **Send to your own test addresses first** | Validate end-to-end (send → unsub link → status flips in Supabase) before any real prospect. |
-| **Watch the bounce/complaint counter daily** | First sign of red = stop immediately. One spam complaint on `simnetiq.store` = halt and assess. |
+| **Watch the bounce/complaint counter daily** | First sign of red = stop immediately. One spam complaint on `simnetiq.com` = halt and assess. |
 
-### Staging setup checklist (assumes `rpochtman@simnetiq.store` already exists at Hostinger)
+### Staging setup checklist (assumes `rpochtman@simnetiq.com` already exists at Hostinger)
 
 1. **n8n SMTP credential**: in `n8n.dopplervpn.org` → Credentials → New → SMTP:
    - Name: `Hostinger — rpochtman`
    - Host: `smtp.hostinger.com`, Port: `465`, Secure: SSL/TLS ✓
-   - User: `rpochtman@simnetiq.store`, Password: (mailbox password)
+   - User: `rpochtman@simnetiq.com`, Password: (mailbox password)
 2. **n8n env vars** (set on the n8n container `.env` then restart):
    ```
    SIMNETIQ_CAL_LINK_URL=https://cal.eu/simnetiq/30min
-   SIMNETIQ_COLD_UNSUB_BASE_URL=https://simnetiq.store/api/cold-unsub
+   SIMNETIQ_COLD_UNSUB_BASE_URL=https://simnetiq.com/api/cold-unsub
    # SIMNETIQ_SUPABASE_SERVICE_KEY already exists from prior session
    ```
 3. **Apply Supabase migration** `20260510_create_outreach_prospects.sql` —
@@ -106,14 +106,14 @@ When `simnetiq.com` is purchased and you're ready to migrate:
    or ask Claude to regenerate it).
 5. Update `outreach_prospects` to mark all currently-`sequencing` rows as
    `suppressed` and re-import the cleaned list under the new domain (so
-   threading starts fresh, no association with the simnetiq.store sender):
+   threading starts fresh, no association with the simnetiq.com sender):
    ```sql
    update outreach_prospects set status='suppressed', updated_at=now()
    where status in ('queued','sequencing');
    ```
 6. Update `SIMNETIQ_CAMPAIGN_START` env on n8n to migration date.
-7. Stop using `rpochtman@simnetiq.store` for any cold outreach. Resume only
-   transactional traffic on `simnetiq.store`.
+7. Stop using `rpochtman@simnetiq.com` for any cold outreach. Resume only
+   transactional traffic on `simnetiq.com`.
 
 ### Why we're not just persisting at `simnetiq.xyz` verification
 
@@ -254,12 +254,12 @@ Hostinger SMTP/IMAP server settings (same for all four):
 
 ### 5. Wire credentials into the Next.js app
 
-In `simnetiq.store/.env.local` (and the same keys in **Vercel → Project
+In `.env.local` (and the same keys in **Vercel → Project
 Settings → Environment Variables → Production**):
 
 ```
 COLD_OUTREACH_DOMAIN=simnetiq.xyz
-COLD_UNSUB_BASE_URL=https://simnetiq.store/api/cold-unsub
+COLD_UNSUB_BASE_URL=https://simnetiq.com/api/cold-unsub
 CAL_LINK_URL=https://cal.eu/simnetiq/30min
 
 COLD_MAILBOX_1_USER=roman@simnetiq.xyz
@@ -296,7 +296,7 @@ On the n8n VPS (`n8n.dopplervpn.org`):
 ```
 SIMNETIQ_CAMPAIGN_START=2026-05-10
 SIMNETIQ_CAL_LINK_URL=https://cal.eu/simnetiq/30min
-SIMNETIQ_COLD_UNSUB_BASE_URL=https://simnetiq.store/api/cold-unsub
+SIMNETIQ_COLD_UNSUB_BASE_URL=https://simnetiq.com/api/cold-unsub
 # SIMNETIQ_SUPABASE_SERVICE_KEY already exists from prior session
 ```
 

@@ -200,7 +200,7 @@
     "transmitted": "Отправлено",
     "failed": "Не дошло — повторите",
     "successMessage": "Получили — ответим в течение одного рабочего дня.",
-    "errorMessage": "Что-то пошло не так. Попробуйте ещё раз или напишите на support@simnetiq.store."
+    "errorMessage": "Что-то пошло не так. Попробуйте ещё раз или напишите на support@simnetiq.com."
   },
   "footer": {
     "tagline": "PRECISION ENGINEERING",
@@ -518,7 +518,7 @@
         },
         {
           "label": "Контакт",
-          "value": "support@simnetiq.store"
+          "value": "support@simnetiq.com"
         }
       ]
     },
@@ -528,7 +528,7 @@
       "blocks": [
         {
           "title": "Контролёр данных",
-          "body": "Контролёр данных этого сайта — Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. По вопросам защиты данных пишите на support@simnetiq.store."
+          "body": "Контролёр данных этого сайта — Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. По вопросам защиты данных пишите на support@simnetiq.com."
         },
         {
           "title": "Сбор данных",
@@ -544,7 +544,7 @@
         },
         {
           "title": "Ваши права",
-          "body": "Согласно GDPR у вас есть право на доступ, исправление, удаление, ограничение обработки, переносимость данных и возражение. Для реализации этих прав напишите на support@simnetiq.store. Также вы вправе подать жалобу в UK Information Commissioner's Office (ICO) на ico.org.uk."
+          "body": "Согласно GDPR у вас есть право на доступ, исправление, удаление, ограничение обработки, переносимость данных и возражение. Для реализации этих прав напишите на support@simnetiq.com. Также вы вправе подать жалобу в UK Information Commissioner's Office (ICO) на ico.org.uk."
         },
         {
           "title": "Файлы cookie и трекинг",
@@ -589,7 +589,7 @@
     "blocks": [
       {
         "title": "Контролёр данных",
-        "body": "Контролёр данных — Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. По вопросам защиты данных пишите на support@simnetiq.store."
+        "body": "Контролёр данных — Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom. По вопросам защиты данных пишите на support@simnetiq.com."
       },
       {
         "title": "Сбор данных",
@@ -613,7 +613,7 @@
       },
       {
         "title": "Ваши права",
-        "body": "Согласно GDPR у вас есть право на доступ, исправление, удаление, ограничение обработки, переносимость данных и возражение. Для реализации этих прав напишите на support@simnetiq.store. Вы также можете запросить удаление аккаунта непосредственно через приложение или на simnetiq.com/delete-account. Вы вправе подать жалобу в UK Information Commissioner's Office (ICO) на ico.org.uk."
+        "body": "Согласно GDPR у вас есть право на доступ, исправление, удаление, ограничение обработки, переносимость данных и возражение. Для реализации этих прав напишите на support@simnetiq.com. Вы также можете запросить удаление аккаунта непосредственно через приложение или на simnetiq.com/delete-account. Вы вправе подать жалобу в UK Information Commissioner's Office (ICO) на ico.org.uk."
       },
       {
         "title": "Файлы cookie и трекинг",
@@ -629,7 +629,7 @@
       },
       {
         "title": "Контакт",
-        "body": "По любым вопросам, связанным с этой Политикой конфиденциальности или нашими практиками обработки данных, пишите на support@simnetiq.store или по адресу: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom."
+        "body": "По любым вопросам, связанным с этой Политикой конфиденциальности или нашими практиками обработки данных, пишите на support@simnetiq.com или по адресу: Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom."
       }
     ]
   },
@@ -664,7 +664,7 @@
     "processing": "Обрабатываем…",
     "cancel": "Отменить процесс",
     "successMessage": "▸ Запрос на удаление отправлен. Ваш аккаунт и все связанные данные будут безвозвратно удалены в течение 30 дней.",
-    "errorMessage": "▸ Не удалось обработать. Попробуйте ещё раз или напишите на support@simnetiq.store."
+    "errorMessage": "▸ Не удалось обработать. Попробуйте ещё раз или напишите на support@simnetiq.com."
   },
   "caseStudyArgus": {
     "eyebrow": "Браузерная инженерия · Анти-детект · Live",

@@ -35,14 +35,14 @@ const organization = {
     {
       "@type": "ContactPoint",
       contactType: "customer support",
-      email: "support@simnetiq.store",
+      email: "support@simnetiq.com",
       areaServed: "Worldwide",
       availableLanguage: ["English"],
     },
     {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "support@simnetiq.store",
+      email: "support@simnetiq.com",
       areaServed: "Worldwide",
       availableLanguage: ["English"],
     },

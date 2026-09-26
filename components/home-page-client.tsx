@@ -257,7 +257,7 @@ export function HomePageClient({
                     </p>
                     <SpecRow
                       label={dict.contact.email}
-                      value="support@simnetiq.store"
+                      value="support@simnetiq.com"
                     />
                     <SpecRow
                       label={dict.contact.location}
