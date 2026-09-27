@@ -5,7 +5,8 @@ import { PageHeader } from "@/components/page-header";
 import { notFound } from "next/navigation";
 import { TechnologyChips } from "@/components/technology-chips";
 import { CardArrow } from "@/components/sections/card-arrow";
-import { Panel } from "@/components/panel";
+import { ProjectStatus } from "@/components/project-status";
+import styles from "@/components/projects.module.css";
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
@@ -196,7 +197,7 @@ export default async function ProjectsPage({ params }: { params: Params }) {
 
       {/* Project cards */}
       <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-4 pb-16 lg:pb-28 space-y-6 lg:space-y-8">
+        <div className={styles.directory}>
           {projectsList.map((proj) => {
             const item = p.items[proj.key];
             const primaryHref =
@@ -213,73 +214,67 @@ export default async function ProjectsPage({ params }: { params: Params }) {
               proj.secondaryLink?.kind === "external";
 
             return (
-              <article key={proj.id} className="group">
-                <Panel innerClassName="p-6 sm:p-8">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-                    <div className="lg:col-span-7">
-                      <div className="flex items-center justify-between gap-4 mb-6">
-                        {/* min-height keeps the header row aligned across
-                            entries whose project has no supplied mark. */}
-                        <div className="flex items-center gap-3 min-h-9">
-                          {hasProjectLogo(proj.key) && (
-                            <ProjectLogo
-                              project={proj.key}
-                              alt={item.title}
-                              size={30}
-                            />
-                          )}
-                          <span className="text-xs text-[var(--color-text-dim)] tabular-nums">
-                            {proj.id}
-                          </span>
-                        </div>
-                        <span className="text-xs text-end text-[var(--color-text-dim)]">
-                          {item.badge}
-                        </span>
-                      </div>
-                      <h2 className="text-headline mb-4">{item.title}</h2>
-                      <p className="text-body mb-6 max-w-lg">
-                        {item.description}
-                      </p>
-                      <TechnologyChips technologies={proj.tags} label={dict.projects.stack} />
-                      <div className="flex flex-wrap items-center gap-3">
-                        <Link
-                          href={primaryHref}
-                          target={primaryExternal ? "_blank" : undefined}
-                          rel={primaryExternal ? "noopener noreferrer" : undefined}
-                          className="btn-primary"
-                        >
-                          {p[proj.link.labelKey]}
-                          <CardArrow external={primaryExternal} />
-                        </Link>
-                        {proj.secondaryLink && secondaryHref && (
-                          <Link
-                            href={secondaryHref}
-                            target={secondaryExternal ? "_blank" : undefined}
-                            rel={secondaryExternal ? "noopener noreferrer" : undefined}
-                            className="btn-secondary"
-                          >
-                            {p[proj.secondaryLink.labelKey]}
-                            <CardArrow external={secondaryExternal} />
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-
-                    {proj.image && (
-                      <div className="lg:col-span-5 min-w-0">
-                        <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[var(--color-border)]">
-                          <Image
-                            src={proj.image}
-                            alt=""
-                            fill
-                            sizes="(min-width: 1440px) 460px, (min-width: 1024px) 36vw, 90vw"
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    )}
+              <article key={proj.id} className={styles.card} aria-labelledby={`project-${proj.key}`}>
+                <header className={styles.cardHeader}>
+                  <div className={styles.category}>
+                    <span className={styles.index}>{proj.id}</span>
+                    <span>{item.badge}</span>
                   </div>
-                </Panel>
+                  <ProjectStatus project={proj.key} labels={p.statuses} />
+                </header>
+                <div className={`${styles.cardBody} ${!proj.image ? styles.withoutImage : ""}`}>
+                  <div className={styles.copy}>
+                    <div className={styles.titleRow}>
+                      {hasProjectLogo(proj.key) && (
+                        <ProjectLogo project={proj.key} alt="" size={32} />
+                      )}
+                      <h2 id={`project-${proj.key}`} className={styles.title}>{item.title}</h2>
+                    </div>
+                    <p className={`text-body ${styles.description}`}>{item.description}</p>
+                    <TechnologyChips technologies={proj.tags} label={dict.projects.stack} />
+                    <div className={styles.actions}>
+                      <Link
+                        href={primaryHref}
+                        target={primaryExternal ? "_blank" : undefined}
+                        rel={primaryExternal ? "noopener noreferrer" : undefined}
+                        className={styles.primaryLink}
+                      >
+                        {p[proj.link.labelKey]}
+                        <CardArrow external={primaryExternal} />
+                      </Link>
+                      {proj.secondaryLink && secondaryHref && (
+                        <Link
+                          href={secondaryHref}
+                          target={secondaryExternal ? "_blank" : undefined}
+                          rel={secondaryExternal ? "noopener noreferrer" : undefined}
+                          className={styles.secondaryLink}
+                        >
+                          {p[proj.secondaryLink.labelKey]}
+                          <CardArrow external={secondaryExternal} />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                  {proj.image && (
+                    <Link
+                      href={primaryHref}
+                      target={primaryExternal ? "_blank" : undefined}
+                      rel={primaryExternal ? "noopener noreferrer" : undefined}
+                      className={styles.media}
+                      aria-label={`${p[proj.link.labelKey]}: ${item.title}`}
+                    >
+                      <Image
+                        src={proj.image}
+                        alt=""
+                        loading={proj.key === "argus" ? "eager" : "lazy"}
+                        fill
+                        sizes="(min-width: 1440px) 600px, (min-width: 1024px) 44vw, 90vw"
+                        className={styles.image}
+                      />
+                      <span className={styles.mediaArrow} aria-hidden="true"><CardArrow external={primaryExternal} /></span>
+                    </Link>
+                  )}
+                </div>
               </article>
             );
           })}

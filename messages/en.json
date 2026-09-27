@@ -323,10 +323,15 @@
     "readCaseStudy": "Read case study",
     "visitSite": "Visit site",
     "inDev": "IN DEV",
+    "statuses": {
+      "released": "Released",
+      "development": "In development",
+      "paused": "Paused"
+    },
     "items": {
       "argus": {
         "title": "Argus Browser",
-        "badge": "Browser engineering · In development",
+        "badge": "Browser engineering",
         "description": "An anti-detect browser built on a custom Chromium fork. The identity — fingerprint, WebRTC address and cookie jar — is applied below the page, inside the engine, where a script cannot read around it. A desktop control plane owns the profiles, proxies, automations, schedules and datasets, and hands each session one launch payload and nothing more.",
         "engine": "Engine",
         "engineValue": "Custom Chromium fork · C++",
@@ -337,7 +342,7 @@
       },
       "physics": {
         "title": "Physics.explained",
-        "badge": "Education · Released",
+        "badge": "Education",
         "description": "An open-source, interactive physics encyclopedia. Every diagram is a live simulation driven by unit-tested ODE integrators and Newton–Raphson solvers. A context-aware AI tutor at /ask answers physics questions with derivations grounded in the library. Classical mechanics, electromagnetism, thermodynamics, relativity, quantum, and modern physics — all shipped, all free.",
         "deployed": "Deployed",
         "deployedValue": "2026",
@@ -348,7 +353,7 @@
       },
       "doppler": {
         "title": "Doppler VPN",
-        "badge": "VPN · Released",
+        "badge": "VPN",
         "description": "A censorship-resistant VPN built on VLESS-Reality. Every connection looks like ordinary HTTPS — undetectable by deep packet inspection, resistant to TSPU and active probing. No registration, no logs, no account database. Native apps on iOS, Android, macOS, and Windows, self-hosted control plane, pay by card or crypto.",
         "deployed": "Deployed",
         "deployedValue": "2025",
@@ -359,7 +364,7 @@
       },
       "creator": {
         "title": "Creator AI",
-        "badge": "AI · Released",
+        "badge": "AI",
         "description": "Neural content synthesis. Fine-tuned LLMs for technical documentation, multi-language editorial pipelines, and automated publishing workflows.",
         "deployed": "Deployed",
         "deployedValue": "2025",
@@ -370,7 +375,7 @@
       },
       "delivery": {
         "title": "Go Delivery",
-        "badge": "Logistics · Released",
+        "badge": "Logistics",
         "description": "Delivery management platform with real-time GPS driver tracking, route optimization, and order lifecycle management. Built for the Israeli logistics market with multi-language support.",
         "deployed": "Deployed",
         "deployedValue": "2025",
@@ -381,7 +386,7 @@
       },
       "greenflagged": {
         "title": "Green Flagged",
-        "badge": "Legal-tech · Released",
+        "badge": "Legal-tech",
         "description": "AI contract review for freelancers and small teams. Paste contract text or drop a PDF/DOCX, get a plain-language verdict, flagged clauses, severity grades, and suggested redlines in under eight minutes. Three tiers: pay-per-contract, Freelancer, Pro/Agency.",
         "stage": "Stage",
         "stageValue": "Released · First scan free",
@@ -392,7 +397,7 @@
       },
       "smscode": {
         "title": "SMS Code by SIMNETIQ",
-        "badge": "Telecom · Released",
+        "badge": "Telecom",
         "description": "Virtual numbers for sign-up verification. Pick one of 100+ services and one of 150+ countries, get a real carrier number, and the code lands in about thirty seconds. Single-use numbers, cancellable activations, and one-time coin packs that never expire — no SIM, no eSIM, no identity contract, no auto-renew.",
         "coverage": "Coverage",
         "coverageValue": "150+ countries · 100+ services",
@@ -403,7 +408,7 @@
       },
       "visapassage": {
         "title": "VisaPassage",
-        "badge": "Travel-tech · In development",
+        "badge": "Travel-tech",
         "description": "Multi-passport visa intelligence. One encrypted profile holds every passport, residency, and document; the comparison engine ranks routes by least paperwork, shortest wait, and lowest cost, then generates a country-specific checklist and auto-fills the government forms. Versioned, expiry-aware document vault. Free to start.",
         "engine": "Engine",
         "engineValue": "Least paperwork · Shortest wait · Lowest cost",
@@ -1157,11 +1162,11 @@
     "specs": [
       {
         "label": "Status",
-        "value": "Released"
+        "value": "In development"
       },
       {
         "label": "Stage",
-        "value": "Released · First scan free"
+        "value": "In development"
       },
       {
         "label": "Site",
@@ -1286,10 +1291,10 @@
         "name": "Exclusivity"
       }
     ],
-    "inDev": "Released",
+    "inDev": "In development",
     "ctaEyebrow": "Continue",
-    "ctaTitle": "First scan, free.",
-    "ctaBody": "Green Flagged is released. Upload a contract or paste its text to get a plain-language review. Your first scan is free.",
+    "ctaTitle": "Explore what we’re building.",
+    "ctaBody": "Green Flagged is in development. Explore the project and its approach to AI contract review on the product website.",
     "ctaPrimary": "Visit site"
   },
   "caseStudySmsCode": {

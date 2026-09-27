@@ -92,11 +92,10 @@ export default async function ServicesIndexPage({
       />
       <PageHeader title={s.titleLine1} subtitle={s.titleLine2} description={s.body} />
       <section className={`${styles.container} ${styles.directory}`} aria-label={s.eyebrow}>
-        {services.map((service, index) => {
+        {services.map((service) => {
           const figure: ServiceCode = service.slug === "mobile-desktop" ? "mobile" : service.slug === "web-platforms" ? "web" : "aiAutomation";
           return <article key={service.slug} id={service.slug} className={`${styles.serviceRow} scroll-mt-28`}>
             <div className={styles.rowVisual}>
-              <span className={styles.number}>0{index + 1}</span>
               <ServiceFigure animated code={figure} className={styles.rowFigure} />
             </div>
             <div>

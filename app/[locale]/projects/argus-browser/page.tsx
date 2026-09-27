@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Panel, SpecRow } from "@/components/panel";
+import { ProjectStatus } from "@/components/project-status";
 import { ProjectLogo } from "@/components/project-logo";
 import { CardArrow } from "@/components/sections/card-arrow";
 import { TechnologyChips } from "@/components/technology-chips";
@@ -12,7 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
-import { isLocale, type Locale } from "@/lib/i18n";
+import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
 
@@ -88,7 +89,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
   const c = dict.caseStudyArgus;
 
   return (
-    <>
+    <div className={styles.page}>
       <BreadcrumbSchema
         items={[
           { name: "Home", url: `${SITE_URL}/${locale}` },
@@ -111,20 +112,27 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
       />
 
       {/* Hero */}
-      <section data-nav-hero="" className="border-b border-[var(--color-border)]">
+      <section data-nav-hero="">
         <div className={`${styles.hero} mx-auto max-w-[1440px] px-6 lg:px-12`}>
+          <div className={styles.projectNav}>
+            <Link href={localizePath(locale, "/projects")} className={styles.backLink}>
+              <span aria-hidden="true">←</span> {dict.nav.links.projects}
+            </Link>
+            <ProjectStatus project="argus" labels={dict.projectsPage.statuses} />
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
-              <ProjectLogo
-                project="argus"
-                alt="Argus Browser"
-                size={56}
-                className="mb-6"
-              />
-              <p className={styles.eyebrow}>
-                {c.eyebrow}
-              </p>
-              <h1 className="text-display mt-5">
+              <div className={styles.identity}>
+                <ProjectLogo
+                  project="argus"
+                  alt="Argus Browser"
+                  size={32}
+                />
+                <p className={styles.eyebrow}>
+                  {c.eyebrow}
+                </p>
+              </div>
+              <h1 className={styles.title}>
                 <span className="block">{c.titleLine1}</span>
                 <span className="block text-[var(--color-text-dim)]">
                   {c.titleLine2}
@@ -144,7 +152,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
                   href={PROJECT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary"
+                  className={styles.primaryLink}
                 >
                   {c.visitSite}
                   <CardArrow external />
@@ -157,7 +165,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
 
       {/* Header image + specs */}
       <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
+        <div className={`mx-auto max-w-[1440px] px-6 lg:px-12 ${styles.overview}`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             <div className="lg:col-span-8">
               <div className={styles.imageFrame}>
@@ -182,7 +190,8 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
                 <p className={`${styles.sectionLabel} mb-4`}>
                   {c.specsLabel}
                 </p>
-                {c.specs.map((row) => (
+                {/* The first specification is Status, already shown in the hero. */}
+                {c.specs.slice(1).map((row) => (
                   <SpecRow key={row.label} label={row.label} value={row.value} />
                 ))}
               </Panel>
@@ -199,7 +208,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
               <p className={`${styles.sectionLabel} mb-5`}>
                 {c.aboutEyebrow}
               </p>
-              <h2 className="text-headline">
+              <h2 className={styles.heading}>
                 <span className="block">{c.aboutTitleA}</span>
                 <span className="block text-[var(--color-text-dim)]">
                   {c.aboutTitleB}
@@ -224,9 +233,9 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
             <p className={`${styles.sectionLabel} mb-5`}>
               {c.insideEyebrow}
             </p>
-            <h2 className="text-headline">{c.insideTitle}</h2>
+            <h2 className={styles.heading}>{c.insideTitle}</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {c.insideItems.map((item, i) => (
               <Panel key={item.label} innerClassName={styles.featureCard}>
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
@@ -266,7 +275,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
               <p className={`${styles.sectionLabel} mb-5`}>
                 {c.designEyebrow}
               </p>
-              <h2 className="text-headline">
+              <h2 className={styles.heading}>
                 <span className="block">{c.designTitleA}</span>
                 <span className="block text-[var(--color-text-dim)]">
                   {c.designTitleB}
@@ -363,7 +372,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
               <p className={`${styles.sectionLabel} mb-5`}>
                 {c.taxonomyEyebrow}
               </p>
-              <h2 className="text-headline">
+              <h2 className={styles.heading}>
                 <span className="block">{c.taxonomyTitleA}</span>
                 <span className="block text-[var(--color-text-dim)]">
                   {c.taxonomyTitleB}
@@ -408,13 +417,13 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
       {/* CTA */}
       <section className="border-t border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <Panel innerClassName="p-8 lg:p-14" corners>
+          <Panel className={styles.cta} innerClassName="p-8 lg:p-14" corners>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
               <div className="lg:col-span-8">
                 <p className={`${styles.sectionLabel} mb-5`}>
                   {c.ctaEyebrow}
                 </p>
-                <h2 className="text-headline">{c.ctaTitle}</h2>
+                <h2 className={styles.heading}>{c.ctaTitle}</h2>
                 <p className="text-body mt-5 max-w-lg">{c.ctaBody}</p>
               </div>
               <div className="lg:col-span-4 flex lg:justify-end">
@@ -423,7 +432,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
                     href={PROJECT_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className={styles.primaryLink}
                   >
                     {c.ctaPrimary}
                     <CardArrow external />
@@ -434,6 +443,6 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
           </Panel>
         </div>
       </section>
-    </>
+    </div>
   );
 }

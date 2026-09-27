@@ -51,7 +51,7 @@
   .hero { padding-block: 6.5rem 5rem; }
   .heroGrid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 7%; }
   .serviceRow { grid-template-columns: 0.8fr 2fr 1.1fr; gap: 3rem; padding-block: 3.5rem; }
-  .rowVisual { flex-direction: column; }
+  .rowVisual { justify-content: center; }
   .rowFigure { align-self: center; }
   .section, .cta { padding-block: 6rem; }
   .ctaGrid { grid-template-columns: 1fr 1fr; gap: 8%; }

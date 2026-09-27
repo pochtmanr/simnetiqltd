@@ -1,0 +1,15 @@
+.status { display: inline-flex; align-items: center; gap: 0.5rem; flex-shrink: 0; min-height: 30px; padding: 0.375rem 0.75rem; border: 1px solid color-mix(in srgb, var(--status-color) 28%, transparent); border-radius: 100px; background: color-mix(in srgb, var(--status-color) 8%, transparent); color: var(--status-color); font-size: 0.75rem; font-weight: 500; line-height: 1.25; }
+.status[data-status="released"] { --status-color: #8dd3ad; }
+.status[data-status="development"] { --status-color: #a5c2e9; }
+.status[data-status="paused"] { --status-color: #dfbb7a; }
+.statusIcon { width: 8px; height: 8px; flex-shrink: 0; background: currentColor; border-radius: 50%; }
+.status[data-status="development"] .statusIcon { background: transparent; border: 1.5px solid currentColor; border-inline-end-color: transparent; }
+.status[data-status="paused"] .statusIcon { border-radius: 0; background: linear-gradient(to right, currentColor 0 30%, transparent 30% 70%, currentColor 70%); }
+:global([data-theme="light"]) .status[data-status="released"] { --status-color: #246044; }
+:global([data-theme="light"]) .status[data-status="development"] { --status-color: #375c96; }
+:global([data-theme="light"]) .status[data-status="paused"] { --status-color: #825918; }
+@media (prefers-color-scheme: light) {
+  :global(:root:not([data-theme])) .status[data-status="released"] { --status-color: #246044; }
+  :global(:root:not([data-theme])) .status[data-status="development"] { --status-color: #375c96; }
+  :global(:root:not([data-theme])) .status[data-status="paused"] { --status-color: #825918; }
+}
