@@ -39,7 +39,7 @@
   --color-surface-container-highest: #151821;
 
   /* Fonts */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
 }
 
@@ -137,9 +137,11 @@
 
 
 :root {
-    --radius-control: 2px;
-  --radius-surface: 2px;
-  --radius-media: 2px;
+  --radius-control: 7px;
+  --radius-surface: 12px;
+  --radius-media: 12px;
+  --motion-fast: 180ms;
+  --motion-standard: 280ms;
 }
 
 html,
@@ -166,19 +168,19 @@ body {
 /* ------------------------------------------------------------------ */
 
 .text-display {
-  font-family: var(--font-display), var(--font-sans);
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-family: var(--font-sans);
+  font-size: clamp(3rem, 6.2vw, 5rem);
   font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 0.96;
+  letter-spacing: -0.05em;
+  line-height: 1.06;
   color: var(--color-text);
 }
 
 .text-headline {
-  font-family: var(--font-display), var(--font-sans);
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-family: var(--font-sans);
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.04em;
   line-height: 1.08;
   color: var(--color-text);
 }
@@ -250,8 +252,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 48px;
-  padding: 13px 24px;
+  min-height: 52px;
+  padding: 14px 24px;
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: 0;
@@ -266,19 +268,16 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
-  color: #FFFFFF;
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border: 1px solid var(--color-text);
 }
 .btn-primary:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 92%, white);
-  border-color: color-mix(in srgb, var(--color-primary) 92%, white);
+  background-color: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-text) 8%, transparent);
 }
 
-[data-theme="light"] .btn-primary:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 92%, black);
-  border-color: color-mix(in srgb, var(--color-primary) 92%, black);
-}
 [data-theme="light"] .btn-secondary {
   border-color: rgba(0, 0, 0, 0.18);
 }
@@ -345,44 +344,16 @@ body {
   }
 }
 
-/*
- * Slide-fill CTA — text label that grows a brand-blue fill from the
- * leading edge on parent .group hover (right edge in RTL).
- */
+/* Legacy inline CTA class shares the same quiet, neutral interaction. */
 .cta-fill {
   position: relative;
-  overflow: hidden;
-  transition: color 360ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-control);
+  transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease;
 }
 .group:hover .cta-fill,
 .cta-fill:hover {
-  color: #fff;
-}
-.cta-fill > * {
-  position: relative;
-  z-index: 1;
-}
-.cta-fill::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-primary);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-.group:hover .cta-fill::before,
-.cta-fill:hover::before {
-  transform: scaleX(1);
-}
-[dir="rtl"] .cta-fill::before {
-  transform-origin: 100% 50%;
-}
-@media (prefers-reduced-motion: reduce) {
-  .cta-fill::before {
-    transition: none;
-  }
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-text) 7%, transparent);
 }
 
 /* ------------------------------------------------------------------ */
@@ -400,45 +371,58 @@ input::placeholder, textarea::placeholder {
 }
 
 /* ------------------------------------------------------------------ */
-/* Gradient shell (from DESIGN: premium hairline frame)                */
+/* Shared panel: neutral surface, continuous hairline, no inset glow.   */
 /* ------------------------------------------------------------------ */
 
 .gradient-shell {
   position: relative;
   padding: 1px;
   border-radius: var(--radius-surface);
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.04) 40%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
-.gradient-shell {
-  transition: background 160ms ease;
+  background: var(--color-border);
+  transition: background-color var(--motion-fast) ease, box-shadow var(--motion-standard) ease;
 }
 .gradient-shell > .shell-inner {
   position: relative;
-  background: var(--color-surface);
-  border-radius: 1px;
-  box-shadow: rgba(10, 13, 20, 0.8) 0 0 100px 0 inset;
   width: 100%;
   height: 100%;
+  background: var(--color-surface);
+  border-radius: calc(var(--radius-surface) - 1px);
 }
-.group:hover > .gradient-shell,
+.gradient-shell.is-hover:hover,
+.gradient-shell.is-hover:focus-within,
 a:hover > .gradient-shell,
-.gradient-shell.is-hover:hover {
-  background: linear-gradient(
-    145deg,
-    rgba(165, 194, 233, 0.38) 0%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0) 100%
-  );
+a:focus-visible > .gradient-shell,
+.group:hover > .gradient-shell.is-hover {
+  background: var(--color-border-strong);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-bg) 30%, transparent);
 }
 
-/* ------------------------------------------------------------------ */
-/* ------------------------------------------------------------------ */
-
+/* Secondary pages inherit the hero's editorial typography and dot detail. */
+.studio-page-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--color-bg);
+}
+.studio-page-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: var(--color-text-dim);
+  font-family: var(--font-sans);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.studio-page-eyebrow::before {
+  content: "";
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-primary-glow);
+}
 
 /* ------------------------------------------------------------------ */
 /* Technical rail (metadata strips: coordinates, timestamps, etc.)     */
@@ -507,70 +491,10 @@ a:hover > .gradient-shell,
   letter-spacing: 0.06em;
 }
 
-[dir="rtl"] .gradient-shell {
-  background: linear-gradient(
-    -145deg,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.04) 40%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
-[dir="rtl"] .group:hover > .gradient-shell,
-[dir="rtl"] a:hover > .gradient-shell,
-[dir="rtl"] .gradient-shell.is-hover:hover {
-  background: linear-gradient(
-    -145deg,
-    rgba(165, 194, 233, 0.38) 0%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Light theme — component overrides                                   */
 /* ------------------------------------------------------------------ */
-
-[data-theme="light"] .gradient-shell {
-  background: linear-gradient(
-    145deg,
-    rgba(0, 0, 0, 0.10) 0%,
-    rgba(0, 0, 0, 0.04) 40%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-[data-theme="light"] .gradient-shell > .shell-inner {
-  background: var(--color-surface);
-  box-shadow: none;
-}
-[data-theme="light"] .group:hover > .gradient-shell,
-[data-theme="light"] a:hover > .gradient-shell,
-[data-theme="light"] .gradient-shell.is-hover:hover {
-  background: linear-gradient(
-    145deg,
-    rgba(84, 115, 161, 0.32) 0%,
-    rgba(0, 0, 0, 0.06) 40%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-[data-theme="light"][dir="rtl"] .gradient-shell {
-  background: linear-gradient(
-    -145deg,
-    rgba(0, 0, 0, 0.10) 0%,
-    rgba(0, 0, 0, 0.04) 40%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-[data-theme="light"][dir="rtl"] .group:hover > .gradient-shell,
-[data-theme="light"][dir="rtl"] a:hover > .gradient-shell,
-[data-theme="light"][dir="rtl"] .gradient-shell.is-hover:hover {
-  background: linear-gradient(
-    -145deg,
-    rgba(84, 115, 161, 0.32) 0%,
-    rgba(0, 0, 0, 0.06) 40%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-
 
 [data-theme="light"] ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.18);
@@ -743,148 +667,149 @@ body > header {
 /* Hero field — the homepage's one owned surface                       */
 /* ------------------------------------------------------------------ */
 
-/*
- * Background is an Obsidian-style knowledge graph (components/hero-graph.tsx):
- * clustered nodes and links drawn as ONE CENTRED FIGURE, sized to about the
- * copy column and cleared in the middle so the display type sits on the page
- * ground rather than on the graph. Monochrome, with the brand blue reserved
- * for hubs and their spokes.
- *
- * The canvas is transparent and the section carries the page ground, so the
- * hero follows the theme with no fixed-colour band fighting light mode.
- * Contrast: dark #07090D gives 17.9:1 for the display and 7.8:1 for body;
- * light #F4F5F7 gives 19:1 and 6.9:1.
- */
+/* A perspective-projected dot sculpture occupies its own column. */
 .hero-field {
-  --field-fg: #f4f4f5;
-  --field-fg-soft: #a1a1aa;
-  --field-fg-quiet: #8a8a93;
+  --field-fg: var(--color-text);
+  --field-fg-soft: var(--color-text-dim);
+  --field-fg-quiet: var(--color-text-faint);
   position: relative;
   isolation: isolate;
   overflow: clip;
-  /* Pull under the sticky 4rem header so the nav floats over the field. */
   margin-top: -4rem;
-  padding-top: 4rem;
-  min-height: 100svh;
-  display: flex;
+  padding: 7rem max(3rem, calc((100vw - 1344px) / 2)) 4rem;
+  min-height: min(820px, 94svh);
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  column-gap: 2rem;
   align-items: center;
-  justify-content: center;
-  background-color: var(--color-bg);
-}
-
-[data-theme="light"] .hero-field {
-  --field-fg: #09090b;
-  --field-fg-soft: #52525b;
-  --field-fg-quiet: #6e6e70;
-}
-
-.hero-field__canvas,
-.hero-field__fallback {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/*
- * DOM fallback when canvas is unavailable: a static dot cluster, masked to the
- * same centred annulus the drawn graph occupies — cleared in the middle, faded
- * at the rim — so the composition survives even without the canvas.
- */
-.hero-field__fallback {
-  background-image: radial-gradient(
-    circle at center,
-    color-mix(in srgb, var(--field-fg) 45%, transparent) 1.6px,
-    transparent 2.2px
-  );
-  background-size: 34px 34px;
-  -webkit-mask-image: radial-gradient(
-    ellipse 48% 36% at 50% 50%,
-    transparent 38%,
-    #000 62%,
-    #000 82%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 48% 36% at 50% 50%,
-    transparent 38%,
-    #000 62%,
-    #000 82%,
-    transparent 100%
-  );
-}
-
-/*
- * Links span the figure and pass BENEATH the copy on purpose. This scrim only
- * damps them there — enough that the display type stays the brightest thing on
- * screen, not so much that the crossing links disappear. It sits inside the
- * inner's stacking context, so it covers the canvas but not the type.
- */
-.hero-field__inner::before {
-  content: "";
-  position: absolute;
-  inset: -12% -10%;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    color-mix(in srgb, var(--color-bg) 74%, transparent) 0%,
-    color-mix(in srgb, var(--color-bg) 42%, transparent) 50%,
-    transparent 76%
-  );
+  background: var(--color-bg);
 }
 
 .hero-field__inner {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 60rem;
-  margin-inline: auto;
-  padding: 2rem 1.5rem;
-  text-align: center;
+  padding-block: 0;
+  text-align: start;
 }
 
 .hero-field__title {
-  font-family: var(--font-display), var(--font-sans);
-  font-size: clamp(2.5rem, 6.1vw, 4.75rem);
-  font-weight: 600;
-  line-height: 1.03;
-  letter-spacing: -0.028em;
+  font-family: var(--font-sans);
+  font-size: clamp(3.25rem, 4.6vw, 4.8rem);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.055em;
   color: var(--field-fg);
   text-wrap: balance;
 }
+.hero-field__title > span:last-child { color: var(--color-text-dim); }
 
 .hero-field__body {
-  margin: 1.5rem auto 0;
-  max-width: 46ch;
-  font-size: clamp(1rem, 1.1vw, 1.125rem);
-  font-weight: 400;
-  line-height: 1.6;
+  margin-top: 1.75rem;
+  max-width: 39ch;
+  font-size: clamp(1rem, 1.3vw, 1.1875rem);
+  line-height: 1.65;
   color: var(--field-fg-soft);
 }
-
 .hero-field__actions {
   margin-top: 2.25rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
+  gap: 0.875rem;
 }
-
+.hero-field__actions :is(.btn-primary, .btn-secondary) {
+  min-height: 54px;
+  padding-inline: 1.5rem;
+  gap: 1.25rem;
+  border-radius: var(--radius-control);
+}
+.hero-field__actions svg { flex-shrink: 0; }
+/* Match the footer's arrow motion while honoring the system preference. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-field__work-arrow { transition: translate var(--motion-standard); }
+  .hero-field__actions .btn-secondary:is(:hover, :focus-visible) .hero-field__work-arrow {
+    translate: 3px -3px;
+  }
+  [dir="rtl"] .hero-field__actions .btn-secondary:is(:hover, :focus-visible) .hero-field__work-arrow {
+    translate: -3px -3px;
+  }
+}
 .hero-field__proof {
-  margin-top: 2rem;
+  margin-top: 1.75rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--field-fg-quiet);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
 }
-.hero-field__proof-mark {
-  display: inline-flex;
-  opacity: 0.85;
+@media (min-width: 701px) {
+  .hero-field__inner > .hero-field__proof {
+    position: absolute;
+    inset-inline-start: 0;
+    top: 100%;
+  }
+}
+.hero-field__proof-mark { display: inline-flex; opacity: 0.85; }
+.hero-field__visual {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: min(600px, 66vw);
+  pointer-events: none;
+}
+.hero-field__canvas,
+.hero-field__fallback {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-field__fallback {
+  background: radial-gradient(circle, var(--color-text-dim) 1px, transparent 2px) 0 0 / 12px 12px;
+  mask-image: radial-gradient(ellipse at center, transparent 23%, #000 25%, #000 45%, transparent 47%);
+  transform: rotate(-28deg) scaleY(.8);
+}
+.landing-contact { background: var(--color-surface); }
+.landing-contact__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1.25rem;
+  font: 500 .6875rem var(--font-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+.landing-contact__eyebrow::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--color-secondary);
+  border-radius: 50%;
+}
+@media (min-width: 1600px) {
+  .hero-field { min-height: 840px; }
+}
+@media (max-width: 1000px) {
+  .hero-field { padding-inline: 2rem; }
+  .hero-field__title { font-size: clamp(2.75rem, 5.5vw, 4rem); }
+  .hero-field__visual { height: 500px; }
+}
+@media (max-width: 700px) {
+  .hero-field {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 7.5rem 1.5rem 1.5rem;
+    min-height: auto;
+  }
+  .hero-field__inner { padding-block: 0; }
+  .hero-field__title { font-size: clamp(2.65rem, 9vw, 3.75rem); }
+  .hero-field__body { margin-top: 1.5rem; max-width: 36ch; }
+  .hero-field__actions { margin-top: 1.75rem; gap: .65rem; }
+  .hero-field__actions :is(.btn-primary, .btn-secondary) { padding-inline: 1rem; gap: .75rem; }
+  .hero-field__proof { margin-top: 1.5rem; font-size: .6875rem; }
+  .hero-field__visual { height: 350px; width: 100%; margin: 0; }
 }
 
 /* ------------------------------------------------------------------ */
@@ -990,4 +915,8 @@ body:has(#hero-nav-sentinel:not([data-passed]))
   .disclosure-icon {
     transition: none;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-shell, .btn-primary, .btn-secondary, .cta-fill { transition: none; }
 }

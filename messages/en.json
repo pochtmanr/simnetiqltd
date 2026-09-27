@@ -9,9 +9,9 @@
     "back": "Back",
     "next": "Next",
     "previous": "Previous",
-    "live": "Live",
-    "liveNominal": "Live · Nominal",
-    "inDevNominal": "In dev · Pre-launch"
+    "live": "Released",
+    "liveNominal": "Released",
+    "inDevNominal": "In development"
   },
   "nav": {
     "links": {
@@ -47,10 +47,24 @@
     "titleLine2": "who build it.",
     "body": "Simnetiq is a London studio building mobile apps, web platforms and AI systems.",
     "ctaPrimary": "Book a call",
-    "ctaSecondary": "See our works",
+    "ctaSecondary": "See our work",
     "accolade": {
       "label": "Recognition",
-      "value": "Top 30 · Israel · Apple App Store"
+      "value": "100+ App Store chart appearances",
+      "next": "Show next App Store highlight",
+      "pause": "Pause highlights",
+      "resume": "Resume highlights",
+      "highlights": [
+        "App Store · #11 in Gabon",
+        "App Store · #25 in Angola",
+        "App Store · #26 in Mongolia",
+        "App Store · #56 in Taiwan",
+        "App Store · #58 in Singapore",
+        "App Store · #71 in Armenia",
+        "Also charted · Ukraine",
+        "Also charted · Hong Kong",
+        "Also charted · British Virgin Islands"
+      ]
     }
   },
   "frame": {
@@ -74,50 +88,52 @@
   "projects": {
     "eyebrow": "Selected work",
     "title": "Recent work",
-    "body": "Production deployments from our London studio — six live in the wild, one in development. Built with an engineering-first mindset: reliable, well-structured, made to last.",
+    "body": "A selection of apps, platforms, and tools we design, build, and ship.",
     "stack": "Stack",
     "visit": "Visit site",
     "caseStudy": "Case study",
+    "seeAll": "See all",
+    "seeLess": "See less",
     "items": {
       "argus": {
         "title": "Argus Browser",
-        "badge": "Browser engineering · Live",
+        "badge": "Browser engineering · In development",
         "description": "An anti-detect browser on a custom Chromium fork. Hundreds of isolated profiles, each with its own fingerprint, proxy and cookie jar, run and automated from one desktop control plane."
       },
       "physics": {
         "title": "Physics.explained",
-        "badge": "Education · Open",
+        "badge": "Education · Released",
         "description": "Physics taught visually. Interactive animations powered by accurate solvers, a concept dictionary, and physicist profiles."
       },
       "doppler": {
         "title": "Doppler VPN",
-        "badge": "VPN · Encrypted",
+        "badge": "VPN · Released",
         "description": "A censorship-resistant VPN built on VLESS-Reality. Zero logs, geo-distributed nodes, native apps on every platform."
       },
       "creator": {
         "title": "Creator AI",
-        "badge": "AI · Generative",
+        "badge": "AI · Released",
         "description": "Generative content platform. Fine-tuned LLMs for technical writing and multi-language editorial workflows."
       },
       "delivery": {
         "title": "Go Delivery",
-        "badge": "Logistics",
+        "badge": "Logistics · Released",
         "description": "Delivery platform with live GPS tracking, route optimisation, and end-to-end order management.",
         "accolade": "Top 30 · Israel · Apple App Store"
       },
       "greenflagged": {
         "title": "Green Flagged",
-        "badge": "Legal-tech · In dev",
+        "badge": "Legal-tech · Released",
         "description": "AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades, and suggested redlines in under eight minutes."
       },
       "smscode": {
         "title": "SMS Code by SIMNETIQ",
-        "badge": "Telecom · Live",
+        "badge": "Telecom · Released",
         "description": "Virtual numbers for sign-ups. Pick a service and a country, get a real carrier number in about thirty seconds, and keep your own number out of someone else's database."
       },
       "visapassage": {
         "title": "VisaPassage",
-        "badge": "Travel-tech · Live",
+        "badge": "Travel-tech · In development",
         "description": "Multi-passport visa intelligence. Compare every visa route across all the passports and residencies you hold, then generate the exact document package for the one you pick."
       }
     }
@@ -169,38 +185,41 @@
   },
   "contact": {
     "eyebrow": "Get in touch",
-    "title": "Contact us",
-    "body": "Briefs, partnerships, engineering work. We reply within one business day.",
+    "title": "Let’s talk about your project.",
+    "body": "An app, a website, or a smarter way to work. Let’s explore what it takes to build and launch it.",
     "directLabel": "Direct line",
     "email": "Email",
     "location": "Location",
     "location_value": "London, UK · BST",
     "response": "Response",
     "response_value": "Within one business day",
-    "bookingHeading": "Book a 30-min call",
-    "bookingSubtitle": "7 days a week, 10:00–18:00 Berlin time. We'll send a Google Meet link.",
+    "bookingHeading": "Book a 30-minute conversation",
+    "bookingSubtitle": "We’ll discuss your needs, the market, pricing, and a practical path from development to launch — including app stores and platforms.",
     "bookingRail": [
-      "30 MIN",
-      "GOOGLE MEET",
-      "MON–SUN",
-      "10:00–18:00 BERLIN"
+      "30 minutes",
+      "Google Meet"
     ],
-    "bookingFooter": "▸ Times shown in your local timezone · Reschedule or cancel any time",
-    "bookingCta": "Show available times",
-    "formHeading": "Prefer email? Send a message",
+    "bookingFooter": "Reschedule or cancel any time",
+    "bookingCta": "Schedule a call",
+    "bookingClose": "Close booking",
+    "bookingFallback": "Open booking in a new tab",
+    "formHeading": "Prefer to write?",
     "name": "Your name",
     "namePlaceholder": "Full name",
     "emailLabel": "Email",
     "emailPlaceholder": "you@domain.com",
-    "message": "How can we help?",
-    "messagePlaceholder": "A few sentences about what you need.",
+    "message": "What would you like to build or improve?",
+    "messagePlaceholder": "The idea, the challenge, or where you’re stuck…",
     "ready": "Ready",
     "sending": "Sending…",
     "submit": "Send message",
     "transmitted": "Sent",
     "failed": "Didn't go through — retry",
-    "successMessage": "Got it — we'll reply within one business day.",
-    "errorMessage": "Something went wrong. Please retry or email support@simnetiq.com."
+    "successMessage": "Thanks for reaching out. We’ll reply to your email to discuss the next steps.",
+    "errorMessage": "Something went wrong. Please retry or email support@simnetiq.com.",
+    "formBody": "Tell us what you need. We’ll take it from there.",
+    "bookingLoading": "Loading available times…",
+    "bookingTimezone": "Times shown in"
   },
   "footer": {
     "tagline": "PRECISION ENGINEERING",
@@ -225,35 +244,35 @@
     "bottom": "© {year} Simnetiq Ltd · All rights reserved"
   },
   "about": {
-    "eyebrow": "Mission Context",
-    "title": "We build the kinetic blueprint for industrial software.",
-    "body": "Simnetiq is a technical design and engineering collective. We reject decorative trends in favour of functional precision and geometric absolutism — software that reads as an instrument, not a decoration.",
-    "founded": "▸ Founded",
-    "operations": "▸ Operations",
+    "eyebrow": "About Simnetiq",
+    "title": "A small team. A direct working relationship.",
+    "body": "Simnetiq is a London software studio building mobile apps, websites and AI automation. We help businesses launch products, serve customers and make everyday work easier. You work directly with the people responsible for the project.",
+    "founded": "Founded",
+    "operations": "Based in",
     "operationsValue": "London, UK",
     "personnel": {
-      "eyebrow": "Personnel",
-      "title": "The architecture team",
-      "body": "Two owner-operators. Engineering and legal. No layers between the work and the decision."
+      "eyebrow": "Our team",
+      "title": "The people you work with",
+      "body": "Two owners with responsibilities across engineering and contracts. We bring the technical work and project agreements together so you know who is responsible for each part."
     },
     "team": [
       {
         "role": "Lead Engineer / Director",
-        "name": "R. Pochtman",
-        "meta": "Mobile · Backend · Infra"
+        "name": "Roman Pochtman",
+        "meta": "Mobile · Backend · Infrastructure"
       },
       {
         "role": "Legal / Contracts",
-        "name": "D. Zitomirsky",
+        "name": "David Zitomirsky",
         "meta": "Corporate · Compliance"
       }
     ],
     "registration": {
-      "eyebrow": "Registration",
-      "title": "Certified entity",
-      "body": "Incorporated in England & Wales. All trading, contracting, and invoicing runs through the parent entity.",
-      "companyDetails": "▸ Company Details",
-      "registeredAddress": "▸ Registered Address",
+      "eyebrow": "Company information",
+      "title": "Registered in the UK",
+      "body": "Simnetiq Ltd is registered in England and Wales. Your project agreement and invoices come from this company.",
+      "companyDetails": "Company details",
+      "registeredAddress": "Registered address",
       "legalName": "Legal name",
       "companyNo": "Company no.",
       "jurisdiction": "Jurisdiction",
@@ -262,38 +281,44 @@
       "vatStatusValue": "On request"
     },
     "principles": {
-      "eyebrow": "Principles",
-      "title": "Operating values",
-      "body": "Four constants that every project, hire, and decision is measured against."
+      "eyebrow": "Working together",
+      "title": "What you can expect",
+      "body": "Clear responsibilities, an agreed scope and a plan for what happens after launch."
     },
     "values": [
       {
         "code": "V-01",
-        "title": "Precision",
-        "text": "Mathematics over aesthetics. Every pixel, every line, every abstraction serves a structural purpose."
+        "title": "Direct collaboration",
+        "text": "Discuss the work with the people building it. Questions, decisions and feedback go straight to the team responsible."
       },
       {
         "code": "V-02",
-        "title": "Function",
-        "text": "We build instruments, not toys. UI is for control, not decoration."
+        "title": "An agreed scope",
+        "text": "Before development starts, we agree what will be delivered, the timeline and the cost. If priorities change, we review the impact together."
       },
       {
         "code": "V-03",
-        "title": "Integrity",
-        "text": "Direct communication. Transparent architecture. Unwavering quality."
+        "title": "Your code and accounts",
+        "text": "You own the source code, infrastructure and accounts. We make access and handover part of the project plan."
       },
       {
         "code": "V-04",
-        "title": "Legacy",
-        "text": "Rooted in Scandinavian and British industrial design principles."
+        "title": "A plan after launch",
+        "text": "We plan monitoring, maintenance and future updates with you. Support responsibilities are agreed as part of the work."
       }
-    ]
+    ],
+    "cta": {
+      "title": "Tell us what you’re working on.",
+      "body": "Whether you have a clear brief or a problem to solve, we can talk through the needs of your business and the next step.",
+      "contact": "Book a call",
+      "work": "See our work"
+    }
   },
   "projectsPage": {
-    "eyebrow": "Engineering Archive",
-    "titleLine1": "Active",
-    "titleLine2": "Deployments",
-    "body": "A catalog of precision software instruments developed for global scale. Industrial-grade reliability, minimalist interfaces, engineering-first execution.",
+    "eyebrow": "Projects",
+    "titleLine1": "Our work,",
+    "titleLine2": "in detail.",
+    "body": "Released products and projects in development. Explore the interfaces, systems, and engineering behind each one.",
     "specification": "▸ Specification",
     "readCaseStudy": "Read case study",
     "visitSite": "Visit site",
@@ -301,7 +326,7 @@
     "items": {
       "argus": {
         "title": "Argus Browser",
-        "badge": "BROWSER ENGINEERING · LIVE",
+        "badge": "Browser engineering · In development",
         "description": "An anti-detect browser built on a custom Chromium fork. The identity — fingerprint, WebRTC address and cookie jar — is applied below the page, inside the engine, where a script cannot read around it. A desktop control plane owns the profiles, proxies, automations, schedules and datasets, and hands each session one launch payload and nothing more.",
         "engine": "Engine",
         "engineValue": "Custom Chromium fork · C++",
@@ -312,7 +337,7 @@
       },
       "physics": {
         "title": "Physics.explained",
-        "badge": "EDUCATION · OPEN",
+        "badge": "Education · Released",
         "description": "An open-source, interactive physics encyclopedia. Every diagram is a live simulation driven by unit-tested ODE integrators and Newton–Raphson solvers. A context-aware AI tutor at /ask answers physics questions with derivations grounded in the library. Classical mechanics, electromagnetism, thermodynamics, relativity, quantum, and modern physics — all shipped, all free.",
         "deployed": "Deployed",
         "deployedValue": "2026",
@@ -323,7 +348,7 @@
       },
       "doppler": {
         "title": "Doppler VPN",
-        "badge": "VPN · ENC",
+        "badge": "VPN · Released",
         "description": "A censorship-resistant VPN built on VLESS-Reality. Every connection looks like ordinary HTTPS — undetectable by deep packet inspection, resistant to TSPU and active probing. No registration, no logs, no account database. Native apps on iOS, Android, macOS, and Windows, self-hosted control plane, pay by card or crypto.",
         "deployed": "Deployed",
         "deployedValue": "2025",
@@ -334,7 +359,7 @@
       },
       "creator": {
         "title": "Creator AI",
-        "badge": "NEURAL · GEN",
+        "badge": "AI · Released",
         "description": "Neural content synthesis. Fine-tuned LLMs for technical documentation, multi-language editorial pipelines, and automated publishing workflows.",
         "deployed": "Deployed",
         "deployedValue": "2025",
@@ -345,7 +370,7 @@
       },
       "delivery": {
         "title": "Go Delivery",
-        "badge": "LOGISTICS · OPS",
+        "badge": "Logistics · Released",
         "description": "Delivery management platform with real-time GPS driver tracking, route optimization, and order lifecycle management. Built for the Israeli logistics market with multi-language support.",
         "deployed": "Deployed",
         "deployedValue": "2025",
@@ -356,10 +381,10 @@
       },
       "greenflagged": {
         "title": "Green Flagged",
-        "badge": "LEGAL-TECH · IN DEV",
-        "description": "AI contract review for freelancers and small teams. Paste contract text or drop a PDF/DOCX, get a plain-language verdict, flagged clauses, severity grades, and suggested redlines in under eight minutes. Marketing site live, scanning engine in development. Three tiers: pay-per-contract, Freelancer, Pro/Agency.",
+        "badge": "Legal-tech · Released",
+        "description": "AI contract review for freelancers and small teams. Paste contract text or drop a PDF/DOCX, get a plain-language verdict, flagged clauses, severity grades, and suggested redlines in under eight minutes. Three tiers: pay-per-contract, Freelancer, Pro/Agency.",
         "stage": "Stage",
-        "stageValue": "Pre-launch · First scan free",
+        "stageValue": "Released · First scan free",
         "scope": "Scope",
         "scopeValue": "Freelancers · Agencies · SMBs",
         "stack": "Stack",
@@ -367,7 +392,7 @@
       },
       "smscode": {
         "title": "SMS Code by SIMNETIQ",
-        "badge": "TELECOM · LIVE",
+        "badge": "Telecom · Released",
         "description": "Virtual numbers for sign-up verification. Pick one of 100+ services and one of 150+ countries, get a real carrier number, and the code lands in about thirty seconds. Single-use numbers, cancellable activations, and one-time coin packs that never expire — no SIM, no eSIM, no identity contract, no auto-renew.",
         "coverage": "Coverage",
         "coverageValue": "150+ countries · 100+ services",
@@ -378,7 +403,7 @@
       },
       "visapassage": {
         "title": "VisaPassage",
-        "badge": "TRAVEL-TECH · LIVE",
+        "badge": "Travel-tech · In development",
         "description": "Multi-passport visa intelligence. One encrypted profile holds every passport, residency, and document; the comparison engine ranks routes by least paperwork, shortest wait, and lowest cost, then generates a country-specific checklist and auto-fills the government forms. Versioned, expiry-aware document vault. Free to start.",
         "engine": "Engine",
         "engineValue": "Least paperwork · Shortest wait · Lowest cost",
@@ -390,85 +415,83 @@
     }
   },
   "servicesIndex": {
-    "eyebrow": "Capabilities",
-    "titleLine1": "Engineering",
-    "titleLine2": "Services",
-    "body": "Four capability groups. Each with a defined scope, stack, and pricing tier — every engagement scoped against a signed SOW.",
-    "servicesCount": "{count} services",
-    "viewBrief": "View brief"
+    "eyebrow": "What we do",
+    "titleLine1": "Software for your",
+    "titleLine2": "next step.",
+    "body": "Launch an app, improve your website or take repetitive work off your team’s hands. We design and build mobile apps, web platforms and business automation.",
+    "servicesCount": "{count} ways we can help",
+    "viewBrief": "Explore the service",
+    "cta": "Book a call"
   },
   "serviceDetail": {
     "hero": {
-      "ctaPricing": "See pricing",
       "ctaContact": "Book a call",
-      "figureCaptionTpl": "{code} · {title} system map",
-      "specsLabel": "Engagement",
-      "liveLabel": "Currently accepting"
+      "figureCaptionTpl": "{code} · {title}",
+      "specsLabel": "At a glance",
+      "liveLabel": "Discuss your project",
+      "ctaScope": "Explore the service"
     },
     "scope": {
-      "eyebrow": "Scope",
-      "title": "Services"
+      "eyebrow": "What we build",
+      "title": "Where we can help"
     },
     "stack": {
-      "eyebrow": "Instrumentation",
-      "title": "Technology stack",
-      "body": "The full surface we deploy across this capability. Chosen per project — not every tool fits every brief.",
-      "itemsCount": "{count} items"
-    },
-    "pricing": {
-      "eyebrow": "Engagement",
-      "title": "Pricing",
-      "body": "Starting ranges in GBP. Final quotes depend on scope, timeline, and support level. Every engagement is a signed SOW with fixed milestones.",
-      "tier": "TIER · 0{n}",
-      "recommended": "◆ Recommended",
-      "requestBrief": "Request brief"
+      "eyebrow": "Platforms and tools",
+      "title": "Technology that fits the job",
+      "body": "We choose the tools around your existing systems, your users and what the product needs to do.",
+      "itemsCount": "{count} tools"
     },
     "cta": {
-      "eyebrow": "Contact Us",
-      "title": "Open a channel.",
-      "body": "Briefs are reviewed within one working day. Tell us the objective, timeline, and constraints — we'll come back with a scope, price, and a plan.",
-      "sendBrief": "Send brief",
-      "viewDeployments": "View deployments",
-      "previous": "← Previous",
-      "next": "Next →"
+      "eyebrow": "Let’s talk",
+      "title": "What would make your business work better?",
+      "body": "Tell us what you want to launch or improve, who will use it and what is getting in the way. We’ll help define the next step.",
+      "sendBrief": "Book a call",
+      "viewDeployments": "See our work",
+      "previous": "← Previous service",
+      "next": "Next service →"
     },
-    "brief": "▸ Brief"
+    "brief": "The approach",
+    "work": {
+      "title": "See it in practice",
+      "body": "Explore products our team has designed and developed. Each project shows how we approach the work.",
+      "viewProject": "View project"
+    }
   },
   "howWeWorkIndex": {
     "eyebrow": "How we work",
-    "titleLine1": "What holds true",
-    "titleLine2": "on every engagement",
-    "body": "Four commitments, each written out in full — what it means in practice, what you actually receive, and where the limits are.",
-    "sectionsCount": "{count} sections",
-    "readMore": "Read in full"
+    "titleLine1": "A clear plan.",
+    "titleLine2": "A direct relationship.",
+    "body": "Who you work with, what we agree before starting and how ownership and support work after launch.",
+    "sectionsCount": "{count} topics",
+    "readMore": "Read more"
   },
   "howWeWorkDetail": {
     "hero": {
       "ctaContact": "Book a call",
-      "ctaAll": "All four",
+      "ctaAll": "How we work",
       "specsLabel": "At a glance"
     },
     "sections": {
       "eyebrow": "In practice",
-      "title": "What this means"
+      "title": "What this means for your project"
     },
     "faq": {
-      "eyebrow": "Questions",
-      "title": "Common questions"
+      "eyebrow": "Your questions",
+      "title": "What to know before we start"
     },
     "cta": {
-      "eyebrow": "Contact Us",
-      "title": "Still have a question?",
-      "body": "Ask it before you commit to anything. Briefs and questions are answered within one working day, by the engineer who would do the work.",
-      "sendBrief": "Send brief",
-      "previous": "← Previous",
-      "next": "Next →"
+      "eyebrow": "Let’s talk",
+      "title": "Have a question about working together?",
+      "body": "Ask us before you decide. The engineer who would work on your project answers briefs and questions within one working day.",
+      "sendBrief": "Book a call",
+      "previous": "← Previous topic",
+      "next": "Next topic →"
     }
   },
   "legal": {
-    "eyebrow": "Legal Framework",
-    "title": "Legal documentation",
-    "tocLabel": "▸ Index",
+    "eyebrow": "Legal information",
+    "title": "Legal information",
+    "tocLabel": "On this page",
     "tocSections": [
       {
         "number": "01",
@@ -483,9 +506,9 @@
         "label": "Terms of Service"
       }
     ],
-    "documentLabel": "▸ Document",
-    "revision": "Revision",
-    "protocol": "Protocol",
+    "documentLabel": "Document",
+    "revision": "Last updated",
+    "protocol": "Version",
     "jurisdiction": "Jurisdiction",
     "jurisdictionValue": "UK",
     "impressum": {
@@ -576,15 +599,15 @@
     }
   },
   "privacy": {
-    "eyebrow": "Legal Framework",
+    "eyebrow": "Privacy",
     "title": "Privacy Policy",
-    "documentLabel": "▸ Document",
-    "contactLabel": "▸ Contact",
-    "revision": "Revision",
-    "protocol": "Protocol",
+    "documentLabel": "Policy details",
+    "contactLabel": "Contact us",
+    "revision": "Last updated",
+    "protocol": "Version",
     "jurisdiction": "Jurisdiction",
     "jurisdictionValue": "UK · GDPR",
-    "entries": "Entries",
+    "entries": "Sections",
     "kingsCross": "Kings Cross, London",
     "blocks": [
       {
@@ -634,40 +657,40 @@
     ]
   },
   "deleteAccount": {
-    "eyebrow": "Account Lifecycle",
-    "title": "System exit",
-    "body": "Permanent account dissolution for Simnetiq account holders. Submit the de-provisioning request below. All associated data will be purged from production within 30 days.",
-    "operationLabel": "▸ Operation",
-    "statusCode": "Status code",
-    "statusCodeValue": "410 · Gone",
-    "retention": "Retention",
-    "retentionValue": "30d wipe",
-    "scope": "Scope",
+    "eyebrow": "Account support",
+    "title": "Delete your account",
+    "body": "Request permanent deletion of your Simnetiq account using the form below. Your account and associated data will be removed from our production systems within 30 days.",
+    "operationLabel": "Request details",
+    "statusCode": "Request type",
+    "statusCodeValue": "Permanent deletion",
+    "retention": "Processing time",
+    "retentionValue": "Within 30 days",
+    "scope": "Data included",
     "scopeValue": "All account data",
-    "reversible": "Reversible",
+    "reversible": "Can this be undone?",
     "reversibleValue": "No",
-    "warningLabel": "⚠ Final confirmation required",
+    "warningLabel": "Before you request deletion",
     "warningBody": "This action is permanent and cannot be undone. All data associated with your account — including service profiles, purchase history, and authentication credentials — will be permanently deleted from the Simnetiq production environment.",
-    "willBeDeletedLabel": "▸ What will be deleted",
+    "willBeDeletedLabel": "What will be deleted",
     "willBeDeletedItems": [
       "Account and authentication data (Google or Apple Sign-In link)",
       "Service profiles and associated carrier data",
       "Purchase and transaction history",
       "Usage analytics and preferences"
     ],
-    "requestLabel": "▸ De-provisioning request",
+    "requestLabel": "Request account deletion",
     "accountEmail": "Account email",
     "accountEmailHint": "Use the email linked to your Google or Apple Sign-In.",
     "reasonLabel": "Reason (optional)",
     "reasonPlaceholder": "Optional feedback",
-    "submit": "Execute deletion",
-    "processing": "Processing…",
-    "cancel": "Cancel process",
-    "successMessage": "▸ Deletion request submitted. Your account and all associated data will be permanently removed within 30 days.",
-    "errorMessage": "▸ Process failed. Please retry or contact support@simnetiq.com."
+    "submit": "Request deletion",
+    "processing": "Sending…",
+    "cancel": "Cancel",
+    "successMessage": "Deletion request submitted. Your account and all associated data will be permanently removed within 30 days.",
+    "errorMessage": "Your request could not be sent. Please try again or contact support@simnetiq.com."
   },
   "caseStudyArgus": {
-    "eyebrow": "Browser engineering · Anti-detect · Live",
+    "eyebrow": "Browser engineering · Anti-detect",
     "titleLine1": "A hundred identities,",
     "titleLine2": "one machine.",
     "body": "Argus is an anti-detect browser: a custom Chromium fork that carries a different, coherent device identity in every window, and a desktop control plane that decides what each of those windows is allowed to know.",
@@ -678,7 +701,7 @@
     "specs": [
       {
         "label": "Status",
-        "value": "Live · v1.0.77"
+        "value": "In development"
       },
       {
         "label": "Engine",
@@ -701,7 +724,7 @@
         "value": "MCP · Local HTTP API"
       }
     ],
-    "aboutEyebrow": "§ 01 · About",
+    "aboutEyebrow": "About",
     "aboutTitleA": "You cannot fake a browser",
     "aboutTitleB": "from inside the page.",
     "aboutBody": [
@@ -710,7 +733,7 @@
       "So the identity had to move below the page. Argus ships its own Chromium fork, with the spoofing compiled into the engine and driven by launch flags the page never sees. There is nothing in the JavaScript environment to find, because nothing in the JavaScript environment was changed.",
       "That one decision is what makes this a compiler and toolchain project rather than a web project — and it is why it takes a build pipeline across three repositories rather than a bundle."
     ],
-    "insideEyebrow": "§ 02 · What's inside",
+    "insideEyebrow": "What's inside",
     "insideTitle": "Four decisions that shaped the build",
     "insideEntry": "DECISION",
     "insideItems": [
@@ -735,7 +758,7 @@
         "body": "The app speaks the Model Context Protocol, so an agent that already knows how to use tools can drive profiles without being taught an API. A loopback HTTP bridge covers everything else."
       }
     ],
-    "designEyebrow": "§ 03 · Design system",
+    "designEyebrow": "Design system",
     "designTitleA": "Achromatic paper,",
     "designTitleB": "one cyan that means buy.",
     "designBody": "Every neutral in the interface is a grey with no hue in it, so the only colour on screen carries meaning. Cyan marks the commercial path; green and red are signal-only. Both themes ship together, and nothing hardcodes a colour — a component that needs a value takes a token, and the token resolves per theme.",
@@ -761,7 +784,7 @@
         "body": "Launch flags, proxy strings, API routes — anything the user is expected to copy exactly."
       }
     ],
-    "taxonomyEyebrow": "§ 04 · Surfaces",
+    "taxonomyEyebrow": "Surfaces",
     "taxonomyTitleA": "Five surfaces,",
     "taxonomyTitleB": "one workspace.",
     "taxonomyBody": "The control plane is organised around what a session needs before it opens and what it leaves behind once it closes. Each surface owns one of those, and an automation can reach across all of them.",
@@ -787,10 +810,10 @@
         "name": "Datasets"
       }
     ],
-    "live": "LIVE",
-    "ctaEyebrow": "§ 05 · Try it",
-    "ctaTitle": "Run a profile yourself.",
-    "ctaBody": "Argus is free to start — five profiles, no card. Signed and notarised builds for macOS on Apple Silicon and for Windows 10 and 11.",
+    "live": "In development",
+    "ctaEyebrow": "Try it",
+    "ctaTitle": "Explore the browser we’re building.",
+    "ctaBody": "Argus is in development. Explore the project and its browser engineering approach on the product website.",
     "ctaPrimary": "Open browserargus.com"
   },
   "caseStudyDoppler": {
@@ -805,7 +828,7 @@
     "specs": [
       {
         "label": "Status",
-        "value": "Launched · Live"
+        "value": "Released"
       },
       {
         "label": "Deployed",
@@ -832,7 +855,7 @@
         "value": "None · by design"
       }
     ],
-    "aboutEyebrow": "§ 01 · About",
+    "aboutEyebrow": "About",
     "aboutTitleA": "A VPN that",
     "aboutTitleB": "stays invisible.",
     "aboutBody": [
@@ -841,7 +864,7 @@
       "Around the protocol sits a deliberately thin control plane. No account database, no email, no phone number — the device itself is the identity, and a subscription key unlocks connectivity. There is no browsing log, no IP log, no DNS query storage. The privacy claim isn't a policy line; it's a direct consequence of what the infrastructure is built to never store.",
       "The product ships as native apps on iOS, Android, macOS, and Windows, backed by a self-hosted Marzban control plane and geo-distributed edge nodes. Subscriptions are payable through the App Store, Google Play, web checkout, or with BTC, ETH, USDT, and USDC — one plan, up to ten devices, one tap to connect."
     ],
-    "dpiEyebrow": "§ 02 · DPI bypass · VLESS-Reality",
+    "dpiEyebrow": "DPI bypass · VLESS-Reality",
     "dpiTitleA": "A tunnel that",
     "dpiTitleB": "looks like nothing.",
     "dpiBody1": "VLESS-Reality performs a real TLS handshake with a real website certificate. The edge node borrows its TLS identity from a legitimate third-party site, then muxes authenticated client traffic through the same connection. An observer — censor, ISP, or transit provider — sees a completely normal HTTPS session.",
@@ -854,7 +877,7 @@
       "Domain-level blocks — reachable via Telegram bot."
     ],
     "dpiOpenDoppler": "Open Doppler",
-    "insideEyebrow": "§ 03 · What's inside",
+    "insideEyebrow": "What's inside",
     "insideTitle": "Four moving parts.",
     "insideEntry": "ENTRY",
     "insideItems": [
@@ -879,7 +902,7 @@
         "body": "Every query is encrypted end-to-end and discarded after resolution. Tracker and malware domains are filtered at the DNS layer across every app on the device, not just the browser."
       }
     ],
-    "infraEyebrow": "§ 04 · Infrastructure",
+    "infraEyebrow": "Infrastructure",
     "infraTitleA": "How it",
     "infraTitleB": "actually works.",
     "infraBody": "The stack is deliberately small. A self-hosted Marzban control plane issues subscriptions and rotates keys. Edge nodes run VLESS-Reality behind real third-party certificates. Nothing logs. Every layer is picked because it either contributes to unobservability or it doesn't ship.",
@@ -922,7 +945,7 @@
         "body": "Pay through the App Store, Google Play, web checkout, or with BTC, ETH, USDT and USDC. One subscription, up to ten devices, no auto-renewal."
       }
     ],
-    "designEyebrow": "§ 05 · Design system",
+    "designEyebrow": "Design system",
     "designTitleA": "Cinematic dark,",
     "designTitleB": "measured accents.",
     "designBody": "Doppler flattens dark mode to a single page ground and lifts cards with a graduated surface scale. Teal owns primary interaction. Gold is the brand warmth. Violet is reserved for the Pro tier. Amber flags freshness and warnings. Every accent clears WCAG AA on the page bg.",
@@ -948,7 +971,7 @@
         "body": "Active on ru and uk locales. Matches Space Grotesk's metrics while shipping a full Cyrillic glyph set."
       }
     ],
-    "platformsEyebrow": "§ 06 · Platforms",
+    "platformsEyebrow": "Platforms",
     "platformsTitle": "Native everywhere.",
     "platformsBody": "Native apps on every supported platform — SwiftUI on iOS and macOS, Kotlin on Android, a signed Windows client for x64 and ARM64. One subscription covers up to ten devices. Status syncs across them via a device-bound token, never via an email address.",
     "platforms": [
@@ -969,7 +992,7 @@
         "name": "Windows"
       }
     ],
-    "live": "LIVE",
+    "live": "Released",
     "ctaEyebrow": "Continue",
     "ctaTitle": "Try the network.",
     "ctaBody": "Three-day free trial on iOS. Subscription unlocks every region and every platform. Pay by card, by IAP, or with crypto.",
@@ -987,7 +1010,7 @@
     "specs": [
       {
         "label": "Status",
-        "value": "Launched · Live"
+        "value": "Released"
       },
       {
         "label": "Deployed",
@@ -1014,7 +1037,7 @@
         "value": "Six branches · Live"
       }
     ],
-    "aboutEyebrow": "§ 01 · About",
+    "aboutEyebrow": "About",
     "aboutTitleA": "A physics library",
     "aboutTitleB": "that computes.",
     "aboutBody": [
@@ -1023,7 +1046,7 @@
       "Around the solver core sits a dense reference layer: a cross-linked concept graph spanning classical mechanics, electromagnetism, thermodynamics, relativity, quantum mechanics, and modern physics, plus biographical profiles of the physicists behind every result. Every concept links back to the simulations that demonstrate it and the people who shaped it.",
       "On top of all of that sits /ask — an AI tutor grounded in the same concept graph. Ask anything from \"derive Kepler's third law\" to \"why does entropy always increase?\" and get a worked answer with citations back into the library. The full encyclopedia, the solver engine, and the tutor are free and open source."
     ],
-    "askEyebrow": "§ 02 · physics.it.com/ask",
+    "askEyebrow": "physics.it.com/ask",
     "askTitleA": "A tutor that's",
     "askTitleB": "read the whole library.",
     "askBody1": "/ask is an AI tutor wired directly into the concept graph. Ask a question in plain language, get a worked derivation back — with citations to the encyclopedia entries and live simulations that back it up.",
@@ -1036,7 +1059,7 @@
       "Show the Lorentz transform for a boost in x."
     ],
     "askOpen": "Open /ask",
-    "insideEyebrow": "§ 03 · What's inside",
+    "insideEyebrow": "What's inside",
     "insideTitle": "Four moving parts.",
     "insideEntry": "ENTRY",
     "insideItems": [
@@ -1061,7 +1084,7 @@
         "body": "Biographical dossiers for the scientists behind every result, wired into the concept graph so derivations, diagrams, and history sit one click apart."
       }
     ],
-    "designEyebrow": "§ 04 · Design system",
+    "designEyebrow": "Design system",
     "designTitleA": "Instrument,",
     "designTitleB": "not illustration.",
     "designBody": "The visual language borrows from scientific instrumentation: near-black ground, bone foreground, and a small set of saturated accents that carry meaning — cyan for primary actions and states, magenta, amber, and mint for categorical signals across simulations.",
@@ -1087,7 +1110,7 @@
         "body": "Reserved for labels, coordinates, code excerpts, and metadata rails."
       }
     ],
-    "branchesEyebrow": "§ 05 · Branches",
+    "branchesEyebrow": "Branches",
     "branchesTitleA": "All six,",
     "branchesTitleB": "all live.",
     "branchesBody": "One solver stack powers every branch — the same numerics that integrate a pendulum also run Maxwell's equations, thermal gradients, Lorentz transforms, Schrödinger evolution, and the modern-physics capstones. Every branch ships with its simulations, its concept entries, and its physicist profiles already wired into /ask.",
@@ -1117,16 +1140,16 @@
         "name": "Modern Physics"
       }
     ],
-    "live": "LIVE",
+    "live": "Released",
     "ctaEyebrow": "Continue",
     "ctaTitle": "Open the library.",
     "ctaBody": "Every concept, every physicist, every simulation, plus the AI tutor at /ask — all live, all free, all open source."
   },
   "caseStudyGreenFlagged": {
-    "eyebrow": "Legal-tech · Editorial · In development",
+    "eyebrow": "Legal-tech · Editorial",
     "titleLine1": "Get your contract",
     "titleLine2": "green-flagged before you sign.",
-    "body": "Green Flagged is an AI contract reviewer for freelancers and small teams. Drop a PDF or paste contract text and get a plain-language verdict — flagged clauses, severity grades, and suggested redlines — in under eight minutes. Marketing site live; scanning engine in development.",
+    "body": "Green Flagged is an AI contract reviewer for freelancers and small teams. Drop a PDF or paste contract text and get a plain-language verdict — flagged clauses, severity grades, and suggested redlines — in under eight minutes.",
     "visitSite": "Visit site",
     "tryFree": "Try first scan free",
     "specsLabel": "▸ Specification",
@@ -1134,11 +1157,11 @@
     "specs": [
       {
         "label": "Status",
-        "value": "In development"
+        "value": "Released"
       },
       {
         "label": "Stage",
-        "value": "Pre-launch · First scan free"
+        "value": "Released · First scan free"
       },
       {
         "label": "Site",
@@ -1161,7 +1184,7 @@
         "value": "30 / 60 / 90 days · auto-delete"
       }
     ],
-    "aboutEyebrow": "§ 01 · About",
+    "aboutEyebrow": "About",
     "aboutTitleA": "A contract reviewer",
     "aboutTitleB": "for people without a lawyer.",
     "aboutBody": [
@@ -1170,7 +1193,7 @@
       "Three tiers cover the realistic price points without subscription friction at the bottom. Free lets you test one contract a month with the full clause report and rewrite suggestions. Pay-as-you-go at $3 per contract is one scan, one report, no recurring charges — card or crypto checkout. Standard at $25/month bundles ten contracts plus a faster analysis queue, clause-type filtering, and an audit log for solo users who scan weekly.",
       "The product is informational, not legal advice — that disclaimer lives in the footer of every page. Green Flagged is the second opinion you'd ask a lawyer friend for at 11pm, delivered in under eight minutes."
     ],
-    "insideEyebrow": "§ 03 · What's inside",
+    "insideEyebrow": "What's inside",
     "insideTitle": "Four moving parts.",
     "insideEntry": "ENTRY",
     "insideItems": [
@@ -1195,7 +1218,7 @@
         "body": "Scans for IP ownership, payment terms, termination, NDA scope, liability caps, jurisdiction, auto-renewal, kill fees, and exclusivity — the clauses that actually move money when something goes wrong."
       }
     ],
-    "designEyebrow": "§ 04 · Design system",
+    "designEyebrow": "Design system",
     "designTitleA": "Editorial spec-sheet,",
     "designTitleB": "light-first.",
     "designBody": "Green Flagged reads like a printed legal document married to a software-engineering tear-sheet. Sharp 2px corners, hairline rules, dotted dividers, monospaced labels in // MONO CAPS. Paper-and-ink neutrals with a sage-green accent. Severity colors — green, yellow, orange, red — are reserved for signals, never decoration. Light-first with a binary dark toggle persisted to localStorage; falls back to prefers-color-scheme on first load. Moved from dark/glass to this token system in May 2026.",
@@ -1221,7 +1244,7 @@
         "body": "Reserved for eyebrows, severity tags, dot-leader spec rows, and code-style labels across the report."
       }
     ],
-    "taxonomyEyebrow": "§ 05 · Clause taxonomy",
+    "taxonomyEyebrow": "Clause taxonomy",
     "taxonomyTitleA": "Nine clauses that",
     "taxonomyTitleB": "actually move money.",
     "taxonomyBody": "Green Flagged scans for the clauses that decide who owns what, who pays when, and who gets stuck if it goes wrong. Each one is rendered as a single row with severity, a plain-language summary, and a suggested redline.",
@@ -1263,10 +1286,10 @@
         "name": "Exclusivity"
       }
     ],
-    "inDev": "IN DEV",
+    "inDev": "Released",
     "ctaEyebrow": "Continue",
     "ctaTitle": "First scan, free.",
-    "ctaBody": "Marketing site is live at greenflagged.com. The scanning engine is in development — early users get their first contract review free at launch.",
+    "ctaBody": "Green Flagged is released. Upload a contract or paste its text to get a plain-language review. Your first scan is free.",
     "ctaPrimary": "Visit site"
   },
   "caseStudySmsCode": {
@@ -1281,7 +1304,7 @@
     "specs": [
       {
         "label": "Status",
-        "value": "Live"
+        "value": "Released"
       },
       {
         "label": "Countries",
@@ -1304,7 +1327,7 @@
         "value": "Web · iOS"
       }
     ],
-    "aboutEyebrow": "§ 01 · About",
+    "aboutEyebrow": "About",
     "aboutTitleA": "Verification without",
     "aboutTitleB": "the lifetime contract.",
     "aboutBody": [
@@ -1314,7 +1337,7 @@
       "Numbers come from real carrier ranges in more than a hundred and fifty countries rather than the VOIP blocks most services silently reject, which is the difference between a code arriving and a sign-up form telling you the number is invalid.",
       "The product shipped as SMS Activate. In August 2026 it was rebranded to SMS Code — a new mark, a rebuilt marketing site, and a new iOS app on the App Store."
     ],
-    "insideEyebrow": "§ 03 · What's inside",
+    "insideEyebrow": "What's inside",
     "insideTitle": "Four numbers.",
     "insideEntry": "ENTRY",
     "insideItems": [
@@ -1339,7 +1362,7 @@
         "body": "One-time coin packs from twenty coins up. Coins never expire, nothing auto-renews, pending activations can be cancelled, and a failed activation refunds itself."
       }
     ],
-    "designEyebrow": "§ 04 · Design system",
+    "designEyebrow": "Design system",
     "designTitleA": "Cool paper,",
     "designTitleB": "one blue ramp.",
     "designBody": "The interface is a utility, not a destination — you open it, you take a code, you leave. The rebrand kept that discipline and gave it a warmer surface: a cool paper greyscale for canvas and cards, and a single blue ramp running from the light tone that opens the logo gradient down to the deep one the display type is set in. Nothing outside that ramp competes for attention.",
@@ -1365,7 +1388,7 @@
         "body": "Reserved for the things you copy: numbers, verification codes, activation IDs, and spec rows."
       }
     ],
-    "taxonomyEyebrow": "§ 05 · Service catalogue",
+    "taxonomyEyebrow": "Service catalogue",
     "taxonomyTitleA": "The services",
     "taxonomyTitleB": "people actually sign up for.",
     "taxonomyBody": "A hundred and counting. Each one is a maintained integration rather than a generic number pool — a service is only listed once its codes are landing reliably on the carrier ranges we hold, and each carries its own country list and live coin price.",
@@ -1407,14 +1430,14 @@
         "name": "Apple"
       }
     ],
-    "live": "LIVE",
+    "live": "Released",
     "ctaEyebrow": "Continue",
     "ctaTitle": "Keep your number to yourself.",
     "ctaBody": "Pick a service, pick a country, take the code. Coin packs start at twenty coins, never expire, and never auto-renew.",
     "ctaPrimary": "Visit site"
   },
   "caseStudyVisaPassage": {
-    "eyebrow": "Travel-tech · Multi-passport · Live",
+    "eyebrow": "Travel-tech · Multi-passport",
     "titleLine1": "One profile for",
     "titleLine2": "every visa journey.",
     "body": "Hold two passports and every visa question doubles. VisaPassage compares the routes across every citizenship and residency you hold, ranks them by paperwork, wait, and cost, then builds the document package for the one you pick.",
@@ -1425,7 +1448,7 @@
     "specs": [
       {
         "label": "Status",
-        "value": "Live"
+        "value": "In development"
       },
       {
         "label": "Profile",
@@ -1448,7 +1471,7 @@
         "value": "Free to start · No card required"
       }
     ],
-    "aboutEyebrow": "§ 01 · About",
+    "aboutEyebrow": "About",
     "aboutTitleA": "The best route is",
     "aboutTitleB": "rarely the obvious one.",
     "aboutBody": [
@@ -1457,7 +1480,7 @@
       "Once a route is chosen the work becomes mechanical, so the product does it: a checklist generated for your exact case rather than a generic list, government forms pre-filled from profile data you have already entered, and a document vault that is versioned, tagged, and aware of what expires when. Update a passport once and it propagates to every application that references it.",
       "Rules carry a source URL, a verification date, and an internal review before they go live — because a stale requirement is worse than no requirement. VisaPassage does not guarantee outcomes; official government rules and consular decisions prevail."
     ],
-    "insideEyebrow": "§ 03 · What's inside",
+    "insideEyebrow": "What's inside",
     "insideTitle": "From profile to filing.",
     "insideEntry": "ENTRY",
     "insideItems": [
@@ -1482,7 +1505,7 @@
         "body": "Profile data pre-populated into government templates, so the same passport number is never typed a fourth time."
       }
     ],
-    "designEyebrow": "§ 04 · Design system",
+    "designEyebrow": "Design system",
     "designTitleA": "Passport blue,",
     "designTitleB": "stamp yellow.",
     "designBody": "The palette borrows from the documents themselves — the blue of a passport gate and the yellow of an entry stamp — over a paper-white surface that reads as a form rather than an app. Green and red are held back for one job each: a route you qualify for, and a route you do not.",
@@ -1508,7 +1531,7 @@
         "body": "Eyebrows, route identifiers, processing times, expiry dates, and every dot-leader spec row."
       }
     ],
-    "taxonomyEyebrow": "§ 05 · Journey",
+    "taxonomyEyebrow": "Journey",
     "taxonomyTitleA": "Five steps,",
     "taxonomyTitleB": "entered once.",
     "taxonomyBody": "The profile is the unit of work. Everything downstream — comparison, checklist, forms, reminders — reads from it, which is why the passport number is typed exactly once.",
@@ -1534,10 +1557,58 @@
         "name": "Submit and track appointments"
       }
     ],
-    "live": "LIVE",
+    "live": "In development",
     "ctaEyebrow": "Continue",
-    "ctaTitle": "Start with the passport you already hold.",
-    "ctaBody": "Free to start, no card required. VisaPassage does not guarantee visa outcomes — official government rules and consular decisions prevail.",
+    "ctaTitle": "Explore a better route to your next visa.",
+    "ctaBody": "VisaPassage is in development. Explore the project on its website. Official government rules and consular decisions prevail.",
     "ctaPrimary": "Visit site"
+  },
+  "subscribe": {
+    "title": "Updates from Simnetiq.",
+    "body": "Product news, recent work and notes from our software studio.",
+    "detailsTitle": "Choose to stay in touch.",
+    "detailsBody": "Sign up for Simnetiq marketing emails. Confirm your email address before joining the list, and unsubscribe whenever you want.",
+    "privacyBody": "We use the details you provide to manage your subscription.",
+    "privacyLink": "Read our privacy policy",
+    "formTitle": "Join the mailing list",
+    "statusTitle": "Your subscription",
+    "nameLabel": "Name (optional)",
+    "emailLabel": "Email address",
+    "emailHint": "We’ll send a confirmation link to this address.",
+    "consent": "I agree to receive marketing emails from Simnetiq. I can unsubscribe at any time.",
+    "submit": "Send confirmation email",
+    "processing": "Sending…",
+    "sentMessage": "Request received. If confirmation is needed, you’ll receive an email with a link to join the list. If you’re already subscribed, no further action is needed.",
+    "errorMessage": "We could not process your request. Please try again.",
+    "rateLimitMessage": "Too many requests. Please wait a little and try again.",
+    "backHome": "Back to home",
+    "confirmation": {
+      "ok": "Your email is confirmed. You’re now subscribed to Simnetiq updates.",
+      "already": "Your subscription is already confirmed. No further action is needed.",
+      "invalid": "This confirmation link is invalid. Use the form below to request a confirmation email.",
+      "error": "We could not confirm your subscription. Try the link again, or request another email below.",
+      "unsubscribed": "You previously unsubscribed. To join again, complete the form and confirm the new email."
+    }
+  },
+  "unsubscribe": {
+    "title": "Manage your email preferences.",
+    "body": "Stop marketing emails from Simnetiq.",
+    "detailsTitle": "You decide what reaches your inbox.",
+    "detailsBody": "Unsubscribing stops the marketing emails linked to this request. It does not delete your account or stop essential service messages.",
+    "privacyLink": "Read our privacy policy",
+    "formTitle": "Confirm your unsubscribe request",
+    "doneTitle": "Request completed",
+    "doneMessage": "Your request has been processed. Any matching subscription is now unsubscribed.",
+    "tokenHint": "Use the button below to stop the emails associated with this link. You do not need to enter your email address.",
+    "emailLabel": "Email address",
+    "emailHint": "Enter the address that receives our newsletter. For a direct outreach email, use the unsubscribe link in that message.",
+    "reasonLabel": "Anything you’d like us to know? (optional)",
+    "submit": "Unsubscribe",
+    "processing": "Processing…",
+    "cancel": "Keep my preferences",
+    "backHome": "Back to home",
+    "invalidMessage": "This link is incomplete. Enter your newsletter email address below, or use the unsubscribe link in the original message.",
+    "errorMessage": "We could not complete the request. Please try again.",
+    "rateLimitMessage": "Too many requests. Please wait a little and try again."
   }
 }

@@ -1,0 +1,68 @@
+.container { max-width: 1440px; margin-inline: auto; padding-inline: 1.5rem; }
+.hero { padding-block: 5rem 4rem; }
+.heroGrid { display: grid; gap: 3rem; align-items: center; }
+.title { max-width: 14ch; font-size: clamp(3rem, 5.8vw, 5.25rem); font-weight: 400; line-height: 1.04; letter-spacing: -0.055em; text-wrap: balance; }
+.title span { display: block; color: var(--color-text-dim); }
+.intro { max-width: 49ch; margin-top: 1.75rem; color: var(--color-text-muted); font-size: 1.0625rem; line-height: 1.7; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.875rem; margin-top: 2rem; }
+.figure { width: 100%; max-width: 480px; color: var(--color-secondary); justify-self: center; }
+.directory { padding-block: 1rem 5rem; }
+.serviceRow { display: grid; gap: 2rem; padding-block: 3rem; }
+.rowVisual { display: flex; align-items: flex-start; justify-content: space-between; }
+.number { color: var(--color-text-dim); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.rowFigure { width: 170px; height: 120px; color: var(--color-secondary); }
+.rowTitle { font-size: clamp(1.8rem, 3vw, 2.75rem); font-weight: 400; line-height: 1.12; letter-spacing: -0.04em; margin-bottom: 1rem; }
+.rowTitle span { color: var(--color-text-dim); }
+.rowDescription { max-width: 54ch; margin-bottom: 1.5rem; }
+.textLink { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; min-height: 48px; padding-block: 0.75rem; border-bottom: 1px solid var(--color-border); font-size: 0.875rem; font-weight: 500; }
+.textLink:hover { border-color: var(--color-text); }
+.rowAside { display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; }
+.section { padding-block: 5rem; }
+.sectionHeader { max-width: 48rem; margin-bottom: 3rem; }
+.sectionHeader h2, .scopeIntro h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.08; letter-spacing: -0.055em; text-wrap: balance; }
+.sectionHeader p { max-width: 52ch; margin-top: 1rem; }
+.scopeLayout { display: grid; gap: 3rem; }
+.scopeIntro p { margin-top: 1.5rem; max-width: 38ch; }
+.scopeGrid { display: grid; gap: 2.5rem 2rem; }
+.scopeItem { padding-top: 1.25rem; border-top: 1px solid var(--color-border-strong); }
+.scopeItem h3 { margin-block: 1rem 0.75rem; font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
+.stackRow { display: grid; gap: 1rem; border-top: 1px solid var(--color-border); padding-block: 1.5rem 0.75rem; }
+.stackRow h3 { font-size: 1rem; font-weight: 500; }
+.workGrid { display: grid; gap: 2.5rem; }
+.workImage { position: relative; display: block; aspect-ratio: 16/9; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-media); margin-bottom: 1.5rem; }
+.workImage img { object-fit: cover; transition: transform var(--motion-standard); }
+.workImage:hover img { transform: scale(1.035); }
+.workItem h3 { font-size: 1.375rem; font-weight: 500; margin-bottom: 0.75rem; }
+.workItem p { margin-bottom: 1rem; max-width: 58ch; }
+.workItem { display: flex; flex-direction: column; }
+.workItem .textLink { margin-top: auto; }
+.cta { padding-block: 5rem; }
+.ctaGrid { display: grid; gap: 2rem; }
+.ctaTitle { max-width: 18ch; font-size: clamp(2.25rem, 4.5vw, 4rem); line-height: 1.08; letter-spacing: -0.055em; font-weight: 400; text-wrap: balance; }
+.ctaBody { max-width: 48ch; }
+.related { display: grid; gap: 1rem 3rem; margin-top: 4rem; }
+:global([dir="rtl"]) .title, :global([dir="rtl"]) .rowTitle, :global([dir="rtl"]) .ctaTitle, :global([dir="rtl"]) .sectionHeader h2, :global([dir="rtl"]) .scopeIntro h2 { letter-spacing: normal; }
+@media (min-width: 768px) {
+  .scopeGrid, .workGrid, .related { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stackRow { grid-template-columns: 1fr 3fr; gap: 2rem; }
+}
+@media (min-width: 1024px) {
+  .container { padding-inline: 3rem; }
+  .hero { padding-block: 6.5rem 5rem; }
+  .heroGrid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 7%; }
+  .serviceRow { grid-template-columns: 0.8fr 2fr 1.1fr; gap: 3rem; padding-block: 3.5rem; }
+  .rowVisual { flex-direction: column; }
+  .rowFigure { align-self: center; }
+  .section, .cta { padding-block: 6rem; }
+  .ctaGrid { grid-template-columns: 1fr 1fr; gap: 8%; }
+  .scopeLayout { grid-template-columns: 1fr 2fr; gap: 8%; }
+}
+@media (max-width: 767px) {
+  .hero { padding-top: 3.5rem; }
+  .title { font-size: clamp(2.6rem, 10vw, 4rem); }
+  .figure { max-width: 280px; }
+  .heroGrid { gap: 1.5rem; }
+  .rowVisual { align-items: center; }
+  .rowFigure { height: 85px; width: 120px; }
+}
+@media (prefers-reduced-motion: reduce) { .workImage img { transition: none; } }

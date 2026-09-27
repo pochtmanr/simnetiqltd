@@ -329,7 +329,7 @@ export default async function RootLayout({
             }}
           />
           <main className="flex-1">{children}</main>
-          <Footer locale={locale} dict={dict.footer} />
+          <Footer locale={locale} dict={dict.footer} themeLabels={dict.nav.themes} />
           <Analytics />
         </ThemeProvider>
       </body>

@@ -1,0 +1,46 @@
+.container { max-width: 1440px; margin-inline: auto; padding-inline: 1.5rem; }
+.section { padding-block: 3.5rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 2rem 5rem; padding-block: 1.5rem 0.5rem; }
+.facts dt, .role { color: var(--color-text-dim); font-size: 0.8125rem; line-height: 1.5; }
+.facts dd { margin-top: 0.4rem; font-size: clamp(1.25rem, 2vw, 1.75rem); letter-spacing: -0.025em; }
+.sectionHeader { max-width: 48rem; margin-bottom: 2.5rem; }
+.sectionHeader h2, .contact h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.08; letter-spacing: -0.055em; text-wrap: balance; }
+.sectionHeader p { margin-top: 1rem; max-width: 52ch; }
+.team { display: grid; gap: 2rem; }
+.member { padding-block: 1.5rem; border-top: 1px solid var(--color-border-strong); }
+.member h3 { margin-block: 1rem 0.75rem; font-size: clamp(1.75rem, 3vw, 2.75rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.04em; }
+.member > p:last-child { max-width: 42ch; }
+.principles { display: grid; gap: 2.5rem 1.5rem; }
+.principleImage { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: var(--radius-media); border: 1px solid var(--color-border); margin-bottom: 1.5rem; }
+.principleImage img { object-fit: cover; }
+.principle h3 { font-size: 1.25rem; font-weight: 500; line-height: 1.35; margin-bottom: 0.75rem; letter-spacing: -0.025em; }
+.company { display: grid; gap: 2.5rem; }
+.company .sectionHeader { margin-bottom: 0; }
+.details { border-top: 1px solid var(--color-border-strong); }
+.details > div { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--color-border); font-size: 0.875rem; line-height: 1.6; }
+.details dt { color: var(--color-text-dim); }
+.details dd { text-align: end; }
+.address { border-top: 1px solid var(--color-border-strong); padding-top: 1rem; }
+.address h3 { color: var(--color-text-dim); font-size: 0.875rem; font-weight: 400; margin-bottom: 1rem; }
+.address address { font-style: normal; font-size: 1rem; line-height: 1.75; text-align: start; }
+.textLink { display: inline-flex; align-items: center; gap: 1rem; min-height: 44px; margin-top: 1rem; font-size: 0.875rem; }
+.textLink:hover { text-decoration: underline; text-underline-offset: 5px; }
+.contact { display: grid; gap: 2rem; padding-block: 1.5rem; }
+.contact h2 { max-width: 18ch; }
+.contact p { max-width: 48ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.875rem; margin-top: 2rem; }
+:global([dir="rtl"]) .sectionHeader h2, :global([dir="rtl"]) .contact h2, :global([dir="rtl"]) .member h3, :global([dir="rtl"]) .principle h3, :global([dir="rtl"]) .facts dd { letter-spacing: normal; }
+@media (min-width: 640px) {
+  .team, .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company .sectionHeader { grid-column: 1 / -1; }
+}
+@media (min-width: 1024px) {
+  .container { padding-inline: 3rem; }
+  .section { padding-block: 5rem; }
+  .team { gap: 4rem; }
+  .principles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .company { grid-template-columns: 1.1fr 1fr 0.8fr; gap: 3rem; }
+  .company .sectionHeader { grid-column: auto; }
+  .contact { grid-template-columns: 1fr 1fr; gap: 8%; }
+}

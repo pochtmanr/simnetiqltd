@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect } from "react";
-import { Panel } from "@/components/panel";
+import styles from "@/components/site-chrome.module.css";
 import { track } from "@/lib/analytics";
 
 export type NavMegaItem = {
@@ -55,7 +55,7 @@ export function NavMegaMenu({
             key={`${name}-backdrop`}
             /* Blur only — no tint. The panel carries its own surface, so the
                scrim just has to soften what is behind it, not dim the page. */
-            className="fixed inset-x-0 bottom-0 top-[91px] z-30 backdrop-blur-[2px]"
+            className="hidden md:block fixed inset-x-0 bottom-0 top-16 z-30 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -74,13 +74,13 @@ export function NavMegaMenu({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: reduce ? 0 : -8 }}
             transition={{ duration: reduce ? 0 : 0.18, ease: "easeOut" }}
-            className="absolute left-0 right-0 top-[calc(100%-1px)] z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]"
+            className="hidden md:block absolute left-0 right-0 top-[calc(100%-1px)] z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]"
           >
-            <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-6 lg:py-8">
-              <p className="text-label text-[var(--color-text-dim)] mb-5">
+            <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-8 lg:py-10">
+              <p className={styles.menuEyebrow}>
                 {eyebrow}
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-10 gap-y-2">
                 {items.map((item) => (
                   <Link
                     key={item.key}
@@ -94,30 +94,17 @@ export function NavMegaMenu({
                       });
                       onClose();
                     }}
-                    className="group block h-full"
+                    className={`group ${styles.menuItem}`}
                   >
-                    <Panel
-                      innerClassName="p-5 lg:p-6 h-full flex flex-col"
-                      hover
-                    >
-                      {item.badge && (
-                        <div className="mb-3">
-                          <span className="text-label-sm text-[var(--color-text-dim)]">
-                            {item.badge}
-                          </span>
-                        </div>
-                      )}
-                      <h3 className="text-title mb-2">{item.title}</h3>
-                      <p className="text-body mb-5 flex-1 line-clamp-2">
-                        {item.body}
-                      </p>
-                      <span className="cta-fill text-label-sm self-start inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
-                        <span>{cta}</span>
-                        <span aria-hidden="true" className="rtl-mirror">
-                          {item.external ? "↗" : "→"}
-                        </span>
-                      </span>
-                    </Panel>
+                    <div className={styles.menuItemHeading}>
+                      <h3>{item.title}</h3>
+                      <svg className="rtl-mirror" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                        <path d={item.external ? "M7 17 17 7M7 7h10v10" : "M4 12h15m-6-6 6 6-6 6"} />
+                      </svg>
+                    </div>
+                    {item.badge && <span className={styles.menuBadge}>{item.badge}</span>}
+                    <p className={styles.menuDescription}>{item.body}</p>
+                    <span className={styles.menuAction}>{cta}</span>
                   </Link>
                 ))}
               </div>

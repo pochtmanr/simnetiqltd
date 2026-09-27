@@ -51,7 +51,7 @@ export function SpecRow({ label, value }: SpecRowProps) {
   return (
     <div className="flex items-baseline justify-between gap-6 py-3 border-b border-[var(--color-border)] last:border-b-0">
       <span className="text-label-sm text-[var(--color-text-dim)]">{label}</span>
-      <span className="text-body-strong text-right">{value}</span>
+      <span className="text-body-strong text-end">{value}</span>
     </div>
   );
 }

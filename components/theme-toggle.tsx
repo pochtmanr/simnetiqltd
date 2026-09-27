@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { useTheme, type ThemeChoice } from "@/components/theme-provider";
+import styles from "@/components/theme-toggle.module.css";
 import { track } from "@/lib/analytics";
 
 const subscribe = () => () => {};
@@ -18,11 +19,11 @@ type ThemeToggleProps = {
   className?: string;
   variant?: Variant;
   labels?: {
-    /** Aria/title used by the icon variant; describes the *next* state. */
+    /** Tooltip used by the icon variant; describes the next state. */
     cycleToLight?: string;
     cycleToDark?: string;
     cycleToSystem?: string;
-    /** Generic fallback before mount. */
+    /** Stable accessible name for the switch and segmented group. */
     generic?: string;
     /** Segmented option labels. */
     auto?: string;
@@ -71,26 +72,20 @@ export function ThemeToggle({
     ];
     return (
       <div
-        className={`inline-flex items-stretch border border-[var(--color-border-strong)] ${className}`}
+        className={`${styles.segmented} ${className}`}
         role="group"
         aria-label={labels.generic}
       >
-        {options.map((opt, i) => {
+        {options.map((opt) => {
           const active = mounted && choice === opt.value;
           return (
             <button
               key={opt.value}
               type="button"
               onClick={() => handleSetChoice(opt.value)}
-              aria-pressed={mounted ? active : undefined}
-              className={[
-                "px-3 py-1.5 text-label-sm transition-colors",
-                i > 0 ? "border-l border-[var(--color-border-strong)]" : "",
-                active
-                  ? "bg-[var(--color-surface-sunk)] text-[var(--color-text)]"
-                  : "text-[var(--color-text-dim)] hover:text-[var(--color-text)]",
-              ].join(" ")}
-              suppressHydrationWarning
+              aria-pressed={active}
+              data-choice={opt.value}
+              className={styles.option}
             >
               {opt.label}
             </button>
@@ -100,46 +95,30 @@ export function ThemeToggle({
     );
   }
 
-  // Icon variant — a squared sliding switch. A single tap flips between light
-  // and dark based on what's actually rendered; aria-label describes the NEXT
-  // state. Re-enabling "Auto" / system mode is done via the segmented variant
-  // in the mobile menu.
+  // The root theme attribute positions the thumb before hydration; React
+  // supplies the accessible state once the provider has mounted.
   const nextLabel = mounted
     ? resolved === "dark"
       ? labels.cycleToLight
       : labels.cycleToDark
     : labels.generic;
-  // Before mount the rendered markup must match SSR, so the knob parks on the
-  // light position and only slides once the resolved theme is known.
   const isDark = mounted && resolved === "dark";
 
   return (
     <button
       type="button"
       role="switch"
-      aria-checked={mounted ? isDark : undefined}
+      aria-checked={isDark}
       onClick={handleCycleChoice}
-      aria-label={nextLabel}
+      aria-label={labels.generic}
       title={nextLabel}
-      className={`group relative inline-flex items-center h-6 w-12 shrink-0 border border-[var(--color-border-strong)] bg-[var(--color-surface-sunk)] transition-colors hover:border-[var(--color-text-faint)] ${className}`}
-      suppressHydrationWarning
+      className={`${styles.switch} ${className}`}
     >
-      {/* Both glyphs stay visible on the track; the knob highlights the
-          active one as it slides over. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 flex items-center justify-between px-[5px] text-[var(--color-text-faint)]"
-      >
-        <SunIcon />
-        <MoonIcon />
+      <span className={styles.track} aria-hidden="true">
+        <span className={styles.thumb} />
+        <span className={styles.sun}><SunIcon /></span>
+        <span className={styles.moon}><MoonIcon /></span>
       </span>
-      <span
-        aria-hidden="true"
-        suppressHydrationWarning
-        className={`pointer-events-none absolute left-0 top-[2px] bottom-[2px] w-[20px] bg-[color-mix(in_srgb,var(--color-text)_14%,transparent)] border border-[var(--color-border-strong)] transition-transform duration-200 ease-out ${
-          isDark ? "translate-x-[24px]" : "translate-x-[2px]"
-        }`}
-      />
     </button>
   );
 }
@@ -152,7 +131,7 @@ function SunIcon() {
       viewBox="0 0 14 14"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1"
+      strokeWidth="1.25"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -178,7 +157,7 @@ function MoonIcon() {
       viewBox="0 0 14 14"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1"
+      strokeWidth="1.25"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"

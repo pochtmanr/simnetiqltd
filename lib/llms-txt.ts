@@ -11,6 +11,9 @@ import {
 import { ROUTE_COPY } from "@/lib/seo-meta";
 import type { Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
+import en from "@/messages/en.json";
+import he from "@/messages/he.json";
+import ru from "@/messages/ru.json";
 
 type Phrasebook = {
   intro: string;
@@ -42,12 +45,6 @@ type Phrasebook = {
   liveDeployments: () => string[];
   homeNarrative: string;
   aboutHeading: string;
-  companyRegistrationHeading: string;
-  companyRegistrationLines: string[];
-  teamHeading: string;
-  teamLines: string[];
-  operatingPrinciplesHeading: string;
-  operatingPrinciples: string[];
   servicesPageHeading: string;
   projectsPageHeading: string;
   argusHeading: string;
@@ -80,7 +77,6 @@ type Phrasebook = {
   machineRefs: (url: string) => string[];
   subServicesLabel: string;
   techStackLabel: string;
-  pricingLabel: string;
   metaLabel: string;
   badgeLabel: string;
   taglineLabel: string;
@@ -106,7 +102,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source interactive physics encyclopedia with unit-tested ODE solvers, WebGL visualisations and an AI tutor at /ask grounded in the library.`,
       `- [SMS Code by SIMNETIQ](${url("/projects/sms-code")}): Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries across 100+ services, codes in about thirty seconds, one-time coin packs with no subscription. Web and iOS.`,
       `- [VisaPassage](${url("/projects/visapassage")}): Multi-passport visa intelligence. One encrypted profile compares every visa route across all your passports and residencies, then generates checklists and auto-fills government forms.`,
-      `- [Green Flagged](${url("/projects/green-flagged")}): AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades and suggested redlines in under eight minutes. Marketing site live, scanning engine in development.`,
+      `- [Green Flagged](${url("/projects/green-flagged")}): AI contract reviewer for freelancers and small teams. Drop a PDF, get a plain-language verdict with flagged clauses, severity grades and suggested redlines in under eight minutes.`,
       `- [Creator AI](https://www.creatorai.art/en): Multi-language LLM content platform on Anthropic and OpenAI. Editorial pipelines, native iOS and Android clients.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): Logistics platform with real-time GPS driver tracking, route optimisation and full order lifecycle management.`,
     ],
@@ -149,36 +145,13 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     homeNarrative:
       "Simnetiq is a small London studio of two owner-operators. We deliver software end-to-end: native mobile and desktop apps, web platforms, AI features and pipelines, and bespoke VPN infrastructure. Each engagement is scoped, priced in GBP, and signed as a SOW before code is written.",
     aboutHeading: "About",
-    companyRegistrationHeading: "Company registration",
-    companyRegistrationLines: [
-      "- **Legal name:** Simnetiq Ltd",
-      "- **Company number:** 16861177",
-      "- **Jurisdiction:** Registered in England & Wales",
-      "- **VAT status:** Not VAT-registered (under threshold)",
-      "- **Registered address:** Simnetiq Ltd, 2 Frederick Street, Kings Cross, London WC1X 0ND, United Kingdom",
-      "- **Founded:** 2025",
-      "- **Operations:** London, United Kingdom (51.5074°N · 0.1278°W)",
-    ],
-    teamHeading: "Team (two owner-operators)",
-    teamLines: [
-      "01 — Director / Engineering — Roman Pochtman — Mobile, web, AI, infrastructure",
-      "02 — Director / Legal & Operations — David Zitomirsky — Contracts, compliance, finance",
-    ],
-    operatingPrinciplesHeading: "Operating principles",
-    operatingPrinciples: [
-      "- Every engagement priced in GBP against a signed SOW. No retainers without a defined deliverable.",
-      "- Production-first: we write the code that survives in production, not demoware.",
-      "- Owner-operator delivery: the people you brief are the people who write and ship the code.",
-      "- Observability and CI/CD shipped from day one of every project.",
-      "- Native where it matters; cross-platform where it doesn't.",
-    ],
     servicesPageHeading: "Services",
     projectsPageHeading: "Projects",
     argusHeading: "Argus Browser",
     argusStack:
       "Stack: C++ / Chromium fork (browser), Electron + React + Vite (desktop control plane), Next.js + Supabase + Revolut Merchant API (site, auth, checkout).",
     argusStatus:
-      "Status: Production. Live at browserargus.com, v1.0.77, signed and notarised builds for macOS (Apple Silicon) and Windows 10/11. Anti-detect browser: fingerprint, WebRTC address and cookie jar applied inside the engine rather than injected into the page. Hundreds of isolated profiles per workspace, a shared proxy library with live health checks, step-tree automations on a schedule, workspace-owned datasets, and an AI assistant that runs on the customer's own provider keys. Drivable over MCP and a local HTTP API.",
+      "Status: In development. Website: browserargus.com. Anti-detect browser: fingerprint, WebRTC address and cookie jar applied inside the engine rather than injected into the page. Hundreds of isolated profiles per workspace, a shared proxy library with live health checks, step-tree automations on a schedule, workspace-owned datasets, and an AI assistant that runs on the customer's own provider keys. Drivable over MCP and a local HTTP API.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "Stack: Swift (iOS), Kotlin (Android), Go (server), Marzban control plane, VLESS-Reality protocol.",
@@ -199,7 +172,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     goDeliveryStack: "Stack: Next.js, React, Node.js, PostgreSQL.",
     greenFlaggedHeading: "Green Flagged",
     greenFlaggedStatus:
-      "Status: In development. Marketing site live at greenflagged.com; scan API not yet wired. Pre-launch, first scan free.",
+      "Status: Released. AI contract review for freelancers and small teams. First scan free.",
     greenFlaggedStack:
       "Stack: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, Radix UI primitives, GSAP, pnpm.",
     smsCodeHeading: "SMS Code by SIMNETIQ",
@@ -208,7 +181,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     smsCodeStack: "Stack: Next.js, React, Tailwind CSS, Vercel; native iOS client.",
     visaPassageHeading: "VisaPassage",
     visaPassageStatus:
-      "Status: Production. Live at visapassage.com. Multi-passport visa comparison from a single encrypted profile; routes ranked by least paperwork, shortest wait and lowest cost. Country-specific checklists, auto-filled government forms, versioned expiry-aware document vault. Free to start. Does not guarantee visa outcomes — official government rules and consular decisions prevail.",
+      "Status: In development. Website: visapassage.com. Multi-passport visa comparison from a single encrypted profile; routes ranked by least paperwork, shortest wait and lowest cost. Country-specific checklists, auto-filled government forms, versioned expiry-aware document vault. Does not guarantee visa outcomes — official government rules and consular decisions prevail.",
     visaPassageStack: "Stack: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "Contact & booking",
     contactLines: (url) => [
@@ -226,7 +199,6 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     subServicesLabel: "Sub-services",
     techStackLabel: "Tech stack",
-    pricingLabel: "Pricing tiers",
     metaLabel: "Meta",
     badgeLabel: "Badge",
     taglineLabel: "Tagline",
@@ -250,7 +222,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- [Physics.explained](${url("/projects/physics-explained")}): אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL ומורה AI ב-/ask המבוסס על הספרייה.`,
       `- [SMS Code מבית SIMNETIQ](${url("/projects/sms-code")}): מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-150 מדינות ויותר מ-100 שירותים, קודים תוך כשלושים שניות, חבילות מטבעות חד-פעמיות ללא מנוי. ווב ו-iOS.`,
       `- [VisaPassage](${url("/projects/visapassage")}): מודיעין ויזות לבעלי דרכונים מרובים. פרופיל מוצפן אחד משווה כל מסלול ויזה על פני כל הדרכונים והתושבויות שלכם, ואז מייצר רשימות מסמכים וממלא אוטומטית טפסים ממשלתיים.`,
-      `- [Green Flagged](${url("/projects/green-flagged")}): סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות. אתר השיווק עלה, מנוע הסריקה בפיתוח.`,
+      `- [Green Flagged](${url("/projects/green-flagged")}): סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות.`,
       `- [Creator AI](https://www.creatorai.art/en): פלטפורמת תוכן LLM רב-לשונית על Anthropic ו-OpenAI. צנרת עריכה, לקוחות מקוריים ל-iOS ו-Android.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): פלטפורמת לוגיסטיקה עם מעקב נהגים בזמן אמת ב-GPS, אופטימיזציית מסלולים וניהול מחזור חיי הזמנה מלא.`,
     ],
@@ -292,36 +264,13 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     homeNarrative:
       "סימנטיק הוא אולפן לונדוני קטן של שני שותפים-מפעילים. אנו מספקים תוכנה מקצה לקצה: אפליקציות מובייל ושולחן עבודה מקוריות, פלטפורמות ווב, פיצ'רי AI וצנרות, ותשתית VPN ייעודית. כל התקשרות מוגדרת, מתומחרת ב-GBP, ונחתמת כ-SOW לפני שנכתב קוד.",
     aboutHeading: "אודות",
-    companyRegistrationHeading: "רישום החברה",
-    companyRegistrationLines: [
-      "- **שם משפטי:** Simnetiq Ltd",
-      "- **מספר חברה:** 16861177",
-      "- **תחום שיפוט:** רשום באנגליה ובוויילס",
-      "- **סטטוס מע״מ:** לא רשום למע״מ (מתחת לסף)",
-      "- **כתובת רשומה:** Simnetiq Ltd, 2 Frederick Street, Kings Cross, London WC1X 0ND, United Kingdom",
-      "- **שנת ייסוד:** 2025",
-      "- **פעילות:** לונדון, בריטניה (51.5074°N · 0.1278°W)",
-    ],
-    teamHeading: "צוות (שני שותפים-מפעילים)",
-    teamLines: [
-      "01 — דירקטור / הנדסה — Roman Pochtman — מובייל, ווב, AI, תשתית",
-      "02 — דירקטור / משפט ותפעול — David Zitomirsky — חוזים, ציות, פיננסים",
-    ],
-    operatingPrinciplesHeading: "עקרונות תפעוליים",
-    operatingPrinciples: [
-      "- כל התקשרות מתומחרת ב-GBP מול SOW חתום. ללא ריטיינרים ללא תוצר מוגדר.",
-      "- ייצור קודם: אנחנו כותבים קוד ששורד בייצור, לא דמו.",
-      "- אספקה על ידי בעלי-מפעילים: האנשים שמדברים עם הלקוח הם אלה שכותבים ומשגרים את הקוד.",
-      "- ניטור ו-CI/CD מהיום הראשון של כל פרויקט.",
-      "- מקורי במקום שזה חשוב; קרוס-פלטפורמה במקום שלא.",
-    ],
     servicesPageHeading: "שירותים",
     projectsPageHeading: "פרויקטים",
     argusHeading: "Argus Browser",
     argusStack:
       "סטאק: C++ / fork של Chromium (הדפדפן), Electron + React + Vite (לוח בקרה שולחני), Next.js + Supabase + Revolut Merchant API (אתר, הזדהות, תשלום).",
     argusStatus:
-      "סטטוס: ייצור. פעיל ב-browserargus.com, גרסה v1.0.77, בניות חתומות ומאושרות ל-macOS (Apple Silicon) ול-Windows 10/11. דפדפן אנטי-דיטקט: טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות מוחלים בתוך המנוע ולא מוזרקים לדף. מאות פרופילים מבודדים בכל סביבת עבודה, ספריית פרוקסי משותפת עם בדיקות תקינות חיות, אוטומציות מבוססות עץ שלבים על לוח זמנים, מאגרי נתונים בבעלות סביבת העבודה, ועוזר AI שרץ על מפתחות הספק של הלקוח עצמו. ניתן להנעה דרך MCP ו-API מקומי.",
+      "סטטוס: בפיתוח. אתר: browserargus.com. דפדפן אנטי-דיטקט: טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות מוחלים בתוך המנוע ולא מוזרקים לדף. מאות פרופילים מבודדים בכל סביבת עבודה, ספריית פרוקסי משותפת עם בדיקות תקינות חיות, אוטומציות מבוססות עץ שלבים על לוח זמנים, מאגרי נתונים בבעלות סביבת העבודה, ועוזר AI שרץ על מפתחות הספק של הלקוח עצמו. ניתן להנעה דרך MCP ו-API מקומי.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "סטאק: Swift (iOS), Kotlin (Android), Go (שרת), בקרת Marzban, פרוטוקול VLESS-Reality.",
@@ -342,7 +291,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     goDeliveryStack: "סטאק: Next.js, React, Node.js, PostgreSQL.",
     greenFlaggedHeading: "Green Flagged",
     greenFlaggedStatus:
-      "סטטוס: בפיתוח. אתר השיווק עלה ב-greenflagged.com; API הסריקה עוד לא חובר. טרום-השקה, סריקה ראשונה חינם.",
+      "סטטוס: הושק. סקירת חוזים מבוססת AI לפרילנסרים ולצוותים קטנים. סריקה ראשונה חינם.",
     greenFlaggedStack:
       "סטאק: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, רכיבי Radix UI, GSAP, pnpm.",
     smsCodeHeading: "SMS Code מבית SIMNETIQ",
@@ -352,7 +301,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "סטאק: Next.js, React, Tailwind CSS, Vercel; אפליקציה מקורית ל-iOS.",
     visaPassageHeading: "VisaPassage",
     visaPassageStatus:
-      "סטטוס: ייצור. חי ב-visapassage.com. השוואת ויזות לבעלי דרכונים מרובים מתוך פרופיל מוצפן אחד; המסלולים מדורגים לפי מינימום ניירת, זמן המתנה קצר ועלות נמוכה. רשימות מסמכים ייעודיות למדינה, מילוי אוטומטי של טפסים ממשלתיים וכספת מסמכים עם ניהול גרסאות ומעקב תפוגה. התחלה חינם. אינה מבטיחה קבלת ויזה — כללי הממשלה והחלטות הקונסוליה גוברים.",
+      "סטטוס: בפיתוח. אתר: visapassage.com. השוואת ויזות לבעלי דרכונים מרובים מתוך פרופיל מוצפן אחד; המסלולים מדורגים לפי מינימום ניירת, זמן המתנה קצר ועלות נמוכה. רשימות מסמכים ייעודיות למדינה, מילוי אוטומטי של טפסים ממשלתיים וכספת מסמכים עם ניהול גרסאות ומעקב תפוגה. אינה מבטיחה קבלת ויזה — כללי הממשלה והחלטות הקונסוליה גוברים.",
     visaPassageStack: "סטאק: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "יצירת קשר והזמנה",
     contactLines: (url) => [
@@ -370,7 +319,6 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     subServicesLabel: "תתי-שירותים",
     techStackLabel: "סטאק טכנולוגי",
-    pricingLabel: "שכבות תמחור",
     metaLabel: "מטא",
     badgeLabel: "תג",
     taglineLabel: "כותרת משנה",
@@ -394,7 +342,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       `- [Physics.explained](${url("/projects/physics-explained")}): Open-source интерактивная энциклопедия физики с покрытыми тестами решателями ОДУ, WebGL-визуализациями и AI-репетитором на /ask, основанным на материалах библиотеки.`,
       `- [SMS Code от SIMNETIQ](${url("/projects/sms-code")}): Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 150+ странах для 100+ сервисов, код примерно за тридцать секунд, разовые пакеты монет без подписки. Веб и iOS.`,
       `- [VisaPassage](${url("/projects/visapassage")}): Визовая аналитика для владельцев нескольких паспортов. Один зашифрованный профиль сравнивает все визовые маршруты по всем вашим паспортам и видам на жительство, затем формирует чек-листы и заполняет государственные формы.`,
-      `- [Green Flagged](${url("/projects/green-flagged")}): AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут. Маркетинговый сайт запущен, движок сканирования в разработке.`,
+      `- [Green Flagged](${url("/projects/green-flagged")}): AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут.`,
       `- [Creator AI](https://www.creatorai.art/en): Многоязычная LLM-платформа контента на Anthropic и OpenAI. Редакторские пайплайны, нативные клиенты iOS и Android.`,
       `- [Go Delivery / ISR Shipping](https://www.isrshipping.com): Логистическая платформа с GPS-трекингом водителей в реальном времени, оптимизацией маршрутов и полным циклом управления заказами.`,
     ],
@@ -437,36 +385,13 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     homeNarrative:
       "Simnetiq — небольшая лондонская студия из двух владельцев-практиков. Мы доставляем ПО от и до: нативные мобильные и десктоп-приложения, веб-платформы, AI-фичи и пайплайны, и заказную VPN-инфраструктуру. Каждый контракт описан, оценён в GBP и подписан как SOW до начала кода.",
     aboutHeading: "О компании",
-    companyRegistrationHeading: "Регистрация компании",
-    companyRegistrationLines: [
-      "- **Юридическое название:** Simnetiq Ltd",
-      "- **Номер компании:** 16861177",
-      "- **Юрисдикция:** Зарегистрирована в Англии и Уэльсе",
-      "- **Статус НДС:** Не зарегистрирован по НДС (ниже порога)",
-      "- **Юридический адрес:** Simnetiq Ltd, 2 Frederick Street, Kings Cross, London WC1X 0ND, United Kingdom",
-      "- **Год основания:** 2025",
-      "- **Операции:** Лондон, Великобритания (51.5074°N · 0.1278°W)",
-    ],
-    teamHeading: "Команда (два владельца-практика)",
-    teamLines: [
-      "01 — Директор / Инжиниринг — Roman Pochtman — Mobile, web, AI, инфраструктура",
-      "02 — Директор / Юр. и операционная часть — David Zitomirsky — Контракты, комплаенс, финансы",
-    ],
-    operatingPrinciplesHeading: "Операционные принципы",
-    operatingPrinciples: [
-      "- Каждый контракт оценивается в GBP по подписанному SOW. Без ретейнеров без чёткого результата.",
-      "- Production-first: мы пишем код, который выживает в продакшене, а не demoware.",
-      "- Доставка владельцами-практиками: те, кто принимает бриф, и пишут и доставляют код.",
-      "- Наблюдаемость и CI/CD с первого дня каждого проекта.",
-      "- Нативное там, где это важно; кросс-платформа — где не важно.",
-    ],
     servicesPageHeading: "Услуги",
     projectsPageHeading: "Проекты",
     argusHeading: "Argus Browser",
     argusStack:
       "Стек: C++ / форк Chromium (браузер), Electron + React + Vite (настольная панель управления), Next.js + Supabase + Revolut Merchant API (сайт, авторизация, оплата).",
     argusStatus:
-      "Статус: продакшен. Работает на browserargus.com, версия v1.0.77, подписанные и нотаризованные сборки для macOS (Apple Silicon) и Windows 10/11. Анти-детект браузер: отпечаток, адрес WebRTC и хранилище cookie применяются внутри движка, а не внедряются в страницу. Сотни изолированных профилей в рабочем пространстве, общая библиотека прокси с живыми проверками доступности, автоматизации в виде дерева шагов по расписанию, таблицы данных во владении пространства и AI-ассистент, работающий на собственных ключах клиента. Управляется через MCP и локальный HTTP API.",
+      "Статус: В разработке. Сайт: browserargus.com. Анти-детект браузер: отпечаток, адрес WebRTC и хранилище cookie применяются внутри движка, а не внедряются в страницу. Сотни изолированных профилей в рабочем пространстве, общая библиотека прокси с живыми проверками доступности, автоматизации в виде дерева шагов по расписанию, таблицы данных во владении пространства и AI-ассистент, работающий на собственных ключах клиента. Управляется через MCP и локальный HTTP API.",
     dopplerHeading: "Doppler VPN",
     dopplerStack:
       "Стек: Swift (iOS), Kotlin (Android), Go (сервер), control plane Marzban, протокол VLESS-Reality.",
@@ -487,7 +412,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     goDeliveryStack: "Стек: Next.js, React, Node.js, PostgreSQL.",
     greenFlaggedHeading: "Green Flagged",
     greenFlaggedStatus:
-      "Статус: В разработке. Маркетинговый сайт запущен на greenflagged.com; API сканирования ещё не подключён. Пред-релиз, первая проверка бесплатно.",
+      "Статус: Выпущен. AI-проверка договоров для фрилансеров и небольших команд. Первая проверка бесплатно.",
     greenFlaggedStack:
       "Стек: Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, примитивы Radix UI, GSAP, pnpm.",
     smsCodeHeading: "SMS Code от SIMNETIQ",
@@ -497,7 +422,7 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
       "Стек: Next.js, React, Tailwind CSS, Vercel; нативный клиент для iOS.",
     visaPassageHeading: "VisaPassage",
     visaPassageStatus:
-      "Статус: Продакшен. Работает на visapassage.com. Сравнение виз для владельцев нескольких паспортов из одного зашифрованного профиля; маршруты ранжируются по объёму бумаг, сроку ожидания и стоимости. Чек-листы под конкретную страну, автозаполнение государственных форм, хранилище документов с версиями и контролем сроков. Начать бесплатно. Не гарантирует получение визы — официальные правила и решения консульства имеют приоритет.",
+      "Статус: В разработке. Сайт: visapassage.com. Сравнение виз для владельцев нескольких паспортов из одного зашифрованного профиля; маршруты ранжируются по объёму бумаг, сроку ожидания и стоимости. Чек-листы под конкретную страну, автозаполнение государственных форм, хранилище документов с версиями и контролем сроков. Не гарантирует получение визы — официальные правила и решения консульства имеют приоритет.",
     visaPassageStack: "Стек: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "Контакты и запись",
     contactLines: (url) => [
@@ -515,7 +440,6 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     ],
     subServicesLabel: "Под-услуги",
     techStackLabel: "Технологический стек",
-    pricingLabel: "Тарифные планы",
     metaLabel: "Мета",
     badgeLabel: "Бейдж",
     taglineLabel: "Слоган",
@@ -540,14 +464,6 @@ function renderService(s: Service, locale: Locale, p: Phrasebook): string {
     .map((g) => `- **${g.label}**: ${g.items.join(", ")}`)
     .join("\n");
 
-  const pricing = s.pricing
-    .map((tier) => {
-      const sub = tier.sub ? ` (${tier.sub})` : "";
-      const bullets = tier.bullets.map((b) => `  - ${b}`).join("\n");
-      return `### ${tier.name} — ${tier.price}${sub}\n${tier.blurb}\n${bullets}`;
-    })
-    .join("\n\n");
-
   const meta = s.meta.map((m) => `- **${m.label}**: ${m.value}`).join("\n");
 
   return `## ${fullTitle} (${s.code})
@@ -564,9 +480,6 @@ ${subServices}
 
 ### ${p.techStackLabel}
 ${techStack}
-
-### ${p.pricingLabel}
-${pricing}
 
 ### ${p.metaLabel}
 ${meta}
@@ -700,26 +613,53 @@ ${p.machineRefs(localeUrl("")).join("\n")}
 `;
 }
 
+function renderAbout(locale: Locale): string {
+  const a = { en, he, ru }[locale].about;
+  return `${a.body}
+
+- **${a.founded}:** 2025
+- **${a.operations}:** ${a.operationsValue}
+
+## ${a.personnel.title}
+
+${a.personnel.body}
+
+${a.team.map((member) => `### ${member.name}\n${member.role}\n\n${member.meta}`).join("\n\n")}
+
+## ${a.registration.title}
+
+${a.registration.body}
+
+### ${a.registration.companyDetails}
+
+- **${a.registration.legalName}:** Simnetiq Ltd
+- **${a.registration.companyNo}:** 16861177
+- **${a.registration.jurisdiction}:** ${a.registration.jurisdictionValue}
+- **${a.registration.vatStatus}:** ${a.registration.vatStatusValue}
+
+### ${a.registration.registeredAddress}
+
+Simnetiq Ltd, 2 Frederick Street, Kings Cross, London, WC1X 0ND, United Kingdom
+
+## ${a.principles.title}
+
+${a.principles.body}
+
+${a.values.map((value) => `### ${value.title}\n\n${value.text}`).join("\n\n")}
+
+## ${a.cta.title}
+
+${a.cta.body}
+
+- [${a.cta.contact}](${SITE_URL}/${locale}/#contact)
+- [${a.cta.work}](${SITE_URL}/${locale}/projects)
+`;
+}
+
 export function buildAboutMarkdown(locale: Locale): string {
   const p = PHRASEBOOK[locale];
-  const localeUrl = (path: string) => `${SITE_URL}/${locale}${path}`;
-  const about = ROUTE_COPY.about[locale];
-
-  return `${buildHeader(p, about.title, localeUrl("/about"))}
-${about.description}
-
-## ${p.companyRegistrationHeading}
-
-${p.companyRegistrationLines.join("\n")}
-
-## ${p.teamHeading}
-
-${p.teamLines.join("\n")}
-
-## ${p.operatingPrinciplesHeading}
-
-${p.operatingPrinciples.join("\n")}
-`;
+  const a = { en, he, ru }[locale].about;
+  return `${buildHeader(p, a.title, `${SITE_URL}/${locale}/about`)}\n${renderAbout(locale)}`;
 }
 
 export function buildServicesIndexMarkdown(locale: Locale): string {
@@ -819,7 +759,7 @@ export function buildProjectMarkdown(
   if (slug === "argus-browser") {
     const c = ROUTE_COPY.caseStudyArgus[locale];
     return `${buildHeader(p, c.title, localeUrl("/projects/argus-browser"))}
-Live: https://www.browserargus.com
+Website: https://www.browserargus.com
 
 ${c.description}
 
@@ -874,7 +814,7 @@ ${p.smsCodeStatus}
   if (slug === "visapassage") {
     const c = ROUTE_COPY.caseStudyVisaPassage[locale];
     return `${buildHeader(p, c.title, localeUrl("/projects/visapassage"))}
-Live: https://visapassage.com
+Website: https://visapassage.com
 
 ${c.description}
 
@@ -939,19 +879,7 @@ ${p.liveDeployments().join("\n")}
 ${p.urlLabel}: ${localeUrl("/about")}
 ${p.titleLabel}: ${about.title}
 
-${about.description}
-
-## ${p.companyRegistrationHeading}
-
-${p.companyRegistrationLines.join("\n")}
-
-## ${p.teamHeading}
-
-${p.teamLines.join("\n")}
-
-## ${p.operatingPrinciplesHeading}
-
-${p.operatingPrinciples.join("\n")}
+${renderAbout(locale)}
 
 ---
 
@@ -987,7 +915,7 @@ ${projects.description}
 ## ${p.argusHeading}
 
 ${p.urlLabel}: ${localeUrl("/projects/argus-browser")}
-Live: https://www.browserargus.com
+Website: https://www.browserargus.com
 ${p.titleLabel}: ${argus.title}
 
 ${argus.description}
@@ -1031,7 +959,7 @@ ${p.smsCodeStatus}
 ## ${p.visaPassageHeading}
 
 ${p.urlLabel}: ${localeUrl("/projects/visapassage")}
-Live: https://visapassage.com
+Website: https://visapassage.com
 ${p.titleLabel}: ${visaPassage.title}
 
 ${visaPassage.description}

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, SpecRow } from "@/components/panel";
+import { PageHeader } from "@/components/page-header";
+import { CardArrow } from "@/components/sections/card-arrow";
+import styles from "@/components/how-we-work.module.css";
 import {
   getAllHowWeWorkSlugs,
   getHowWeWork,
@@ -131,177 +133,77 @@ export default async function HowWeWorkEntryPage({
         locale={locale}
       />
 
-      {/* ============================================================ */}
-      {/* HERO BAND — 7/5                                               */}
-      {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-7">
-              <span className="text-mono text-[var(--color-text-faint)]">
-                {entry.code}
-              </span>
-              <h1 className="text-display mt-6">
-                <span className="block">{entry.title}</span>
-                <span className="block text-[var(--color-text-dim)]">
-                  {entry.titleSecondary}
-                </span>
-              </h1>
-              <p className="text-body-strong mt-6 max-w-xl">{entry.tagline}</p>
-            </div>
-            <div className="lg:col-span-5 self-end">
-              <p className="text-body">{entry.summary}</p>
-              <div className="flex flex-wrap gap-3 mt-8">
-                <Link
-                  href={localizePath(locale, "/#contact")}
-                  className="btn-primary"
-                >
-                  <span>{d.hero.ctaContact}</span>
-                  <span aria-hidden="true" className="btn-arrow">
-                    →
-                  </span>
-                </Link>
-                <Link
-                  href={localizePath(locale, "/how-we-work")}
-                  className="btn-secondary"
-                >
-                  <span>{d.hero.ctaAll}</span>
-                  <span aria-hidden="true" className="btn-arrow">
-                    →
-                  </span>
-                </Link>
+      <PageHeader title={entry.title} subtitle={entry.titleSecondary} description={entry.summary} />
+      <div className={`${styles.container} ${styles.heroActions}`}>
+        <p className={styles.tagline}>{entry.tagline}</p>
+        <div className={styles.actions}>
+          <Link href={localizePath(locale, "/#contact")} className="btn-primary">
+            <span>{d.hero.ctaContact}</span><CardArrow />
+          </Link>
+          <Link href={localizePath(locale, "/how-we-work")} className="btn-secondary">
+            <span>{d.hero.ctaAll}</span><CardArrow />
+          </Link>
+        </div>
+      </div>
+
+      <section className={`${styles.container} ${styles.section} ${styles.editorial}`}>
+        <div className={styles.sectionIntro}>
+          <h2>{d.sections.title}</h2>
+          <dl className={styles.facts} aria-label={d.hero.specsLabel}>
+            {entry.meta.map((item) => (
+              <div key={item.label}>
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
               </div>
+            ))}
+          </dl>
+        </div>
+        <div className={styles.prose}>
+          {entry.sections.map((section) => (
+            <div key={section.heading} className={styles.proseItem}>
+              <h3>{section.heading}</h3>
+              <p className="text-body">{section.body}</p>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/* AT A GLANCE + SECTIONS — 4/8                                  */}
-      {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {d.sections.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5 mb-8">{d.sections.title}</h2>
-              <Panel innerClassName="p-6 lg:p-8" corners>
-                <p className="text-label-sm text-[var(--color-text-dim)] mb-4">
-                  {d.hero.specsLabel}
-                </p>
-                {entry.meta.map((m) => (
-                  <SpecRow key={m.label} label={m.label} value={m.value} />
-                ))}
-              </Panel>
+      <section className={`${styles.container} ${styles.section} ${styles.editorial}`}>
+        <div className={styles.sectionIntro}>
+          <h2>{d.faq.title}</h2>
+        </div>
+        <div className={styles.prose}>
+          {entry.faq.map((item) => (
+            <div key={item.q} className={styles.proseItem}>
+              <h3>{item.q}</h3>
+              <p className="text-body">{item.a}</p>
             </div>
-            <div className="lg:col-span-7 lg:col-start-6 space-y-10">
-              {entry.sections.map((section, i) => (
-                <div key={section.heading}>
-                  <div className="flex items-baseline gap-4 mb-3">
-                    <span className="text-mono text-[var(--color-text-faint)]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="text-title">{section.heading}</h3>
-                  </div>
-                  <p className="text-body">{section.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/* FAQ — marked up as FAQPage above; text must stay visible here  */}
-      {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {d.faq.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{d.faq.title}</h2>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6 space-y-5">
-              {entry.faq.map((item) => (
-                <Panel key={item.q} innerClassName="p-6 lg:p-7">
-                  <h3 className="text-title mb-3">{item.q}</h3>
-                  <p className="text-body">{item.a}</p>
-                </Panel>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/* CTA + NAVIGATION — 7/5                                        */}
-      {/* ============================================================ */}
-      <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-            <div className="lg:col-span-7">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {d.cta.eyebrow}
-              </p>
-              <h2
-                className="text-display mt-6"
-                style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
-              >
-                {d.cta.title}
-              </h2>
-              <p className="text-body mt-6 max-w-lg">{d.cta.body}</p>
-              <div className="flex flex-wrap gap-3 mt-8">
-                <Link
-                  href={localizePath(locale, "/#contact")}
-                  className="btn-primary"
-                >
-                  <span>{d.cta.sendBrief}</span>
-                  <span aria-hidden="true" className="btn-arrow">
-                    →
-                  </span>
-                </Link>
-              </div>
-            </div>
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <Link
-                href={localizePath(locale, `/how-we-work/${prev.slug}`)}
-                className="block group"
-              >
-                <Panel innerClassName="p-5 h-full">
-                  <span className="text-label-sm text-[var(--color-text-dim)]">
-                    {d.cta.previous}
-                  </span>
-                  <p className="text-mono text-[var(--color-text-faint)] mt-3">
-                    {prev.code}
-                  </p>
-                  <p className="text-body-strong mt-1">
-                    {getHowWeWorkFullTitle(prev)}
-                  </p>
-                </Panel>
-              </Link>
-              <Link
-                href={localizePath(locale, `/how-we-work/${next.slug}`)}
-                className="block group"
-              >
-                <Panel innerClassName="p-5 h-full text-right">
-                  <span className="text-label-sm text-[var(--color-text-dim)]">
-                    {d.cta.next}
-                  </span>
-                  <p className="text-mono text-[var(--color-text-faint)] mt-3">
-                    {next.code}
-                  </p>
-                  <p className="text-body-strong mt-1">
-                    {getHowWeWorkFullTitle(next)}
-                  </p>
-                </Panel>
+      <section className={`${styles.container} ${styles.section}`}>
+        <div className={styles.contact}>
+          <h2>{d.cta.title}</h2>
+          <div>
+            <p className="text-body">{d.cta.body}</p>
+            <div className={styles.actions}>
+              <Link href={localizePath(locale, "/#contact")} className="btn-primary">
+                <span>{d.cta.sendBrief}</span><CardArrow />
               </Link>
             </div>
           </div>
         </div>
+        <nav className={styles.related}>
+          <Link href={localizePath(locale, `/how-we-work/${prev.slug}`)} className={styles.relatedLink}>
+            <span className={styles.direction}>{d.cta.previous}</span>
+            <span className={styles.relatedTitle}>{getHowWeWorkFullTitle(prev)}<CardArrow /></span>
+          </Link>
+          <Link href={localizePath(locale, `/how-we-work/${next.slug}`)} className={styles.relatedLink}>
+            <span className={styles.direction}>{d.cta.next}</span>
+            <span className={styles.relatedTitle}>{getHowWeWorkFullTitle(next)}<CardArrow /></span>
+          </Link>
+        </nav>
       </section>
     </>
   );

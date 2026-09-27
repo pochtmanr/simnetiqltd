@@ -3,17 +3,21 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Panel, Rail, SpecRow } from "@/components/panel";
 import { SectionFrame } from "@/components/section-frame";
 import { OfferedServicesSection } from "@/components/sections/offered-services-section";
 import { WhyUsSection } from "@/components/sections/why-us-section";
 import { RecentWorkSection } from "@/components/sections/recent-work-section";
+import { HeroChartProof, type ChartProofCopy } from "@/components/hero-chart-proof";
+import { GoogleMeetIcon } from "@/components/google-meet-icon";
 import { HeroGraph } from "@/components/hero-graph";
 import { HeroNavSentinel } from "@/components/hero-nav-sentinel";
-import { ContactDisclosure } from "@/components/contact-disclosure";
+import { ContactFigure } from "@/components/contact-figure";
 import { BookingCta } from "@/components/booking-cta";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
+
+import landingStyles from "./sections/landing-sections.module.css";
+import contactStyles from "./contact-section.module.css";
 
 type CapKey = "mobile" | "web" | "aiAutomation";
 
@@ -30,7 +34,7 @@ type HomeDict = {
     body: string;
     ctaPrimary: string;
     ctaSecondary: string;
-    accolade: { label: string; value: string };
+    accolade: ChartProofCopy;
   };
   projects: {
     eyebrow: string;
@@ -39,6 +43,8 @@ type HomeDict = {
     stack: string;
     visit: string;
     caseStudy: string;
+    seeAll: string;
+    seeLess: string;
     items: Record<
       | "argus"
       | "physics"
@@ -84,7 +90,12 @@ type HomeDict = {
     bookingRail: string[];
     bookingFooter: string;
     bookingCta: string;
+    bookingClose: string;
+    bookingFallback: string;
     formHeading: string;
+    formBody: string;
+    bookingLoading: string;
+    bookingTimezone: string;
     name: string;
     namePlaceholder: string;
     emailLabel: string;
@@ -120,7 +131,7 @@ export function HomePageClient({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, locale }),
       });
       if (res.ok) {
         setStatus("sent");
@@ -153,29 +164,12 @@ export function HomePageClient({
           <p className="hero-field__body">{dict.hero.body}</p>
 
           <div className="hero-field__actions">
-            {/* Icons are bare <svg>, not wrapped in a <span>: .btn-primary >
-                span:last-child is the site's hover-arrow rule, and a wrapper
-                would make the icon slide instead of the arrow. Both glyphs are
-                non-directional so they survive the RTL flip unmirrored. */}
             <a
               href="#contact"
               onClick={() => track("hero_cta_click", { cta: "primary", locale })}
               className="btn-primary"
             >
-              <svg
-                viewBox="0 0 24 24"
-                width="17"
-                height="17"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <rect x="3" y="5" width="18" height="16" rx="3" />
-                <path d="M8 2.75v4M16 2.75v4M3 10h18M9.4 15.4l1.9 1.9 3.4-3.7" />
-              </svg>
+              <GoogleMeetIcon />
               {dict.hero.ctaPrimary}
             </a>
             <Link
@@ -183,34 +177,12 @@ export function HomePageClient({
               onClick={() => track("hero_cta_click", { cta: "secondary", locale })}
               className="btn-secondary"
             >
-              <svg
-                viewBox="0 0 24 24"
-                width="17"
-                height="17"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <rect x="3.25" y="3.25" width="7.5" height="7.5" rx="2" />
-                <rect x="13.25" y="3.25" width="7.5" height="7.5" rx="2" />
-                <rect x="3.25" y="13.25" width="7.5" height="7.5" rx="2" />
-                <rect x="13.25" y="13.25" width="7.5" height="7.5" rx="2" />
-              </svg>
               {dict.hero.ctaSecondary}
+              <svg className="hero-field__work-arrow rtl-mirror" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg>
             </Link>
           </div>
 
-          <p className="hero-field__proof">
-            <span aria-hidden="true" className="hero-field__proof-mark">
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
-                <path d="M17.5 13.5c-.02-2.4 1.96-3.55 2.05-3.6-1.12-1.64-2.86-1.86-3.48-1.89-1.48-.15-2.89.87-3.64.87-.76 0-1.92-.85-3.16-.83-1.62.02-3.12.94-3.95 2.4-1.69 2.93-.43 7.27 1.21 9.65.81 1.16 1.77 2.46 3.04 2.41 1.22-.05 1.68-.79 3.16-.79 1.47 0 1.89.79 3.18.77 1.31-.02 2.14-1.18 2.94-2.34.93-1.34 1.31-2.65 1.33-2.72-.03-.01-2.55-.98-2.58-3.93zM15.05 6.45c.66-.81 1.11-1.93.99-3.05-.96.04-2.13.64-2.82 1.45-.62.71-1.16 1.86-1.02 2.95 1.07.08 2.18-.55 2.85-1.35z" />
-              </svg>
-            </span>
-            <span className="sr-only">{dict.hero.accolade.label}: </span>
-            {dict.hero.accolade.value}
-          </p>
+          <HeroChartProof copy={dict.hero.accolade} />
         </div>
 
         <HeroGraph />
@@ -219,7 +191,7 @@ export function HomePageClient({
       </section>
 
       {/* OFFERED SERVICES — moved BEFORE recent work */}
-      <SectionFrame id="services" className="scroll-mt-24">
+      <SectionFrame noTop id="services" className="scroll-mt-24">
         <OfferedServicesSection
           locale={locale}
           dict={{ capabilities: dict.capabilities }}
@@ -227,147 +199,126 @@ export function HomePageClient({
       </SectionFrame>
 
       {/* WHY WORK WITH US */}
-      <SectionFrame id="why" className="scroll-mt-24">
+      <SectionFrame noTop id="why" className="scroll-mt-24">
         <WhyUsSection locale={locale} dict={{ whyUs: dict.whyUs }} />
       </SectionFrame>
 
       {/* RECENT WORK */}
-      <SectionFrame id="projects" className="scroll-mt-24">
+      <SectionFrame noTop id="projects" className="scroll-mt-24">
         <RecentWorkSection locale={locale} dict={{ projects: dict.projects }} />
       </SectionFrame>
 
       {/* CONTACT */}
       <SectionFrame
+        noTop
         as={motion.section}
         id="contact"
-        className="scroll-mt-24"
+        className={`scroll-mt-24 ${contactStyles.contrast}`}
         onViewportEnter={() => track("contact_section_view", { locale })}
         viewport={{ once: true, margin: "-10% 0px" }}
       >
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-            <div className="lg:col-span-5 flex flex-col gap-8">
-              <div>
-                <h2 className="text-headline">{dict.contact.title}</h2>
-                <p className="text-body mt-6 max-w-sm">{dict.contact.body}</p>
-                <div className="mt-10">
-                  <Panel innerClassName="p-6">
-                    <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                      {dict.contact.directLabel}
-                    </p>
-                    <SpecRow
-                      label={dict.contact.email}
-                      value="support@simnetiq.com"
-                    />
-                    <SpecRow
-                      label={dict.contact.location}
-                      value={dict.contact.location_value}
-                    />
-                    <SpecRow
-                      label={dict.contact.response}
-                      value={dict.contact.response_value}
-                    />
-                  </Panel>
-                </div>
-              </div>
-
-              {/* Email message form — disclosure pattern. Booking is primary. */}
-              <ContactDisclosure
-                heading={dict.contact.formHeading}
-                locale={locale}
-              >
-                <Panel innerClassName="p-6 lg:p-8" corners>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <label className="text-label-sm text-[var(--color-text-faint)] block mb-2">
-                        {dict.contact.name}
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={form.name}
-                        onChange={(e) =>
-                          setForm({ ...form, name: e.target.value })
-                        }
-                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors"
-                        placeholder={dict.contact.namePlaceholder}
-                      />
-                    </div>
-                    <div>
-                      <label className="text-label-sm text-[var(--color-text-faint)] block mb-2">
-                        {dict.contact.emailLabel}
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={form.email}
-                        onChange={(e) =>
-                          setForm({ ...form, email: e.target.value })
-                        }
-                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors"
-                        placeholder={dict.contact.emailPlaceholder}
-                      />
-                    </div>
-                    <div>
-                      <label className="text-label-sm text-[var(--color-text-faint)] block mb-2">
-                        {dict.contact.message}
-                      </label>
-                      <textarea
-                        required
-                        rows={5}
-                        value={form.message}
-                        onChange={(e) =>
-                          setForm({ ...form, message: e.target.value })
-                        }
-                        className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors resize-none"
-                        placeholder={dict.contact.messagePlaceholder}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between pt-2">
-                      <div className="text-mono text-[var(--color-text-faint)]">
-                        {status === "sent"
-                          ? dict.contact.transmitted
-                          : status === "error"
-                          ? dict.contact.failed
-                          : dict.contact.ready}
-                      </div>
-                      <button
-                        type="submit"
-                        disabled={status === "sending"}
-                        className="btn-primary"
-                      >
-                        {status === "sending"
-                          ? dict.contact.sending
-                          : dict.contact.submit}
-                        {status !== "sending" && <span aria-hidden="true">→</span>}
-                      </button>
-                    </div>
-                    {status === "sent" && (
-                      <p className="text-label-sm text-[var(--color-text)]">
-                        {dict.contact.successMessage}
-                      </p>
-                    )}
-                    {status === "error" && (
-                      <p className="text-label-sm text-[var(--color-error)]">
-                        {dict.contact.errorMessage}
-                      </p>
-                    )}
-                  </form>
-                </Panel>
-              </ContactDisclosure>
+        <div className={contactStyles.section}>
+          <div className={contactStyles.intro}>
+            <div>
+              <h2 className={`${landingStyles.sectionTitle} ${contactStyles.title}`}>{dict.contact.title}</h2>
+              <p className={landingStyles.sectionDescription}>{dict.contact.body}</p>
             </div>
-            <div className="lg:col-span-7">
-              <h3 className="text-title mb-2">
-                {dict.contact.bookingHeading}
-              </h3>
-              <p className="text-body mb-4 max-w-md">
-                {dict.contact.bookingSubtitle}
-              </p>
-              <Rail items={dict.contact.bookingRail} className="mb-3" />
-              <BookingCta locale={locale} label={dict.contact.bookingCta} />
-              <p className="text-mono text-[var(--color-text-faint)] mt-3">
-                {dict.contact.bookingFooter}
-              </p>
+            <ContactFigure />
+          </div>
+          <div className={contactStyles.columns}>
+            <div className={contactStyles.bookingColumn}>
+              <BookingCta
+                locale={locale}
+                label={dict.contact.bookingCta}
+                heading={dict.contact.bookingHeading}
+                description={dict.contact.bookingSubtitle}
+                note={dict.contact.bookingFooter}
+                meta={dict.contact.bookingRail}
+                closeLabel={dict.contact.bookingClose}
+                fallbackLabel={dict.contact.bookingFallback}
+                loadingLabel={dict.contact.bookingLoading}
+                timezoneLabel={dict.contact.bookingTimezone}
+              />
+            </div>
+            <div id="contact-message-form" className={contactStyles.messageColumn}>
+              <h3 className={contactStyles.subheading}>{dict.contact.formHeading}</h3>
+              <p className={contactStyles.formBody}>{dict.contact.formBody}</p>
+              <form onSubmit={handleSubmit} className={contactStyles.form} aria-busy={status === "sending"}>
+                <div>
+                  <label htmlFor="contact-name" className={contactStyles.label}>
+                    {dict.contact.name}
+                  </label>
+                  <input
+                    id="contact-name"
+                    autoComplete="name"
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(e) =>
+                      setForm({ ...form, name: e.target.value })
+                    }
+                    className={contactStyles.input}
+                    placeholder={dict.contact.namePlaceholder}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-email" className={contactStyles.label}>
+                    {dict.contact.emailLabel}
+                  </label>
+                  <input
+                    id="contact-email"
+                    autoComplete="email"
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                    className={contactStyles.input}
+                    placeholder={dict.contact.emailPlaceholder}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-message" className={contactStyles.label}>
+                    {dict.contact.message}
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    required
+                    rows={5}
+                    value={form.message}
+                    onChange={(e) =>
+                      setForm({ ...form, message: e.target.value })
+                    }
+                    className={contactStyles.input}
+                    placeholder={dict.contact.messagePlaceholder}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className={`btn-secondary ${contactStyles.submit}`}
+                >
+                  {status === "sending"
+                    ? dict.contact.sending
+                    : dict.contact.submit}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg>
+                </button>
+                {status === "sent" && (
+                  <p role="status" className={contactStyles.feedback}>
+                    {dict.contact.successMessage}
+                  </p>
+                )}
+                {status === "error" && (
+                  <p role="alert" className={contactStyles.feedback}>
+                    {dict.contact.errorMessage}
+                  </p>
+                )}
+              </form>
+              <a className={contactStyles.emailLink} href="mailto:support@simnetiq.com" dir="ltr">
+                support@simnetiq.com
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg>
+              </a>
             </div>
           </div>
         </div>

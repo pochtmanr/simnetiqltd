@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Panel, SpecRow } from "@/components/panel";
+import { PageHeader } from "@/components/page-header";
+import styles from "@/components/document-pages.module.css";
 import { getDictionary } from "@/lib/dictionaries";
 import {
   LOCALES,
@@ -91,68 +92,40 @@ export default async function PrivacyPolicyPage({
 
   return (
     <>
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
-          <p className="text-label text-[var(--color-primary-glow)]">
-            {p.eyebrow}
-          </p>
-          <h1 className="text-display mt-6 max-w-3xl">{p.title}</h1>
-          <p className="text-mono mt-6">{dict.common.lastUpdatedApr2026}</p>
-        </div>
-      </section>
-
-      <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-            {/* Meta sidebar */}
-            <aside className="lg:col-span-3">
-              <div className="lg:sticky lg:top-28 space-y-6">
-                <Panel innerClassName="p-5">
-                  <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
-                    {p.documentLabel}
-                  </p>
-                  <SpecRow label={p.revision} value={dict.common.revisionApr2026} />
-                  <SpecRow label={p.protocol} value="1.0.0" />
-                  <SpecRow label={p.jurisdiction} value={p.jurisdictionValue} />
-                  <SpecRow label={p.entries} value={String(p.blocks.length)} />
-                </Panel>
-                <Panel innerClassName="p-5">
-                  <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
-                    {p.contactLabel}
-                  </p>
-                  <p className="text-body-strong text-[var(--color-text)]">
-                    support@simnetiq.com
-                  </p>
-                  <p className="text-body mt-2">Simnetiq Ltd</p>
-                  <p className="text-body">{p.kingsCross}</p>
-                </Panel>
-              </div>
-            </aside>
-
-            {/* Body */}
-            <div className="lg:col-span-9">
-              <div className="space-y-8 lg:space-y-10 max-w-3xl">
-                {p.blocks.map((b, i) => (
-                  <div key={b.title} className="grid grid-cols-12 gap-4">
-                    <div className="col-span-2 sm:col-span-1 text-mono text-[var(--color-text-faint)] pt-1">
-                      {String(i + 1)}
-                    </div>
-                    <div className="col-span-10 sm:col-span-11">
-                      <h2 className="text-title mb-2">{b.title}</h2>
-                      <p className="text-body">{b.body}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="border-t border-[var(--color-border)] mt-14 pt-8">
-                <p className="text-mono">
-                  {dict.common.endOfDocument.replace("{year}", String(year))}
-                </p>
-              </div>
-            </div>
+      <PageHeader title={p.title} description={dict.common.lastUpdatedApr2026} />
+      <div className={styles.container}>
+        <div className={styles.layout}>
+          <aside className={styles.sidebar}>
+            <nav className={styles.nav} aria-label={dict.legal.tocLabel}>
+              {p.blocks.map((block, i) => (
+                <a key={block.title} href={`#privacy-section-${i + 1}`}>{block.title}</a>
+              ))}
+            </nav>
+            <h2 className={styles.label}>{p.contactLabel}</h2>
+            <address className={styles.contact}>
+              <a href="mailto:support@simnetiq.com">support@simnetiq.com</a>
+              <span>Simnetiq Ltd</span>
+              <span>{p.kingsCross}</span>
+            </address>
+            <h2 className={styles.label}>{p.documentLabel}</h2>
+            <dl className={styles.facts}>
+              <div><dt>{p.revision}</dt><dd>{dict.common.revisionApr2026}</dd></div>
+              <div><dt>{p.jurisdiction}</dt><dd>{p.jurisdictionValue}</dd></div>
+            </dl>
+          </aside>
+          <div className={styles.content}>
+            {p.blocks.map((block, i) => (
+              <article key={block.title} id={`privacy-section-${i + 1}`}>
+                <h2 className={styles.heading}>{block.title}</h2>
+                <p className={styles.body}>{block.body}</p>
+              </article>
+            ))}
+            <p className={`${styles.note} ${styles.end}`}>
+              {dict.common.endOfDocument.replace("{year}", String(year))}
+            </p>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

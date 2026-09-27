@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { PageHeader } from "@/components/page-header";
 import { notFound } from "next/navigation";
-import { Panel, SpecRow } from "@/components/panel";
+import { TechnologyChips } from "@/components/technology-chips";
+import { CardArrow } from "@/components/sections/card-arrow";
+import { Panel } from "@/components/panel";
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import {
   BreadcrumbSchema,
@@ -89,111 +93,72 @@ type ProjectKey =
 type ProjectStruct = {
   key: ProjectKey;
   id: string;
+  image?: string;
   tags: string[];
   link: { kind: "internal" | "external"; href: string; labelKey: "readCaseStudy" | "visitSite" };
   secondaryLink?: { kind: "internal" | "external"; href: string; labelKey: "readCaseStudy" | "visitSite" };
-  metaKeys: { labelKey: string; valueKey: string }[];
-  status?: "live" | "inDev";
 };
 
 const projectsList: ProjectStruct[] = [
   {
     key: "argus",
+    image: "/argus-header.avif",
     id: "01",
-    tags: ["C++", "CHROMIUM", "ELECTRON", "REACT", "SUPABASE"],
+    tags: ["C++", "Chromium", "Electron", "React", "Supabase"],
     link: { kind: "internal", href: "/projects/argus-browser", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://www.browserargus.com/", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "engine", valueKey: "engineValue" },
-      { labelKey: "platforms", valueKey: "platformsValue" },
-      { labelKey: "scope", valueKey: "scopeValue" },
-    ],
-    status: "live",
   },
   {
     key: "physics",
+    image: "/physics-header.avif",
     id: "02",
-    tags: ["NEXT.JS", "WEBGL", "MATHJAX", "AI"],
+    tags: ["Next.js", "WebGL", "MathJax", "AI"],
     link: { kind: "internal", href: "/projects/physics-explained", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://physics.it.com/", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "deployed", valueKey: "deployedValue" },
-      { labelKey: "coverage", valueKey: "coverageValue" },
-      { labelKey: "tutor", valueKey: "tutorValue" },
-    ],
   },
   {
     key: "doppler",
+    image: "/doppler-header.avif",
     id: "03",
-    tags: ["SWIFT", "KOTLIN", "GO", "MARZBAN"],
+    tags: ["Swift", "Kotlin", "Go", "Marzban"],
     link: { kind: "internal", href: "/projects/doppler-vpn", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://dopplervpn.org", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "deployed", valueKey: "deployedValue" },
-      { labelKey: "protocol", valueKey: "protocolValue" },
-      { labelKey: "platforms", valueKey: "platformsValue" },
-    ],
   },
   {
     key: "smscode",
+    image: "/smscode-header.avif",
     id: "04",
-    tags: ["NEXT.JS", "REACT", "TAILWIND", "iOS"],
+    tags: ["Next.js", "React", "Tailwind", "iOS"],
     link: { kind: "internal", href: "/projects/sms-code", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://simnetiq.xyz/", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "coverage", valueKey: "coverageValue" },
-      { labelKey: "billing", valueKey: "billingValue" },
-      { labelKey: "platforms", valueKey: "platformsValue" },
-    ],
-    status: "live",
   },
   {
     key: "visapassage",
+    image: "/visapassage-header.avif",
     id: "05",
-    tags: ["NEXT.JS", "REACT", "SUPABASE", "TAILWIND"],
+    tags: ["Next.js", "React", "Supabase", "Tailwind"],
     link: { kind: "internal", href: "/projects/visapassage", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://visapassage.com/", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "engine", valueKey: "engineValue" },
-      { labelKey: "scope", valueKey: "scopeValue" },
-      { labelKey: "stack", valueKey: "stackValue" },
-    ],
-    status: "live",
   },
   {
     key: "greenflagged",
+    image: "/greenflagged-header.avif",
     id: "06",
-    tags: ["NEXT.JS 16", "REACT 19", "TAILWIND V4", "GSAP"],
+    tags: ["Next.js 16", "React 19", "Tailwind v4", "GSAP"],
     link: { kind: "internal", href: "/projects/green-flagged", labelKey: "readCaseStudy" },
     secondaryLink: { kind: "external", href: "https://greenflagged.vercel.app/", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "stage", valueKey: "stageValue" },
-      { labelKey: "scope", valueKey: "scopeValue" },
-      { labelKey: "stack", valueKey: "stackValue" },
-    ],
-    status: "inDev",
   },
   {
     key: "delivery",
     id: "07",
-    tags: ["NEXT.JS", "REACT", "NODE", "POSTGRES"],
+    tags: ["Next.js", "React", "Node.js", "PostgreSQL"],
     link: { kind: "external", href: "https://www.isrshipping.com", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "deployed", valueKey: "deployedValue" },
-      { labelKey: "market", valueKey: "marketValue" },
-      { labelKey: "scope", valueKey: "scopeValue" },
-    ],
   },
   {
     key: "creator",
     id: "08",
-    tags: ["SWIFT", "KOTLIN", "PYTHON", "SUPABASE"],
+    tags: ["Swift", "Kotlin", "Python", "Supabase"],
     link: { kind: "external", href: "https://www.creatorai.art/en", labelKey: "visitSite" },
-    metaKeys: [
-      { labelKey: "deployed", valueKey: "deployedValue" },
-      { labelKey: "models", valueKey: "modelsValue" },
-      { labelKey: "platforms", valueKey: "platformsValue" },
-    ],
   },
 ];
 
@@ -227,34 +192,13 @@ export default async function ProjectsPage({ params }: { params: Params }) {
           };
         })}
       />
-      {/* Hero */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-7">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {p.eyebrow}
-              </p>
-              <h1 className="text-display mt-6">
-                <span className="block">{p.titleLine1}</span>
-                <span className="block text-[var(--color-text-dim)]">
-                  {p.titleLine2}
-                </span>
-              </h1>
-            </div>
-            <div className="lg:col-span-5 self-end">
-              <p className="text-body max-w-md">{p.body}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader title={p.titleLine1} subtitle={p.titleLine2} description={p.body} />
 
       {/* Project cards */}
       <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20 space-y-8 lg:space-y-10">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-4 pb-16 lg:pb-28 space-y-6 lg:space-y-8">
           {projectsList.map((proj) => {
             const item = p.items[proj.key];
-            const meta = item as unknown as Record<string, string>;
             const primaryHref =
               proj.link.kind === "internal"
                 ? localizePath(locale, proj.link.href)
@@ -270,10 +214,10 @@ export default async function ProjectsPage({ params }: { params: Params }) {
 
             return (
               <article key={proj.id} className="group">
-                <Panel innerClassName="p-6 lg:p-10" corners>
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                <Panel innerClassName="p-6 sm:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
                     <div className="lg:col-span-7">
-                      <div className="flex items-center justify-between gap-4 mb-8">
+                      <div className="flex items-center justify-between gap-4 mb-6">
                         {/* min-height keeps the header row aligned across
                             entries whose project has no supplied mark. */}
                         <div className="flex items-center gap-3 min-h-9">
@@ -284,28 +228,19 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                               size={30}
                             />
                           )}
-                          <span className="text-mono text-[var(--color-text-faint)]">
-                            {proj.id} · ENTRY
+                          <span className="text-xs text-[var(--color-text-dim)] tabular-nums">
+                            {proj.id}
                           </span>
                         </div>
-                        <span className="text-label-sm text-[var(--color-primary-glow)]">
+                        <span className="text-xs text-end text-[var(--color-text-dim)]">
                           {item.badge}
                         </span>
                       </div>
-                      <h2 className="text-headline mb-5">{item.title}</h2>
-                      <p className="text-body mb-8 max-w-lg">
+                      <h2 className="text-headline mb-4">{item.title}</h2>
+                      <p className="text-body mb-6 max-w-lg">
                         {item.description}
                       </p>
-                      <div className="flex flex-wrap gap-2 mb-8">
-                        {proj.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-label-sm text-[var(--color-text-dim)] border border-[var(--color-border-strong)] px-3 py-1.5"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                      <TechnologyChips technologies={proj.tags} label={dict.projects.stack} />
                       <div className="flex flex-wrap items-center gap-3">
                         <Link
                           href={primaryHref}
@@ -314,7 +249,7 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                           className="btn-primary"
                         >
                           {p[proj.link.labelKey]}
-                          <span aria-hidden="true" className="btn-arrow">{primaryExternal ? "↗" : "→"}</span>
+                          <CardArrow external={primaryExternal} />
                         </Link>
                         {proj.secondaryLink && secondaryHref && (
                           <Link
@@ -324,43 +259,25 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                             className="btn-secondary"
                           >
                             {p[proj.secondaryLink.labelKey]}
-                            <span aria-hidden="true" className="btn-arrow">{secondaryExternal ? "↗" : "→"}</span>
+                            <CardArrow external={secondaryExternal} />
                           </Link>
                         )}
                       </div>
                     </div>
 
-                    <div className="lg:col-span-5">
-                      <div className="border-l border-[var(--color-border)] lg:pl-10">
-                        <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                          {p.specification}
-                        </p>
-                        {proj.metaKeys.map((m) => (
-                          <SpecRow
-                            key={m.labelKey}
-                            label={meta[m.labelKey]}
-                            value={meta[m.valueKey]}
+                    {proj.image && (
+                      <div className="lg:col-span-5 min-w-0">
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[var(--color-border)]">
+                          <Image
+                            src={proj.image}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1440px) 460px, (min-width: 1024px) 36vw, 90vw"
+                            className="object-cover"
                           />
-                        ))}
-                        <div className="mt-6 flex items-center gap-2">
-                          {proj.status === "inDev" ? (
-                            <>
-                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-secondary)] pulse-dot" />
-                              <span className="text-mono text-[var(--color-secondary)]">
-                                {dict.common.inDevNominal}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                              <span className="text-mono text-[var(--color-primary-glow)]">
-                                {dict.common.liveNominal}
-                              </span>
-                            </>
-                          )}
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </Panel>
               </article>

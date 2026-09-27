@@ -1,0 +1,134 @@
+.switch {
+  --thumb-shift: 36px;
+  --slide-direction: 1;
+  --sun-color: var(--color-text-dim);
+  --moon-color: var(--color-surface);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 72px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: 72px;
+  height: 36px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface-sunk);
+  transition: border-color 250ms ease;
+}
+
+.thumb {
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-text);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 16%);
+  transform: translateX(calc(var(--thumb-shift) * var(--slide-direction)));
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1), background-color 250ms ease;
+}
+
+.sun,
+.moon {
+  position: absolute;
+  inset-block-start: 3px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  transition: color 250ms ease;
+}
+
+.sun {
+  inset-inline-start: 3px;
+  color: var(--sun-color);
+}
+
+.moon {
+  inset-inline-end: 3px;
+  color: var(--moon-color);
+}
+
+.switch:hover .track {
+  border-color: var(--color-text-dim);
+}
+
+.switch:focus-visible {
+  border-radius: 999px;
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+:global([dir="rtl"]) .switch {
+  --slide-direction: -1;
+}
+
+:global([data-theme="light"]) .switch {
+  --thumb-shift: 0px;
+  --sun-color: var(--color-surface);
+  --moon-color: var(--color-text-dim);
+}
+
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 12px;
+  background: var(--color-surface-sunk);
+}
+
+.option {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--color-text-dim);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  transition: color 250ms ease, background-color 250ms ease;
+}
+
+.option:hover {
+  color: var(--color-text);
+}
+
+:global([data-theme-choice="system"]) .option[data-choice="system"],
+:global([data-theme-choice="light"]) .option[data-choice="light"],
+:global([data-theme-choice="dark"]) .option[data-choice="dark"] {
+  color: var(--color-surface);
+  background: var(--color-text);
+}
+
+@media (prefers-color-scheme: light) {
+  :global(:root:not([data-theme])) .switch {
+    --thumb-shift: 0px;
+    --sun-color: var(--color-surface);
+    --moon-color: var(--color-text-dim);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .thumb,
+  .sun,
+  .moon,
+  .option {
+    transition: none;
+  }
+}

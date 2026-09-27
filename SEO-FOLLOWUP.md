@@ -14,11 +14,36 @@ serve the site themselves.
 
 Vercel → project → Settings → Domains.
 
+The app also includes host-based 308 redirects in `next.config.ts` as a fallback
+after deployment. Configure the dashboard redirects below too: Vercel's existing
+apex `.store` → `www.simnetiq.store` redirect runs before application routing and
+otherwise adds an unnecessary hop.
+
 **`simnetiq.com`:** Production, no redirect. This is the serving host.
 
 **`www.simnetiq.com`, `simnetiq.store`, and `www.simnetiq.store`:**
 - Redirect to Another Domain: **`simnetiq.com`**
 - Status code: **308 Permanent Redirect** (not 307)
+
+### Cloudflare and migration follow-through
+
+- For the `.com` apex and `www` web DNS records, use the exact target shown in
+  Vercel's Domains panel and set Cloudflare proxy status to **DNS only** (grey
+  cloud). Do not change MX or email authentication records. Cloudflare can remain
+  the DNS provider; Vercel handles the web traffic and TLS.
+- Keep `.store` registered, its DNS working, and both old hosts attached to Vercel
+  for at least one year after the move. Letting it expire next month also ends
+  the redirects.
+- Verify both domains in Google Search Console, submit
+  `https://simnetiq.com/sitemap.xml`, and use **Change of Address** on the old
+  property after the live redirects pass verification. Monitor indexing and
+  traffic on both properties.
+- Check a nested page and query string, not only the homepage:
+  `https://www.simnetiq.store/he/services?utm_source=migration` must redirect to
+  `https://simnetiq.com/he/services?utm_source=migration`.
+
+References: [Vercel + Cloudflare](https://vercel.com/kb/guide/cloudflare-with-vercel),
+[Google site moves](https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes).
 
 `simnetiqstore.vercel.app` needs no action. It's Vercel's built-in deployment
 URL, can't be removed, and isn't primary. It serves 200 but its canonical already

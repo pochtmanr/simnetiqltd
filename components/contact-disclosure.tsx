@@ -38,7 +38,7 @@ export function ContactDisclosure({
         onClick={toggle}
         aria-expanded={open}
         aria-controls="contact-form-panel"
-        className="w-full flex items-center justify-between gap-4 py-4 text-left text-mono uppercase tracking-[0.18em] text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors focus:outline-none focus-visible:text-[var(--color-text)]"
+        className="w-full flex items-center justify-between gap-4 py-5 text-start text-sm font-medium text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors focus-visible:text-[var(--color-text)]"
       >
         <span>{heading}</span>
         <span
@@ -64,6 +64,7 @@ export function ContactDisclosure({
         id="contact-form-panel"
         role="region"
         aria-hidden={!open}
+        inert={!open}
         initial={false}
         animate={{
           height: open ? "auto" : 0,

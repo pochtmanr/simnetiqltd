@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Panel } from "@/components/panel";
+import { useRef } from "react";
+import { useInView } from "motion/react";
 import { ScrollReveal } from "@/components/scroll-reveal";
+import { CardArrow } from "@/components/sections/card-arrow";
+import styles from "@/components/sections/landing-sections.module.css";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
 
-type ServiceCode = "mobile" | "web" | "aiAutomation";
+import { ServiceFigure, type ServiceCode } from "@/components/service-figure";
 
 type ServiceCardProps = {
   code: ServiceCode;
@@ -29,6 +32,9 @@ export function ServiceCard({
   cta,
   className = "",
 }: ServiceCardProps) {
+  const figureRef = useRef<HTMLDivElement>(null);
+  const figureVisible = useInView(figureRef);
+
   return (
     <ScrollReveal
       delay={index * 80}
@@ -39,32 +45,21 @@ export function ServiceCard({
     >
       <Link
         href={localizePath(locale, href)}
-        className="block h-full"
+        className={styles.serviceCard}
         onClick={() => track("service_card_click", { service: code, locale })}
       >
-        <Panel innerClassName="p-6 lg:p-7 h-full" hover>
-          <div className="flex h-full">
-            <div className="relative z-[1] flex flex-1 min-w-0 flex-col">
-              <h3 className="text-title mb-3">{title}</h3>
-              <p className="text-body mb-6 flex-1">{body}</p>
-              {/* Mobile: pre-filled, full-width — no hover state available */}
-              <span className="md:hidden text-label-sm !text-white flex w-full items-center justify-between gap-1.5 px-3 py-2.5 bg-[var(--color-primary)]">
-                <span>{cta}</span>
-                <span aria-hidden="true" className="rtl-mirror">
-                  →
-                </span>
-              </span>
-              {/* Desktop: slide-fill on hover */}
-              <span className="cta-fill text-label-sm self-start hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
-                <span>{cta}</span>
-                <span aria-hidden="true" className="rtl-mirror">
-                  →
-                </span>
-              </span>
-            </div>
-
+        <div className={styles.serviceTop} aria-hidden="true">
+          <span className={styles.number}>0{index + 1}</span>
+          <div ref={figureRef} className={styles.dotFigureMotion} data-visible={figureVisible} style={{ animationDelay: `${index * -2}s` }}>
+            <ServiceFigure code={code} className={styles.dotFigure} />
           </div>
-        </Panel>
+        </div>
+        <h3 className="text-title mb-4">{title}</h3>
+        <p className="text-body mb-8 flex-1">{body}</p>
+        <span className={styles.serviceCta}>
+          <span>{cta}</span>
+          <CardArrow />
+        </span>
       </Link>
     </ScrollReveal>
   );

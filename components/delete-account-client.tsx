@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Panel, SpecRow } from "@/components/panel";
+import { PageHeader } from "@/components/page-header";
+import styles from "./document-pages.module.css";
+import formStyles from "./contact-section.module.css";
 
 export type DeleteAccountDict = {
   eyebrow: string;
@@ -60,138 +62,55 @@ export function DeleteAccountClient({ dict }: { dict: DeleteAccountDict }) {
 
   return (
     <>
-      {/* Hero */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-14 lg:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-8">
-              <p className="text-label text-[var(--color-text-dim)]">
-                {dict.eyebrow}
-              </p>
-              <h1 className="text-display mt-6">{dict.title}</h1>
-              <p className="text-body mt-6 max-w-lg">{dict.body}</p>
+      <PageHeader title={dict.title} description={dict.body} />
+      <div className={styles.container}>
+        <div className={`${styles.layout} ${styles.accountLayout}`}>
+          <div>
+            <div className={styles.warning}>
+              <h2 className={styles.subheading}>{dict.warningLabel}</h2>
+              <p className={styles.body}>{dict.warningBody}</p>
             </div>
-            <div className="lg:col-span-4">
-              <Panel innerClassName="p-5">
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
-                  {dict.operationLabel}
-                </p>
-                <SpecRow label={dict.statusCode} value={dict.statusCodeValue} />
-                <SpecRow label={dict.retention} value={dict.retentionValue} />
-                <SpecRow label={dict.scope} value={dict.scopeValue} />
-                <SpecRow label={dict.reversible} value={dict.reversibleValue} />
-              </Panel>
-            </div>
+            <h2 className={styles.subheading}>{dict.willBeDeletedLabel}</h2>
+            <ul className={`${styles.list} ${styles.body}`}>
+              {dict.willBeDeletedItems.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+            <h2 className={styles.label}>{dict.operationLabel}</h2>
+            <dl className={styles.facts}>
+              <div><dt>{dict.statusCode}</dt><dd>{dict.statusCodeValue}</dd></div>
+              <div><dt>{dict.retention}</dt><dd>{dict.retentionValue}</dd></div>
+              <div><dt>{dict.scope}</dt><dd>{dict.scopeValue}</dd></div>
+              <div><dt>{dict.reversible}</dt><dd>{dict.reversibleValue}</dd></div>
+            </dl>
           </div>
+          <section className={styles.formPanel} aria-labelledby="deletion-request-title">
+            <h2 id="deletion-request-title" className={styles.heading}>{dict.requestLabel}</h2>
+            <form onSubmit={handleSubmit} className={styles.form} aria-busy={status === "sending"}>
+              <div>
+                <label htmlFor="deletion-email" className={styles.formLabel}>{dict.accountEmail}</label>
+                <input id="deletion-email" type="email" autoComplete="email" required
+                  aria-describedby="deletion-email-hint" value={form.identity}
+                  onChange={(e) => setForm({ ...form, identity: e.target.value })}
+                  className={formStyles.input} placeholder="your-email@example.com" />
+                <p id="deletion-email-hint" className={`${styles.note} ${styles.hint}`}>{dict.accountEmailHint}</p>
+              </div>
+              <div>
+                <label htmlFor="deletion-reason" className={styles.formLabel}>{dict.reasonLabel}</label>
+                <textarea id="deletion-reason" rows={4} value={form.reason}
+                  onChange={(e) => setForm({ ...form, reason: e.target.value })}
+                  className={formStyles.input} placeholder={dict.reasonPlaceholder} />
+              </div>
+              <div className={styles.actions}>
+                <button type="submit" disabled={status === "sending"} className="btn-primary">
+                  {status === "sending" ? dict.processing : dict.submit}
+                </button>
+                <button type="button" onClick={() => window.history.back()} className="btn-secondary">{dict.cancel}</button>
+              </div>
+              {status === "sent" && <p role="status" className={styles.note}>{dict.successMessage}</p>}
+              {status === "error" && <p role="alert" className={`${styles.note} ${styles.error}`}>{dict.errorMessage}</p>}
+            </form>
+          </section>
         </div>
-      </section>
-
-      {/* Warning vs Form */}
-      <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-5 space-y-6">
-              <Panel
-                innerClassName="p-6 lg:p-8 border-t-2 border-[var(--color-error)]"
-              >
-                <p className="text-label-sm text-[var(--color-error)] mb-3 tracking-[0.2em]">
-                  {dict.warningLabel}
-                </p>
-                <p className="text-body">{dict.warningBody}</p>
-              </Panel>
-
-              <Panel innerClassName="p-6 lg:p-8">
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  {dict.willBeDeletedLabel}
-                </p>
-                <ul className="space-y-2">
-                  {dict.willBeDeletedItems.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-body"
-                    >
-                      <span className="mt-[9px] inline-block w-2 h-[1px] bg-[var(--color-text-dim)] flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Panel>
-            </div>
-
-            <div className="lg:col-span-7">
-              <Panel innerClassName="p-6 lg:p-10" corners>
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-6">
-                  {dict.requestLabel}
-                </p>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="text-label-sm text-[var(--color-text-faint)] block mb-2">
-                      {dict.accountEmail}
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={form.identity}
-                      onChange={(e) =>
-                        setForm({ ...form, identity: e.target.value })
-                      }
-                      className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors"
-                      placeholder="your-email@example.com"
-                    />
-                    <p className="text-label-sm text-[var(--color-text-faint)] mt-2">
-                      {dict.accountEmailHint}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-label-sm text-[var(--color-text-faint)] block mb-2">
-                      {dict.reasonLabel}
-                    </label>
-                    <textarea
-                      rows={4}
-                      value={form.reason}
-                      onChange={(e) =>
-                        setForm({ ...form, reason: e.target.value })
-                      }
-                      className="w-full bg-transparent border-b border-[var(--color-border-strong)] px-0 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] transition-colors resize-none"
-                      placeholder={dict.reasonPlaceholder}
-                    />
-                  </div>
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    <button
-                      type="submit"
-                      disabled={status === "sending"}
-                      className="btn-primary"
-                    >
-                      {status === "sending" ? dict.processing : dict.submit}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => window.history.back()}
-                      className="btn-secondary"
-                    >
-                      {dict.cancel}
-                    </button>
-                  </div>
-                  {status === "sent" && (
-                    <div className="border-l border-[var(--color-border-strong)] pl-4 py-2">
-                      <p className="text-label-sm text-[var(--color-text-dim)]">
-                        {dict.successMessage}
-                      </p>
-                    </div>
-                  )}
-                  {status === "error" && (
-                    <div className="border-l-2 border-[var(--color-error)] pl-4 py-2">
-                      <p className="text-label-sm text-[var(--color-error)]">
-                        {dict.errorMessage}
-                      </p>
-                    </div>
-                  )}
-                </form>
-              </Panel>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </>
   );
 }

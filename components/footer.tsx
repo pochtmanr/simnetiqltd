@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Logo } from "@/components/logo";
+import styles from "@/components/footer.module.css";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { localizePath, type Locale } from "@/lib/i18n";
 
 type FooterDict = {
@@ -39,118 +40,104 @@ const social = [
 export function Footer({
   locale,
   dict,
+  themeLabels,
 }: {
   locale: Locale;
   dict: FooterDict;
+  themeLabels: { toggle: string; light: string; dark: string };
 }) {
   const year = new Date().getFullYear();
 
-  type FooterLine = { text: string; strong?: boolean; href?: string };
-  const columns: { label: string; lines: FooterLine[] }[] = [
-    {
-      label: dict.columns.entity,
-      lines: [
-        { text: dict.lines.company, strong: true },
-        { text: dict.lines.companyNumber },
-        { text: dict.lines.jurisdiction },
-      ],
-    },
-    {
-      label: dict.columns.documents,
-      lines: [
-        { text: dict.lines.about, href: localizePath(locale, "/about"), strong: true },
-        { text: dict.lines.howWeWork, href: localizePath(locale, "/how-we-work") },
-        { text: dict.lines.legal, href: localizePath(locale, "/legal") },
-        { text: dict.lines.privacy, href: localizePath(locale, "/privacy-policy") },
-        { text: dict.lines.deletion, href: localizePath(locale, "/delete-account") },
-      ],
-    },
-    {
-      label: dict.columns.contact,
-      lines: [
-        { text: "support@simnetiq.com", strong: true },
-        { text: dict.lines.studio },
-        { text: dict.lines.hours },
-      ],
-    },
+  const documents = [
+    { text: dict.lines.about, href: "/about" },
+    { text: dict.lines.howWeWork, href: "/how-we-work" },
+    { text: dict.lines.legal, href: "/legal" },
+    { text: dict.lines.privacy, href: "/privacy-policy" },
+    { text: dict.lines.deletion, href: "/delete-account" },
   ];
 
   return (
-    <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
-      <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-16 pb-10">
-        {/* Top: identity block + metadata columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          <div className="lg:col-span-5">
-            <div className="flex items-center gap-3">
-              <Logo className="h-5 w-auto" />
-              <span className="text-label text-[var(--color-text)]">SIMNETIQ</span>
-            </div>
-            <p className="text-display mt-8" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-              {dict.tagline}
-            </p>
-            <p className="text-body mt-6 max-w-md">{dict.body}</p>
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        <div className={styles.intro}>
+          <div>
+            <p className={styles.tagline}>{dict.tagline}</p>
+            <p className={styles.description}>{dict.body}</p>
           </div>
+          <a className={styles.email} href="mailto:support@simnetiq.com" aria-label="support@simnetiq.com" dir="ltr">
+            <span>support@<br />simnetiq.com</span>
+            <Arrow />
+          </a>
+        </div>
 
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
-            {columns.map((col) => (
-              <div key={col.label}>
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  {col.label}
-                </p>
-                <div className="space-y-1.5">
-                  {col.lines.map((line, i) => {
-                    if (line.href) {
-                      return (
-                        <Link
-                          key={i}
-                          href={line.href}
-                          className={
-                            line.strong
-                              ? "block text-body-strong text-[var(--color-text)] hover:text-[var(--color-text)] transition-colors"
-                              : "block text-body hover:text-[var(--color-text)] transition-colors"
-                          }
-                        >
-                          {line.text}
-                        </Link>
-                      );
-                    }
-                    return (
-                      <p
-                        key={i}
-                        className={
-                          line.strong
-                            ? "text-body-strong text-[var(--color-text)]"
-                            : "text-body"
-                        }
-                      >
-                        {line.text}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
+        <div className={styles.directory}>
+          <div>
+            <h2 className={styles.heading}>{dict.columns.entity}</h2>
+            <div className={styles.company}>
+              <p>{dict.lines.company}</p>
+              <p>{dict.lines.companyNumber}</p>
+              <p>{dict.lines.jurisdiction}</p>
+            </div>
+          </div>
+          <nav aria-label={dict.columns.documents}>
+            <h2 className={styles.heading}>{dict.columns.documents}</h2>
+            <ul className={styles.links}>
+              {documents.map((item) => (
+                <li key={item.href}>
+                  <Link href={localizePath(locale, item.href)}>{item.text}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className={styles.contact}>
+            <h2 className={styles.heading}>{dict.columns.contact}</h2>
+            <div className={styles.company}>
+              <p>{dict.lines.studio}</p>
+              <p>{dict.lines.hours}</p>
+            </div>
+            <ul className={styles.socials}>
+              {social.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                    <SocialIcon name={item.label} />
+                    <span>{item.label}</span>
+                    <Arrow />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Bottom rail */}
-        <div className="mt-14 pt-6 border-t border-[var(--color-border)] flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
-          <p className="text-mono">{dict.bottom.replace("{year}", String(year))}</p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            {social.map((s) => (
-              <Link
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-label-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)] transition-colors"
-              >
-                {s.label}
-              </Link>
-            ))}
-          </div>
+        <Link href={localizePath(locale, "/")} className={styles.wordmark} aria-label="Simnetiq" dir="ltr">
+          {Array.from("SIMNETIQ").map((letter, index) => <span key={index} aria-hidden="true">{letter}</span>)}
+        </Link>
+
+        <div className={styles.baseline}>
+          <p>{dict.bottom.replace("{year}", String(year))}</p>
+          <ThemeToggle labels={{ generic: themeLabels.toggle, cycleToLight: themeLabels.light, cycleToDark: themeLabels.dark }} />
         </div>
       </div>
     </footer>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true">
+      <path d="M5 19 19 5M5 5h14v14" />
+    </svg>
+  );
+}
+
+function SocialIcon({ name }: { name: string }) {
+  return name === "Instagram" ? (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  ) : (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3.5 9h3v12h-3V9Zm6 0h3v1.6c.8-1.2 2-1.9 3.6-1.9 3.1 0 4.4 1.9 4.4 5.4V21h-3v-6.2c0-2.1-.7-3.1-2.3-3.1-1.7 0-2.7 1.2-2.7 3.2V21h-3V9Z" />
+    </svg>
   );
 }

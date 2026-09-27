@@ -4,6 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Panel, SpecRow } from "@/components/panel";
 import { ProjectLogo } from "@/components/project-logo";
+import { CardArrow } from "@/components/sections/card-arrow";
+import { TechnologyChips } from "@/components/technology-chips";
+import styles from "@/components/case-study.module.css";
 import {
   BreadcrumbSchema,
   CaseStudyArticleSchema,
@@ -108,7 +111,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
 
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
+        <div className={`${styles.hero} mx-auto max-w-[1440px] px-6 lg:px-12`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <ProjectLogo
@@ -117,10 +120,10 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
                 size={56}
                 className="mb-6"
               />
-              <p className="text-label text-[var(--color-primary-glow)]">
+              <p className={styles.eyebrow}>
                 {c.eyebrow}
               </p>
-              <h1 className="text-display mt-6">
+              <h1 className="text-display mt-5">
                 <span className="block">{c.titleLine1}</span>
                 <span className="block text-[var(--color-text-dim)]">
                   {c.titleLine2}
@@ -128,7 +131,13 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
               </h1>
             </div>
             <div className="lg:col-span-5 self-end">
-              <p className="text-body max-w-md">{c.body}</p>
+              <p className="text-body max-w-lg">{c.body}</p>
+              <div className="mt-6">
+                <TechnologyChips
+                  technologies={["Next.js", "React", "Supabase", "Tailwind"]}
+                  label={dict.projects.stack}
+                />
+              </div>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   href={PROJECT_URL}
@@ -137,16 +146,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
                   className="btn-primary"
                 >
                   {c.visitSite}
-                  <span>↗</span>
-                </Link>
-                <Link
-                  href={PROJECT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary"
-                >
-                  {c.tryFree}
-                  <span>↗</span>
+                  <CardArrow external />
                 </Link>
               </div>
             </div>
@@ -159,7 +159,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             <div className="lg:col-span-8">
-              <Panel innerClassName="p-2" corners>
+              <div className={styles.imageFrame}>
                 <div className="relative w-full overflow-hidden aspect-[16/9]">
                   <Image
                     src="/visapassage-header.avif"
@@ -170,26 +170,20 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
                     className="object-cover"
                   />
                 </div>
-              </Panel>
-              <div className="mt-4 text-mono text-[var(--color-text-faint)]">
+              </div>
+              <div className={`${styles.caption} mt-4`}>
                 {c.figureCaption}
               </div>
             </div>
 
             <div className="lg:col-span-4">
               <Panel innerClassName="p-6 lg:p-8" corners>
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
+                <p className={`${styles.sectionLabel} mb-4`}>
                   {c.specsLabel}
                 </p>
                 {c.specs.map((row) => (
                   <SpecRow key={row.label} label={row.label} value={row.value} />
                 ))}
-                <div className="mt-6 flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                  <span className="text-mono text-[var(--color-primary-glow)]">
-                    {dict.common.liveNominal}
-                  </span>
-                </div>
               </Panel>
             </div>
           </div>
@@ -201,7 +195,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-4">
-              <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <p className={`${styles.sectionLabel} mb-5`}>
                 {c.aboutEyebrow}
               </p>
               <h2 className="text-headline">
@@ -226,29 +220,30 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
       <section className="border-t border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="mb-10">
-            <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+            <p className={`${styles.sectionLabel} mb-5`}>
               {c.insideEyebrow}
             </p>
             <h2 className="text-headline">{c.insideTitle}</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
             {c.insideItems.map((item, i) => (
-              <Panel key={item.label} innerClassName="p-8" corners>
-                <div className="flex items-center justify-between mb-8">
+              <Panel key={item.label} innerClassName={styles.featureCard}>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
                   <span className="text-mono text-[var(--color-text-faint)]">
                     0{i + 1} · {c.insideEntry}
                   </span>
                   <span className="text-label-sm text-[var(--color-primary-glow)]">
-                    {item.label.toUpperCase()}
+                    {item.label}
                   </span>
                 </div>
                 <div
                   className="mb-6"
                   style={{
-                    fontSize: "clamp(2.25rem, 3.6vw, 3rem)",
+                    fontSize: "clamp(1.5rem, 2.4vw, 2rem)",
+                    overflowWrap: "anywhere",
                     fontWeight: 500,
                     letterSpacing: "-0.025em",
-                    lineHeight: 1,
+                    lineHeight: 1.15,
                     color: "var(--color-text)",
                   }}
                 >
@@ -266,7 +261,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
             <div className="lg:col-span-4">
-              <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <p className={`${styles.sectionLabel} mb-5`}>
                 {c.designEyebrow}
               </p>
               <h2 className="text-headline">
@@ -282,7 +277,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
           </div>
 
           {/* Palette swatches */}
-          <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
+          <p className={`${styles.sectionLabel} mb-4`}>
             {c.paletteLabel}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
@@ -323,8 +318,8 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {c.typographyCards.map((card, i) => (
-              <Panel key={card.code} innerClassName="p-8 lg:p-10" corners>
-                <div className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <Panel key={card.code} innerClassName="p-6 lg:p-8">
+                <div className={`${styles.sectionLabel} mb-5`}>
                   {card.code}
                 </div>
                 <div
@@ -363,7 +358,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8">
             <div className="lg:col-span-4">
-              <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <p className={`${styles.sectionLabel} mb-5`}>
                 {c.taxonomyEyebrow}
               </p>
               <h2 className="text-headline">
@@ -392,13 +387,13 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
                   <span className="col-span-2 md:col-span-1 text-mono text-[var(--color-text-faint)]">
                     {t.id}
                   </span>
-                  <span className="col-span-7 md:col-span-8 text-title">
+                  <span className="col-span-10 md:col-span-7 text-title">
                     {t.name}
                   </span>
-                  <span className="col-span-3 md:col-span-3 flex justify-end items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                    <span className="text-label-sm text-[var(--color-primary-glow)]">
-                      {c.live}
+                  <span className={`${styles.status} col-span-12 md:col-span-4 md:justify-self-end`}>
+                    <span aria-hidden="true" className="inline-block w-1.5 h-1.5 shrink-0 rounded-full bg-current" />
+                    <span>
+                      {dict.common.inDevNominal}
                     </span>
                   </span>
                 </li>
@@ -414,7 +409,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
           <Panel innerClassName="p-8 lg:p-14" corners>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
               <div className="lg:col-span-8">
-                <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+                <p className={`${styles.sectionLabel} mb-5`}>
                   {c.ctaEyebrow}
                 </p>
                 <h2 className="text-headline">{c.ctaTitle}</h2>
@@ -429,7 +424,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
                     className="btn-primary"
                   >
                     {c.ctaPrimary}
-                    <span>↗</span>
+                    <CardArrow external />
                   </Link>
                 </div>
               </div>

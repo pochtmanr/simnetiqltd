@@ -72,7 +72,6 @@ const professionalService = {
   logo: `${BASE_URL}/icon-512.png`,
   description:
     "End-to-end product studio: iOS, Android, macOS, Windows and Linux applications; Next.js web platforms; LLM and AI integration; VPN and network infrastructure.",
-  priceRange: "£££",
   address: {
     "@type": "PostalAddress",
     streetAddress: "2 Frederick Street, Kings Cross",
@@ -149,14 +148,6 @@ const professionalService = {
               serviceType: "Mobile app development",
               url: `${BASE_URL}/en/services/mobile-desktop`,
             },
-            priceCurrency: "GBP",
-            price: "1000",
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              priceCurrency: "GBP",
-              price: "1000",
-              minPrice: "1000",
-            },
           },
         ],
       },
@@ -172,8 +163,6 @@ const professionalService = {
               serviceType: "AI engineering and automation",
               url: `${BASE_URL}/en/services/ai-automation`,
             },
-            priceCurrency: "GBP",
-            price: "1500",
           },
         ],
       },
@@ -189,8 +178,6 @@ const professionalService = {
               serviceType: "Web development",
               url: `${BASE_URL}/en/services/web-platforms`,
             },
-            priceCurrency: "GBP",
-            price: "800",
           },
         ],
       },
@@ -319,7 +306,7 @@ type ServiceSchemaInput = {
   slug: string;
   summary: string;
   serviceTypes?: string[];
-  priceFrom?: string;
+  locale?: Locale;
 };
 
 export function ServiceSchema({
@@ -327,9 +314,9 @@ export function ServiceSchema({
   slug,
   summary,
   serviceTypes,
-  priceFrom,
+  locale = "en",
 }: ServiceSchemaInput) {
-  const url = `${BASE_URL}/en/services/${slug}`;
+  const url = `${BASE_URL}/${locale}/services/${slug}`;
   const data = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -337,6 +324,7 @@ export function ServiceSchema({
     name: `${name} — Simnetiq`,
     description: summary,
     url,
+    inLanguage: locale,
     provider: { "@id": `${BASE_URL}/#organization` },
     areaServed: [
       { "@type": "Country", name: "United Kingdom" },
@@ -345,14 +333,6 @@ export function ServiceSchema({
       { "@type": "Place", name: "Worldwide" },
     ],
     serviceType: serviceTypes,
-    offers: priceFrom
-      ? {
-          "@type": "Offer",
-          priceCurrency: "GBP",
-          price: priceFrom,
-          url,
-        }
-      : undefined,
   };
   return (
     <script

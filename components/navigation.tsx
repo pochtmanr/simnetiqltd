@@ -7,8 +7,9 @@ import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { NavMegaMenu, type NavMegaItem } from "@/components/nav-mega-menu";
+import styles from "@/components/site-chrome.module.css";
 import { track } from "@/lib/analytics";
-import { localizePath, type Locale } from "@/lib/i18n";
+import { localizePath, LOCALE_LABELS, type Locale } from "@/lib/i18n";
 
 type ProjectKey = "argus" | "physics" | "doppler" | "creator" | "delivery";
 type CapKey = "mobile" | "web" | "aiAutomation";
@@ -94,6 +95,10 @@ export function Navigation({
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsRef = useRef<HTMLDivElement>(null);
+  const settingsButton = useRef<HTMLButtonElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [openDropdown, setOpenDropdown] = useState<DropdownName | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<DropdownName | null>(
     null,
@@ -108,6 +113,7 @@ export function Navigation({
   if (lastPathname !== pathname) {
     setLastPathname(pathname);
     setOpen(false);
+    setSettingsOpen(false);
     setOpenDropdown(null);
     setMobileExpanded(null);
   }
@@ -126,6 +132,7 @@ export function Navigation({
   const scheduleOpen = useCallback(
     (name: DropdownName) => {
       clearTimers();
+      setSettingsOpen(false);
       openTimer.current = window.setTimeout(() => {
         setOpenDropdown((prev) => {
           if (prev !== name) {
@@ -151,6 +158,31 @@ export function Navigation({
   }, [clearTimers]);
 
   useEffect(() => () => clearTimers(), [clearTimers]);
+
+  useEffect(() => {
+    if (!settingsOpen) return;
+    const dismiss = (event: PointerEvent) => {
+      if (!settingsRef.current?.contains(event.target as Node)) setSettingsOpen(false);
+    };
+    document.addEventListener("pointerdown", dismiss);
+    return () => document.removeEventListener("pointerdown", dismiss);
+  }, [settingsOpen]);
+
+  useEffect(() => {
+    if (!open) return;
+    const query = window.matchMedia("(max-width: 767px)");
+    const previous = document.body.style.overflow;
+    const sync = () => {
+      document.body.style.overflow = query.matches ? "hidden" : previous;
+      if (!query.matches) setOpen(false);
+    };
+    sync();
+    query.addEventListener("change", sync);
+    return () => {
+      document.body.style.overflow = previous;
+      query.removeEventListener("change", sync);
+    };
+  }, [open]);
 
   const links = linkDefs.map((l) => ({
     ...l,
@@ -195,7 +227,34 @@ export function Navigation({
        inherit the overlay's white text. */
     <header
       data-site-header=""
-      data-menu-open={openDropdown || open ? "" : undefined}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) closeNow();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Tab" && open) {
+          const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')).filter((element) => element.getClientRects().length > 0);
+          const first = controls[0];
+          const last = controls[controls.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }
+        if (event.key === "Escape") {
+          closeNow();
+          if (settingsOpen) {
+            setSettingsOpen(false);
+            settingsButton.current?.focus();
+          } else {
+            setOpen(false);
+            menuButton.current?.focus();
+          }
+        }
+      }}
+      data-menu-open={openDropdown || open || settingsOpen ? "" : undefined}
       className={`sticky top-0 z-40 bg-[var(--color-bg)] ${
         openDropdown
           ? ""
@@ -214,23 +273,24 @@ export function Navigation({
           <div className="flex h-16 items-center justify-between gap-6">
             <Link
               href={localizePath(locale, "/")}
-              className="flex items-center gap-3"
+              className={`flex items-center gap-3 ${styles.brand}`}
             >
               <Logo className="h-5 w-auto" />
               <span className="text-label text-[var(--color-text)]">SIMNETIQ</span>
             </Link>
 
             {/* Desktop links */}
-            <div className="hidden md:flex items-center gap-10">
+            <div className="hidden md:flex items-center gap-2 lg:gap-4">
               {links.map((link) => {
-                const active = pathname === link.href;
+                const active = pathname === link.href || (link.key !== "home" && pathname.startsWith(`${link.href}/`));
                 const isDropdown = !!link.dropdown;
                 const isOpen = isDropdown && openDropdown === link.dropdown;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="group relative inline-flex items-center gap-2 text-label-sm transition-colors duration-150"
+                    className={`group relative inline-flex items-center gap-2 ${styles.navLink}`}
+                    aria-current={active ? "page" : undefined}
                     aria-haspopup={isDropdown ? "true" : undefined}
                     aria-expanded={isDropdown ? isOpen : undefined}
                     aria-controls={
@@ -255,7 +315,7 @@ export function Navigation({
                           : "text-[var(--color-text-dim)] group-hover:text-[var(--color-text)]"
                       }
                     >
-                      {link.label.toUpperCase()}
+                      {link.label}
                     </span>
                     {isDropdown && (
                       <span
@@ -276,24 +336,44 @@ export function Navigation({
               })}
             </div>
 
-            {/* Desktop right cluster: language + theme */}
-            <div className="hidden md:flex items-center gap-5">
-              <LocaleSwitcher current={locale} />
-              <ThemeToggle
-                labels={{
-                  cycleToLight: dict.themes.light,
-                  cycleToDark: dict.themes.dark,
-                  cycleToSystem: dict.themes.auto,
-                  generic: dict.themes.toggle,
-                }}
-              />
-            </div>
+            <div className="flex items-center gap-3">
+              <div ref={settingsRef} className={styles.settings} onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setSettingsOpen(false);
+              }}>
+                <button
+                  ref={settingsButton}
+                  type="button"
+                  className={styles.settingsToggle}
+                  aria-label={`${dict.languageLabel} / ${dict.themeLabel}`}
+                  aria-expanded={settingsOpen}
+                  aria-controls="navigation-settings"
+                  onClick={() => { closeNow(); setSettingsOpen(!settingsOpen); }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><path d="M3 12h18" />
+                  </svg>
+                  <span className="hidden md:inline">{LOCALE_LABELS[locale]}</span>
+                  <span aria-hidden="true">{settingsOpen ? "−" : "+"}</span>
+                </button>
+                {settingsOpen && (
+                  <div id="navigation-settings" className={styles.settingsPanel}>
+                    <p className={styles.settingsLabel}>{dict.languageLabel}</p>
+                    <LocaleSwitcher current={locale} label={dict.languageLabel} className={styles.languageOptions} />
+                    <div className={styles.themeSettings}>
+                      <p className={styles.settingsLabel}>{dict.themeLabel}</p>
+                      <ThemeToggle variant="segmented" className={styles.themeOptions} labels={{ auto: dict.themes.auto, dark: dict.themes.dark, light: dict.themes.light, generic: dict.themes.toggle }} />
+                    </div>
+                  </div>
+                )}
+              </div>
 
             {/* Mobile hamburger */}
             <button
-              onClick={() => setOpen(!open)}
-              className="md:hidden flex flex-col gap-[5px] p-2"
+              ref={menuButton}
+              onClick={() => { setOpen(!open); setSettingsOpen(false); }}
+              className={`md:hidden flex flex-col gap-[5px] ${styles.menuToggle}`}
               aria-label="Toggle menu"
+              aria-controls="mobile-navigation"
               aria-expanded={open}
             >
               <span
@@ -312,6 +392,7 @@ export function Navigation({
                 }`}
               />
             </button>
+            </div>
           </div>
         </div>
 
@@ -339,10 +420,10 @@ export function Navigation({
 
         {/* Mobile menu */}
         {open && (
-          <div className="md:hidden border-t border-[var(--color-border)]">
-            <div className="px-6 py-5 flex flex-col gap-4">
+          <div id="mobile-navigation" className={`md:hidden border-t border-[var(--color-border)] ${styles.mobileMenu}`}>
+            <div className={styles.mobileInner}>
               {links.map((link) => {
-                const active = pathname === link.href;
+                const active = pathname === link.href || (link.key !== "home" && pathname.startsWith(`${link.href}/`));
                 const isDropdown = !!link.dropdown;
                 const expanded =
                   isDropdown && mobileExpanded === link.dropdown;
@@ -353,21 +434,22 @@ export function Navigation({
                       ? serviceItems
                       : [];
                 return (
-                  <div key={link.href} className="flex flex-col">
+                  <div key={link.href} className={styles.mobileRow}>
                     <div className="flex items-center justify-between">
                       <Link
                         href={link.href}
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-3 flex-1"
+                        className={`flex items-center gap-3 flex-1 ${styles.mobileLink}`}
+                        aria-current={active ? "page" : undefined}
                       >
                         <span
-                          className={`text-label ${
+                          className={`${styles.mobileLabel} ${
                             active
                               ? "text-[var(--color-text)]"
                               : "text-[var(--color-text-dim)]"
                           }`}
                         >
-                          {link.label.toUpperCase()}
+                          {link.label}
                         </span>
                       </Link>
                       {isDropdown ? (
@@ -380,7 +462,7 @@ export function Navigation({
                           }
                           aria-expanded={expanded}
                           aria-label={`Toggle ${link.label}`}
-                          className="p-2 -mr-2 text-[var(--color-text-faint)]"
+                          className="flex h-11 w-11 items-center justify-center text-[var(--color-text-dim)]"
                         >
                           <span
                             aria-hidden="true"
@@ -424,7 +506,7 @@ export function Navigation({
                                 }
                                 setOpen(false);
                               }}
-                              className="flex items-baseline gap-3"
+                              className="flex min-h-11 items-center gap-3"
                             >
                               <span className="text-body-strong text-[var(--color-text)]">
                                 {item.title}
@@ -443,28 +525,7 @@ export function Navigation({
                   </div>
                 );
               })}
-              <div className="mt-2 pt-5 border-t border-[var(--color-border)] space-y-5">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="text-label-sm text-[var(--color-text-faint)]">
-                    ▸ {dict.languageLabel}
-                  </p>
-                  <LocaleSwitcher current={locale} variant="segmented" />
-                </div>
-                <div className="flex items-center justify-between gap-4">
-                  <p className="text-label-sm text-[var(--color-text-faint)]">
-                    ▸ {dict.themeLabel}
-                  </p>
-                  <ThemeToggle
-                    variant="segmented"
-                    labels={{
-                      auto: dict.themes.auto,
-                      dark: dict.themes.dark,
-                      light: dict.themes.light,
-                      generic: dict.themes.toggle,
-                    }}
-                  />
-                </div>
-              </div>
+              <div className={styles.mobileWordmark} aria-hidden="true">SIMNETIQ</div>
             </div>
           </div>
         )}

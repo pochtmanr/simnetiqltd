@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { PageHeader } from "@/components/page-header";
+import { CardArrow } from "@/components/sections/card-arrow";
+import styles from "@/components/about-page.module.css";
 import { notFound } from "next/navigation";
-import { Panel, SpecRow } from "@/components/panel";
 import { BreadcrumbSchema } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
-import { isLocale, type Locale } from "@/lib/i18n";
+import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
 
@@ -40,6 +43,8 @@ export async function generateMetadata({
   });
 }
 
+const PRINCIPLE_IMAGES = ["/why-people.avif", "/why-scope.avif", "/why-ownership.avif", "/why-support.avif"];
+
 type Params = Promise<{ locale: string }>;
 
 export default async function AboutPage({ params }: { params: Params }) {
@@ -53,165 +58,83 @@ export default async function AboutPage({ params }: { params: Params }) {
     <>
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: `${SITE_URL}/${locale}` },
-          { name: "About", url: `${SITE_URL}/${locale}/about` },
+          { name: dict.nav.links.home, url: `${SITE_URL}/${locale}` },
+          { name: dict.footer.lines.about, url: `${SITE_URL}/${locale}/about` },
         ]}
       />
-      {/* Hero */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-8">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {a.eyebrow}
-              </p>
-              <h1 className="text-display mt-6">{a.title}</h1>
-              <p className="text-body mt-8 max-w-xl">{a.body}</p>
-            </div>
-            <div className="lg:col-span-4 flex flex-col gap-5">
-              <Panel innerClassName="p-6">
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
-                  {a.founded}
-                </p>
-                <p className="text-display" style={{ fontSize: "clamp(2.25rem, 4vw, 3.25rem)" }}>
-                  2025
-                </p>
-              </Panel>
-              <Panel innerClassName="p-6">
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-3">
-                  {a.operations}
-                </p>
-                <p className="text-headline">{a.operationsValue}</p>
-                <p className="text-mono mt-2">51.5074°N · 0.1278°W</p>
-              </Panel>
-            </div>
+      <PageHeader title={a.title} description={a.body} />
+      <div className={styles.container}>
+        <dl className={styles.facts}>
+          <div><dt>{a.founded}</dt><dd>2025</dd></div>
+          <div><dt>{a.operations}</dt><dd>{a.operationsValue}</dd></div>
+        </dl>
+      </div>
+
+      <section className={`${styles.container} ${styles.section}`}>
+        <div className={styles.sectionHeader}>
+          <h2>{a.personnel.title}</h2>
+          <p className="text-body">{a.personnel.body}</p>
+        </div>
+        <div className={styles.team}>
+          {a.team.map((member) => (
+            <article key={member.name} className={styles.member}>
+              <p className={styles.role}>{member.role}</p>
+              <h3>{member.name}</h3>
+              <p className="text-body">{member.meta}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={`${styles.container} ${styles.section}`}>
+        <div className={styles.sectionHeader}>
+          <h2>{a.principles.title}</h2>
+          <p className="text-body">{a.principles.body}</p>
+        </div>
+        <div className={styles.principles}>
+          {a.values.map((value, index) => (
+            <article key={value.code} className={styles.principle}>
+              <div className={styles.principleImage}>
+                <Image src={PRINCIPLE_IMAGES[index]} alt="" fill sizes="(min-width: 1024px) 23vw, (min-width: 640px) 45vw, 100vw" />
+              </div>
+              <h3>{value.title}</h3>
+              <p className="text-body">{value.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={`${styles.container} ${styles.section}`}>
+        <div className={styles.company}>
+          <div className={styles.sectionHeader}>
+            <h2>{a.registration.title}</h2>
+            <p className="text-body">{a.registration.body}</p>
+          </div>
+          <dl className={styles.details}>
+            <div><dt>{a.registration.legalName}</dt><dd>Simnetiq Ltd</dd></div>
+            <div><dt>{a.registration.companyNo}</dt><dd>16861177</dd></div>
+            <div><dt>{a.registration.jurisdiction}</dt><dd>{a.registration.jurisdictionValue}</dd></div>
+            <div><dt>{a.registration.vatStatus}</dt><dd>{a.registration.vatStatusValue}</dd></div>
+          </dl>
+          <div className={styles.address}>
+            <h3>{a.registration.registeredAddress}</h3>
+            <address dir="ltr">Simnetiq Ltd<br />2 Frederick Street<br />Kings Cross<br />London, WC1X 0ND<br />United Kingdom</address>
+            <Link href="https://maps.google.com/?q=2+Frederick+Street+Kings+Cross+London+WC1X+0ND" target="_blank" rel="noopener noreferrer" className={styles.textLink}>
+              {dict.common.viewOnGoogleMaps.replace(/\s*[→↗]\s*$/, "")}<CardArrow external />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Team */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {a.personnel.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{a.personnel.title}</h2>
-              <p className="text-body mt-6 max-w-sm">{a.personnel.body}</p>
+      <section className={`${styles.container} ${styles.section}`}>
+        <div className={styles.contact}>
+          <h2>{a.cta.title}</h2>
+          <div>
+            <p className="text-body">{a.cta.body}</p>
+            <div className={styles.actions}>
+              <Link href={localizePath(locale, "/#contact")} className="btn-primary">{a.cta.contact}<CardArrow /></Link>
+              <Link href={localizePath(locale, "/projects")} className="btn-secondary">{a.cta.work}<CardArrow /></Link>
             </div>
-            <div className="lg:col-span-8">
-              <Panel innerClassName="p-6 lg:p-8" corners>
-                {a.team.map((member, i) => (
-                  <div
-                    key={member.name}
-                    className={`grid grid-cols-12 gap-4 py-5 ${
-                      i < a.team.length - 1
-                        ? "border-b border-[var(--color-border)]"
-                        : ""
-                    }`}
-                  >
-                    <div className="col-span-2 sm:col-span-1 text-mono text-[var(--color-text-faint)]">
-                      0{i + 1}
-                    </div>
-                    <div className="col-span-10 sm:col-span-5 text-body">
-                      {member.role}
-                    </div>
-                    <div className="col-span-6 sm:col-span-3 text-label-sm text-[var(--color-text)]">
-                      {member.name}
-                    </div>
-                    <div className="col-span-6 sm:col-span-3 text-mono text-right">
-                      {member.meta}
-                    </div>
-                  </div>
-                ))}
-              </Panel>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Registration */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {a.registration.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{a.registration.title}</h2>
-              <p className="text-body mt-6 max-w-sm">{a.registration.body}</p>
-            </div>
-            <div className="lg:col-span-4">
-              <Panel innerClassName="p-6 lg:p-8">
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-5">
-                  {a.registration.companyDetails}
-                </p>
-                <SpecRow label={a.registration.legalName} value="Simnetiq Ltd" />
-                <SpecRow label={a.registration.companyNo} value="16861177" />
-                <SpecRow
-                  label={a.registration.jurisdiction}
-                  value={a.registration.jurisdictionValue}
-                />
-                <SpecRow
-                  label={a.registration.vatStatus}
-                  value={a.registration.vatStatusValue}
-                />
-              </Panel>
-            </div>
-            <div className="lg:col-span-4">
-              <Panel innerClassName="p-6 lg:p-8">
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-5">
-                  {a.registration.registeredAddress}
-                </p>
-                <p className="text-body-strong text-[var(--color-text)]">
-                  Simnetiq Ltd
-                </p>
-                <p className="text-body mt-2">2 Frederick Street</p>
-                <p className="text-body">Kings Cross</p>
-                <p className="text-body">London, WC1X 0ND</p>
-                <p className="text-body">United Kingdom</p>
-                <Link
-                  href="https://maps.google.com/?q=2+Frederick+Street+Kings+Cross+London+WC1X+0ND"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-6 text-label-sm text-[var(--color-primary-glow)] hover:text-[var(--color-text)] transition-colors"
-                >
-                  {dict.common.viewOnGoogleMaps} <span>→</span>
-                </Link>
-              </Panel>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {a.principles.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{a.principles.title}</h2>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7 self-end">
-              <p className="text-body max-w-md">{a.principles.body}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-            {a.values.map((value) => (
-              <Panel key={value.code} innerClassName="p-6 h-full">
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-mono text-[var(--color-text-faint)]">
-                    {value.code}
-                  </span>
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
-                </div>
-                <h3 className="text-title mb-3">{value.title}</h3>
-                <p className="text-body">{value.text}</p>
-              </Panel>
-            ))}
           </div>
         </div>
       </section>

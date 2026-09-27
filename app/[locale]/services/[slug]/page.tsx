@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Panel, SpecRow } from "@/components/panel";
+import { ServiceFigure } from "@/components/service-figure";
+import { TechnologyChips } from "@/components/technology-chips";
+import { CardArrow } from "@/components/sections/card-arrow";
+import { ServiceWork, ServiceContact } from "@/components/service-page-sections";
+import styles from "@/components/services.module.css";
 import {
   getAllServiceSlugs,
   getService,
@@ -12,7 +16,6 @@ import {
   BreadcrumbSchema,
   ServiceSchema,
 } from "@/components/structured-data";
-import { ServiceHeroVisual } from "@/components/service-hero-visual";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
@@ -122,12 +125,6 @@ const slugKeywords: Record<string, string[]> = {
   ],
 };
 
-const slugPriceFrom: Record<string, string> = {
-  "mobile-desktop": "1000",
-  "ai-automation": "1500",
-  "web-platforms": "800",
-};
-
 export function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({ slug }));
 }
@@ -143,7 +140,7 @@ export async function generateMetadata({
   if (!service) return { title: "Service" };
   const url = `${SITE_URL}/${locale}/services/${slug}`;
   const fullTitle = getServiceFullTitle(service);
-  const title = `${fullTitle} — ${service.tagline}`;
+  const title = fullTitle;
   const description = service.summary;
   return {
     title,
@@ -191,17 +188,13 @@ export default async function ServicePage({
   const dict = await getDictionary(locale);
   const sd = dict.serviceDetail;
   const services = getServices(locale);
-  const currentIndex = services.findIndex((s) => s.slug === slug);
-  const next = services[(currentIndex + 1) % services.length];
-  const prev =
-    services[(currentIndex - 1 + services.length) % services.length];
 
   return (
     <>
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: `${SITE_URL}/${locale}` },
-          { name: "Services", url: `${SITE_URL}/${locale}/services` },
+          { name: dict.nav.links.home, url: `${SITE_URL}/${locale}` },
+          { name: dict.nav.links.services, url: `${SITE_URL}/${locale}/services` },
           {
             name: getServiceFullTitle(service),
             url: `${SITE_URL}/${locale}/services/${service.slug}`,
@@ -213,286 +206,50 @@ export default async function ServicePage({
         slug={service.slug}
         summary={service.summary}
         serviceTypes={slugKeywords[service.slug]}
-        priceFrom={slugPriceFrom[service.slug]}
+        locale={locale}
       />
-      {/* ============================================================ */}
-      {/* HERO BAND — case-study style (7/5)                            */}
-      {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-7">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {service.code}
-              </p>
-              <h1 className="text-display mt-6">
-                <span className="block">{service.title}</span>
-                <span className="block text-[var(--color-text-dim)]">
-                  {service.titleSecondary}
-                </span>
-              </h1>
+      <section className={styles.hero}>
+        <div className={`${styles.container} ${styles.heroGrid}`}>
+          <div>
+            <h1 className={styles.title}>{service.title}{" "}<span>{service.titleSecondary}</span></h1>
+            <p className={styles.intro}>{service.summary}</p>
+            <div className={styles.actions}>
+              <Link href={localizePath(locale, "/#contact")} className="btn-primary">{sd.hero.ctaContact}<CardArrow /></Link>
+              <Link href="#scope" className="btn-secondary">{sd.hero.ctaScope}<CardArrow /></Link>
             </div>
-            <div className="lg:col-span-5 self-end">
-              <p className="text-body max-w-md">{service.summary}</p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link href="#pricing" className="btn-primary">
-                  {sd.hero.ctaPricing}
-                  <span aria-hidden="true" className="btn-arrow">→</span>
-                </Link>
-                <Link
-                  href={localizePath(locale, "/#contact")}
-                  className="btn-secondary"
-                >
-                  {sd.hero.ctaContact}
-                  <span aria-hidden="true" className="btn-arrow">→</span>
-                </Link>
-              </div>
-            </div>
+          </div>
+          <ServiceFigure animated code={slug === "mobile-desktop" ? "mobile" : slug === "web-platforms" ? "web" : "aiAutomation"} className={styles.figure} />
+        </div>
+      </section>
+      <section id="scope" className={`${styles.section} scroll-mt-24`}>
+        <div className={`${styles.container} ${styles.scopeLayout}`}>
+          <div className={styles.scopeIntro}>
+            <h2 className="text-headline">{sd.scope.title}</h2>
+            <p className="text-body">{service.positioning}</p>
+          </div>
+          <div className={styles.scopeGrid}>
+            {service.services.map((item, i) => <article key={item.code} className={styles.scopeItem}>
+              <span className={styles.number}>0{i + 1}</span>
+              <h3>{item.title}</h3>
+              <p className="text-body">{item.text}</p>
+            </article>)}
           </div>
         </div>
       </section>
-
-      {/* ============================================================ */}
-      {/* HERO VISUAL + SPECS BAND (8/4, 16:9 SVG)                      */}
-      {/* ============================================================ */}
-      <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-            <div className="lg:col-span-8">
-              <Panel innerClassName="p-2" corners>
-                <div className="relative w-full overflow-hidden aspect-[16/9]">
-                  <ServiceHeroVisual slug={slug} />
-                </div>
-              </Panel>
-              <div className="mt-4 text-mono text-[var(--color-text-faint)]">
-                {sd.hero.figureCaptionTpl
-                  .replace("{code}", service.code)
-                  .replace("{title}", getServiceFullTitle(service))}
-              </div>
-            </div>
-
-            <div className="lg:col-span-4">
-              <Panel innerClassName="p-6 lg:p-8" corners>
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
-                  {sd.hero.specsLabel}
-                </p>
-                {service.meta.map((m) => (
-                  <SpecRow key={m.label} label={m.label} value={m.value} />
-                ))}
-                <div className="mt-6 flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                  <span className="text-mono text-[var(--color-primary-glow)]">
-                    {sd.hero.liveLabel}
-                  </span>
-                </div>
-              </Panel>
-            </div>
+      <ServiceWork locale={locale} dict={dict} slug={slug} />
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <h2 className="text-headline">{sd.stack.title}</h2>
+            <p className="text-body">{sd.stack.body}</p>
           </div>
+          {service.techStack.map((group) => <div key={group.label} className={styles.stackRow}>
+            <h3>{group.label}</h3>
+            <TechnologyChips technologies={group.items} label={group.label} />
+          </div>)}
         </div>
       </section>
-
-      {/* ============================================================ */}
-      {/* POSITIONING + SERVICES                                        */}
-      {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {sd.scope.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{sd.scope.title}</h2>
-              <p className="text-body mt-6 max-w-sm">
-                {service.positioning}
-              </p>
-            </div>
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {service.services.map((item) => (
-                <Panel key={item.code} innerClassName="p-6 h-full" corners>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-mono text-[var(--color-text-faint)]">
-                      {item.code}
-                    </span>
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
-                  </div>
-                  <h3 className="text-title mb-3">{item.title}</h3>
-                  <p className="text-body">{item.text}</p>
-                </Panel>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/* TECH STACK                                                    */}
-      {/* ============================================================ */}
-      <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
-            <div className="lg:col-span-4">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {sd.stack.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{sd.stack.title}</h2>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7 self-end">
-              <p className="text-body max-w-md">{sd.stack.body}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-            {service.techStack.map((group, i) => (
-              <Panel key={group.label} innerClassName="p-6 h-full">
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-mono text-[var(--color-text-faint)]">
-                    T-{String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-label-sm text-[var(--color-text-dim)]">
-                    {sd.stack.itemsCount.replace(
-                      "{count}",
-                      String(group.items.length)
-                    )}
-                  </span>
-                </div>
-                <h3 className="text-title mb-5">{group.label}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className="text-label-sm text-[var(--color-text-dim)] border border-[var(--color-border-strong)] px-3 py-1.5"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </Panel>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/* PRICING                                                       */}
-      {/* ============================================================ */}
-      <section id="pricing" className="scroll-mt-24 border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10">
-            <div className="lg:col-span-5">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {sd.pricing.eyebrow}
-              </p>
-              <h2 className="text-headline mt-5">{sd.pricing.title}</h2>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7 self-end">
-              <p className="text-body max-w-md">{sd.pricing.body}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-            {service.pricing.map((tier, i) => (
-              <Panel
-                key={tier.name}
-                innerClassName={`p-6 lg:p-8 h-full flex flex-col ${
-                  tier.highlighted
-                    ? "border-t-2 border-[var(--color-primary)]"
-                    : ""
-                }`}
-                corners
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-mono text-[var(--color-text-faint)]">
-                    {sd.pricing.tier.replace("{n}", String(i + 1))}
-                  </span>
-                  {tier.highlighted && (
-                    <span className="text-label-sm text-[var(--color-primary-glow)]">
-                      {sd.pricing.recommended}
-                    </span>
-                  )}
-                </div>
-                <h3 className="text-title mb-2">{tier.name}</h3>
-                <p className="text-display mt-2" style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)" }}>
-                  {tier.price}
-                </p>
-                {tier.sub && (
-                  <p className="text-mono mt-2">{tier.sub}</p>
-                )}
-                <p className="text-body mt-4">{tier.blurb}</p>
-                <div className="border-t border-[var(--color-border)] mt-6 pt-6 flex-1">
-                  <ul className="space-y-3">
-                    {tier.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-3 text-body">
-                        <span className="mt-[9px] inline-block w-2 h-[1px] bg-[var(--color-primary-glow)] flex-shrink-0" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Link
-                  href={localizePath(locale, "/#contact")}
-                  className={
-                    tier.highlighted ? "btn-primary mt-8" : "btn-secondary mt-8"
-                  }
-                >
-                  {sd.pricing.requestBrief}
-                  <span aria-hidden="true" className="btn-arrow">→</span>
-                </Link>
-              </Panel>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/* CTA + NAVIGATION                                              */}
-      {/* ============================================================ */}
-      <section>
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-            <div className="lg:col-span-7">
-              <p className="text-label text-[var(--color-primary-glow)]">
-                {sd.cta.eyebrow}
-              </p>
-              <h2 className="text-display mt-5" style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)" }}>
-                {sd.cta.title}
-              </h2>
-              <p className="text-body mt-6 max-w-lg">{sd.cta.body}</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link href={localizePath(locale, "/#contact")} className="btn-primary">
-                  {sd.cta.sendBrief}
-                  <span aria-hidden="true" className="btn-arrow">→</span>
-                </Link>
-                <Link href={localizePath(locale, "/projects")} className="btn-secondary">
-                  {sd.cta.viewDeployments}
-                  <span aria-hidden="true" className="btn-arrow">→</span>
-                </Link>
-              </div>
-            </div>
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <Link href={localizePath(locale, `/services/${prev.slug}`)} className="block group">
-                <Panel innerClassName="p-5 h-full">
-                  <p className="text-mono text-[var(--color-text-faint)] mb-3">
-                    {sd.cta.previous}
-                  </p>
-                  <p className="text-label-sm text-[var(--color-text-dim)] mb-1">
-                    {prev.code}
-                  </p>
-                  <p className="text-title">{getServiceFullTitle(prev)}</p>
-                </Panel>
-              </Link>
-              <Link href={localizePath(locale, `/services/${next.slug}`)} className="block group">
-                <Panel innerClassName="p-5 h-full text-right">
-                  <p className="text-mono text-[var(--color-text-faint)] mb-3">
-                    {sd.cta.next}
-                  </p>
-                  <p className="text-label-sm text-[var(--color-text-dim)] mb-1">
-                    {next.code}
-                  </p>
-                  <p className="text-title">{getServiceFullTitle(next)}</p>
-                </Panel>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ServiceContact locale={locale} dict={dict} related={services.filter((item) => item.slug !== slug)} />
     </>
   );
 }

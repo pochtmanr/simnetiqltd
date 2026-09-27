@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Panel } from "@/components/panel";
+import { CardArrow } from "./card-arrow";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { track } from "@/lib/analytics";
 import { localizePath, type Locale } from "@/lib/i18n";
+import styles from "./landing-sections.module.css";
 
 type WhyKey = "people" | "scope" | "ownership" | "support";
 
@@ -52,17 +53,13 @@ export function WhyUsSection({
 }) {
   const w = dict.whyUs;
   return (
-    <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-14">
-        <div className="lg:col-span-4">
-          <h2 className="text-headline">{w.title}</h2>
-        </div>
-        <div className="lg:col-span-6 lg:col-start-7 self-end">
-          <p className="text-body max-w-md">{w.body}</p>
-        </div>
-      </div>
+    <div className={styles.section}>
+      <header className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>{w.title}</h2>
+        <p className={styles.sectionDescription}>{w.body}</p>
+      </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-6">
+      <div className={styles.whyGrid}>
         {CARDS.map((card, i) => {
           const meta = w.items[card.key];
           return (
@@ -76,13 +73,12 @@ export function WhyUsSection({
             >
               <Link
                 href={localizePath(locale, card.href)}
-                className="block h-full"
+                className={styles.whyCard}
                 onClick={() =>
                   track("why_card_click", { card: card.key, locale })
                 }
               >
-                <Panel innerClassName="h-full flex flex-col" hover>
-                  <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <div className={`${styles.whyImage} relative aspect-[4/3] w-full overflow-hidden`}>
                     <Image
                       src={card.image}
                       alt=""
@@ -91,25 +87,14 @@ export function WhyUsSection({
                       className="object-cover"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-6 lg:p-7">
+                  <div className={styles.whyContent}>
                     <h3 className="text-title mb-3">{meta.title}</h3>
                     <p className="text-body mb-6 flex-1">{meta.text}</p>
-                    {/* Mobile: pre-filled, full-width — no hover state available */}
-                    <span className="md:hidden text-label-sm !text-white flex w-full items-center justify-between gap-1.5 px-3 py-2.5 bg-[var(--color-primary)]">
+                    <span className={styles.serviceCta}>
                       <span>{w.cta}</span>
-                      <span aria-hidden="true" className="rtl-mirror">
-                        →
-                      </span>
-                    </span>
-                    {/* Desktop: slide-fill on hover */}
-                    <span className="cta-fill text-label-sm self-start hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-[var(--color-text-dim)] transition-colors duration-300 group-hover:text-white">
-                      <span>{w.cta}</span>
-                      <span aria-hidden="true" className="rtl-mirror">
-                        →
-                      </span>
+                      <CardArrow />
                     </span>
                   </div>
-                </Panel>
               </Link>
             </ScrollReveal>
           );

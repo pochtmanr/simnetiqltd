@@ -24,10 +24,12 @@ export function LocaleSwitcher({
   current,
   className = "",
   variant = "compact",
+  label = "Language",
 }: {
   current: Locale;
   className?: string;
   variant?: Variant;
+  label?: string;
 }) {
   const pathname = usePathname() ?? "/";
 
@@ -46,7 +48,7 @@ export function LocaleSwitcher({
       <div
         className={`inline-flex items-stretch border border-[var(--color-border-strong)] ${className}`}
         role="group"
-        aria-label="Language"
+        aria-label={label}
       >
         {LOCALES.map((locale) => {
           const active = locale === current;
@@ -86,7 +88,7 @@ export function LocaleSwitcher({
     <div
       className={`inline-flex items-center font-[family-name:var(--font-mono)] text-[11px] tracking-[0.18em] uppercase ${className}`}
       role="group"
-      aria-label="Language"
+      aria-label={label}
     >
       {LOCALES.map((locale, i) => {
         const active = locale === current;

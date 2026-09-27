@@ -42,8 +42,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/services", freq: "monthly", priority: 0.9 },
     { path: "/how-we-work", freq: "monthly", priority: 0.85 },
     { path: "/about", freq: "monthly", priority: 0.8 },
-    { path: "/privacy-policy", freq: "yearly", priority: 0.4 },
-    { path: "/delete-account", freq: "yearly", priority: 0.4 },
   ];
 
   const staticEntries: MetadataRoute.Sitemap = localizedRoutes.flatMap((r) =>

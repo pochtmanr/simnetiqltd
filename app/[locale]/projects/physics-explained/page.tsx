@@ -4,6 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Panel, SpecRow } from "@/components/panel";
 import { ProjectLogo } from "@/components/project-logo";
+import { TechnologyChips } from "@/components/technology-chips";
+import { CardArrow } from "@/components/sections/card-arrow";
+import styles from "@/components/case-study.module.css";
 import {
   BreadcrumbSchema,
   CaseStudyArticleSchema,
@@ -108,7 +111,7 @@ export default async function PhysicsExplainedPage({
 
       {/* Hero */}
       <section className="border-b border-[var(--color-border)]">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 pt-12 lg:pt-20 pb-16 lg:pb-24">
+        <div className={`mx-auto max-w-[1440px] px-6 lg:px-12 ${styles.hero}`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">
               <ProjectLogo
@@ -117,10 +120,10 @@ export default async function PhysicsExplainedPage({
                 size={56}
                 className="mb-6"
               />
-              <p className="text-label text-[var(--color-primary-glow)]">
+              <p className={styles.eyebrow}>
                 {c.eyebrow}
               </p>
-              <h1 className="text-display mt-6">
+              <h1 className="text-display mt-4">
                 <span className="block">{c.titleLine1}</span>
                 <span className="block text-[var(--color-text-dim)]">
                   {c.titleLine2}
@@ -129,6 +132,12 @@ export default async function PhysicsExplainedPage({
             </div>
             <div className="lg:col-span-5 self-end">
               <p className="text-body max-w-md">{c.body}</p>
+              <div className="mt-5">
+                <TechnologyChips
+                  technologies={["Next.js", "WebGL", "MathJax", "odex"]}
+                  label={dict.projects.stack}
+                />
+              </div>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   href="https://physics.it.com/"
@@ -137,7 +146,7 @@ export default async function PhysicsExplainedPage({
                   className="btn-primary"
                 >
                   {c.visitSite}
-                  <span>↗</span>
+                  <CardArrow external />
                 </Link>
                 <Link
                   href="https://physics.it.com/ask"
@@ -146,7 +155,7 @@ export default async function PhysicsExplainedPage({
                   className="btn-secondary"
                 >
                   {c.tryAsk}
-                  <span>↗</span>
+                  <CardArrow external />
                 </Link>
               </div>
             </div>
@@ -159,34 +168,34 @@ export default async function PhysicsExplainedPage({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-12 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
             <div className="lg:col-span-8">
-              <Panel innerClassName="p-2" corners>
+              <div className={styles.imageFrame}>
                 <div className="relative w-full overflow-hidden aspect-[16/9]">
                   <Image
                     src="/physics-header.avif"
                     alt="Physics.explained — interactive visualisation of classical mechanics"
                     fill
-                    priority
+                    preload
                     sizes="(min-width: 1440px) 896px, (min-width: 1024px) 66vw, 100vw"
                     className="object-cover"
                   />
                 </div>
-              </Panel>
-              <div className="mt-4 text-mono text-[var(--color-text-faint)]">
+              </div>
+              <div className={styles.caption}>
                 {c.figureCaption}
               </div>
             </div>
 
             <div className="lg:col-span-4">
               <Panel innerClassName="p-6 lg:p-8" corners>
-                <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
+                <p className={`${styles.sectionLabel} mb-4`}>
                   {c.specsLabel}
                 </p>
                 {c.specs.map((row) => (
                   <SpecRow key={row.label} label={row.label} value={row.value} />
                 ))}
-                <div className="mt-6 flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                  <span className="text-mono text-[var(--color-primary-glow)]">
+                <div className={`mt-6 ${styles.status}`}>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
+                  <span className="text-sm font-medium text-[var(--color-text-muted)]">
                     {dict.common.liveNominal}
                   </span>
                 </div>
@@ -201,7 +210,7 @@ export default async function PhysicsExplainedPage({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-4">
-              <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <p className={`${styles.sectionLabel} mb-4`}>
                 {c.aboutEyebrow}
               </p>
               <h2 className="text-headline">
@@ -228,7 +237,7 @@ export default async function PhysicsExplainedPage({
           <Panel innerClassName="p-8 lg:p-14 relative overflow-hidden" corners>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
               <div className="lg:col-span-7">
-                <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+                <p className={`${styles.sectionLabel} mb-4`}>
                   {c.askEyebrow}
                 </p>
                 <h2 className="text-headline mb-6">
@@ -241,15 +250,15 @@ export default async function PhysicsExplainedPage({
                 <p className="text-body max-w-xl">{c.askBody2}</p>
               </div>
               <div className="lg:col-span-5">
-                <div className="border-l border-[var(--color-border)] lg:pl-10">
-                  <p className="text-label-sm text-[var(--color-text-faint)] mb-5">
+                <div className="border-s border-[var(--color-border)] ps-5 lg:ps-8">
+                  <p className={`${styles.sectionLabel} mb-4`}>
                     {c.askExamplesLabel}
                   </p>
                   <ul className="space-y-3">
                     {c.askExamples.map((q) => (
                       <li
                         key={q}
-                        className="text-body border-l-2 border-[var(--color-primary-glow)] pl-4"
+                        className="text-body border-s-2 border-[var(--color-border)] ps-4"
                       >
                         {q}
                       </li>
@@ -263,7 +272,7 @@ export default async function PhysicsExplainedPage({
                       className="btn-primary"
                     >
                       {c.askOpen}
-                      <span>↗</span>
+                      <CardArrow external />
                     </Link>
                   </div>
                 </div>
@@ -277,20 +286,20 @@ export default async function PhysicsExplainedPage({
       <section className="border-t border-[var(--color-border)]">
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="mb-10">
-            <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+            <p className={`${styles.sectionLabel} mb-4`}>
               {c.insideEyebrow}
             </p>
             <h2 className="text-headline">{c.insideTitle}</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {c.insideItems.map((item, i) => (
-              <Panel key={item.label} innerClassName="p-8" corners>
-                <div className="flex items-center justify-between mb-8">
-                  <span className="text-mono text-[var(--color-text-faint)]">
+              <Panel key={item.label} innerClassName="p-6" corners>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-6">
+                  <span className="text-xs text-[var(--color-text-dim)]">
                     0{i + 1} · {c.insideEntry}
                   </span>
-                  <span className="text-label-sm text-[var(--color-primary-glow)]">
-                    {item.label.toUpperCase()}
+                  <span className="text-sm font-medium text-[var(--color-text-muted)]">
+                    {item.label}
                   </span>
                 </div>
                 <div
@@ -317,7 +326,7 @@ export default async function PhysicsExplainedPage({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
             <div className="lg:col-span-4">
-              <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <p className={`${styles.sectionLabel} mb-4`}>
                 {c.designEyebrow}
               </p>
               <h2 className="text-headline">
@@ -333,7 +342,7 @@ export default async function PhysicsExplainedPage({
           </div>
 
           {/* Palette swatches */}
-          <p className="text-label-sm text-[var(--color-text-faint)] mb-4">
+          <p className={`${styles.sectionLabel} mb-4`}>
             {c.paletteLabel}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -369,13 +378,13 @@ export default async function PhysicsExplainedPage({
           </div>
 
           {/* Typography pairing */}
-          <p className="text-label-sm text-[var(--color-text-faint)] mt-12 mb-4">
+          <p className={`${styles.sectionLabel} mt-10 mb-4`}>
             {c.typographyLabel}
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {c.typographyCards.map((card, i) => (
-              <Panel key={card.code} innerClassName="p-8 lg:p-10" corners>
-                <div className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <Panel key={card.code} innerClassName="p-6 lg:p-8" corners>
+                <div className={`${styles.sectionLabel} mb-4`}>
                   {card.code}
                 </div>
                 <div
@@ -417,7 +426,7 @@ export default async function PhysicsExplainedPage({
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8">
             <div className="lg:col-span-4">
-              <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+              <p className={`${styles.sectionLabel} mb-4`}>
                 {c.branchesEyebrow}
               </p>
               <h2 className="text-headline">
@@ -450,8 +459,8 @@ export default async function PhysicsExplainedPage({
                     {b.name}
                   </span>
                   <span className="col-span-3 md:col-span-3 flex justify-end items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)] pulse-dot" />
-                    <span className="text-label-sm text-[var(--color-primary-glow)]">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary-glow)]" />
+                    <span className="text-sm font-medium text-[var(--color-text-muted)]">
                       {c.live}
                     </span>
                   </span>
@@ -468,7 +477,7 @@ export default async function PhysicsExplainedPage({
           <Panel innerClassName="p-8 lg:p-14" corners>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
               <div className="lg:col-span-8">
-                <p className="text-mono text-[var(--color-primary-glow)] mb-6">
+                <p className={`${styles.sectionLabel} mb-4`}>
                   {c.ctaEyebrow}
                 </p>
                 <h2 className="text-headline">{c.ctaTitle}</h2>
@@ -483,7 +492,7 @@ export default async function PhysicsExplainedPage({
                     className="btn-primary"
                   >
                     {c.visitSite}
-                    <span>↗</span>
+                    <CardArrow external />
                   </Link>
                   <Link
                     href="https://physics.it.com/ask"
@@ -492,7 +501,7 @@ export default async function PhysicsExplainedPage({
                     className="btn-secondary"
                   >
                     {c.tryAsk}
-                    <span>↗</span>
+                    <CardArrow external />
                   </Link>
                 </div>
               </div>

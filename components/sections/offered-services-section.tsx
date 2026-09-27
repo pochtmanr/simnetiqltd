@@ -2,6 +2,7 @@
 
 import { ServiceCard } from "@/components/service-card";
 import type { Locale } from "@/lib/i18n";
+import styles from "./landing-sections.module.css";
 
 type CapKey = "mobile" | "web" | "aiAutomation";
 
@@ -35,17 +36,13 @@ export function OfferedServicesSection({
   const subtitle = caps.subtitle ?? caps.body;
   return (
     <>
-      <div className="mx-auto max-w-[1440px] px-6 lg:px-12 py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-14">
-          <div className="lg:col-span-4">
-            <h2 className="text-headline">{caps.title}</h2>
-          </div>
-          <div className="lg:col-span-6 lg:col-start-7 self-end">
-            <p className="text-body max-w-md">{subtitle}</p>
-          </div>
-        </div>
+      <div className={styles.section}>
+        <header className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>{caps.title}</h2>
+          <p className={styles.sectionDescription}>{subtitle}</p>
+        </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+        <div className={styles.serviceGrid}>
           {CARDS.map((card, i) => {
             const meta = caps.items[card.key];
             return (

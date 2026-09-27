@@ -1,0 +1,357 @@
+.section {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 5rem 1.5rem;
+}
+
+.sectionHeader {
+  max-width: 48rem;
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.sectionTitle {
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.sectionDescription {
+  max-width: 52ch;
+  margin-top: 1rem;
+  color: var(--color-text-dim);
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+
+:global([dir="rtl"]) .sectionTitle,
+:global([dir="rtl"]) .sectionDescription { letter-spacing: normal; }
+
+/* Progressive enhancement: text stays visible without scroll timelines. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sectionTitle {
+      animation: heading-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+@keyframes heading-rise {
+  from { transform: translateY(12px); }
+  to { transform: translateY(0); }
+}
+
+.serviceGrid {
+  display: grid;
+  gap: 2rem;
+}
+
+.serviceCard {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border-strong);
+  transition: border-color var(--motion-fast) ease;
+}
+
+.serviceCard:hover,
+.serviceCard:focus-visible {
+  border-color: var(--color-primary-glow);
+}
+
+.serviceTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.number {
+  color: var(--color-text-faint);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.dotFigure {
+  width: 140px;
+  height: 100px;
+  flex-shrink: 0;
+  fill: var(--color-secondary);
+}
+
+.dotFigureMotion {
+  width: 140px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dotFigureMotion {
+    animation: service-figure-drift 8s ease-in-out infinite alternate;
+    animation-play-state: paused;
+  }
+  .dotFigureMotion[data-visible="true"] { animation-play-state: running; }
+}
+
+@keyframes service-figure-drift {
+  from { transform: translateY(2px) rotate(-4deg); }
+  to { transform: translateY(-3px) rotate(4deg); }
+}
+
+.serviceCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-block: 1rem;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: border-color 200ms ease;
+}
+
+.serviceCta > :last-child {
+  flex-shrink: 0;
+  color: var(--color-primary-glow);
+}
+
+.whyGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem 1.5rem;
+}
+
+.whyCard {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  border-radius: var(--radius-control);
+}
+
+.whyContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-top: 1.5rem;
+}
+
+.whyImage,
+.projectImage {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-media);
+}
+
+.whyImage img,
+.projectImage img {
+  transition: transform var(--motion-standard) ease;
+}
+
+.whyCard:hover .whyImage img,
+.whyCard:focus-visible .whyImage img,
+.projectImage:hover img,
+.projectImage:focus-visible img {
+  transform: scale(1.035);
+}
+
+.whyCard:hover .serviceCta,
+.whyCard:focus-visible .serviceCta,
+.serviceCard:hover .serviceCta,
+.serviceCard:focus-visible .serviceCta {
+  border-color: var(--color-primary-glow);
+}
+
+.workToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 44px;
+  width: fit-content;
+  margin-top: 2.5rem;
+  padding-block: 0.5rem;
+  border-bottom: 1px solid var(--color-border-strong);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.workToggle span { font-size: 1.25rem; font-weight: 400; }
+.workToggle:hover { border-color: var(--color-text); }
+
+.projectGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem 1.5rem;
+}
+
+.projectCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.projectCompact {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.projectImage {
+  display: block;
+  margin-bottom: 1rem;
+  background: var(--color-surface);
+}
+
+.projectMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-dim);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.projectTitle {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.projectTitle:dir(rtl) {
+  letter-spacing: 0;
+}
+
+.projectDescription {
+  flex: 1;
+  margin-bottom: 1.25rem;
+  color: var(--color-text-dim);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.projectFooter { margin-top: auto; }
+
+
+.projectActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.projectUtilities { display: flex; align-items: center; margin-inline-start: auto; }
+
+.projectVisit,
+.projectStore,
+.projectCaseStudy {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-control);
+  color: var(--color-text-dim);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: color var(--motion-fast) ease;
+}
+
+.projectVisit,
+.projectStore { width: 44px; }
+.projectCaseStudy { color: var(--color-text); }
+.projectCaseStudy:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.projectVisit:hover,
+.projectStore:hover { color: var(--color-text); background: var(--color-surface-raised); }
+
+.workToggle:focus-visible,
+.projectCaseStudy:focus-visible,
+.projectVisit:focus-visible,
+.projectStore:focus-visible {
+  outline: 2px solid var(--color-text-dim);
+  outline-offset: 4px;
+}
+
+.accolade {
+  display: inline-flex;
+  max-width: fit-content;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .whyGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .serviceGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .projectGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 7rem 3rem;
+  }
+
+  .projectGrid {
+    gap: 2.5rem 1.5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .projectGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1280px) {
+  .whyGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serviceCard,
+  .serviceCta,
+  .whyImage img,
+  .projectImage img,
+  .projectVisit,
+  .projectStore,
+  .projectCaseStudy {
+    transition: none;
+  }
+
+  .whyCard:hover .whyImage img,
+  .whyCard:focus-visible .whyImage img,
+  .projectImage:hover img,
+  .projectImage:focus-visible img {
+    transform: none;
+  }
+}

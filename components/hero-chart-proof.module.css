@@ -1,0 +1,39 @@
+/* Single-line proof reel; the text itself controls playback. */
+.proof { max-width: 100%; gap: .45rem; }
+.mark { flex-shrink: 0; }
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+.control { min-width: 0; }
+.window {
+  display: grid;
+  align-items: center;
+  height: 1.8em;
+  width: 36ch;
+  max-width: calc(100vw - 5rem);
+  overflow: hidden;
+  perspective: 500px;
+  text-align: start;
+}
+.entry {
+  display: block;
+  white-space: nowrap;
+  transform-origin: center bottom;
+  animation: chart-proof-flip 480ms cubic-bezier(.2,.7,.2,1) both;
+}
+.control:hover { color: var(--color-text); }
+@keyframes chart-proof-flip {
+  from { opacity: 0; transform: translateY(60%) rotateX(-65deg); }
+  to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entry { animation: none; }
+}

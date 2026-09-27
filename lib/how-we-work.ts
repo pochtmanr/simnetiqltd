@@ -24,741 +24,837 @@ const howWeWorkEn: HowWeWork[] = [
   {
     slug: "work-directly-with-engineers",
     code: "W-01",
-    badge: "ACCESS · CONTINUITY · BANDWIDTH",
+    badge: "DIRECT CONTACT · CLEAR RESPONSIBILITY",
     title: "Work directly with",
-    titleSecondary: "Developers",
-    tagline: "The person who scopes your project is the person who writes it.",
-    summary:
-      "Simnetiq is two owner-operators. There is no account manager between you and the code, no sales engineer who disappears after the pitch, and no junior team the work is quietly handed to once the contract is signed. You brief the person who builds it, and you keep briefing that person until the project ships.",
+    titleSecondary: "the engineer",
+    tagline: "The engineer who scopes your project also builds it.",
+    summary: "Work with the people responsible for your project, from the first conversation to launch. Roman handles engineering; David handles contracts, compliance and finance. You know who to ask and who makes each decision.",
     sections: [
       {
-        heading: "Who you actually talk to",
-        body: "Simnetiq Ltd is registered in England and Wales (Companies House 16861177) and run by two directors. Roman Pochtman handles engineering — mobile, web, AI and infrastructure. David Zitomirsky handles contracts, compliance and finance. On a technical call you are talking to Roman. On a contract question you are talking to David. Nobody is relaying messages between you and a delivery team, because there is no delivery team to relay them to.",
+        heading: "Who you work with",
+        body: "Simnetiq Ltd has two directors. Roman Pochtman leads mobile, web, AI and infrastructure development. David Zitomirsky handles contracts, compliance and finance. Technical questions go to Roman; questions about the agreement go to David. Simnetiq is registered in England and Wales, company number 16861177."
       },
       {
-        heading: "Why this changes the estimate",
-        body: "When the person estimating the work is the person who has to do it, the estimate stops being a sales number. There is no incentive to quote optimistically to win the deal and absorb the overrun later, because the overrun lands on the same desk. It also removes an entire category of defect: the requirement that gets lost between the person who heard it on the call and the person who implements it three weeks later.",
+        heading: "How we estimate the work",
+        body: "The engineer who will build the project also reviews the requirements and estimates the work. You can discuss technical choices and trade-offs directly, so the agreed scope reflects what needs to be built."
       },
       {
-        heading: "What this costs you",
-        body: "Bandwidth. Two people cannot run six engagements at once, so we take fewer projects and start dates are a real constraint rather than a formality. If we are booked until a given month, we say so and give you the date. We would rather lose the work than start it and stall.",
+        heading: "Availability and start dates",
+        body: "We take on a limited number of projects at a time. Availability depends on the size of each engagement, and we give you a start date when we scope the work. If we are booked, we tell you before you commit."
       },
       {
-        heading: "The bus factor, stated plainly",
-        body: "A two-person studio carries a continuity risk that a fifty-person agency does not, and pretending otherwise would be dishonest. The mitigation is not a promise that nothing will happen. It is that nothing we hold is unrecoverable if it does: source sits in your repository, infrastructure sits in your accounts, and deployment is documented well enough for an engineer who has never met us to take it over. That is a deliberate design constraint on every engagement, not a courtesy at the end of one.",
-      },
+        heading: "Continuity if we become unavailable",
+        body: "A small team has limited cover when someone is unavailable. Your source code, infrastructure access and deployment documentation stay with you so another engineer can continue. We document the setup throughout the project and flag delays as soon as we know about them."
+      }
     ],
     faq: [
       {
-        q: "Will the work be handed to a junior developer after I sign?",
-        a: "No. There is no junior team to hand it to. Simnetiq has two directors and the engineering is done by the director who scoped your project.",
+        q: "Who will write the code?",
+        a: "The engineer who scoped your project. We do not hand the work to a junior delivery team after the agreement is signed."
       },
       {
-        q: "Can I speak to the engineer before there is a contract?",
-        a: "Yes. Scoping calls are with the engineer, not a salesperson, and they happen before there is anything to sign. That call is also where you find out if we are the wrong fit — we would rather say so early.",
+        q: "Can I speak to the engineer before signing?",
+        a: "Yes. The scoping conversation is with the engineer who would do the work. We discuss your needs and whether we are a suitable fit before you sign anything."
       },
       {
-        q: "How quickly do you respond during a project?",
-        a: "Within one working day for anything routine, and the same day for anything blocking a release. We work UK hours from London and correspond in English, Hebrew or Russian.",
+        q: "How quickly do you respond?",
+        a: "Routine questions receive a response within one working day. Questions blocking a release receive a response the same working day. We work UK hours and communicate in English, Hebrew and Russian."
       },
       {
-        q: "What happens if you become unavailable mid-project?",
-        a: "Your repository, your infrastructure accounts and your deployment documentation are already in your hands, so another engineer can continue without our involvement. We would also tell you early rather than let a deadline pass quietly.",
+        q: "What happens if you become unavailable?",
+        a: "You already have the repository, infrastructure access and deployment documentation. Another engineer can continue from them. We also tell you when availability changes may affect the schedule."
       },
       {
-        q: "How many projects do you run at the same time?",
-        a: "Deliberately few. The exact number depends on the size of each engagement, but the constraint is real and it is why we quote start dates rather than starting immediately.",
-      },
+        q: "How many projects do you take on?",
+        a: "A limited number, depending on the size of each engagement. We confirm a start date during scoping so you can plan around our availability."
+      }
     ],
     meta: [
-      { label: "Team", value: "Two owner-operators" },
-      { label: "Who writes the code", value: "The engineer who scoped it" },
-      { label: "Languages", value: "English · Hebrew · Russian" },
-    ],
+      {
+        label: "Team",
+        value: "Two owner-operators"
+      },
+      {
+        label: "Development",
+        value: "The engineer who scopes the work"
+      },
+      {
+        label: "Languages",
+        value: "English · Hebrew · Russian"
+      }
+    ]
   },
   {
     slug: "fixed-price-scope",
     code: "W-02",
-    badge: "SOW · DELIVERABLES · GBP",
-    title: "Scoped",
-    titleSecondary: "before it starts",
-    tagline: "A signed statement of work, with the price agreed before any code is written.",
-    summary:
-      "Every engagement runs against a signed SOW that names the deliverables, the timeline and the price in GBP. You know what you are buying before you commit to it, and the number you agreed is the number you pay unless you ask for something that was not in the document.",
+    badge: "AGREED SCOPE · MILESTONES · FIXED PRICE",
+    title: "Agree the scope",
+    titleSecondary: "before work starts",
+    tagline: "Deliverables, timeline and price agreed in writing.",
+    summary: "Every engagement starts with a signed statement of work. It sets out what we will deliver, when we will deliver it and the agreed price. You can review what is included and decide before development begins.",
     sections: [
       {
-        heading: "What the SOW actually contains",
-        body: "A deliverable list specific enough to argue with — screens, endpoints, integrations, platforms, and what 'done' means for each. A timeline with the milestones we will be measured against. A fixed price in GBP. What you are responsible for providing, such as App Store accounts, API credentials, brand assets or content. And an explicit list of what is out of scope, which is usually the more useful half of the document.",
+        heading: "What the statement of work covers",
+        body: "The statement of work lists the screens, integrations, platforms and other deliverables, with acceptance criteria for each. It includes milestones, the fixed price in GBP, anything you need to provide and any work excluded from the agreement."
       },
       {
-        heading: "Why not time and materials",
-        body: "Hourly billing puts the risk of a bad estimate entirely on you and gives the supplier no reason to be efficient. Fixed price moves that risk to us, which is the correct place for it: we are the ones who can control it. It also forces the scoping conversation to happen properly at the start, when changing your mind is free, rather than in week seven when it is expensive.",
+        heading: "How a fixed price works",
+        body: "You pay the agreed amount for the agreed scope. If we underestimate that work, the price stays the same. Defining the deliverables before development helps both sides make decisions about priorities and budget."
       },
       {
-        heading: "What happens when the scope changes",
-        body: "Scope changes on most projects, and that is not a problem as long as it is visible. When you ask for something outside the SOW we quote it as a variation — a short written amendment with its own price and its own effect on the timeline — and you decide whether to take it. Nothing gets added silently and then invoiced. If a change is small enough that quoting it would cost more than doing it, we absorb it and say so.",
+        heading: "When you want to change the scope",
+        body: "We describe a requested change in a written amendment with its price and effect on the timeline. You decide whether to proceed before we add it. If we can absorb a small change at no extra cost, we say so."
       },
       {
-        heading: "Where a fixed price does not fit",
-        body: "Some work genuinely cannot be scoped up front: open-ended research, a system whose behaviour nobody can describe yet, or a rescue job on a codebase we have not read. For those we scope a short paid discovery phase first, deliver the findings as something you own and can take elsewhere, and only then quote the build. We would rather sell you a small piece of honest work than a large piece of guesswork.",
+        heading: "When discovery comes first",
+        body: "For research, an unfamiliar codebase or a system with unclear requirements, we first scope a short paid discovery phase. You receive the findings and can use them with us or another developer. We then quote the build based on that work."
       },
       {
-        heading: "Payment and company details",
-        body: "Prices are quoted in GBP. Simnetiq Ltd is registered in England and Wales, company number 16861177, at 2 Frederick Street, Kings Cross, London WC1X 0ND. The company is not currently VAT-registered, so quotes do not carry VAT.",
-      },
+        heading: "Billing and company details",
+        body: "We quote in GBP through Simnetiq Ltd, registered in England and Wales under company number 16861177. The registered address is 2 Frederick Street, Kings Cross, London WC1X 0ND. The company is not currently VAT-registered, so our quotes do not include VAT."
+      }
     ],
     faq: [
       {
-        q: "What does a typical project cost?",
-        a: "It depends on the scope, which is the point of the SOW. As a starting reference, web platform work begins around £800, mobile and desktop work around £1,000, and AI or automation pilots around £1,500. Larger builds are quoted individually. Every figure is confirmed in writing before you commit.",
+        q: "How is the project price decided?",
+        a: "We quote against the agreed deliverables, integrations and platforms. The price is confirmed in writing before you commit."
       },
       {
         q: "How long does a project take?",
-        a: "Most engagements run between two and ten weeks. The SOW names the milestones, so you are not tracking progress by asking how it is going.",
+        a: "Most engagements run for two to ten weeks. Your statement of work includes the timeline and milestones for your project."
       },
       {
-        q: "What if the project takes longer than you estimated?",
-        a: "The price does not change. A fixed price means the estimating risk is ours. What can move the timeline is a change you requested, or a dependency on your side — credentials, content, an App Store account — that arrives late.",
+        q: "What if the work takes longer than estimated?",
+        a: "The agreed price stays the same for the agreed scope. Requested changes or delays in receiving content, credentials or accounts can affect the timeline; we discuss those with you."
       },
       {
-        q: "Can I change my mind about a feature partway through?",
-        a: "Yes. We quote it as a written variation with its own price and timeline effect, and you decide. Changes are never added silently and invoiced later.",
+        q: "Can I change a feature during development?",
+        a: "Yes. We set out the change, price and timeline in writing for your approval before proceeding."
       },
       {
-        q: "Do you work on a retainer?",
-        a: "Only against a defined deliverable. We do not sell open-ended monthly retainers with no stated output — ongoing work is scoped the same way project work is.",
+        q: "Do you offer ongoing work?",
+        a: "Yes, against defined deliverables. Ongoing work is scoped with a stated output rather than an open-ended monthly retainer."
       },
       {
         q: "Do you charge VAT?",
-        a: "No. Simnetiq Ltd is under the VAT threshold and is not currently VAT-registered, so quotes are the amount you pay.",
-      },
+        a: "Simnetiq Ltd is not currently VAT-registered and does not add VAT to its quotes."
+      }
     ],
     meta: [
-      { label: "Contract", value: "Signed SOW before work starts" },
-      { label: "Currency", value: "GBP · no VAT" },
-      { label: "Typical engagement", value: "2–10 weeks" },
-    ],
+      {
+        label: "Agreement",
+        value: "Signed before development starts"
+      },
+      {
+        label: "Currency",
+        value: "GBP · no VAT"
+      },
+      {
+        label: "Typical duration",
+        value: "2–10 weeks"
+      }
+    ]
   },
   {
     slug: "code-ownership",
     code: "W-03",
-    badge: "SOURCE · INFRASTRUCTURE · KEYS",
-    title: "You own",
-    titleSecondary: "all of it",
-    tagline: "Source, infrastructure, accounts and deployment keys are yours from day one.",
-    summary:
-      "There is no licence you have to keep paying for, no proprietary framework you cannot leave, and no account in our name that holds your production system hostage. If you decided tomorrow to move the project to another engineer, you would already have everything needed to do it.",
+    badge: "YOUR CODE · YOUR ACCOUNTS · YOUR ACCESS",
+    title: "Your project.",
+    titleSecondary: "Your ownership.",
+    tagline: "Your source code and project accounts are under your control.",
+    summary: "The code we write for your product belongs to you. Your repository, accounts and deployment documentation let you continue with our team or another developer. Any hosting we manage and any third-party licences are set out in the agreement.",
     sections: [
       {
-        heading: "What ownership means concretely",
-        body: "The source lives in your repository under your organisation, and it is there from the first commit rather than transferred at the end. Cloud, hosting, database, error tracking, analytics and App Store or Play Console accounts are registered to you and billed to your card. Deployment credentials, signing certificates and environment secrets are yours. The written deliverables — architecture notes, runbooks, deployment steps — are part of what you paid for, not an extra.",
+        heading: "What you receive",
+        body: "Your source code is in your repository from the first commit. Hosting, database, monitoring and app store accounts are set up in your name, with your billing, unless we agree on managed hosting. You also receive credentials, signing certificates, architecture notes and deployment instructions."
       },
       {
-        heading: "Why day one rather than handover",
-        body: "Ownership transferred at the end of a project is a promise. Ownership from the first commit is a fact you can verify at any point during it. It also means there is never a moment where a payment dispute, a scheduling problem or a disagreement gives anyone leverage over your production system. Nobody has to trust anyone.",
+        heading: "Access throughout the project",
+        body: "You can access the repository and project accounts while development is in progress. Handover is part of the work from the start, so access does not depend on a final transfer at the end."
       },
       {
-        heading: "When we host on your behalf",
-        body: "Some projects — VPN infrastructure in particular, and self-hosted pipelines — run on a VPS that we operate day to day. This is the honest edge of the claim, so it is worth being precise. Where you want the server in your own name, it is provisioned in your account on your card and we hold access as a collaborator. Where you would rather not run a Hetzner account, we host it and the SOW names it explicitly: what runs there, what it costs, and the migration path. In that case you still hold the configuration, the deployment scripts and a documented rebuild procedure, so the server is replaceable rather than irreplaceable. What we will not do is host something critical without you knowing that is the arrangement.",
+        heading: "When we manage hosting",
+        body: "We can operate a server in your account with collaborator access. If you prefer us to provide hosting, the statement of work identifies what runs there, the cost and how to move it. You receive the configuration, deployment scripts and rebuild instructions needed to recreate the setup elsewhere."
       },
       {
-        heading: "Third-party licences are a separate question",
-        body: "You own what we write. You do not own Stripe, Supabase, Anthropic, OpenAI or the App Store, and no supplier can give you those. Those are your accounts with your billing, and we tell you during scoping which ones a design implies and roughly what they cost to run, so the ongoing bill is not a surprise after launch. Where a paid library would create a dependency you cannot exit, we say so before choosing it.",
+        heading: "Third-party services and licences",
+        body: "External services such as Stripe, Supabase and AI providers have their own terms and running costs. We identify those dependencies during scoping, including paid libraries that could affect a future move. Your accounts are billed directly unless the agreement specifies managed hosting."
       },
       {
-        heading: "Reused components",
-        body: "Some infrastructure — CI configuration, deployment scaffolding, internal utilities — is not written from scratch for each client, and paying us to rewrite it would be a waste of your money. Anything reused is either open source under a permissive licence or supplied to you under a perpetual, irrevocable licence with no fee attached. Nothing you receive stops working if you stop working with us.",
-      },
+        heading: "Components used across projects",
+        body: "Shared infrastructure components may be open source under permissive licences or supplied under a perpetual, irrevocable licence at no extra cost. You retain the right to use them after our work together ends. The code written for your product belongs to you."
+      }
     ],
     faq: [
       {
-        q: "Who owns the intellectual property in the code?",
-        a: "You do. The SOW assigns it to you, and the source is in your repository from the first commit rather than transferred at the end of the project.",
+        q: "Who owns the code?",
+        a: "You own the code written for your product. The statement of work assigns those rights to you. Reused components and third-party software retain their stated licences."
       },
       {
-        q: "Can I take the project to another developer?",
-        a: "Yes, at any point and without asking us. You already hold the repository, the infrastructure accounts and the deployment documentation. We will answer a successor engineer's questions rather than obstruct the move.",
+        q: "Can another developer take over?",
+        a: "Yes. You have the repository, project accounts and deployment documentation. We will answer the next engineer’s questions to help with the transition."
       },
       {
-        q: "Do I have to keep paying you a licence fee to keep using what you built?",
-        a: "No. There is no licence fee and no proprietary runtime. If you never speak to us again, everything we built keeps running.",
+        q: "Is there an ongoing licence fee to Simnetiq?",
+        a: "No. You do not need to pay us a licence fee to keep using the software we built. Hosting, third-party services and any agreed support have their own costs."
       },
       {
-        q: "What if Simnetiq hosts the server for my project?",
-        a: "Then the SOW says so explicitly, along with what runs there and what it costs. You still hold the configuration, deployment scripts and a documented rebuild procedure, so the server can be recreated elsewhere. Where you prefer, we provision it in your own account instead and hold access as a collaborator.",
+        q: "What if Simnetiq provides the hosting?",
+        a: "The agreement states what we host, its cost and how to move it. You hold the configuration, scripts and rebuild instructions. We can also set up the server in your account."
       },
       {
-        q: "Do you reuse code between clients?",
-        a: "Some infrastructure scaffolding, yes — rewriting it per client would waste your budget. Anything reused is open source under a permissive licence or licensed to you perpetually and irrevocably at no cost. Your product code is yours alone.",
+        q: "Do you reuse components?",
+        a: "Yes, for shared infrastructure. Reused components are open source under permissive licences or provided under a perpetual, irrevocable licence at no extra cost. Your product code remains yours."
       },
       {
-        q: "What ongoing third-party costs should I expect?",
-        a: "Whatever your architecture implies: hosting, database, model APIs, payment processing, developer program fees. We name them during scoping with rough running costs so the bill after launch is not a surprise. They are billed to your accounts, not resold through us.",
-      },
+        q: "What running costs should I expect?",
+        a: "Depending on the project: hosting, databases, AI APIs, payment processing and developer accounts. We identify them and estimate running costs during scoping."
+      }
     ],
     meta: [
-      { label: "Source", value: "Your repository, first commit" },
-      { label: "Infrastructure", value: "Your accounts, your billing" },
-      { label: "Licence fee to keep it", value: "None" },
-    ],
+      {
+        label: "Source code",
+        value: "Your repository from the first commit"
+      },
+      {
+        label: "Accounts",
+        value: "Yours, with any hosting exception agreed"
+      },
+      {
+        label: "Simnetiq licence fee",
+        value: "None"
+      }
+    ]
   },
   {
     slug: "support-after-launch",
     code: "W-04",
-    badge: "MONITORING · MAINTENANCE · ITERATION",
-    title: "We stay",
-    titleSecondary: "past launch",
-    tagline: "Monitoring, maintenance and the next iteration are planned in, not bolted on.",
-    summary:
-      "Shipping is the middle of the job. An app that went live and then broke quietly three weeks later was not delivered — it was abandoned on schedule. Observability and deployment automation go in from day one, and what happens after launch is agreed while there is still time to build for it.",
+    badge: "MONITORING · MAINTENANCE · UPDATES",
+    title: "Support",
+    titleSecondary: "after launch",
+    tagline: "Plan maintenance and the next steps before the product goes live.",
+    summary: "A launched product needs updates, monitoring and someone responsible for incidents. We include monitoring and deployment automation in the build, and agree the scope and duration of support with you before launch.",
     sections: [
       {
-        heading: "What ships on day one",
-        body: "Every project goes live with error tracking, uptime monitoring and a CI/CD pipeline already wired in, because retrofitting observability after an incident means finding out what broke by guessing. These are not upsells added at the end of the SOW. They are part of the build, for the same reason tests are.",
+        heading: "What is ready at launch",
+        body: "Error tracking, uptime monitoring and an automated deployment process are part of the build. They help identify problems and make releases repeatable. These are included in the project scope."
       },
       {
-        heading: "What maintenance actually covers",
-        body: "Defect fixes in what we built. Dependency and security updates. Platform churn — an iOS or Android release that deprecates something you depend on, an API version a vendor retires, a certificate that expires. Reacting to alerts from the monitoring that shipped with the project. This is the unglamorous work that decides whether software is still running in two years.",
+        heading: "What maintenance covers",
+        body: "Maintenance covers fixes to what we built, dependency and security updates, changes to operating systems and external APIs, certificate renewals and responses to monitoring alerts. The support agreement sets out the responsibilities and duration."
       },
       {
-        heading: "What ends when an engagement ends",
-        body: "Support is scoped and priced like everything else, so it has an end date and you can see it. It is not an automatic monthly charge that continues until someone notices. When a support period ends, the software keeps running — you hold the source, the infrastructure and the documentation, so nothing switches off and nothing needs renewing to stay live. New features are quoted as new work rather than absorbed into a maintenance line.",
+        heading: "When the support period ends",
+        body: "Support has a defined scope, price and end date. We do not disable your software when support ends: you keep the code, accounts and documentation. You then take responsibility for updates and incidents, including any third-party services needed to run the product. New features are scoped separately."
       },
       {
-        heading: "App Store and Play review",
-        body: "Store review is not a one-time event. Apple and Google change requirements, reject builds for reasons that did not exist last year, and periodically remove apps that have not been updated for a current SDK. If we submitted your app, we handle the resubmission cycle during the support period rather than sending you the rejection email to interpret.",
+        heading: "App store updates and reviews",
+        body: "If we submitted your app, we handle resubmissions during the support period. This includes responding to review feedback and adapting to changes in platform and SDK requirements."
       },
       {
-        heading: "The next iteration",
-        body: "Most useful software changes after real users touch it. We would rather scope a second phase against what actually happened — the monitoring data, the support tickets, the features nobody used — than build everything anyone imagined in phase one. Launch is the point where you finally have evidence, and it is the cheapest moment to change direction.",
-      },
+        heading: "Planning the next version",
+        body: "Usage data, support requests and feedback help decide what to improve next. We use that evidence to scope a further phase around the needs that emerge after launch."
+      }
     ],
     faq: [
       {
-        q: "What does support cost after launch?",
-        a: "It is quoted per engagement against a defined scope, in the same SOW or a short follow-on one, because the honest answer depends on what was built and what it runs on. What it is not is an open-ended retainer with no stated deliverable.",
+        q: "How is support priced?",
+        a: "Support is quoted against a defined scope and period in the project agreement or a follow-on agreement. It depends on the product and the systems it uses."
       },
       {
-        q: "What is covered by maintenance and what is a new project?",
-        a: "Maintenance covers defects in what we built, dependency and security updates, platform and OS changes, and responding to monitoring alerts. A new feature, a new integration or a redesign is quoted as new work — it gets its own scope and price rather than being absorbed silently.",
+        q: "What counts as maintenance?",
+        a: "Fixes, dependency and security updates, platform changes and responses to monitoring alerts. New features, integrations and redesigns are quoted as separate work."
       },
       {
-        q: "What happens if I stop paying for support?",
-        a: "Nothing switches off. You hold the source, the infrastructure accounts and the documentation, so the software keeps running exactly as it did. You would be responsible for updates and incidents from that point, and you can come back for a specific fix without a standing arrangement.",
+        q: "What happens when I stop support?",
+        a: "We do not disable the software or withdraw your access. You become responsible for updates, incidents and running costs. You can return for a specific fix without a standing support agreement."
       },
       {
-        q: "Do you monitor the app, or do I have to tell you when it breaks?",
-        a: "Error tracking and uptime monitoring ship with the project, so during a support period the alert usually reaches us before you notice. Outside a support period the monitoring still runs and still alerts — it is in your account — it just alerts you.",
+        q: "Who receives monitoring alerts?",
+        a: "During the support period, we receive the alerts needed to maintain the product. When support ends, monitoring remains in your account and alerts go to you."
       },
       {
-        q: "Who handles App Store rejections and OS updates?",
-        a: "We do, during the support period, if we submitted the app. Store requirements and SDK minimums change on Apple's and Google's schedule rather than yours, so this is treated as ongoing work rather than a one-off submission.",
+        q: "Who handles app store reviews and operating system changes?",
+        a: "We handle them during the agreed support period if we submitted the app. The support scope includes the relevant platform updates and resubmissions."
       },
       {
-        q: "How fast do you respond to a production incident?",
-        a: "Same working day for anything taking a live system down. Routine issues are handled within one working day. Response expectations are written into the support scope rather than left as an understanding.",
-      },
+        q: "How quickly do you respond to incidents?",
+        a: "We respond the same working day when a live system is down, and within one working day for routine issues. Response expectations are written into the support scope."
+      }
     ],
     meta: [
-      { label: "Ships with every build", value: "Monitoring · CI/CD" },
-      { label: "Support scope", value: "Defined and time-boxed" },
-      { label: "If support lapses", value: "Nothing switches off" },
-    ],
-  },
+      {
+        label: "Included in the build",
+        value: "Monitoring · Automated deployment"
+      },
+      {
+        label: "Support",
+        value: "Defined scope and duration"
+      },
+      {
+        label: "After support",
+        value: "Your code, accounts and access remain yours"
+      }
+    ]
+  }
 ];
 
 const howWeWorkHe: HowWeWork[] = [
   {
     slug: "work-directly-with-engineers",
     code: "W-01",
-    badge: "גישה · המשכיות · זמינות",
+    badge: "קשר ישיר · אחריות ברורה",
     title: "עובדים ישירות",
-    titleSecondary: "מול המהנדסים",
-    tagline: "מי שמאפיין את הפרויקט הוא מי שכותב אותו.",
-    summary:
-      "סימנטיק היא שני בעלים־מפעילים. אין מנהל לקוח בינך לבין הקוד, אין מהנדס מכירות שנעלם אחרי הפגישה, ואין צוות זוטר שהעבודה עוברת אליו בשקט ברגע שהחוזה נחתם. אתם מתדרכים את מי שבונה, וממשיכים לתדרך את אותו אדם עד שהפרויקט עולה לאוויר.",
+    titleSecondary: "עם המפתח",
+    tagline: "המהנדס שמגדיר את הפרויקט גם בונה אותו.",
+    summary: "עובדים עם האנשים שאחראים לפרויקט מהשיחה הראשונה ועד ההשקה. רומן אחראי לפיתוח; דוד אחראי להסכמים, לעמידה בדרישות ולכספים. ברור למי פונים ומי מקבל כל החלטה.",
     sections: [
       {
-        heading: "עם מי אתם באמת מדברים",
-        body: "סימנטיק בע\"מ רשומה באנגליה ובוויילס (רשם החברות 16861177) ומנוהלת בידי שני דירקטורים. רומן פוצ'טמן אחראי על ההנדסה — מובייל, ווב, AI ותשתיות. דוד זיטומירסקי אחראי על חוזים, רגולציה וכספים. בשיחה טכנית אתם מדברים עם רומן. בשאלה חוזית אתם מדברים עם דוד. אף אחד לא מעביר הודעות ביניכם לבין צוות פיתוח, כי אין צוות כזה להעביר אליו.",
+        heading: "עם מי עובדים",
+        body: "ל-Simnetiq Ltd שני דירקטורים. Roman Pochtman מוביל את פיתוח המובייל, הווב, ה-AI והתשתיות. David Zitomirsky מטפל בהסכמים, בעמידה בדרישות ובכספים. שאלות טכניות מגיעות לרומן ושאלות על ההסכם לדוד. החברה רשומה באנגליה ובוויילס, מספר חברה 16861177."
       },
       {
-        heading: "למה זה משנה את ההערכה",
-        body: "כשמי שמעריך את העבודה הוא מי שצריך לבצע אותה, ההערכה מפסיקה להיות מספר מכירתי. אין תמריץ לתמחר באופטימיות כדי לזכות בעסקה ולספוג את החריגה אחר כך, כי החריגה נוחתת על אותו שולחן. זה גם מבטל קטגוריה שלמה של תקלות: הדרישה שנעלמת בין מי ששמע אותה בשיחה לבין מי שמממש אותה שלושה שבועות מאוחר יותר.",
+        heading: "איך מעריכים את העבודה",
+        body: "המהנדס שיבנה את הפרויקט גם בוחן את הדרישות ומעריך את העבודה. אפשר לדון ישירות בבחירות הטכניות ובפשרות, כך שההיקף המוסכם משקף את מה שצריך לבנות."
       },
       {
-        heading: "מה זה עולה לכם",
-        body: "זמינות. שני אנשים לא יכולים לנהל שישה פרויקטים במקביל, ולכן אנחנו לוקחים פחות פרויקטים ותאריכי התחלה הם אילוץ אמיתי ולא פורמליות. אם אנחנו תפוסים עד חודש מסוים, אנחנו אומרים זאת ונותנים לכם את התאריך. אנחנו מעדיפים לוותר על העבודה מאשר להתחיל אותה ולהיתקע.",
+        heading: "זמינות ומועד התחלה",
+        body: "אנחנו עובדים על מספר מוגבל של פרויקטים במקביל. הזמינות תלויה בהיקף כל פרויקט, ואת מועד ההתחלה קובעים בשלב הגדרת העבודה. אם אנחנו תפוסים, אומרים זאת לפני ההתחייבות."
       },
       {
-        heading: "סיכון ההמשכיות, במפורש",
-        body: "לסטודיו של שני אנשים יש סיכון המשכיות שאין לסוכנות של חמישים איש, ולהעמיד פנים אחרת יהיה לא כנה. ההגנה אינה הבטחה ששום דבר לא יקרה. היא שדבר ממה שאנחנו מחזיקים אינו בלתי ניתן לשחזור אם כן יקרה: הקוד יושב במאגר שלכם, התשתית יושבת בחשבונות שלכם, ותהליך ההעלאה לאוויר מתועד מספיק טוב כדי שמהנדס שמעולם לא פגש אותנו ייקח אותו לידיו. זה אילוץ תכנוני מכוון בכל התקשרות, לא נימוס בסופה.",
-      },
+        heading: "אם לא נוכל להמשיך",
+        body: "לצוות קטן יש יכולת מוגבלת להחליף מי שאינו זמין. הקוד, הגישה לתשתיות והוראות ההפעלה נשארים אצלכם כדי שמפתח אחר יוכל להמשיך. אנחנו מתעדים לאורך הפרויקט ומעדכנים על עיכובים ברגע שנודע לנו עליהם."
+      }
     ],
     faq: [
       {
-        q: "האם העבודה תועבר למפתח זוטר אחרי החתימה?",
-        a: "לא. אין צוות זוטר להעביר אליו. בסימנטיק שני דירקטורים, וההנדסה נעשית בידי הדירקטור שאפיין את הפרויקט שלכם.",
+        q: "מי יכתוב את הקוד?",
+        a: "המהנדס שהגדיר את הפרויקט. העבודה אינה מועברת לצוות מפתחים מתחילים אחרי חתימת ההסכם."
       },
       {
-        q: "אפשר לדבר עם המהנדס לפני שיש חוזה?",
-        a: "כן. שיחות האפיון הן מול המהנדס, לא מול איש מכירות, והן מתקיימות לפני שיש מה לחתום. באותה שיחה גם מתברר אם אנחנו לא ההתאמה הנכונה — אנחנו מעדיפים לומר זאת מוקדם.",
+        q: "אפשר לדבר עם המהנדס לפני שחותמים?",
+        a: "כן. שיחת הגדרת העבודה מתקיימת עם המהנדס שיבצע אותה. בוחנים את הצרכים ואת ההתאמה שלנו לפרויקט לפני שחותמים."
       },
       {
-        q: "כמה מהר אתם מגיבים במהלך הפרויקט?",
-        a: "בתוך יום עבודה אחד לכל דבר שגרתי, ובאותו יום לכל דבר שחוסם שחרור גרסה. אנחנו עובדים בשעות בריטניה מלונדון ומתכתבים באנגלית, עברית או רוסית.",
+        q: "תוך כמה זמן אתם עונים?",
+        a: "לשאלות שוטפות עונים בתוך יום עבודה אחד. לשאלות שחוסמות השקה עונים באותו יום עבודה. עובדים לפי שעות העבודה בבריטניה ומתקשרים באנגלית, בעברית וברוסית."
       },
       {
-        q: "מה קורה אם לא תהיו זמינים באמצע הפרויקט?",
-        a: "המאגר שלכם, חשבונות התשתית שלכם והתיעוד כבר בידיכם, כך שמהנדס אחר יכול להמשיך בלי מעורבותנו. בנוסף, נאמר לכם מוקדם במקום לתת לדדליין לחלוף בשקט.",
+        q: "מה קורה אם אינכם זמינים?",
+        a: "מאגר הקוד, הגישה לתשתיות והוראות הפריסה כבר אצלכם. מפתח אחר יכול להמשיך בעזרתם. אנחנו מעדכנים כששינוי בזמינות עלול להשפיע על לוח הזמנים."
       },
       {
-        q: "כמה פרויקטים אתם מריצים במקביל?",
-        a: "מעט, במכוון. המספר המדויק תלוי בגודל כל התקשרות, אבל האילוץ אמיתי וזו הסיבה שאנחנו מוסרים תאריך התחלה במקום להתחיל מיד.",
-      },
+        q: "כמה פרויקטים אתם מנהלים במקביל?",
+        a: "מספר מוגבל, בהתאם להיקף כל פרויקט. מועד ההתחלה נקבע בשלב הגדרת העבודה כדי שתוכלו לתכנן בהתאם."
+      }
     ],
     meta: [
-      { label: "צוות", value: "שני בעלים־מפעילים" },
-      { label: "מי כותב את הקוד", value: "המהנדס שאפיין אותו" },
-      { label: "שפות", value: "אנגלית · עברית · רוסית" },
-    ],
+      {
+        label: "צוות",
+        value: "שני בעלי חברה שעובדים בפרויקטים"
+      },
+      {
+        label: "פיתוח",
+        value: "המהנדס שמגדיר את העבודה"
+      },
+      {
+        label: "שפות",
+        value: "אנגלית · עברית · רוסית"
+      }
+    ]
   },
   {
     slug: "fixed-price-scope",
     code: "W-02",
-    badge: "SOW · תוצרים · GBP",
-    title: "מאופיין ומתומחר",
+    badge: "היקף מוסכם · אבני דרך · מחיר קבוע",
+    title: "מסכימים על ההיקף",
     titleSecondary: "לפני שמתחילים",
-    tagline: "מסמך עבודה חתום, עם מחיר שסוכם לפני שנכתבת שורת קוד.",
-    summary:
-      "כל התקשרות מתנהלת מול SOW חתום שמפרט את התוצרים, לוח הזמנים והמחיר בליש\"ט. אתם יודעים מה אתם קונים לפני שאתם מתחייבים, והמספר שסוכם הוא המספר שתשלמו — אלא אם ביקשתם משהו שלא היה במסמך.",
+    tagline: "התוצרים, לוח הזמנים והמחיר מוסכמים בכתב.",
+    summary: "כל פרויקט מתחיל במסמך עבודה חתום. הוא מפרט מה נמסור, מתי ובאיזה מחיר. אפשר לבדוק מה כלול ולקבל החלטה לפני תחילת הפיתוח.",
     sections: [
       {
-        heading: "מה באמת יש במסמך העבודה",
-        body: "רשימת תוצרים מפורטת מספיק כדי להתווכח עליה — מסכים, נקודות קצה, אינטגרציות, פלטפורמות, ומה נחשב \"גמור\" בכל אחד מהם. לוח זמנים עם אבני הדרך שלפיהן נימדד. מחיר קבוע בליש\"ט. מה באחריותכם לספק, כגון חשבונות App Store, מפתחות API, נכסי מותג או תוכן. ורשימה מפורשת של מה שמחוץ להיקף — שהיא בדרך כלל החצי השימושי יותר של המסמך.",
+        heading: "מה כולל מסמך העבודה",
+        body: "המסמך מפרט מסכים, חיבורים למערכות, פלטפורמות ותוצרים נוספים, עם תנאי קבלה לכל אחד. הוא כולל אבני דרך, מחיר קבוע בליש״ט, מה נדרש מכם לספק ומה אינו כלול בהסכם."
       },
       {
-        heading: "למה לא תמחור לפי שעה",
-        body: "חיוב שעתי מטיל את מלוא הסיכון של הערכה שגויה עליכם, ולא נותן לספק שום סיבה להתייעל. מחיר קבוע מעביר את הסיכון אלינו, וזה המקום הנכון עבורו: אנחנו אלה שיכולים לשלוט בו. הוא גם מאלץ את שיחת האפיון להתרחש כמו שצריך בהתחלה, כשלשנות את דעתכם עדיין חינם, ולא בשבוע השביעי כשזה יקר.",
+        heading: "איך עובד מחיר קבוע",
+        body: "משלמים את הסכום המוסכם עבור ההיקף המוסכם. אם הערכנו את העבודה בחסר, המחיר אינו משתנה. הגדרת התוצרים מראש עוזרת לשני הצדדים לקבוע סדרי עדיפויות ותקציב."
       },
       {
-        heading: "מה קורה כשההיקף משתנה",
-        body: "ההיקף משתנה ברוב הפרויקטים, וזו לא בעיה כל עוד השינוי גלוי. כשאתם מבקשים משהו שמחוץ ל־SOW אנחנו מתמחרים אותו כשינוי — תוספת קצרה בכתב עם מחיר משלה והשפעה משלה על לוח הזמנים — ואתם מחליטים אם לקחת אותה. שום דבר לא נוסף בשקט ואז מחויב. אם שינוי קטן מספיק שתמחורו יעלה יותר מביצועו, אנחנו סופגים אותו ואומרים זאת.",
+        heading: "כשמבקשים לשנות את ההיקף",
+        body: "מתארים את השינוי בנספח כתוב, כולל המחיר והשפעתו על לוח הזמנים. אתם מחליטים אם להתקדם לפני שמוסיפים אותו לעבודה. אם אפשר לכלול שינוי קטן ללא תוספת תשלום, אומרים זאת."
       },
       {
-        heading: "איפה מחיר קבוע לא מתאים",
-        body: "יש עבודה שבאמת אי אפשר לאפיין מראש: מחקר פתוח, מערכת שאיש עדיין לא יודע לתאר את התנהגותה, או חילוץ של בסיס קוד שלא קראנו. במקרים כאלה אנחנו מאפיינים תחילה שלב גילוי קצר בתשלום, מוסרים את הממצאים כנכס שבבעלותכם ושאפשר לקחת למקום אחר, ורק אז מתמחרים את הבנייה. אנחנו מעדיפים למכור לכם פיסת עבודה קטנה וכנה מאשר פיסה גדולה של ניחושים.",
+        heading: "מתי מתחילים בבדיקה",
+        body: "למחקר, לקוד שאיננו מכירים או למערכת עם דרישות לא ברורות, מגדירים תחילה שלב בדיקה קצר בתשלום. התוצאות נמסרות לכם ואפשר להשתמש בהן איתנו או עם מפתח אחר. על בסיסן נותנים הצעה לפיתוח."
       },
       {
         heading: "תשלום ופרטי החברה",
-        body: "המחירים נקובים בליש\"ט. סימנטיק בע\"מ רשומה באנגליה ובוויילס, מספר חברה 16861177, בכתובת 2 Frederick Street, Kings Cross, London WC1X 0ND. החברה אינה רשומה כיום כעוסק במע\"מ, ולכן הצעות המחיר אינן כוללות מע\"מ.",
-      },
+        body: "ההצעות ניתנות בליש״ט מטעם Simnetiq Ltd, הרשומה באנגליה ובוויילס במספר 16861177. הכתובת הרשומה היא 2 Frederick Street, Kings Cross, London WC1X 0ND. החברה אינה רשומה כיום לצורכי מע״מ בבריטניה, ולכן אינה מוסיפה מע״מ להצעות."
+      }
     ],
     faq: [
       {
-        q: "כמה עולה פרויקט טיפוסי?",
-        a: "תלוי בהיקף, וזו בדיוק מטרת ה־SOW. כנקודת ייחוס, עבודת פלטפורמות ווב מתחילה סביב 800 ליש\"ט, מובייל ודסקטופ סביב 1,000 ליש\"ט, ופיילוטים של AI או אוטומציה סביב 1,500 ליש\"ט. בנייה גדולה יותר מתומחרת פרטנית. כל סכום מאושר בכתב לפני שאתם מתחייבים.",
+        q: "איך נקבע מחיר הפרויקט?",
+        a: "לפי התוצרים, החיבורים והפלטפורמות המוסכמים. המחיר מאושר בכתב לפני ההתחייבות."
       },
       {
-        q: "כמה זמן לוקח פרויקט?",
-        a: "רוב ההתקשרויות נמשכות בין שבועיים לעשרה שבועות. ה־SOW מפרט את אבני הדרך, כך שאינכם עוקבים אחר ההתקדמות דרך שאלות מצב.",
+        q: "כמה זמן נמשך פרויקט?",
+        a: "רוב הפרויקטים נמשכים בין שבועיים לעשרה שבועות. מסמך העבודה מפרט את לוח הזמנים ואבני הדרך של הפרויקט שלכם."
       },
       {
-        q: "מה אם הפרויקט יימשך יותר ממה שהערכתם?",
-        a: "המחיר לא משתנה. מחיר קבוע פירושו שסיכון ההערכה הוא שלנו. מה שכן יכול להזיז את לוח הזמנים הוא שינוי שביקשתם, או תלות מצדכם — הרשאות, תוכן, חשבון App Store — שמגיעה באיחור.",
+        q: "מה קורה אם העבודה נמשכת יותר מההערכה?",
+        a: "המחיר נשאר קבוע עבור ההיקף המוסכם. שינויים שביקשתם או עיכובים בקבלת תוכן, גישה וחשבונות יכולים להשפיע על המועד, ואנחנו דנים בכך איתכם."
       },
       {
-        q: "אפשר לשנות דעה לגבי פיצ'ר באמצע?",
-        a: "כן. אנחנו מתמחרים זאת כשינוי כתוב עם מחיר משלו והשפעה על לוח הזמנים, ואתם מחליטים. שינויים לעולם אינם נוספים בשקט ומחויבים בדיעבד.",
+        q: "אפשר לשנות יכולת בזמן הפיתוח?",
+        a: "כן. לפני שמבצעים את השינוי מסכימים בכתב על התוכן שלו, המחיר והשפעתו על לוח הזמנים."
       },
       {
-        q: "אתם עובדים ברשיינר חודשי?",
-        a: "רק כנגד תוצר מוגדר. אנחנו לא מוכרים ריטיינרים חודשיים פתוחים ללא תפוקה מוגדרת — עבודה מתמשכת מאופיינת בדיוק כמו עבודת פרויקט.",
+        q: "אפשר לעבוד איתכם באופן שוטף?",
+        a: "כן, עבור תוצרים מוגדרים. גם עבודה מתמשכת מתוכננת עם היקף ותוצאה מוסכמים."
       },
       {
-        q: "אתם גובים מע\"מ?",
-        a: "לא. סימנטיק בע\"מ מתחת לסף המע\"מ ואינה רשומה כיום כעוסק במע\"מ, ולכן הצעת המחיר היא הסכום שתשלמו.",
-      },
+        q: "אתם גובים מע״מ?",
+        a: "Simnetiq Ltd אינה רשומה כיום לצורכי מע״מ בבריטניה ואינה מוסיפה אותו להצעות."
+      }
     ],
     meta: [
-      { label: "חוזה", value: "SOW חתום לפני תחילת העבודה" },
-      { label: "מטבע", value: "GBP · ללא מע\"מ" },
-      { label: "התקשרות טיפוסית", value: "2–10 שבועות" },
-    ],
+      {
+        label: "הסכם",
+        value: "נחתם לפני תחילת הפיתוח"
+      },
+      {
+        label: "מטבע",
+        value: "GBP · ללא מע״מ"
+      },
+      {
+        label: "משך טיפוסי",
+        value: "2–10 שבועות"
+      }
+    ]
   },
   {
     slug: "code-ownership",
     code: "W-03",
-    badge: "קוד · תשתית · מפתחות",
-    title: "הכול",
-    titleSecondary: "בבעלותכם",
-    tagline: "הקוד, התשתית, החשבונות ומפתחות ההעלאה לאוויר שלכם מהיום הראשון.",
-    summary:
-      "אין רישיון שצריך להמשיך לשלם עליו, אין תשתית קניינית שאי אפשר לעזוב, ואין חשבון על שמנו שמחזיק את מערכת הייצור שלכם כבת ערובה. אם הייתם מחליטים מחר להעביר את הפרויקט למהנדס אחר, כבר עכשיו יש בידיכם כל מה שנדרש כדי לעשות זאת.",
+    badge: "הקוד שלכם · החשבונות שלכם · הגישה שלכם",
+    title: "הפרויקט שלכם.",
+    titleSecondary: "הבעלות שלכם.",
+    tagline: "קוד המקור וחשבונות הפרויקט בשליטתכם.",
+    summary: "הקוד שאנחנו כותבים למוצר שייך לכם. מאגר הקוד, החשבונות והתיעוד מאפשרים להמשיך איתנו או עם מפתח אחר. אחסון שאנחנו מנהלים ורישיונות צד שלישי מפורטים בהסכם.",
     sections: [
       {
-        heading: "מה בעלות אומרת בפועל",
-        body: "הקוד יושב במאגר שלכם תחת הארגון שלכם, והוא שם מהקומיט הראשון ולא מועבר בסוף. חשבונות ענן, אחסון, בסיס נתונים, מעקב שגיאות, אנליטיקה ו־App Store או Play Console רשומים על שמכם ומחויבים לכרטיס שלכם. הרשאות ההעלאה לאוויר, תעודות החתימה וסודות הסביבה שלכם. התוצרים הכתובים — הערות ארכיטקטורה, נהלי תפעול, שלבי פריסה — הם חלק ממה ששילמתם עליו, לא תוספת.",
+        heading: "מה מקבלים",
+        body: "קוד המקור נמצא במאגר שלכם מהשינוי הראשון. חשבונות האחסון, מסדי הנתונים, הניטור וחנויות האפליקציות רשומים על שמכם ובחיוב שלכם, אלא אם סוכם על אחסון שלנו. מקבלים גם פרטי גישה, תעודות חתימה, תיעוד ארכיטקטורה והוראות פריסה."
       },
       {
-        heading: "למה מהיום הראשון ולא בהעברה",
-        body: "בעלות שמועברת בסוף הפרויקט היא הבטחה. בעלות מהקומיט הראשון היא עובדה שאפשר לאמת בכל רגע במהלכו. משמעות הדבר גם שאין אף רגע שבו מחלוקת על תשלום, בעיית לוחות זמנים או אי־הסכמה נותנים למישהו מנוף על מערכת הייצור שלכם. אף אחד לא צריך לסמוך על אף אחד.",
+        heading: "גישה לאורך הפרויקט",
+        body: "יש לכם גישה למאגר הקוד ולחשבונות בזמן הפיתוח. ההכנה להעברת הפרויקט מתחילה מראש, כך שהגישה אינה תלויה בהעברה בסוף העבודה."
       },
       {
-        heading: "כשאנחנו מאחסנים עבורכם",
-        body: "חלק מהפרויקטים — בעיקר תשתיות VPN וצינורות עיבוד בשרת עצמאי — רצים על VPS שאנחנו מתפעלים ביום־יום. זה הקצה הכן של ההצהרה, ולכן כדאי לדייק בו. כשאתם רוצים את השרת על שמכם, הוא מוקם בחשבון שלכם ובכרטיס שלכם ואנחנו מחזיקים גישה כשותפים. כשאתם מעדיפים לא לנהל חשבון Hetzner, אנחנו מאחסנים וה־SOW מציין זאת במפורש: מה רץ שם, כמה זה עולה, ומה מסלול ההגירה. גם אז אתם מחזיקים את התצורה, את סקריפטי הפריסה ונוהל שחזור מתועד, כך שהשרת ניתן להחלפה ולא בלתי ניתן להחלפה. מה שלא נעשה הוא לאחסן משהו קריטי בלי שתדעו שזה ההסדר.",
+        heading: "כשאנחנו מנהלים את האחסון",
+        body: "אפשר להפעיל שרת בחשבון שלכם עם הרשאת גישה לצוות שלנו. אם אנחנו מספקים אחסון, מסמך העבודה מפרט מה פועל בו, מה העלות ואיך להעביר אותו. ההגדרות, הסקריפטים והוראות ההקמה נמסרים לכם כדי שאפשר יהיה לשחזר את המערכת במקום אחר."
       },
       {
-        heading: "רישיונות צד שלישי הם שאלה נפרדת",
-        body: "אתם בעלים של מה שאנחנו כותבים. אינכם בעלים של Stripe, Supabase, Anthropic, OpenAI או ה־App Store, ואף ספק לא יכול לתת לכם אותם. אלה חשבונות שלכם עם חיוב שלכם, ואנחנו אומרים לכם באפיון אילו מהם הארכיטקטורה מחייבת ובערך כמה הם עולים לתפעול, כדי שהחשבון החודשי אחרי ההשקה לא יהיה הפתעה. כשספרייה בתשלום תיצור תלות שאי אפשר לצאת ממנה, אנחנו אומרים זאת לפני שבוחרים בה.",
+        heading: "שירותים ורישיונות של צד שלישי",
+        body: "ל-Stripe, ל-Supabase, לספקי AI ולשירותים חיצוניים נוספים יש תנאים ועלויות משלהם. בשלב הגדרת העבודה מציינים את התלויות, כולל ספריות בתשלום שעלולות להשפיע על מעבר עתידי. החיוב נעשה בחשבונות שלכם, למעט אחסון שסוכם בנפרד."
       },
       {
-        heading: "רכיבים בשימוש חוזר",
-        body: "חלק מהתשתית — הגדרות CI, פיגומי פריסה, כלי עזר פנימיים — אינה נכתבת מאפס לכל לקוח, ולשלם לנו כדי לכתוב אותה מחדש יהיה בזבוז של הכסף שלכם. כל דבר בשימוש חוזר הוא או קוד פתוח ברישיון מתירני, או ניתן לכם ברישיון תמידי ובלתי הדיר וללא תשלום. שום דבר שאתם מקבלים לא מפסיק לעבוד אם תפסיקו לעבוד איתנו.",
-      },
+        heading: "רכיבים משותפים",
+        body: "רכיבי תשתית משותפים נמסרים בקוד פתוח עם רישיון מתירני, או ברישיון קבוע ובלתי חוזר ללא תשלום נוסף. הזכות להשתמש בהם נשמרת גם אחרי סיום העבודה המשותפת. הקוד שנכתב למוצר שלכם שייך לכם."
+      }
     ],
     faq: [
       {
-        q: "למי שייכת הקניין הרוחני בקוד?",
-        a: "לכם. ה־SOW מקצה אותו אליכם, והקוד נמצא במאגר שלכם מהקומיט הראשון ולא מועבר בסוף הפרויקט.",
+        q: "למי שייך הקוד?",
+        a: "הקוד שנכתב למוצר שייך לכם, וההסכם מעביר את הזכויות אליכם. על רכיבים משותפים ותוכנות צד שלישי חלים הרישיונות שלהם."
       },
       {
-        q: "אפשר לקחת את הפרויקט למפתח אחר?",
-        a: "כן, בכל שלב ובלי לשאול אותנו. כבר עכשיו יש בידיכם המאגר, חשבונות התשתית והתיעוד. נענה לשאלות של המהנדס הממשיך במקום להערים קשיים.",
+        q: "מפתח אחר יכול להמשיך את העבודה?",
+        a: "כן. מאגר הקוד, החשבונות והוראות הפריסה אצלכם. נענה לשאלות של המפתח הבא כדי לעזור בהעברה."
       },
       {
-        q: "האם אצטרך להמשיך לשלם לכם דמי רישיון כדי להשתמש במה שבניתם?",
-        a: "לא. אין דמי רישיון ואין סביבת ריצה קניינית. גם אם לא תדברו איתנו שוב לעולם, כל מה שבנינו ימשיך לרוץ.",
+        q: "צריך לשלם לסימנטיק דמי רישיון שוטפים?",
+        a: "לא. אין דמי רישיון לסימנטיק כדי להמשיך להשתמש בתוכנה שבנינו. לאחסון, לשירותים חיצוניים ולתמיכה מוסכמת יש עלויות משלהם."
       },
       {
-        q: "מה אם סימנטיק מאחסנת את השרת של הפרויקט שלי?",
-        a: "אז ה־SOW מציין זאת במפורש, יחד עם מה שרץ שם וכמה זה עולה. עדיין בידיכם התצורה, סקריפטי הפריסה ונוהל שחזור מתועד, כך שאפשר להקים את השרת מחדש במקום אחר. אם תעדיפו, נקים אותו בחשבון שלכם ונחזיק גישה כשותפים.",
+        q: "מה אם סימנטיק מספקת את האחסון?",
+        a: "ההסכם מציין מה אנחנו מארחים, מה העלות ואיך להעביר את המערכת. ההגדרות, הסקריפטים והוראות ההקמה אצלכם. אפשר גם להקים את השרת בחשבון שלכם."
       },
       {
-        q: "אתם עושים שימוש חוזר בקוד בין לקוחות?",
-        a: "בפיגומי תשתית מסוימים, כן — כתיבה מחדש לכל לקוח תבזבז את התקציב שלכם. כל דבר בשימוש חוזר הוא קוד פתוח ברישיון מתירני או מורשה לכם לצמיתות וללא תשלום. קוד המוצר שלכם הוא שלכם בלבד.",
+        q: "אתם משתמשים ברכיבים במספר פרויקטים?",
+        a: "כן, בתשתיות משותפות. הרכיבים נמסרים ברישיון קוד פתוח מתירני או ברישיון קבוע ובלתי חוזר ללא תוספת תשלום. קוד המוצר שלכם נשאר שלכם."
       },
       {
-        q: "אילו עלויות צד שלישי שוטפות עליי לצפות?",
-        a: "מה שהארכיטקטורה מחייבת: אחסון, בסיס נתונים, ממשקי מודלים, סליקה, דמי תוכניות מפתחים. אנחנו מפרטים אותן באפיון עם הערכת עלות שוטפת, כדי שהחשבון אחרי ההשקה לא יהיה הפתעה. הן מחויבות לחשבונות שלכם ולא נמכרות מחדש דרכנו.",
-      },
+        q: "אילו הוצאות שוטפות צפויות?",
+        a: "בהתאם לפרויקט: אחסון, מסדי נתונים, שירותי AI, סליקת תשלומים וחשבונות מפתחים. מפרטים אותם ומעריכים את העלויות בשלב הגדרת העבודה."
+      }
     ],
     meta: [
-      { label: "קוד", value: "המאגר שלכם, מהקומיט הראשון" },
-      { label: "תשתית", value: "החשבונות שלכם, החיוב שלכם" },
-      { label: "דמי רישיון להמשך שימוש", value: "אין" },
-    ],
+      {
+        label: "קוד מקור",
+        value: "במאגר שלכם מהשינוי הראשון"
+      },
+      {
+        label: "חשבונות",
+        value: "שלכם; חריגות אחסון בהסכמה"
+      },
+      {
+        label: "דמי רישיון לסימנטיק",
+        value: "אין"
+      }
+    ]
   },
   {
     slug: "support-after-launch",
     code: "W-04",
-    badge: "ניטור · תחזוקה · איטרציה",
-    title: "אנחנו נשארים",
+    badge: "ניטור · תחזוקה · עדכונים",
+    title: "תמיכה",
     titleSecondary: "אחרי ההשקה",
-    tagline: "ניטור, תחזוקה והאיטרציה הבאה מתוכננים פנימה, לא מוברגים בדיעבד.",
-    summary:
-      "ההשקה היא אמצע העבודה. אפליקציה שעלתה לאוויר ואז נשברה בשקט שלושה שבועות אחר כך לא נמסרה — היא ננטשה לפי לוח זמנים. ניטור ואוטומציית פריסה נכנסים מהיום הראשון, ומה שקורה אחרי ההשקה מסוכם בזמן שעוד אפשר לבנות עבורו.",
+    tagline: "מתכננים את התחזוקה והצעדים הבאים לפני שהמוצר עולה לאוויר.",
+    summary: "מוצר שהושק צריך עדכונים, ניטור ואחריות לטיפול בתקלות. אנחנו כוללים ניטור ואוטומציה של הפריסה בפיתוח, ומסכימים איתכם על היקף התמיכה ומשכה לפני ההשקה.",
     sections: [
       {
-        heading: "מה עולה לאוויר ביום הראשון",
-        body: "כל פרויקט עולה עם מעקב שגיאות, ניטור זמינות וצינור CI/CD מחווטים מראש, כי התקנת ניטור אחרי תקלה פירושה לגלות מה נשבר בדרך של ניחוש. אלה אינם שדרוגים שנוספים בסוף ה־SOW. הם חלק מהבנייה, מאותה סיבה שבדיקות הן חלק ממנה.",
+        heading: "מה מוכן להשקה",
+        body: "מעקב שגיאות, ניטור זמינות ותהליך פריסה אוטומטי הם חלק מהפיתוח. הם עוזרים לזהות בעיות ולבצע עדכונים בתהליך מסודר שאפשר לחזור עליו. הם נכללים בהיקף הפרויקט."
       },
       {
-        heading: "מה תחזוקה באמת מכסה",
-        body: "תיקון תקלות במה שבנינו. עדכוני תלויות ואבטחה. שינויי פלטפורמה — גרסת iOS או אנדרואיד שמוציאה משימוש רכיב שאתם תלויים בו, גרסת API שספק מסיים, תעודה שפגה. תגובה להתראות מהניטור שעלה עם הפרויקט. זו העבודה הלא זוהרת שקובעת אם התוכנה עדיין רצה בעוד שנתיים.",
+        heading: "מה כוללת התחזוקה",
+        body: "תיקון תקלות במה שבנינו, עדכוני ספריות ואבטחה, התאמות לשינויים במערכות הפעלה ובממשקים חיצוניים, חידוש תעודות וטיפול בהתראות ניטור. הסכם התמיכה מגדיר את האחריות ואת התקופה."
       },
       {
-        heading: "מה מסתיים כשההתקשרות מסתיימת",
-        body: "התמיכה מאופיינת ומתומחרת כמו כל דבר אחר, ולכן יש לה תאריך סיום ואתם רואים אותו. היא לא חיוב חודשי אוטומטי שנמשך עד שמישהו שם לב. כשתקופת תמיכה מסתיימת התוכנה ממשיכה לרוץ — הקוד, התשתית והתיעוד בידיכם, כך ששום דבר לא נכבה ושום דבר לא דורש חידוש כדי להישאר באוויר. פיצ'רים חדשים מתומחרים כעבודה חדשה ולא נבלעים בשורת תחזוקה.",
+        heading: "כשמסתיימת תקופת התמיכה",
+        body: "לתמיכה יש היקף, מחיר ומועד סיום מוגדרים. אנחנו לא משביתים את התוכנה כשהתמיכה מסתיימת: הקוד, החשבונות והתיעוד נשארים שלכם. האחריות לעדכונים, לתקלות ולשירותים החיצוניים הנדרשים עוברת אליכם. יכולות חדשות מוגדרות בנפרד."
       },
       {
-        heading: "ביקורת App Store ו־Play",
-        body: "ביקורת החנויות אינה אירוע חד־פעמי. אפל וגוגל משנות דרישות, דוחות בילדים מסיבות שלא היו קיימות בשנה שעברה, ומדי פעם מסירות אפליקציות שלא עודכנו ל־SDK עדכני. אם אנחנו הגשנו את האפליקציה שלכם, אנחנו מטפלים במחזור ההגשה מחדש בתקופת התמיכה במקום לשלוח לכם את מייל הדחייה לפענוח.",
+        heading: "עדכונים ובדיקות בחנויות",
+        body: "אם אנחנו הגשנו את האפליקציה, נטפל בהגשות חוזרות בתקופת התמיכה. העבודה כוללת מענה להערות הבדיקה והתאמה לשינויים בדרישות הפלטפורמות וערכות הפיתוח."
       },
       {
-        heading: "האיטרציה הבאה",
-        body: "רוב התוכנה השימושית משתנה אחרי שמשתמשים אמיתיים נוגעים בה. אנחנו מעדיפים לאפיין שלב שני מול מה שקרה בפועל — נתוני הניטור, פניות התמיכה, הפיצ'רים שאיש לא השתמש בהם — מאשר לבנות בשלב הראשון את כל מה שמישהו דמיין. ההשקה היא הנקודה שבה סוף־סוף יש לכם ראיות, וזה הרגע הזול ביותר לשנות כיוון.",
-      },
+        heading: "תכנון הגרסה הבאה",
+        body: "נתוני שימוש, פניות תמיכה ומשוב עוזרים להחליט מה לשפר בהמשך. לפיהם מגדירים שלב נוסף שמתאים לצרכים שהתגלו אחרי ההשקה."
+      }
     ],
     faq: [
       {
-        q: "כמה עולה תמיכה אחרי ההשקה?",
-        a: "היא מתומחרת לכל התקשרות מול היקף מוגדר, באותו SOW או בהמשך קצר שלו, כי התשובה הכנה תלויה במה שנבנה ובמה שהוא רץ עליו. מה שהיא לא היא ריטיינר פתוח ללא תוצר מוגדר.",
+        q: "איך מתמחרים תמיכה?",
+        a: "לפי היקף ותקופה מוגדרים, בהסכם הפרויקט או בהסכם המשך. העלות תלויה במוצר ובמערכות שעליהן הוא פועל."
       },
       {
-        q: "מה נכלל בתחזוקה ומה נחשב פרויקט חדש?",
-        a: "תחזוקה מכסה תקלות במה שבנינו, עדכוני תלויות ואבטחה, שינויי פלטפורמה ומערכת הפעלה, ותגובה להתראות ניטור. פיצ'ר חדש, אינטגרציה חדשה או עיצוב מחדש מתומחרים כעבודה חדשה — עם היקף ומחיר משלהם, ולא נבלעים בשקט.",
+        q: "מה נחשב תחזוקה?",
+        a: "תיקונים, עדכוני ספריות ואבטחה, התאמות לפלטפורמות וטיפול בהתראות. יכולות חדשות, חיבורים חדשים ועיצוב מחדש מתומחרים בנפרד."
       },
       {
-        q: "מה קורה אם אפסיק לשלם על תמיכה?",
-        a: "שום דבר לא נכבה. הקוד, חשבונות התשתית והתיעוד בידיכם, כך שהתוכנה ממשיכה לרוץ בדיוק כפי שרצה. מאותה נקודה העדכונים והתקלות באחריותכם, ואפשר לחזור אלינו לתיקון נקודתי בלי הסדר קבוע.",
+        q: "מה קורה כשאני מפסיק את התמיכה?",
+        a: "אנחנו לא משביתים את התוכנה ולא מבטלים את הגישה. האחריות לעדכונים, לתקלות ולעלויות השוטפות עוברת אליכם. אפשר לפנות לתיקון נקודתי ללא הסכם תמיכה קבוע."
       },
       {
-        q: "אתם מנטרים את האפליקציה, או שעליי לדווח כשהיא נשברת?",
-        a: "מעקב שגיאות וניטור זמינות עולים יחד עם הפרויקט, כך שבתקופת תמיכה ההתראה בדרך כלל מגיעה אלינו לפני שאתם שמים לב. מחוץ לתקופת תמיכה הניטור עדיין רץ ועדיין מתריע — הוא בחשבון שלכם — הוא פשוט מתריע לכם.",
+        q: "מי מקבל התראות ניטור?",
+        a: "בתקופת התמיכה אנחנו מקבלים את ההתראות הדרושות לתחזוקת המוצר. כשהיא מסתיימת, הניטור נשאר בחשבון שלכם וההתראות מגיעות אליכם."
       },
       {
-        q: "מי מטפל בדחיות App Store ובעדכוני מערכת הפעלה?",
-        a: "אנחנו, בתקופת התמיכה, אם אנחנו הגשנו את האפליקציה. דרישות החנויות ומינימום ה־SDK משתנים לפי לוח הזמנים של אפל וגוגל ולא לפי שלכם, ולכן זו עבודה מתמשכת ולא הגשה חד־פעמית.",
+        q: "מי מטפל בבדיקות החנויות ובעדכוני מערכות הפעלה?",
+        a: "אנחנו, במהלך תקופת התמיכה המוסכמת, אם הגשנו את האפליקציה. העדכונים וההגשות החוזרות הרלוונטיים כלולים בהיקף התמיכה."
       },
       {
-        q: "כמה מהר אתם מגיבים לתקלת ייצור?",
-        a: "באותו יום עבודה לכל דבר שמפיל מערכת חיה. בעיות שגרתיות מטופלות בתוך יום עבודה אחד. ציפיות התגובה נכתבות בהיקף התמיכה ולא נשארות כהבנה בעל פה.",
-      },
+        q: "תוך כמה זמן אתם מגיבים לתקלה?",
+        a: "באותו יום עבודה כשמערכת פעילה מושבתת, ובתוך יום עבודה אחד לבעיות שוטפות. זמני התגובה מוגדרים בהסכם התמיכה."
+      }
     ],
     meta: [
-      { label: "עולה עם כל בילד", value: "ניטור · CI/CD" },
-      { label: "היקף התמיכה", value: "מוגדר ותחום בזמן" },
-      { label: "אם התמיכה פוקעת", value: "שום דבר לא נכבה" },
-    ],
-  },
+      {
+        label: "כלול בפיתוח",
+        value: "ניטור · פריסה אוטומטית"
+      },
+      {
+        label: "תמיכה",
+        value: "היקף ותקופה מוגדרים"
+      },
+      {
+        label: "אחרי התמיכה",
+        value: "הקוד, החשבונות והגישה נשארים שלכם"
+      }
+    ]
+  }
 ];
 
 const howWeWorkRu: HowWeWork[] = [
   {
     slug: "work-directly-with-engineers",
     code: "W-01",
-    badge: "ДОСТУП · НЕПРЕРЫВНОСТЬ · ЗАГРУЗКА",
-    title: "Вы работаете напрямую",
-    titleSecondary: "с инженерами",
-    tagline: "Тот, кто оценивает проект, — тот же, кто его пишет.",
-    summary:
-      "Simnetiq — это два владельца-практика. Между вами и кодом нет аккаунт-менеджера, нет пресейл-инженера, который исчезает после презентации, и нет команды джуниоров, которой работу тихо передают после подписания договора. Вы ставите задачу тому, кто её реализует, и продолжаете работать с этим же человеком до релиза.",
+    badge: "ПРЯМОЕ ОБЩЕНИЕ · ПОНЯТНАЯ ОТВЕТСТВЕННОСТЬ",
+    title: "Работайте напрямую",
+    titleSecondary: "с разработчиком",
+    tagline: "Проект оценивает и разрабатывает один и тот же инженер.",
+    summary: "Вы общаетесь с ответственными за проект от первой встречи до запуска. Роман занимается разработкой, Давид — договорами, соблюдением требований и финансами. Вы знаете, к кому обратиться и кто принимает решения.",
     sections: [
       {
-        heading: "С кем вы действительно разговариваете",
-        body: "Simnetiq Ltd зарегистрирована в Англии и Уэльсе (регистрационный номер 16861177) и управляется двумя директорами. Роман Почтман отвечает за инженерию — мобильные приложения, веб, AI и инфраструктуру. Давид Зитомирский отвечает за договоры, комплаенс и финансы. На техническом созвоне вы говорите с Романом. По договорному вопросу — с Давидом. Никто не пересказывает ваши слова команде разработки, потому что такой команды нет.",
+        heading: "С кем вы работаете",
+        body: "У Simnetiq Ltd два директора. Roman Pochtman отвечает за мобильную и веб-разработку, ИИ и инфраструктуру. David Zitomirsky занимается договорами, соблюдением требований и финансами. Технические вопросы вы обсуждаете с Романом, условия договора — с Давидом. Компания зарегистрирована в Англии и Уэльсе под номером 16861177."
       },
       {
-        heading: "Почему это меняет саму оценку",
-        body: "Когда оценку даёт тот, кому потом эту работу делать, оценка перестаёт быть продажным числом. Нет смысла занижать срок ради сделки и потом поглощать перерасход — перерасход придёт на тот же стол. Это также убирает целый класс дефектов: требование, теряющееся между тем, кто услышал его на созвоне, и тем, кто реализует его три недели спустя.",
+        heading: "Как оцениваем работу",
+        body: "Требования изучает и работу оценивает тот инженер, который будет создавать продукт. Вы напрямую обсуждаете технические решения и ограничения, чтобы согласованный объём отражал реальные задачи проекта."
       },
       {
-        heading: "Чего это стоит вам",
-        body: "Пропускной способности. Два человека не могут вести шесть проектов одновременно, поэтому мы берём меньше проектов, а даты старта — реальное ограничение, а не формальность. Если мы заняты до определённого месяца, мы так и говорим и называем дату. Мы скорее откажемся от работы, чем начнём её и застрянем.",
+        heading: "Загрузка и дата начала",
+        body: "Мы ведём ограниченное число проектов одновременно. Загрузка зависит от объёма каждой работы. Дату начала согласуем при оценке и сообщаем о занятости до того, как вы подпишете договор."
       },
       {
-        heading: "Риск непрерывности — прямым текстом",
-        body: "У студии из двух человек есть риск непрерывности, которого нет у агентства на пятьдесят, и делать вид, что это не так, было бы нечестно. Защита состоит не в обещании, что ничего не случится. Она в том, что ничто из того, что мы держим, не является невосстановимым: исходный код лежит в вашем репозитории, инфраструктура — в ваших аккаунтах, а развёртывание описано достаточно подробно, чтобы его подхватил инженер, который никогда нас не видел. Это осознанное проектное ограничение в каждом проекте, а не любезность в его конце.",
-      },
+        heading: "Если мы не сможем продолжить",
+        body: "У небольшой команды ограничены возможности подменить отсутствующего участника. Код, доступы и инструкции по развёртыванию остаются у вас, чтобы другой инженер мог продолжить работу. Документацию ведём по ходу проекта и сообщаем о задержках, как только узнаём о них."
+      }
     ],
     faq: [
       {
-        q: "Передадут ли работу джуниору после подписания договора?",
-        a: "Нет. Передавать некому — в Simnetiq два директора, и инженерную работу делает тот директор, который оценивал ваш проект.",
+        q: "Кто будет писать код?",
+        a: "Инженер, который оценивал ваш проект. После подписания договора работа не передаётся команде начинающих разработчиков."
       },
       {
-        q: "Можно поговорить с инженером до того, как появится договор?",
-        a: "Да. Созвоны по оценке проходят с инженером, а не с продавцом, и происходят до того, как появляется что-то для подписи. На этом же созвоне выясняется, если мы вам не подходим, — мы предпочитаем сказать об этом сразу.",
+        q: "Можно поговорить с инженером до подписания договора?",
+        a: "Да. Вы обсуждаете задачу с инженером, который будет её выполнять. До подписания договора выясняем, подходим ли мы вашему проекту."
       },
       {
-        q: "Как быстро вы отвечаете во время проекта?",
-        a: "В течение одного рабочего дня по любому штатному вопросу и в тот же день по всему, что блокирует релиз. Мы работаем по британскому времени из Лондона и переписываемся на английском, иврите или русском.",
+        q: "Как быстро вы отвечаете?",
+        a: "На обычные вопросы — в течение одного рабочего дня. На вопросы, блокирующие выпуск, — в тот же рабочий день. Работаем по британскому графику и общаемся на английском, иврите и русском."
       },
       {
-        q: "Что будет, если вы окажетесь недоступны в середине проекта?",
-        a: "Ваш репозиторий, ваши инфраструктурные аккаунты и документация уже у вас, поэтому другой инженер может продолжить без нашего участия. Кроме того, мы предупредим заранее, а не дадим дедлайну тихо пройти.",
+        q: "Что будет, если вы станете недоступны?",
+        a: "У вас уже есть репозиторий, доступ к инфраструктуре и инструкции по развёртыванию. Другой инженер сможет продолжить работу. Об изменениях нашей доступности, которые влияют на сроки, мы сообщаем заранее."
       },
       {
         q: "Сколько проектов вы ведёте одновременно?",
-        a: "Намеренно мало. Точное число зависит от размера проектов, но ограничение реальное — именно поэтому мы называем дату старта, а не начинаем немедленно.",
-      },
+        a: "Ограниченное число, в зависимости от объёма каждой работы. При оценке согласуем дату начала, чтобы вы могли планировать запуск."
+      }
     ],
     meta: [
-      { label: "Команда", value: "Два владельца-практика" },
-      { label: "Кто пишет код", value: "Инженер, который его оценил" },
-      { label: "Языки", value: "Английский · Иврит · Русский" },
-    ],
+      {
+        label: "Команда",
+        value: "Два владельца, участвующих в работе"
+      },
+      {
+        label: "Разработка",
+        value: "Инженер, который оценивает проект"
+      },
+      {
+        label: "Языки",
+        value: "Английский · Иврит · Русский"
+      }
+    ]
   },
   {
     slug: "fixed-price-scope",
     code: "W-02",
-    badge: "SOW · РЕЗУЛЬТАТЫ · GBP",
-    title: "Объём и цена согласованы",
-    titleSecondary: "до старта",
-    tagline: "Подписанный SOW, с ценой, согласованной до первой строки кода.",
-    summary:
-      "Каждый проект идёт по подписанному SOW, где перечислены результаты, сроки и цена в фунтах. Вы знаете, что покупаете, прежде чем на это соглашаетесь, и согласованная сумма — это та сумма, которую вы платите, если только вы сами не попросите то, чего в документе не было.",
+    badge: "ОБЪЁМ РАБОТ · ЭТАПЫ · ФИКСИРОВАННАЯ ЦЕНА",
+    title: "Согласуем объём",
+    titleSecondary: "до начала работ",
+    tagline: "Результат, сроки и цена закреплены в письменном соглашении.",
+    summary: "Каждый проект начинается с подписанного описания работ. В нём указано, что мы создадим, в какие сроки и по какой цене. Вы можете изучить условия и принять решение до начала разработки.",
     sections: [
       {
-        heading: "Что на самом деле входит в SOW",
-        body: "Список результатов, достаточно конкретный, чтобы с ним можно было спорить: экраны, эндпоинты, интеграции, платформы и что означает «готово» для каждого пункта. Сроки с контрольными точками, по которым нас будут мерить. Фиксированная цена в фунтах. Что предоставляете вы — аккаунты App Store, ключи API, брендбук или контент. И явный список того, что за рамки вынесено, — обычно это более полезная половина документа.",
+        heading: "Что входит в описание работ",
+        body: "Документ перечисляет экраны, интеграции, платформы и другие результаты с критериями готовности. В нём указаны этапы, фиксированная цена в фунтах стерлингов, материалы и доступы с вашей стороны, а также работы, не входящие в договор."
       },
       {
-        heading: "Почему не почасовая оплата",
-        body: "Почасовая оплата полностью перекладывает риск неверной оценки на вас и не даёт подрядчику никакого повода работать эффективно. Фиксированная цена переносит этот риск на нас — туда, где ему и место: управлять им можем именно мы. Она же заставляет разговор об объёме состояться как следует в начале, когда передумать бесплатно, а не на седьмой неделе, когда это дорого.",
+        heading: "Как действует фиксированная цена",
+        body: "За согласованный объём вы платите согласованную сумму. Если мы недооценили эту работу, цена не меняется. Подробное описание до разработки помогает обеим сторонам определить приоритеты и бюджет."
       },
       {
-        heading: "Что происходит при изменении объёма",
-        body: "Объём меняется в большинстве проектов, и это не проблема, пока изменение видимо. Когда вы просите что-то за рамками SOW, мы оцениваем это как отдельное дополнение — короткое письменное изменение со своей ценой и своим влиянием на сроки, — и вы решаете, брать его или нет. Ничто не добавляется молча и не выставляется в счёте задним числом. Если изменение настолько мелкое, что оценить его дороже, чем сделать, мы делаем его за свой счёт и говорим об этом.",
+        heading: "Если нужно изменить объём",
+        body: "Описываем изменение, его стоимость и влияние на сроки в письменном дополнении. Вы решаете, включать ли его в работу. Если небольшое изменение можем выполнить без доплаты, сообщаем об этом."
       },
       {
-        heading: "Где фиксированная цена не работает",
-        body: "Часть работы действительно нельзя оценить заранее: открытое исследование, система, поведение которой пока никто не может описать, или спасение кодовой базы, которую мы ещё не читали. Для таких случаев мы сначала оцениваем короткий платный этап исследования, отдаём результаты как ваш актив, который можно унести куда угодно, и только потом называем цену разработки. Мы предпочтём продать вам маленькую честную работу, а не большую догадку.",
+        heading: "Когда сначала нужно исследование",
+        body: "Для исследований, незнакомой кодовой базы или системы с неясными требованиями сначала согласуем короткий оплачиваемый этап изучения. Вы получаете результаты и можете использовать их с нами или другим разработчиком. Затем оцениваем разработку на их основе."
       },
       {
-        heading: "Оплата и реквизиты компании",
-        body: "Цены указываются в фунтах стерлингов. Simnetiq Ltd зарегистрирована в Англии и Уэльсе, регистрационный номер 16861177, адрес: 2 Frederick Street, Kings Cross, London WC1X 0ND. Компания в настоящее время не зарегистрирована как плательщик НДС, поэтому НДС в расчёты не входит.",
-      },
+        heading: "Оплата и реквизиты",
+        body: "Выставляем предложения в фунтах стерлингов от Simnetiq Ltd, зарегистрированной в Англии и Уэльсе под номером 16861177. Юридический адрес: 2 Frederick Street, Kings Cross, London WC1X 0ND. Компания сейчас не зарегистрирована плательщиком НДС, поэтому не добавляет НДС к предложениям."
+      }
     ],
     faq: [
       {
-        q: "Сколько стоит типичный проект?",
-        a: "Зависит от объёма — ради этого и существует SOW. Для ориентира: веб-платформы начинаются примерно от £800, мобильная и десктопная разработка — примерно от £1 000, пилоты по AI и автоматизации — примерно от £1 500. Крупные проекты оцениваются индивидуально. Любая сумма подтверждается письменно до того, как вы берёте на себя обязательства.",
+        q: "Как определяется стоимость проекта?",
+        a: "По согласованным результатам, интеграциям и платформам. Цена подтверждается письменно до заключения договора."
       },
       {
         q: "Сколько времени занимает проект?",
-        a: "Большинство проектов укладывается в срок от двух до десяти недель. В SOW указаны контрольные точки, поэтому вам не нужно узнавать статус вопросами «как дела».",
+        a: "Большинство проектов занимает от двух до десяти недель. Сроки и этапы вашего проекта указаны в описании работ."
       },
       {
-        q: "Что если работа займёт больше времени, чем вы оценили?",
-        a: "Цена не меняется. Фиксированная цена означает, что риск оценки — наш. Сдвинуть срок может изменение, о котором вы попросили, или зависимость с вашей стороны — доступы, контент, аккаунт App Store, — пришедшая с опозданием.",
+        q: "Что если работа займёт больше времени?",
+        a: "Для согласованного объёма цена остаётся прежней. Запрошенные изменения или задержки с контентом, доступами и аккаунтами могут повлиять на сроки — мы обсуждаем это с вами."
       },
       {
-        q: "Можно передумать насчёт функции в середине проекта?",
-        a: "Да. Мы оценим это как письменное изменение со своей ценой и влиянием на сроки, а вы решите. Изменения никогда не добавляются молча и не выставляются в счёте задним числом.",
+        q: "Можно изменить функцию во время разработки?",
+        a: "Да. До начала изменений письменно согласуем их содержание, цену и влияние на сроки."
       },
       {
-        q: "Вы работаете по ретейнеру?",
-        a: "Только под конкретный результат. Мы не продаём открытые ежемесячные ретейнеры без заявленной отдачи — постоянная работа оценивается так же, как проектная.",
+        q: "Можно договориться о постоянной работе?",
+        a: "Да, с определёнными результатами. Для последующей работы тоже согласуем объём и ожидаемый результат."
       },
       {
         q: "Вы начисляете НДС?",
-        a: "Нет. Simnetiq Ltd находится ниже порога регистрации по НДС и плательщиком НДС сейчас не является, поэтому в расчёте указана итоговая сумма.",
-      },
+        a: "Simnetiq Ltd сейчас не зарегистрирована плательщиком НДС и не добавляет его к своим предложениям."
+      }
     ],
     meta: [
-      { label: "Договор", value: "Подписанный SOW до старта" },
-      { label: "Валюта", value: "GBP · без НДС" },
-      { label: "Типичный проект", value: "2–10 недель" },
-    ],
+      {
+        label: "Соглашение",
+        value: "Подписывается до начала разработки"
+      },
+      {
+        label: "Валюта",
+        value: "GBP · без НДС"
+      },
+      {
+        label: "Обычный срок",
+        value: "2–10 недель"
+      }
+    ]
   },
   {
     slug: "code-ownership",
     code: "W-03",
-    badge: "КОД · ИНФРАСТРУКТУРА · КЛЮЧИ",
-    title: "Всё принадлежит",
-    titleSecondary: "вам",
-    tagline: "Код, инфраструктура, аккаунты и ключи развёртывания — ваши с первого дня.",
-    summary:
-      "Нет лицензии, за которую нужно продолжать платить, нет проприетарного фреймворка, который нельзя покинуть, и нет аккаунта на наше имя, удерживающего вашу продакшен-систему в заложниках. Если завтра вы решите передать проект другому инженеру, у вас уже есть всё необходимое, чтобы это сделать.",
+    badge: "ВАШ КОД · ВАШИ АККАУНТЫ · ВАШ ДОСТУП",
+    title: "Ваш проект.",
+    titleSecondary: "Ваши права.",
+    tagline: "Исходный код и аккаунты проекта под вашим контролем.",
+    summary: "Код, который мы пишем для вашего продукта, принадлежит вам. Репозиторий, аккаунты и документация позволяют продолжить работу с нами или другим разработчиком. Наш хостинг и сторонние лицензии оговариваются отдельно.",
     sections: [
       {
-        heading: "Что означает владение на практике",
-        body: "Код лежит в вашем репозитории в вашей организации — с первого коммита, а не передаётся в конце. Облако, хостинг, база данных, трекинг ошибок, аналитика, аккаунты App Store и Play Console зарегистрированы на вас и оплачиваются с вашей карты. Учётные данные развёртывания, сертификаты подписи и секреты окружения — ваши. Письменные материалы — заметки по архитектуре, регламенты, шаги развёртывания — входят в то, за что вы заплатили, а не продаются отдельно.",
+        heading: "Что вы получаете",
+        body: "Исходный код находится в вашем репозитории с первого коммита. Аккаунты хостинга, баз данных, мониторинга и магазинов приложений оформляются на вас и оплачиваются вами, если не согласован наш хостинг. Вы также получаете доступы, сертификаты подписи, описание архитектуры и инструкции по развёртыванию."
       },
       {
-        heading: "Почему с первого дня, а не при передаче",
-        body: "Владение, передаваемое в конце проекта, — это обещание. Владение с первого коммита — факт, который можно проверить в любой момент. Это также означает, что не существует момента, когда спор об оплате, сбой в графике или разногласие давали бы кому-либо рычаг над вашей продакшен-системой. Никому не нужно никому доверять.",
+        heading: "Доступ в ходе проекта",
+        body: "Вы имеете доступ к репозиторию и аккаунтам во время разработки. Передачу проекта готовим с самого начала, поэтому доступ не зависит от финального этапа."
       },
       {
-        heading: "Когда хостинг ведём мы",
-        body: "Часть проектов — прежде всего VPN-инфраструктура и самостоятельно размещённые пайплайны — работает на VPS, который эксплуатируем мы. Это честный край утверждения, поэтому здесь стоит быть точным. Если вы хотите, чтобы сервер был оформлен на вас, он разворачивается в вашем аккаунте и на вашей карте, а мы получаем доступ как соисполнители. Если вы предпочитаете не заводить аккаунт Hetzner, хостинг ведём мы, и SOW называет это прямо: что там работает, сколько это стоит и каков путь миграции. Даже в этом случае у вас остаются конфигурация, скрипты развёртывания и описанная процедура пересборки, поэтому сервер заменим, а не незаменим. Чего мы не делаем — так это не размещаем что-то критичное, не поставив вас в известность, что схема именно такая.",
+        heading: "Если хостинг ведём мы",
+        body: "Мы можем обслуживать сервер в вашем аккаунте с предоставленным доступом. Если хостинг предоставляем мы, в договоре указаны его состав, стоимость и порядок переноса. У вас остаются конфигурация, скрипты и инструкции для восстановления системы на другом сервере."
       },
       {
-        heading: "Сторонние лицензии — отдельный вопрос",
-        body: "Вам принадлежит то, что пишем мы. Вам не принадлежат Stripe, Supabase, Anthropic, OpenAI или App Store, и ни один подрядчик не может вам их отдать. Это ваши аккаунты с вашей оплатой, и на этапе оценки мы называем, какие из них подразумевает архитектура и сколько примерно стоит их эксплуатация, чтобы счёт после запуска не стал сюрпризом. Если платная библиотека создаст зависимость, из которой нельзя выйти, мы скажем об этом до того, как её выберем.",
+        heading: "Сторонние сервисы и лицензии",
+        body: "У Stripe, Supabase, поставщиков ИИ и других внешних сервисов свои условия и расходы. При оценке называем эти зависимости, включая платные библиотеки, которые могут повлиять на будущий перенос. Оплата идёт с ваших аккаунтов, кроме отдельно согласованного хостинга."
       },
       {
-        heading: "Переиспользуемые компоненты",
-        body: "Часть инфраструктуры — конфигурация CI, каркас развёртывания, внутренние утилиты — не пишется с нуля под каждого клиента, и платить нам за их переписывание было бы пустой тратой вашего бюджета. Всё переиспользуемое либо является открытым кодом под разрешительной лицензией, либо передаётся вам по бессрочной и безотзывной лицензии без платы. Ничто из полученного вами не перестаёт работать, если вы перестаёте работать с нами.",
-      },
+        heading: "Общие компоненты",
+        body: "Общие инфраструктурные компоненты передаются под разрешительными открытыми лицензиями или по бессрочной, безотзывной лицензии без доплаты. Вы сохраняете право использовать их после завершения сотрудничества. Код вашего продукта принадлежит вам."
+      }
     ],
     faq: [
       {
-        q: "Кому принадлежат права на код?",
-        a: "Вам. SOW передаёт их вам, а исходный код находится в вашем репозитории с первого коммита, а не передаётся в конце проекта.",
+        q: "Кому принадлежит код?",
+        a: "Вам принадлежит код, написанный для вашего продукта. Эти права передаются по договору. Для общих компонентов и стороннего ПО действуют их лицензии."
       },
       {
-        q: "Могу ли я передать проект другому разработчику?",
-        a: "Да, в любой момент и не спрашивая нас. У вас уже есть репозиторий, инфраструктурные аккаунты и документация. Мы ответим на вопросы инженера-преемника, а не будем мешать переходу.",
+        q: "Может ли другой разработчик продолжить работу?",
+        a: "Да. У вас есть репозиторий, аккаунты и инструкции по развёртыванию. Мы ответим на вопросы следующего инженера, чтобы помочь с передачей."
       },
       {
-        q: "Придётся ли платить вам лицензионные отчисления, чтобы продолжать пользоваться результатом?",
-        a: "Нет. Ни лицензионной платы, ни проприетарной среды выполнения. Даже если вы больше никогда с нами не заговорите, всё построенное продолжит работать.",
+        q: "Нужно ли платить Simnetiq за право пользоваться продуктом?",
+        a: "Нет. Лицензионной платы за использование созданного нами ПО нет. Хостинг, сторонние сервисы и согласованная поддержка оплачиваются отдельно."
       },
       {
-        q: "Что если сервер моего проекта хостит Simnetiq?",
-        a: "Тогда SOW называет это прямо, вместе с тем, что там работает и сколько это стоит. У вас всё равно остаются конфигурация, скрипты развёртывания и описанная процедура пересборки, поэтому сервер можно поднять в другом месте. Если вам так удобнее, мы развернём его в вашем собственном аккаунте, а доступ получим как соисполнители.",
+        q: "Что если хостинг предоставляет Simnetiq?",
+        a: "В договоре указано, что мы размещаем, сколько это стоит и как перенести систему. Конфигурация, скрипты и инструкции остаются у вас. Также можем настроить сервер в вашем аккаунте."
       },
       {
-        q: "Вы переиспользуете код между клиентами?",
-        a: "Часть инфраструктурного каркаса — да, переписывать его под каждого клиента значило бы тратить ваш бюджет впустую. Всё переиспользуемое — либо открытый код под разрешительной лицензией, либо передано вам бессрочно и безвозмездно. Код вашего продукта принадлежит только вам.",
+        q: "Вы используете компоненты повторно?",
+        a: "Да, в общей инфраструктуре. Они предоставляются под разрешительными открытыми лицензиями или по бессрочной, безотзывной лицензии без доплаты. Код вашего продукта остаётся вашим."
       },
       {
-        q: "Каких постоянных расходов на сторонние сервисы ожидать?",
-        a: "Тех, что вытекают из архитектуры: хостинг, база данных, API моделей, приём платежей, взносы за программы разработчиков. Мы называем их на этапе оценки с примерной стоимостью эксплуатации, чтобы счёт после запуска не стал сюрпризом. Они оплачиваются с ваших аккаунтов и не перепродаются через нас.",
-      },
+        q: "Какие расходы будут после запуска?",
+        a: "В зависимости от проекта: хостинг, базы данных, API моделей ИИ, обработка платежей и аккаунты разработчиков. При оценке перечисляем их и рассчитываем примерные текущие расходы."
+      }
     ],
     meta: [
-      { label: "Исходный код", value: "Ваш репозиторий, первый коммит" },
-      { label: "Инфраструктура", value: "Ваши аккаунты, ваша оплата" },
-      { label: "Плата за продолжение", value: "Отсутствует" },
-    ],
+      {
+        label: "Исходный код",
+        value: "Ваш репозиторий с первого коммита"
+      },
+      {
+        label: "Аккаунты",
+        value: "Ваши; условия хостинга согласуются"
+      },
+      {
+        label: "Лицензионная плата Simnetiq",
+        value: "Отсутствует"
+      }
+    ]
   },
   {
     slug: "support-after-launch",
     code: "W-04",
-    badge: "МОНИТОРИНГ · ПОДДЕРЖКА · ИТЕРАЦИИ",
-    title: "Мы остаёмся",
+    badge: "МОНИТОРИНГ · ОБСЛУЖИВАНИЕ · ОБНОВЛЕНИЯ",
+    title: "Поддержка",
     titleSecondary: "после запуска",
-    tagline: "Мониторинг, поддержка и следующая итерация заложены в план, а не привинчены сверху.",
-    summary:
-      "Запуск — это середина работы. Приложение, которое вышло в прод и тихо сломалось через три недели, не было сдано — оно было брошено точно в срок. Наблюдаемость и автоматизация развёртывания закладываются с первого дня, а то, что происходит после запуска, обсуждается, пока ещё есть время под это построить.",
+    tagline: "Планируем обслуживание и дальнейшие шаги до выхода продукта.",
+    summary: "После запуска продукту нужны обновления, мониторинг и ответственный за сбои. Мы включаем мониторинг и автоматизацию развёртывания в разработку, а объём и срок поддержки согласуем с вами до запуска.",
     sections: [
       {
-        heading: "Что уходит в прод в первый день",
-        body: "Каждый проект выходит с уже подключёнными трекингом ошибок, мониторингом доступности и конвейером CI/CD, потому что достраивать наблюдаемость после инцидента — значит выяснять причину сбоя угадыванием. Это не допродажи в конце SOW. Это часть разработки — по той же причине, по которой ею являются тесты.",
+        heading: "Что готово к запуску",
+        body: "Отслеживание ошибок, проверка доступности и автоматизированное развёртывание входят в разработку. Они помогают замечать проблемы и выпускать обновления по повторяемому процессу. Это часть объёма проекта."
       },
       {
-        heading: "Что на самом деле покрывает поддержка",
-        body: "Исправление дефектов в том, что мы построили. Обновления зависимостей и безопасности. Изменения платформ — релиз iOS или Android, объявляющий устаревшим то, на что вы опираетесь; версия API, которую поставщик выводит из эксплуатации; истекающий сертификат. Реакция на алерты того мониторинга, что ушёл в прод вместе с проектом. Это негероическая работа, от которой зависит, будет ли софт работать через два года.",
+        heading: "Что покрывает обслуживание",
+        body: "Исправление ошибок в нашей работе, обновления зависимостей и безопасности, адаптация к изменениям ОС и внешних API, продление сертификатов и реакция на уведомления мониторинга. Обязанности и сроки определены в соглашении о поддержке."
       },
       {
-        heading: "Что заканчивается вместе с проектом",
-        body: "Поддержка оценивается и стоит так же, как всё остальное, поэтому у неё есть дата окончания и вы её видите. Это не автоматический ежемесячный платёж, идущий, пока кто-нибудь не заметит. Когда период поддержки заканчивается, софт продолжает работать: код, инфраструктура и документация у вас, поэтому ничего не выключается и ничего не нужно продлевать, чтобы остаться в проде. Новые функции оцениваются как новая работа, а не растворяются в строке «поддержка».",
+        heading: "Когда поддержка заканчивается",
+        body: "У поддержки есть объём, цена и дата окончания. Мы не отключаем ПО после её завершения: код, аккаунты и документация остаются у вас. Вы принимаете ответственность за обновления, сбои и необходимые внешние сервисы. Новые функции оцениваются отдельно."
       },
       {
-        heading: "Ревью App Store и Play",
-        body: "Ревью в сторах — не разовое событие. Apple и Google меняют требования, отклоняют сборки по причинам, которых год назад не существовало, и периодически удаляют приложения, не обновлённые под актуальный SDK. Если приложение подавали мы, цикл повторной подачи в период поддержки ведём мы, а не пересылаем вам письмо об отклонении на расшифровку.",
+        heading: "Обновления и проверки в магазинах",
+        body: "Если приложение публиковали мы, повторные подачи в течение срока поддержки ведём тоже мы. Работа включает ответы на замечания проверяющих и адаптацию к требованиям платформ и SDK."
       },
       {
-        heading: "Следующая итерация",
-        body: "Большинство полезного софта меняется после того, как его коснулись реальные пользователи. Мы предпочтём оценить второй этап по тому, что произошло на самом деле — данным мониторинга, обращениям в поддержку, функциям, которыми никто не воспользовался, — а не строить на первом этапе всё, что кто-либо вообразил. Запуск — это момент, когда у вас наконец появляются факты, и это самый дешёвый момент, чтобы сменить направление.",
-      },
+        heading: "Планирование следующей версии",
+        body: "Данные об использовании, обращения и обратная связь помогают определить, что улучшать дальше. На их основе согласуем следующий этап с учётом потребностей, проявившихся после запуска."
+      }
     ],
     faq: [
       {
-        q: "Сколько стоит поддержка после запуска?",
-        a: "Она оценивается под конкретный проект и конкретный объём — в том же SOW или в коротком продолжении, — потому что честный ответ зависит от того, что построено и на чём оно работает. Чем она точно не является, так это открытым ретейнером без заявленного результата.",
+        q: "Как определяется стоимость поддержки?",
+        a: "По согласованному объёму и сроку в основном или последующем договоре. Стоимость зависит от продукта и систем, на которых он работает."
       },
       {
-        q: "Что входит в поддержку, а что считается новым проектом?",
-        a: "Поддержка покрывает дефекты в том, что мы построили, обновления зависимостей и безопасности, изменения платформ и ОС, а также реакцию на алерты мониторинга. Новая функция, новая интеграция или редизайн оцениваются как новая работа — со своим объёмом и ценой, а не поглощаются молча.",
+        q: "Что считается обслуживанием?",
+        a: "Исправления, обновления зависимостей и безопасности, адаптация к платформам и реакция на уведомления мониторинга. Новые функции, интеграции и редизайн оцениваются отдельно."
       },
       {
-        q: "Что произойдёт, если я перестану платить за поддержку?",
-        a: "Ничего не выключится. Код, инфраструктурные аккаунты и документация у вас, поэтому софт продолжит работать ровно так же. С этого момента обновления и инциденты — ваша зона ответственности, и вы можете вернуться к нам за точечным исправлением без постоянного договора.",
+        q: "Что будет, когда я прекращу поддержку?",
+        a: "Мы не отключаем ПО и не закрываем ваш доступ. Обновления, сбои и текущие расходы становятся вашей ответственностью. Можно обратиться за конкретным исправлением без постоянного договора."
       },
       {
-        q: "Вы мониторите приложение, или я должен сообщать о поломках?",
-        a: "Трекинг ошибок и мониторинг доступности уходят в прод вместе с проектом, поэтому в период поддержки алерт обычно доходит до нас раньше, чем вы что-то заметите. Вне периода поддержки мониторинг продолжает работать и продолжает слать алерты — он в вашем аккаунте — просто теперь он шлёт их вам.",
+        q: "Кто получает уведомления мониторинга?",
+        a: "Во время поддержки мы получаем уведомления, необходимые для обслуживания продукта. После её окончания мониторинг остаётся в вашем аккаунте, а уведомления приходят вам."
       },
       {
-        q: "Кто занимается отклонениями в App Store и обновлениями ОС?",
-        a: "Мы, в период поддержки, если приложение подавали мы. Требования сторов и минимальные версии SDK меняются по графику Apple и Google, а не по вашему, поэтому это трактуется как постоянная работа, а не как разовая подача.",
+        q: "Кто занимается проверками магазинов и обновлениями ОС?",
+        a: "Мы, в согласованный срок поддержки, если публиковали приложение. Соответствующие обновления и повторные подачи входят в объём поддержки."
       },
       {
-        q: "Как быстро вы реагируете на инцидент в проде?",
-        a: "В тот же рабочий день по всему, что кладёт живую систему. Штатные вопросы решаются в течение одного рабочего дня. Ожидания по времени реакции прописываются в объёме поддержки, а не остаются устной договорённостью.",
-      },
+        q: "Как быстро вы отвечаете при сбоях?",
+        a: "В тот же рабочий день, если действующая система недоступна, и в течение одного рабочего дня по обычным вопросам. Время реакции закрепляется в соглашении о поддержке."
+      }
     ],
     meta: [
-      { label: "Входит в каждую сборку", value: "Мониторинг · CI/CD" },
-      { label: "Объём поддержки", value: "Определён и ограничен по времени" },
-      { label: "Если поддержка закончилась", value: "Ничего не выключается" },
-    ],
-  },
+      {
+        label: "Входит в разработку",
+        value: "Мониторинг · Автоматизация развёртывания"
+      },
+      {
+        label: "Поддержка",
+        value: "Согласованный объём и срок"
+      },
+      {
+        label: "После поддержки",
+        value: "Код, аккаунты и доступ остаются у вас"
+      }
+    ]
+  }
 ];
 
 const HOW_WE_WORK_BY_LOCALE: Record<Locale, HowWeWork[]> = {
