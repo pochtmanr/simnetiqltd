@@ -13,7 +13,7 @@ function useIsMounted(): boolean {
   return useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
 }
 
-type Variant = "icon" | "segmented";
+type Variant = "icon" | "segmented" | "choices";
 
 type ThemeToggleProps = {
   className?: string;
@@ -64,7 +64,7 @@ export function ThemeToggle({
     cycleChoice();
   };
 
-  if (variant === "segmented") {
+  if (variant === "segmented" || variant === "choices") {
     const options: { value: ThemeChoice; label: string }[] = [
       { value: "system", label: labels.auto },
       { value: "light", label: labels.light },
@@ -72,7 +72,7 @@ export function ThemeToggle({
     ];
     return (
       <div
-        className={`${styles.segmented} ${className}`}
+        className={`${variant === "choices" ? styles.choices : styles.segmented} ${className}`}
         role="group"
         aria-label={labels.generic}
       >
@@ -85,9 +85,11 @@ export function ThemeToggle({
               onClick={() => handleSetChoice(opt.value)}
               aria-pressed={active}
               data-choice={opt.value}
-              className={styles.option}
+              className={variant === "choices" ? styles.choice : styles.option}
             >
+              {variant === "choices" && <span aria-hidden="true">{opt.value === "light" ? <SunIcon /> : opt.value === "dark" ? <MoonIcon /> : <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><rect x="1.5" y="2" width="13" height="9" rx="1" /><path d="M5 14h6M8 11v3" /></svg>}</span>}
               {opt.label}
+              {variant === "choices" && <span className={styles.choiceMark} aria-hidden="true">✓</span>}
             </button>
           );
         })}

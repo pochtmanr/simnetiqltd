@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
-import { useInView } from "motion/react";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { CardArrow } from "@/components/sections/card-arrow";
 import styles from "@/components/sections/landing-sections.module.css";
@@ -32,9 +30,6 @@ export function ServiceCard({
   cta,
   className = "",
 }: ServiceCardProps) {
-  const figureRef = useRef<HTMLDivElement>(null);
-  const figureVisible = useInView(figureRef);
-
   return (
     <ScrollReveal
       delay={index * 80}
@@ -49,10 +44,7 @@ export function ServiceCard({
         onClick={() => track("service_card_click", { service: code, locale })}
       >
         <div className={styles.serviceTop} aria-hidden="true">
-          <span className={styles.number}>0{index + 1}</span>
-          <div ref={figureRef} className={styles.dotFigureMotion} data-visible={figureVisible} style={{ animationDelay: `${index * -2}s` }}>
-            <ServiceFigure code={code} className={styles.dotFigure} />
-          </div>
+          <ServiceFigure code={code} className={styles.dotFigure} animated />
         </div>
         <h3 className="text-title mb-4">{title}</h3>
         <p className="text-body mb-8 flex-1">{body}</p>

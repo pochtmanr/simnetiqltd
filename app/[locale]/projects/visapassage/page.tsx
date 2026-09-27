@@ -110,7 +110,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
       />
 
       {/* Hero */}
-      <section className="border-b border-[var(--color-border)]">
+      <section data-nav-hero="" className="border-b border-[var(--color-border)]">
         <div className={`${styles.hero} mx-auto max-w-[1440px] px-6 lg:px-12`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">

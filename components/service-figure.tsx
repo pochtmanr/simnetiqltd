@@ -2,7 +2,7 @@ import { ServiceFigureMotion } from "./service-figure-motion";
 
 export type ServiceCode = "mobile" | "web" | "aiAutomation";
 
-// Fixed point clouds are generated once, then rendered as decorative SVG.
+// Keep the original 3D coordinates for the live orbit and the static SVG fallback.
 function makeFigure(code: ServiceCode) {
   const points: { x: number; y: number; z: number }[] = [];
   const addPoint = (x: number, y: number, z: number) => {
@@ -17,7 +17,7 @@ function makeFigure(code: ServiceCode) {
     });
   };
 
-  if (code === "mobile") {
+  if (code === "web") {
     for (let row = 1; row < 16; row++) {
       const latitude = (row / 16) * Math.PI;
       const count = Math.round(32 * Math.sin(latitude));
@@ -26,7 +26,7 @@ function makeFigure(code: ServiceCode) {
         addPoint(Math.sin(latitude) * Math.cos(longitude), Math.cos(latitude), Math.sin(latitude) * Math.sin(longitude));
       }
     }
-  } else if (code === "web") {
+  } else if (code === "mobile") {
     for (let ring = 0; ring < 42; ring++) {
       const u = (ring / 42) * Math.PI * 2;
       for (let tube = 0; tube < 12; tube++) {
@@ -51,7 +51,11 @@ function makeFigure(code: ServiceCode) {
     }
   }
 
-  return points.sort((a, b) => a.z - b.z).map((point, index) => (
+  return points.sort((a, b) => a.z - b.z);
+}
+
+function renderPoints(points: { x: number; y: number; z: number }[]) {
+  return points.map((point, index) => (
     <circle
       key={index}
       cx={Number((70 + point.x * 42).toFixed(2))}
@@ -68,7 +72,13 @@ const FIGURES = {
   aiAutomation: makeFigure("aiAutomation"),
 };
 
+const STATIC_FIGURES = {
+  mobile: renderPoints(FIGURES.mobile),
+  web: renderPoints(FIGURES.web),
+  aiAutomation: renderPoints(FIGURES.aiAutomation),
+};
+
 export function ServiceFigure({ code, className, animated = false }: { code: ServiceCode; className?: string; animated?: boolean }) {
-  const figure = <svg className={animated ? undefined : className} viewBox="0 0 140 100" fill="currentColor" aria-hidden="true" focusable="false">{FIGURES[code]}</svg>;
-  return animated ? <ServiceFigureMotion className={className} variant={code}>{figure}</ServiceFigureMotion> : figure;
+  const figure = <svg className={animated ? undefined : className} viewBox="0 0 140 100" fill="currentColor" aria-hidden="true" focusable="false">{STATIC_FIGURES[code]}</svg>;
+  return animated ? <ServiceFigureMotion className={className} variant={code} points={FIGURES[code]}>{figure}</ServiceFigureMotion> : figure;
 }

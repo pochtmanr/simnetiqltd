@@ -18,7 +18,7 @@ const LOCALE_SHORT: Record<Locale, string> = {
 const HEBREW_FONT_STACK =
   'var(--font-lunasima), "Lunasima", ui-sans-serif, system-ui, sans-serif';
 
-type Variant = "compact" | "segmented";
+type Variant = "compact" | "segmented" | "choices";
 
 export function LocaleSwitcher({
   current,
@@ -43,10 +43,10 @@ export function LocaleSwitcher({
     return `/${segments.join("/")}`;
   }
 
-  if (variant === "segmented") {
+  if (variant === "segmented" || variant === "choices") {
     return (
       <div
-        className={`inline-flex items-stretch border border-[var(--color-border-strong)] ${className}`}
+        className={`${variant === "segmented" ? "inline-flex items-stretch border border-[var(--color-border-strong)]" : ""} ${className}`}
         role="group"
         aria-label={label}
       >
@@ -68,7 +68,7 @@ export function LocaleSwitcher({
                 }
               }}
               style={isHebrew ? { fontFamily: HEBREW_FONT_STACK } : undefined}
-              className={[
+              className={variant === "choices" ? "" : [
                 "px-3 py-1.5 text-label-sm transition-colors",
                 "border-l border-[var(--color-border-strong)] first:border-l-0",
                 active
@@ -76,7 +76,9 @@ export function LocaleSwitcher({
                   : "text-[var(--color-text-dim)] hover:text-[var(--color-text)]",
               ].join(" ")}
             >
-              {LOCALE_LABELS[locale]}
+              {variant === "choices" && <span aria-hidden="true" data-locale-code="">{locale.toUpperCase()}</span>}
+              <span>{LOCALE_LABELS[locale]}</span>
+              {variant === "choices" && <span aria-hidden="true" data-choice-mark="">{active ? "✓" : "↗"}</span>}
             </Link>
           );
         })}

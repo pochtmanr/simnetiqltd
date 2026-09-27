@@ -113,7 +113,7 @@ export default async function DopplerVpnPage({ params }: { params: Params }) {
       />
 
       {/* Hero */}
-      <section className="border-b border-[var(--color-border)]">
+      <section data-nav-hero="" className="border-b border-[var(--color-border)]">
         <div className={`mx-auto max-w-[1440px] px-6 lg:px-12 ${styles.hero}`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-7">

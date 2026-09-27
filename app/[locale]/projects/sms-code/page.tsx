@@ -141,7 +141,7 @@ export default async function SmsCodePage({ params }: { params: Params }) {
       />
 
       {/* Hero */}
-      <section className="border-b border-[var(--color-border)]">
+      <section data-nav-hero="" className="border-b border-[var(--color-border)]">
         <div className={`mx-auto max-w-[1440px] px-6 lg:px-12 ${styles.hero}`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
             <div className="lg:col-span-7">

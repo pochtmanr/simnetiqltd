@@ -742,7 +742,7 @@ body > header {
   font-size: 0.75rem;
   color: var(--color-text-dim);
 }
-@media (min-width: 701px) {
+@media (min-width: 768px) {
   .hero-field__inner > .hero-field__proof {
     position: absolute;
     inset-inline-start: 0;
@@ -797,19 +797,19 @@ body > header {
   .hero-field__title { font-size: clamp(2.75rem, 5.5vw, 4rem); }
   .hero-field__visual { height: 500px; }
 }
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   .hero-field {
     grid-template-columns: minmax(0, 1fr);
-    padding: 7.5rem 1.5rem 1.5rem;
-    min-height: auto;
+    padding: 7.5rem 1.5rem 4rem;
+    min-height: min(760px, 100svh);
   }
-  .hero-field__inner { padding-block: 0; }
+  .hero-field__inner { padding-block: 0; text-align: center; }
   .hero-field__title { font-size: clamp(2.65rem, 9vw, 3.75rem); }
-  .hero-field__body { margin-top: 1.5rem; max-width: 36ch; }
-  .hero-field__actions { margin-top: 1.75rem; gap: .65rem; }
+  .hero-field__body { margin: 1.5rem auto 0; max-width: 36ch; }
+  .hero-field__actions { margin-top: 1.75rem; gap: .65rem; justify-content: center; }
   .hero-field__actions :is(.btn-primary, .btn-secondary) { padding-inline: 1rem; gap: .75rem; }
   .hero-field__proof { margin-top: 1.5rem; font-size: .6875rem; }
-  .hero-field__visual { height: 350px; width: 100%; margin: 0; }
+  .hero-field__visual { display: none; }
 }
 
 /* ------------------------------------------------------------------ */
@@ -835,6 +835,8 @@ body > header {
 }
 
 body:has(#hero-nav-sentinel:not([data-passed]))
+  [data-site-header]:not([data-menu-open]),
+body:has([data-nav-hero]:not([data-nav-passed]))
   [data-site-header]:not([data-menu-open]) {
   /* transparent here neutralises BOTH bg-[var(--color-bg)] and the
      color-mix(...85%, transparent) backdrop variant in one go. The rest of

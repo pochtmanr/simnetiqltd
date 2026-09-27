@@ -208,7 +208,7 @@ export default async function ServicePage({
         serviceTypes={slugKeywords[service.slug]}
         locale={locale}
       />
-      <section className={styles.hero}>
+      <section data-nav-hero="" className={styles.hero}>
         <div className={`${styles.container} ${styles.heroGrid}`}>
           <div>
             <h1 className={styles.title}>{service.title}{" "}<span>{service.titleSecondary}</span></h1>

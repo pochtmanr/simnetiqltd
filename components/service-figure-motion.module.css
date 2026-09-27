@@ -1,20 +1,10 @@
-.figure { aspect-ratio: 7 / 5; }
-.motion { width: 100%; height: 100%; }
-.motion > svg { display: block; width: 100%; height: 100%; }
+.figure { position: relative; aspect-ratio: 7 / 5; }
+.figure > svg { display: block; width: 100%; height: 100%; }
+.canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; visibility: hidden; }
+.figure[data-animated="true"] > svg { visibility: hidden; }
+.figure[data-animated="true"] > .canvas { visibility: visible; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .motion {
-    animation: figure-drift 10s ease-in-out infinite alternate;
-    animation-play-state: paused;
-    transform-origin: center;
-  }
-
-  .figure[data-visible="true"] .motion { animation-play-state: running; }
-  .figure[data-variant="web"] .motion { animation-duration: 12s; animation-delay: -4s; animation-direction: alternate-reverse; }
-  .figure[data-variant="aiAutomation"] .motion { animation-duration: 11s; animation-delay: -7s; }
-}
-
-@keyframes figure-drift {
-  from { transform: translateY(3px) rotate(-4deg) scale(0.98); }
-  to { transform: translateY(-5px) rotate(4deg) scale(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  .figure[data-animated="true"] > svg { visibility: visible; }
+  .figure[data-animated="true"] > .canvas { visibility: hidden; }
 }

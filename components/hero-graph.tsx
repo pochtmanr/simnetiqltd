@@ -56,31 +56,6 @@ function buildSculpture(longitudes: number, latitudes: number): Particle[] {
   return particles;
 }
 
-/** Shaded beads are painted once; the animation only projects and blits them. */
-function createBead(light: boolean, accent: boolean) {
-  const sprite = document.createElement("canvas");
-  sprite.width = 24;
-  sprite.height = 24;
-  const ctx = sprite.getContext("2d")!;
-  const shading = ctx.createRadialGradient(8, 7, 1, 12, 12, 11);
-  if (light) {
-    shading.addColorStop(0, accent ? "#aac8ef" : "#9caec0");
-    shading.addColorStop(0.35, accent ? "#527ca8" : "#526373");
-    shading.addColorStop(1, "#162331");
-  } else {
-    shading.addColorStop(0, "#ffffff");
-    shading.addColorStop(0.22, accent ? "#c4dfff" : "#dce8f4");
-    shading.addColorStop(0.5, accent ? "#709bc9" : "#8397aa");
-    shading.addColorStop(0.82, "#344556");
-    shading.addColorStop(1, "#111c28");
-  }
-  ctx.fillStyle = shading;
-  ctx.beginPath();
-  ctx.arc(12, 12, 11, 0, TAU);
-  ctx.fill();
-  return sprite;
-}
-
 export function HeroGraph() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -93,16 +68,12 @@ export function HeroGraph() {
       return;
     }
     const ctx = context;
-    const beads = {
-      dark: [createBead(false, false), createBead(false, true)],
-      light: [createBead(true, false), createBead(true, true)],
-    };
     const hero = canvas.closest(".hero-field");
     const narrow = window.matchMedia("(max-width: 767px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let particles = buildSculpture(narrow.matches ? 90 : 132, narrow.matches ? 10 : 14);
-    let projected = particles.map(() => ({ x: 0, y: 0, z: 0, radius: 0, alpha: 0, accent: false }));
-    let light = document.documentElement.dataset.theme === "light";
+    const particles = buildSculpture(64, 8);
+    const projected = particles.map(() => ({ x: 0, y: 0, z: 0, radius: 0, alpha: 0, accent: false }));
+    let ink = getComputedStyle(canvas).getPropertyValue("--color-text").trim();
     let width = 0;
     let height = 0;
     let frame = 0;
@@ -117,7 +88,7 @@ export function HeroGraph() {
 
     function draw() {
       ctx.clearRect(0, 0, width, height);
-      if (width < 2 || height < 2) return;
+      if (narrow.matches || width < 2 || height < 2) return;
       const time = reduced.matches ? 0 : elapsed;
       const easing = 0.045;
       tiltX += ((reduced.matches ? 0 : pointerX) - tiltX) * easing;
@@ -151,32 +122,35 @@ export function HeroGraph() {
         const normalY = normalX2 * sz + normalY1 * cz;
         const lighting = Math.max(0, -normalX * 0.4 - normalY * 0.55 + normalZ * 0.73);
         const depth = Math.min(1, Math.max(0, (z2 + 1) / 2));
-        const facing = (normalZ + 1) / 2;
         const point = projected[i];
         point.x = width * 0.5 + x3 * scale * perspective;
         point.y = height * 0.5 + y3 * scale * perspective;
         point.z = z2;
-        point.radius = (0.9 + depth * 0.5 + facing * 0.2) * perspective * Math.min(1.22, width / 520);
-        // Hide the reverse surface so the logo strokes read as solid volumes.
-        point.alpha = normalZ < -0.12 ? 0 : (0.32 + lighting * 0.48 + depth * 0.2);
+        // Use the service globe’s 4.5–6px dots, independent of the logo bounds.
+        point.radius = (0.65 + (z2 + 1) * 0.12) * (480 / 140);
+        // Keep the reverse surface visible, with softer dots behind the front face.
+        point.alpha = normalZ < -0.12
+          ? 0.18 + depth * 0.16
+          : 0.32 + lighting * 0.48 + depth * 0.2;
         point.accent = p.accent;
       }
 
       // Sort references separately so every particle keeps its scratch-buffer slot.
       const ordered = drawOrder;
       ordered.sort((a, b) => projected[a].z - projected[b].z);
-      const sprites = light ? beads.light : beads.dark;
       for (const index of ordered) {
         const p = projected[index];
         if (p.alpha === 0) continue;
+        ctx.fillStyle = p.accent ? "#5473A1" : ink;
         ctx.globalAlpha = p.alpha;
-        const size = p.radius * 2;
-        ctx.drawImage(sprites[p.accent ? 1 : 0], p.x - p.radius, p.y - p.radius, size, size);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, TAU);
+        ctx.fill();
       }
       ctx.globalAlpha = 1;
     }
 
-    let drawOrder = particles.map((_, index) => index);
+    const drawOrder = particles.map((_, index) => index);
 
     function resize() {
       width = canvas!.clientWidth;
@@ -189,7 +163,7 @@ export function HeroGraph() {
     }
 
     function tick(now: number) {
-      if (reduced.matches || document.hidden || !visible) {
+      if (narrow.matches || reduced.matches || document.hidden || !visible) {
         syncPlayback();
         draw();
         return;
@@ -201,7 +175,7 @@ export function HeroGraph() {
     }
 
     function syncPlayback() {
-      const shouldRun = visible && !document.hidden && !reduced.matches;
+      const shouldRun = visible && !narrow.matches && !document.hidden && !reduced.matches;
       if (shouldRun === running) return;
       running = shouldRun;
       if (running) {
@@ -232,10 +206,9 @@ export function HeroGraph() {
     }
 
     function onNarrowChange() {
-      particles = buildSculpture(narrow.matches ? 90 : 132, narrow.matches ? 10 : 14);
-      projected = particles.map(() => ({ x: 0, y: 0, z: 0, radius: 0, alpha: 0, accent: false }));
-      drawOrder = particles.map((_, index) => index);
-      draw();
+      resetPointer();
+      syncPlayback();
+      resize();
     }
 
     resize();
@@ -247,7 +220,7 @@ export function HeroGraph() {
     });
     intersectionObserver.observe(canvas);
     const themeObserver = new MutationObserver(() => {
-      light = document.documentElement.dataset.theme === "light";
+      ink = getComputedStyle(canvas).getPropertyValue("--color-text").trim();
       draw();
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });

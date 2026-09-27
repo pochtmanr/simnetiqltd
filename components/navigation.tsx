@@ -160,6 +160,16 @@ export function Navigation({
   useEffect(() => () => clearTimers(), [clearTimers]);
 
   useEffect(() => {
+    const hero = document.querySelector<HTMLElement>("[data-nav-hero]");
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      hero.toggleAttribute("data-nav-passed", !entry.isIntersecting);
+    }, { rootMargin: "-64px 0px 0px 0px", threshold: 0 });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  useEffect(() => {
     if (!settingsOpen) return;
     const dismiss = (event: PointerEvent) => {
       if (!settingsRef.current?.contains(event.target as Node)) setSettingsOpen(false);
@@ -356,12 +366,16 @@ export function Navigation({
                   <span aria-hidden="true">{settingsOpen ? "−" : "+"}</span>
                 </button>
                 {settingsOpen && (
-                  <div id="navigation-settings" className={styles.settingsPanel}>
-                    <p className={styles.settingsLabel}>{dict.languageLabel}</p>
-                    <LocaleSwitcher current={locale} label={dict.languageLabel} className={styles.languageOptions} />
-                    <div className={styles.themeSettings}>
-                      <p className={styles.settingsLabel}>{dict.themeLabel}</p>
-                      <ThemeToggle variant="segmented" className={styles.themeOptions} labels={{ auto: dict.themes.auto, dark: dict.themes.dark, light: dict.themes.light, generic: dict.themes.toggle }} />
+                  <div id="navigation-settings" className={styles.settingsPanel} role="region" aria-label={`${dict.languageLabel} / ${dict.themeLabel}`}>
+                    <div className={styles.settingsInner}>
+                      <div>
+                        <p className={styles.settingsLabel}>{dict.languageLabel}</p>
+                        <LocaleSwitcher current={locale} label={dict.languageLabel} variant="choices" className={styles.languageOptions} />
+                      </div>
+                      <div>
+                        <p className={styles.settingsLabel}>{dict.themeLabel}</p>
+                        <ThemeToggle variant="choices" className={styles.themeOptions} labels={{ auto: dict.themes.auto, dark: dict.themes.dark, light: dict.themes.light, generic: dict.themes.toggle }} />
+                      </div>
                     </div>
                   </div>
                 )}

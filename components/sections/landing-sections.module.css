@@ -70,7 +70,7 @@
 .serviceTop {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 1.5rem;
 }
 
@@ -85,26 +85,7 @@
   width: 140px;
   height: 100px;
   flex-shrink: 0;
-  fill: var(--color-secondary);
-}
-
-.dotFigureMotion {
-  width: 140px;
-  height: 100px;
-  flex-shrink: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .dotFigureMotion {
-    animation: service-figure-drift 8s ease-in-out infinite alternate;
-    animation-play-state: paused;
-  }
-  .dotFigureMotion[data-visible="true"] { animation-play-state: running; }
-}
-
-@keyframes service-figure-drift {
-  from { transform: translateY(2px) rotate(-4deg); }
-  to { transform: translateY(-3px) rotate(4deg); }
+  color: var(--color-secondary);
 }
 
 .serviceCta {

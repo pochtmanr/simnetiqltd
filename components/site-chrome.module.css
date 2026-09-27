@@ -139,7 +139,7 @@
   }
 }
 
-.settings { position: relative; }
+.settings { position: static; }
 
 .settingsToggle {
   display: flex;
@@ -159,82 +159,78 @@
 
 .settingsPanel {
   position: absolute;
-  z-index: 10;
-  inset-inline-end: 0;
-  top: calc(100% + 1rem);
-  width: 280px;
-  max-width: calc(100vw - 3rem);
-  padding: 1.25rem;
-  background: var(--color-surface);
+  z-index: 40;
+  inset-inline: 0;
+  top: calc(100% - 1px);
+  background: var(--color-bg);
   color: var(--color-text);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-control);
+  border-bottom: 1px solid var(--color-border);
+  animation: settings-enter 180ms ease-out;
+}
+
+.settingsInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 2rem 1.5rem 2.5rem;
 }
 
 .settingsLabel {
-  margin-bottom: .5rem;
-  font-size: .75rem;
-  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  font-size: .8125rem;
+  font-weight: 500;
+  color: var(--color-text-dim);
 }
 
 .languageOptions {
   display: flex;
-  width: 100%;
-  font-family: inherit;
-  letter-spacing: .02em;
+  flex-direction: column;
 }
 
-.languageOptions > span { flex: 1; }
-.languageOptions > span > span { display: none; }
 .languageOptions a {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 44px;
-  border-radius: var(--radius-control);
-  color: var(--color-text);
-  font-size: .8125rem;
+  gap: 1rem;
+  min-height: 56px;
+  padding: .75rem .5rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-dim);
+  font-size: 1rem;
+  transition: color var(--motion-fast), background-color var(--motion-fast);
 }
 
-.languageOptions a[aria-current] {
-  color: var(--color-surface);
-  background: var(--color-text);
+.languageOptions a[aria-current] { color: var(--color-text); }
+.languageOptions a:hover { color: var(--color-text); background: var(--nav-hover); }
+.languageOptions [data-locale-code] { width: 1.75rem; font-size: .6875rem; letter-spacing: .04em; }
+.languageOptions [data-choice-mark] { margin-inline-start: auto; }
+.languageOptions a:not([aria-current]) [data-choice-mark] { opacity: 0; }
+.languageOptions a:hover [data-choice-mark],
+.languageOptions a:focus-visible [data-choice-mark] { opacity: 1; }
+
+.themeOptions { display: flex; flex-direction: column; }
+.themeOptions button { text-align: start; }
+
+@keyframes settings-enter {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.languageOptions a:not([aria-current]):hover { background: var(--nav-hover); }
-.languageOptions a:hover { text-decoration: underline; text-underline-offset: 4px; }
-
-.themeSettings {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border-strong);
+@media (min-width: 1024px) {
+  .settingsInner { padding: 2.5rem 3rem; gap: 5rem; }
 }
 
-.themeOptions {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0;
-  padding: 0;
-  border: 0;
-  border-radius: var(--radius-control);
-  background: transparent;
+@media (prefers-reduced-motion: reduce) {
+  .settingsPanel { animation: none; }
+  .languageOptions a { transition: none; }
 }
-
-.themeOptions button {
-  flex: 1;
-  padding-inline: .5rem;
-  border-radius: var(--radius-control);
-  color: var(--color-text);
-  font-weight: 400;
-}
-
-.themeOptions button[aria-pressed="false"]:hover { background: var(--nav-hover); }
-.themeOptions button:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .mobileInner { display: flex; flex-direction: column; min-height: 100%; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); }
 .mobileRow { padding-block: .25rem; border-bottom: 1px solid var(--color-border-strong); }
 .mobileWordmark { margin-top: auto; padding-top: 3rem; font-family: var(--font-inter), Arial, sans-serif; font-size: 17.4vw; font-weight: 750; letter-spacing: -.075em; line-height: 1; direction: ltr; }
 @media (max-width: 767px) {
-  .settingsPanel { position: fixed; top: 76px; inset-inline-end: 1.5rem; max-height: calc(100dvh - 100px); overflow-y: auto; }
+  .settingsPanel { position: fixed; top: 64px; max-height: calc(100dvh - 64px); overflow-y: auto; }
+  .settingsInner { grid-template-columns: 1fr; gap: 1.75rem; }
+  .settingsLabel { margin-bottom: .75rem; }
 }
