@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "rule": "Names and reserved identifiers are frozen. Confirmed values stay null until the owner supplies them outside this repository. No tax rate, FX rate, or credential belongs in this file.",
+  "gates": [
+    {
+      "name": "REPORTING_TIMEZONE",
+      "status": "proposed",
+      "proposed": "Europe/London",
+      "confirmed_value": null
+    },
+    {
+      "name": "REPORTING_CURRENCY",
+      "status": "proposed",
+      "proposed": "GBP",
+      "confirmed_value": null
+    },
+    {
+      "name": "RECOGNITION_BASIS_POLICY",
+      "status": "unconfigured",
+      "confirmed_value": null,
+      "note": "Request enum is purchase, earned_management, settled_cash, sms_legacy. Unsupported values return 422. No default is confirmed."
+    },
+    {
+      "name": "FX_POLICY_VERSION",
+      "status": "unconfigured",
+      "reserved_identifier": "gbp-unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "FX_RATE_SOURCE",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "FX_RATE_EFFECTIVE_TIME_RULE",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "FX_DATASET_ID",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "VAT_STATUS",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "VAT_RATES",
+      "status": "unconfigured",
+      "confirmed_value": null,
+      "note": "Do not assume a rate. Null tax stays null."
+    },
+    {
+      "name": "FISCAL_YEAR_START",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "SHARED_EXPENSE_ALLOCATION_POLICY",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "DOPPLER_HISTORY_START",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "DOPPLER_OPENING_BALANCE_AS_OF",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "DOPPLER_FORMULA_PIN",
+      "status": "unconfigured",
+      "reserved_identifier": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "SMS_HISTORY_START",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "SMS_OPENING_BALANCE_AS_OF",
+      "status": "unconfigured",
+      "confirmed_value": null
+    },
+    {
+      "name": "SMS_LEGACY_FORMULA_PIN",
+      "status": "unconfigured",
+      "reserved_identifier": "sms-legacy-usd-v1",
+      "confirmed_value": null,
+      "note": "Identifier only. The SQL text stays in the SMS repository."
+    }
+  ]
+}

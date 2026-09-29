@@ -33,8 +33,14 @@ function isKnownPath(path: string): boolean {
   return KNOWN_PATHS.has(path.replace(/\/+$/, ""));
 }
 
+const PRIVATE_PREFIXES = ["/admin", "/tg", "/login"];
+
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  if (PRIVATE_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+    return NextResponse.next();
+  }
 
   const pathLocale = LOCALES.find(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)

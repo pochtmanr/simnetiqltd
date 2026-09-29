@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-vercel-bad-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "provider": "vercel",
+  "report": "vercel_daily",
+  "availability": "unavailable",
+  "data_state": "unavailable",
+  "source_timezone": "Europe/London",
+  "property_ref": "redacted",
+  "coverage": {
+    "status": "missing",
+    "missing": [
+      "vercel_drain"
+    ]
+  },
+  "posting": false,
+  "rows": [
+    {
+      "pageviews": 0
+    }
+  ],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "complete_property_total": false
+  },
+  "limitations": [
+    "Invalid because an unavailable report contains a zero row."
+  ],
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "reason": "drain_not_configured"
+}

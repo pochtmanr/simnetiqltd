@@ -1,0 +1,12 @@
+{
+  "error": {
+    "code": "cursor_expired",
+    "message": "Cursor expired. Drop the cursor and bootstrap a new snapshot.",
+    "retryable": false,
+    "resync": {
+      "drop_cursor": true,
+      "endpoint": "/api/business-os/v1/finance/records",
+      "reuse_original_from_to": true
+    }
+  }
+}

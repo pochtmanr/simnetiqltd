@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-gsc-dim-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "provider": "gsc",
+  "report": "gsc_dimension_rows",
+  "availability": "available",
+  "data_state": "partial",
+  "source_timezone": "America/Los_Angeles",
+  "property_ref": "redacted",
+  "coverage": {
+    "status": "partial",
+    "missing": []
+  },
+  "posting": false,
+  "rows": [
+    {
+      "query": "vpn",
+      "page": "https://example.invalid/pricing",
+      "clicks": 2,
+      "impressions": 20,
+      "ctr": "0.10",
+      "position": "8.5"
+    }
+  ],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "complete_property_total": false
+  },
+  "limitations": [
+    "Dimension rows overlap, omit data, and are not the property total. Dates stay in America/Los_Angeles."
+  ],
+  "period": {
+    "from": "2026-09-27T07:00:00Z",
+    "to": "2026-09-28T07:00:00Z",
+    "timezone": "America/Los_Angeles"
+  }
+}

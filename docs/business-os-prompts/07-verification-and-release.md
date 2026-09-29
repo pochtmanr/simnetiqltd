@@ -1,0 +1,19 @@
+# Agent 07 — independent verification and release integration
+
+Read docs/BUSINESS_OS_FUNCTION_MATRIX.md and docs/BUSINESS_OS_PROJECT_API_CONTRACT.md first: the latest project-local calculation and provider-import ownership supersedes any conflicting central reimplementation below. Local admin and project API share calculations; Simnetiq consumes original financial facts plus non-posting report snapshots.
+
+Read AGENTS.md in each repository you touch and the installed Next.js documentation before Next code. Read docs/BUSINESS_OS_AUDIT.md, BUSINESS_OS_ARCHITECTURE.md, BUSINESS_OS_DATABASE.md, BUSINESS_OS_METRICS.md, BUSINESS_OS_INTEGRATIONS.md, BUSINESS_OS_SECURITY.md and BUSINESS_OS_IMPLEMENTATION_PLAN.md first. These plans are source-grounded proposals: introspect actual schema and verify current provider APIs before implementation. Do not invent missing fields/endpoints or silently change agreed contracts.
+
+Scope: Simnetiq Ltd, GBP, Doppler VPN + SMS Code only, owner-only initially, prepared owner/admin/read_only roles, dedicated Simnetiq Telegram business bot. Proposed timezone Europe/London; confirm before production aggregation. Preserve public website, source payment fulfilment and source auth. No Argus/Physics/Greenflagged implementation. Never expose credentials or send them in chat. No destructive database changes. Keep changes within this task's ownership; coordinate shared-file/migration changes with the foundation integrator. Do not deploy financial integrations until staging tests and reconciliation pass. Missing live access means explicitly unverified, not completed.
+
+For handoff report: changed files, migration/contract version, tests and actual results, redacted reconciliation evidence, credentials/configuration still needed, remaining limitations, and next dependent task. Update relevant Business OS documentation to match final behavior.
+
+Run after preceding agents deliver integrated code. Own end-to-end tests, release evidence, reconciliation reports and deployment/runbook completion. Review contracts against BUSINESS_OS_* documents; identify mismatches instead of accepting task-completion claims.
+
+Verify auth/Telegram signature and freshness/replay, link/revoke/refresh/MFA, direct DB/RPC/storage policies for anonymous/owner/admin/read_only, CSRF, secret absence from bundles/logs and private document paths. Check source machine exports do not weaken SMS AAL2 or expose SMS content. Verify no arbitrary user-target session generation.
+
+Run exact-money tests and frozen SMS parity with real redacted source data. Reconcile Doppler by provider/original currency and actual settlements. Verify estimates and missing fees/tax/FX cannot appear as verified net profit; no double counting across RC/source DB/payouts, no transfers counted as sales, no SMS MRR, no mixed recognition bases concealed in combined metrics.
+
+Run browser and actual Telegram client scenarios on staging. Check public en/he/ru pages, redirects/canonical URLs and mailing-list/contact/deletion routes, and confirm private pages aren't crawled or tracked publicly. Exercise backup restore into isolation including Storage policies. Test failed imports, restart/replay, worker lease recovery, staleness alerts, incomplete coverage, recurring reminders and notification recipient restrictions.
+
+Document actual test commands/results, unresolved reconciliation residuals, tested devices and restore evidence. Do not promote an integration that only passes mock tests. Follow BUSINESS_OS_DEPLOYMENT.md: identify correct target, backup, reviewed forward migrations, additive deployment, staged source activation, monitor and preserve replayable evidence. Do not perform destructive rollback or claim production verification without access. Final handoff names known limitations and operating owner for credential rotation, monthly reconciliation and backups.

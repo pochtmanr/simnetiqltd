@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-daily-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-25T23:00:00Z",
+    "to": "2026-09-27T12:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "reporting_currency": "GBP",
+  "basis": "purchase",
+  "formula_version": "unconfigured",
+  "coverage": {
+    "status": "partial",
+    "missing": [
+      "processor_fees"
+    ]
+  },
+  "posting": false,
+  "balances_included": false,
+  "buckets": [
+    {
+      "date": "2026-09-26",
+      "timezone": "Europe/London",
+      "partial": false,
+      "bounds": {
+        "from": "2026-09-25T23:00:00Z",
+        "to": "2026-09-26T23:00:00Z"
+      },
+      "metrics": {
+        "gross_customer_sales": {
+          "amount": "40.00",
+          "currency": "GBP",
+          "quality": "actual",
+          "coverage": "partial",
+          "drill_through": {
+            "dataset": "finance.records",
+            "snapshot_id": "snap-daily-01",
+            "filter": {
+              "project_id": "doppler",
+              "from": "2026-09-26T23:00:00Z",
+              "to": "2026-09-27T23:00:00Z",
+              "basis": "purchase",
+              "record_types": [
+                "sale"
+              ]
+            }
+          }
+        },
+        "net_proceeds": {
+          "amount": null,
+          "currency": "GBP",
+          "quality": "unavailable",
+          "coverage": "missing",
+          "drill_through": {
+            "dataset": "finance.records",
+            "snapshot_id": "snap-daily-01",
+            "filter": {
+              "project_id": "doppler",
+              "from": "2026-09-26T23:00:00Z",
+              "to": "2026-09-27T23:00:00Z",
+              "basis": "purchase",
+              "record_types": [
+                "sale",
+                "fee"
+              ]
+            }
+          },
+          "reason": "missing_fee_and_tax_components"
+        }
+      },
+      "cash_balance": "10.00"
+    },
+    {
+      "date": "2026-09-27",
+      "timezone": "Europe/London",
+      "partial": true,
+      "bounds": {
+        "from": "2026-09-26T23:00:00Z",
+        "to": "2026-09-27T23:00:00Z"
+      },
+      "covered_from": "2026-09-26T23:00:00Z",
+      "covered_to": "2026-09-27T12:00:00Z",
+      "metrics": {
+        "gross_customer_sales": {
+          "amount": "15.00",
+          "currency": "GBP",
+          "quality": "actual",
+          "coverage": "partial",
+          "drill_through": {
+            "dataset": "finance.records",
+            "snapshot_id": "snap-daily-01",
+            "filter": {
+              "project_id": "doppler",
+              "from": "2026-09-26T23:00:00Z",
+              "to": "2026-09-27T23:00:00Z",
+              "basis": "purchase",
+              "record_types": [
+                "sale"
+              ]
+            }
+          }
+        },
+        "net_proceeds": {
+          "amount": null,
+          "currency": "GBP",
+          "quality": "unavailable",
+          "coverage": "missing",
+          "drill_through": {
+            "dataset": "finance.records",
+            "snapshot_id": "snap-daily-01",
+            "filter": {
+              "project_id": "doppler",
+              "from": "2026-09-26T23:00:00Z",
+              "to": "2026-09-27T23:00:00Z",
+              "basis": "purchase",
+              "record_types": [
+                "sale",
+                "fee"
+              ]
+            }
+          },
+          "reason": "missing_fee_and_tax_components"
+        }
+      }
+    }
+  ],
+  "warnings": [
+    "Partial local days are not complete day totals. Stock balances are not in this payload."
+  ]
+}

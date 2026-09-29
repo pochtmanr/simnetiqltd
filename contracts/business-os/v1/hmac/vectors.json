@@ -1,0 +1,88 @@
+{
+  "contract_version": "business-os.contract.v1",
+  "algorithm": "HMAC-SHA256",
+  "signature_encoding": "lowercase-hex",
+  "vectors": [
+    {
+      "id": "get-health-empty-body",
+      "method": "GET",
+      "path": "/api/business-os/v1/health",
+      "query": [],
+      "timestamp": "1759017600",
+      "nonce": "nonce-health-0001",
+      "body_utf8": "",
+      "secret_utf8": "test-secret-do-not-use-in-production",
+      "key_id": "bos_test_doppler_production_v1",
+      "project_id": "doppler",
+      "environment": "production",
+      "request_target": "/api/business-os/v1/health",
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "canonical_utf8": "GET\n/api/business-os/v1/health\n1759017600\nnonce-health-0001\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signature_hex": "8dc751a41ba6d4cd5bdf4cb05713f13bf1828714e53f02b3996c99f5533b5aab"
+    },
+    {
+      "id": "get-overview-canonical-query",
+      "method": "GET",
+      "path": "/api/business-os/v1/overview",
+      "query": [
+        [
+          "to",
+          "2026-09-27T23:00:00Z"
+        ],
+        [
+          "from",
+          "2026-09-26T23:00:00Z"
+        ],
+        [
+          "basis",
+          "purchase"
+        ]
+      ],
+      "timestamp": "1759017600",
+      "nonce": "nonce-overview-0001",
+      "body_utf8": "",
+      "secret_utf8": "test-secret-do-not-use-in-production",
+      "key_id": "bos_test_doppler_production_v1",
+      "project_id": "doppler",
+      "environment": "production",
+      "request_target": "/api/business-os/v1/overview?basis=purchase&from=2026-09-26T23%3A00%3A00Z&to=2026-09-27T23%3A00%3A00Z",
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "canonical_utf8": "GET\n/api/business-os/v1/overview?basis=purchase&from=2026-09-26T23%3A00%3A00Z&to=2026-09-27T23%3A00%3A00Z\n1759017600\nnonce-overview-0001\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signature_hex": "c20b60ffa01349f16dae315b1279773f747b7feec0251901960131939db5d434"
+    },
+    {
+      "id": "nonempty-body-changes-signature",
+      "method": "GET",
+      "path": "/api/business-os/v1/health",
+      "query": [],
+      "timestamp": "1759017600",
+      "nonce": "nonce-body-00000001",
+      "body_utf8": "{}",
+      "secret_utf8": "test-secret-do-not-use-in-production",
+      "key_id": "bos_test_doppler_production_v1",
+      "project_id": "doppler",
+      "environment": "production",
+      "request_target": "/api/business-os/v1/health",
+      "body_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "canonical_utf8": "GET\n/api/business-os/v1/health\n1759017600\nnonce-body-00000001\n44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "signature_hex": "18ba35975c7b9001df7573ee0fabd9ca99818a7e44c0d9ee36e025bae5338820"
+    },
+    {
+      "id": "retry-fresh-nonce",
+      "method": "GET",
+      "path": "/api/business-os/v1/health",
+      "query": [],
+      "timestamp": "1759017600",
+      "nonce": "nonce-health-0002",
+      "body_utf8": "",
+      "secret_utf8": "test-secret-do-not-use-in-production",
+      "key_id": "bos_test_doppler_production_v1",
+      "project_id": "doppler",
+      "environment": "production",
+      "request_target": "/api/business-os/v1/health",
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "canonical_utf8": "GET\n/api/business-os/v1/health\n1759017600\nnonce-health-0002\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signature_hex": "89c880d75c69648c2754594dc5fa458060ad80cceb643d1fb1eef988b1c3e8e2"
+    }
+  ]
+}

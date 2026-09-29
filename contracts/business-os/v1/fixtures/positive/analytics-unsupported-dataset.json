@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-unsupported-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "provider": "ga4",
+  "report": "ga4_overview_daily",
+  "availability": "unsupported",
+  "data_state": "unsupported",
+  "source_timezone": "Europe/London",
+  "property_ref": "redacted",
+  "coverage": {
+    "status": "missing",
+    "missing": [
+      "ga4"
+    ]
+  },
+  "posting": false,
+  "rows": [],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "complete_property_total": false
+  },
+  "limitations": [
+    "The dataset is unsupported for this project. This is not a zero report."
+  ],
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "reason": "provider_not_configured"
+}

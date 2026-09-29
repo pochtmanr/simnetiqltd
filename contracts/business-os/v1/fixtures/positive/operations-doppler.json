@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-ops-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "posting": false,
+  "buckets": [
+    {
+      "date": "2026-09-27",
+      "timezone": "Europe/London",
+      "partial": false,
+      "flows": [
+        {
+          "name": "new_contracts",
+          "count": 2,
+          "additive": true
+        },
+        {
+          "name": "renewal_failures",
+          "count": 1,
+          "additive": true
+        }
+      ],
+      "stocks": [
+        {
+          "name": "paid_access_accounts",
+          "count": 50,
+          "additive": false,
+          "as_of": "2026-09-27T22:59:59Z"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    "Paid access is a stock. Cancellations are not the same as ended access."
+  ]
+}

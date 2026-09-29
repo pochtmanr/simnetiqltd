@@ -1,0 +1,2358 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Business OS project reporting API",
+    "version": "1.0.0",
+    "description": "Read-only contract for Doppler (project_id doppler) and SMS Code (project_id smscode). Not a deployed API. Intervals are [from, to) UTC instants. Daily finance buckets use the requested IANA timezone. GSC rows stay on America/Los_Angeles dates."
+  },
+  "servers": [
+    {
+      "url": "https://{sourceHost}/api/business-os/v1",
+      "variables": {
+        "sourceHost": {
+          "default": "source.example"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "businessOsHmac": []
+    }
+  ],
+  "paths": {
+    "/capabilities": {
+      "get": {
+        "summary": "Advertise datasets, limits, and formula versions.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/capabilities"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/overview": {
+      "get": {
+        "summary": "One cutoff for finance, subscriber counts, and traffic highlights.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/timezone"
+          },
+          {
+            "$ref": "#/components/parameters/currency"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/overview"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/summary": {
+      "get": {
+        "summary": "Non-posting finance components and native-currency subtotals.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/timezone"
+          },
+          {
+            "$ref": "#/components/parameters/currency"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/financeSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/daily": {
+      "get": {
+        "summary": "Non-overlapping local-day buckets. Balances are omitted.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/timezone"
+          },
+          {
+            "$ref": "#/components/parameters/currency"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/source"
+          },
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/financeDaily"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/records": {
+      "get": {
+        "summary": "Incremental canonical records inside a frozen high watermark.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/recordsPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/balances": {
+      "get": {
+        "summary": "Point-in-time balances on or before as_of.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/asOf"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/financeBalances"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/reconciliation": {
+      "get": {
+        "summary": "Matching residuals and optional SMS legacy comparison.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/financeReconciliation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/summary": {
+      "get": {
+        "summary": "Doppler subscription metrics. SMS returns supported false.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/asOf"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/subscriptionsSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/daily": {
+      "get": {
+        "summary": "Additive flows and non-additive stocks.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/operationsDaily"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/report": {
+      "get": {
+        "summary": "Provider report grain. Unsupported datasets are labelled, not zeroed.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          },
+          {
+            "$ref": "#/components/parameters/provider"
+          },
+          {
+            "$ref": "#/components/parameters/report"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/snapshotId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/analyticsReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Import and export health without secrets.",
+        "security": [
+          {
+            "businessOsHmac": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyId"
+          },
+          {
+            "$ref": "#/components/parameters/timestamp"
+          },
+          {
+            "$ref": "#/components/parameters/nonce"
+          },
+          {
+            "$ref": "#/components/parameters/signature"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful read. Summaries are non-posting observations.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/responses.json#/$defs/health"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or malformed parameters, or a non-empty GET body.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication failed, the key is revoked, or the credential is bound to another project or environment.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "The cursor or snapshot expired. Drop it and resync.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The basis, dataset, interval, or cursor binding is not supported.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": true,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary source failure. Retry later.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Private responses must not enter a shared cache.",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "const": "private, no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "Delay-seconds before the next attempt. An HTTP-date is not accepted.",
+                "required": false,
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/common.json#/$defs/errorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "businessOsHmac": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-BOS-Signature",
+        "description": "Lowercase hex HMAC-SHA256. Also send X-BOS-Key-Id, X-BOS-Timestamp, and X-BOS-Nonce. See hmac.md."
+      }
+    },
+    "parameters": {
+      "keyId": {
+        "name": "X-BOS-Key-Id",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "timestamp": {
+        "name": "X-BOS-Timestamp",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[0-9]{10}$"
+        }
+      },
+      "nonce": {
+        "name": "X-BOS-Nonce",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{16,128}$"
+        }
+      },
+      "signature": {
+        "name": "X-BOS-Signature",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "from": {
+        "name": "from",
+        "in": "query",
+        "required": true,
+        "description": "Inclusive UTC instant.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "to": {
+        "name": "to",
+        "in": "query",
+        "required": true,
+        "description": "Exclusive UTC instant.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "timezone": {
+        "name": "timezone",
+        "in": "query",
+        "required": true,
+        "description": "IANA timezone used to group finance days.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "currency": {
+        "name": "currency",
+        "in": "query",
+        "required": true,
+        "description": "Reporting currency. v1 responses use GBP.",
+        "schema": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "basis": {
+        "name": "basis",
+        "in": "query",
+        "required": true,
+        "description": "Unsupported values return 422.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "purchase",
+            "earned_management",
+            "settled_cash",
+            "sms_legacy"
+          ]
+        }
+      },
+      "source": {
+        "name": "source",
+        "in": "query",
+        "required": false,
+        "description": "Optional source filter.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "channel": {
+        "name": "channel",
+        "in": "query",
+        "required": false,
+        "description": "Optional channel filter.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "snapshotId": {
+        "name": "snapshot_id",
+        "in": "query",
+        "required": false,
+        "description": "Pin another endpoint to this cutoff.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "cursor": {
+        "name": "cursor",
+        "in": "query",
+        "required": false,
+        "description": "Opaque continuation. Bootstrap omits it.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "Page size. Sources may advertise a lower maximum.",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "asOf": {
+        "name": "as_of",
+        "in": "query",
+        "required": true,
+        "description": "Balance or subscription instant.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "provider": {
+        "name": "provider",
+        "in": "query",
+        "required": true,
+        "description": "Analytics provider.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ga4",
+            "gsc",
+            "vercel"
+          ]
+        }
+      },
+      "report": {
+        "name": "report",
+        "in": "query",
+        "required": true,
+        "description": "Unknown report ids return 422 unsupported_dataset.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ga4_overview_daily",
+            "ga4_breakdown",
+            "ga4_period_unique_users",
+            "gsc_daily_totals",
+            "gsc_dimension_rows",
+            "vercel_daily"
+          ]
+        }
+      }
+    }
+  }
+}

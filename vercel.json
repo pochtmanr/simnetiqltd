@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/business-os/sync/tick",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/business-os/operations/tick",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}

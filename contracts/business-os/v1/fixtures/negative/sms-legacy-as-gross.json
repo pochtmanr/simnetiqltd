@@ -1,0 +1,49 @@
+{
+  "record_id": "sms-bad-1",
+  "revision": 1,
+  "change_sequence": "1",
+  "record_type": "refund",
+  "project_id": "smscode",
+  "source_system": "sms_ledger",
+  "source_account_id": "acct-smscode-1",
+  "environment": "production",
+  "external_object_id": "evt-1",
+  "economic_transaction_id": "eco-1",
+  "occurred_at": "2026-09-27T10:00:00Z",
+  "updated_at": "2026-09-27T10:05:00Z",
+  "status": "posted",
+  "original_amount": {
+    "amount": null,
+    "currency": "USD",
+    "quality": "unavailable",
+    "reason": "raw_gross_unknown"
+  },
+  "quality": "unavailable",
+  "formula_version": "sms-legacy-usd-v1",
+  "economic_direction": "outflow",
+  "counts_as_new_revenue": false,
+  "source_as_of": "2026-09-27T10:05:00Z",
+  "retrieved_at": "2026-09-27T11:00:00Z",
+  "source_gbp_valuation": {
+    "amount": null,
+    "currency": "GBP",
+    "quality": "unavailable",
+    "reason": "fx_policy_not_configured",
+    "rate": null,
+    "rate_source": null,
+    "effective_at": null,
+    "policy_version": "gbp-unconfigured",
+    "source_amount": null,
+    "source_currency": "USD"
+  },
+  "tax_inclusion": "unknown",
+  "parent_record_id": "sms-sale-1",
+  "counts_as_gross_refunded_principal": true,
+  "legacy_net_amount": {
+    "amount": "8.00",
+    "currency": "USD",
+    "quality": "legacy_derived"
+  },
+  "legacy_formula_version": "sms-legacy-usd-v1",
+  "content_hash": "61ed4925fb274cdde34a04eda5e586bcb2eaf456244733a0931a2c2cc333f761"
+}

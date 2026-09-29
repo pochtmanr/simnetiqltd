@@ -1,0 +1,88 @@
+{
+  "records": [
+    {
+      "record_id": "fee-a",
+      "revision": 1,
+      "change_sequence": "1",
+      "record_type": "fee",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "fee-a",
+      "economic_transaction_id": "eco-fee-a",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": "1.50",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "outflow",
+      "counts_as_new_revenue": false,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "1.50",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "component_id": "cmp-shared",
+      "posting_role": "primary",
+      "content_hash": "d1289451a3c45167d608ceafd189966e8376ee73fa49846f7f331cb01f539baf"
+    },
+    {
+      "record_id": "fee-b",
+      "revision": 1,
+      "change_sequence": "1",
+      "record_type": "fee",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "fee-b",
+      "economic_transaction_id": "eco-fee-b",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": "1.50",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "outflow",
+      "counts_as_new_revenue": false,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "1.50",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "component_id": "cmp-shared",
+      "posting_role": "primary",
+      "content_hash": "77101e07625256842c8c2ce9ba027795a8e370c69d462c82ce7f5a762c493e83"
+    }
+  ]
+}

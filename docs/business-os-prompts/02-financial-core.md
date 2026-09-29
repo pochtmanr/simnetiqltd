@@ -1,0 +1,19 @@
+# Agent 02 — exact-money financial core
+
+Read docs/BUSINESS_OS_FUNCTION_MATRIX.md and docs/BUSINESS_OS_PROJECT_API_CONTRACT.md first: the latest project-local calculation and provider-import ownership supersedes any conflicting central reimplementation below. Local admin and project API share calculations; Simnetiq consumes original financial facts plus non-posting report snapshots.
+
+Read AGENTS.md in each repository you touch and the installed Next.js documentation before Next code. Read docs/BUSINESS_OS_AUDIT.md, BUSINESS_OS_ARCHITECTURE.md, BUSINESS_OS_DATABASE.md, BUSINESS_OS_METRICS.md, BUSINESS_OS_INTEGRATIONS.md, BUSINESS_OS_SECURITY.md and BUSINESS_OS_IMPLEMENTATION_PLAN.md first. These plans are source-grounded proposals: introspect actual schema and verify current provider APIs before implementation. Do not invent missing fields/endpoints or silently change agreed contracts.
+
+Scope: Simnetiq Ltd, GBP, Doppler VPN + SMS Code only, owner-only initially, prepared owner/admin/read_only roles, dedicated Simnetiq Telegram business bot. Proposed timezone Europe/London; confirm before production aggregation. Preserve public website, source payment fulfilment and source auth. No Argus/Physics/Greenflagged implementation. Never expose credentials or send them in chat. No destructive database changes. Keep changes within this task's ownership; coordinate shared-file/migration changes with the foundation integrator. Do not deploy financial integrations until staging tests and reconciliation pass. Missing live access means explicitly unverified, not completed.
+
+For handoff report: changed files, migration/contract version, tests and actual results, redacted reconciliation evidence, credentials/configuration still needed, remaining limitations, and next dependent task. Update relevant Business OS documentation to match final behavior.
+
+Depends on agent 01's database/identity/DTO contract. Own lib/business-os/finance, financial RPCs and tests, manual expense/income server workflows, FX and financial reporting views. Shared migration files are integrated by agent 01.
+
+Implement exact decimal-string parsing and Postgres numeric arithmetic, source/original currency retention and immutable posted journal entries. Model drafts, postings, reversal/replacement, account transfers, supplier prepayment/consumption, processor clearing, settlements, bank/wallet balances and source coverage. Balanced posting must be transactional. No JS Number arithmetic for money. Unknown tax/fees/FX must stay unknown. Use GBP and timestamped FX; do not choose a live FX vendor without checking access/licensing and documenting policy.
+
+Manual income/expense forms' APIs support all requested dates, categories, project/shared allocation, vendor, payment status/method, tax and documents. Shared allocation sums exactly; operating expenses aren't deducted again when fees already appear in proceeds. Recurring schedules create due drafts, never claim payment. Imports use idempotent staging and review. Opening balances require explicit date and provenance.
+
+Implement separate purchase-date sales/proceeds, earned-management and cash views. Preserve SMS legacy USD outputs as compatibility data, not another revenue stream; do not combine mixed recognition bases into verified profit. Support report snapshots/versioned formulas, period locking and audited reopen. CSV exports prevent spreadsheet formula injection and use explicit currency/basis/coverage.
+
+Acceptance fixtures: sale/refund/partial refund/refund reversal; chargeback and fee refund; same sale from two providers; duplicate/concurrent import; supplier top-up then consumption; provider payout then bank observation; own-wallet transfer; allocation rounding; zero/negative denominator; missing FX; GBP/USD and non-two-decimal currency; crypto precision; DST reporting day and month/year boundaries. Prove exact amounts and no double counting. Do not overwrite working SMS formulas.

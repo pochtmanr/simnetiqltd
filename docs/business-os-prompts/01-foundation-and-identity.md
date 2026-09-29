@@ -1,0 +1,21 @@
+# Agent 01 — foundation, database and identity integrator
+
+Read docs/BUSINESS_OS_FUNCTION_MATRIX.md and docs/BUSINESS_OS_PROJECT_API_CONTRACT.md first: the latest project-local calculation and provider-import ownership supersedes any conflicting central reimplementation below. Local admin and project API share calculations; Simnetiq consumes original financial facts plus non-posting report snapshots.
+
+Read AGENTS.md in each repository you touch and the installed Next.js documentation before Next code. Read docs/BUSINESS_OS_AUDIT.md, BUSINESS_OS_ARCHITECTURE.md, BUSINESS_OS_DATABASE.md, BUSINESS_OS_METRICS.md, BUSINESS_OS_INTEGRATIONS.md, BUSINESS_OS_SECURITY.md and BUSINESS_OS_IMPLEMENTATION_PLAN.md first. These plans are source-grounded proposals: introspect actual schema and verify current provider APIs before implementation. Do not invent missing fields/endpoints or silently change agreed contracts.
+
+Scope: Simnetiq Ltd, GBP, Doppler VPN + SMS Code only, owner-only initially, prepared owner/admin/read_only roles, dedicated Simnetiq Telegram business bot. Proposed timezone Europe/London; confirm before production aggregation. Preserve public website, source payment fulfilment and source auth. No Argus/Physics/Greenflagged implementation. Never expose credentials or send them in chat. No destructive database changes. Keep changes within this task's ownership; coordinate shared-file/migration changes with the foundation integrator. Do not deploy financial integrations until staging tests and reconciliation pass. Missing live access means explicitly unverified, not completed.
+
+For handoff report: changed files, migration/contract version, tests and actual results, redacted reconciliation evidence, credentials/configuration still needed, remaining limitations, and next dependent task. Update relevant Business OS documentation to match final behavior.
+
+You own the shared architecture contracts, migration ordering, private routes and identity. Work in /Volumes/RomanSSD/Developer/simnetiq.store. Implement phase 1 only, plus the ledger schema contract needed by agent 02.
+
+Confirm a dedicated Business OS Supabase target before provisioning; preserve marketing's lib/supabase.ts and variables. Start locally with schema/RLS tests. Add organization/membership/project registry and linked Telegram identity tables; roles owner/admin/read_only, one approved owner, no public signup. Keep roles out of editable profile metadata. Seed only Doppler and SMS, sources unverified.
+
+Add private route-group root layout for /admin, /tg and login. Modify proxy.ts so private/auth routes survive existing locale redirects while public en/he/ru behavior remains unchanged. Both interfaces share session-bound server services. Implement owner web sign-in/logout/refresh and MFA enrollment/step-up.
+
+Build and test the Telegram-to-Supabase session proof of concept in BUSINESS_OS_SECURITY.md before promising frictionless login. First link a server-verified Telegram ID from an MFA-authenticated owner session using a short-lived one-time challenge. Validate raw initData, freshness/future bounds, bot identity and replay. Resolve only pre-linked enabled users. If using the proposed generateLink/verifyOtp broker, keep all link/hash handling server-only, verify returned user id, reject user-target input and prove genuine session refresh/revocation. Do not bypass RLS or claim Telegram grants AAL2. Document any fallback requiring normal Supabase login.
+
+Freeze decimal-string DTOs, posting semantics, source identity keys and source status contracts with agent 02 before adapters start writing. Create ledger schema/migration scaffolding under separate Business OS configuration; don't create redundant finance tables. Add required RLS/storage scaffolding and test roles with direct REST/RPC access. Document contract version and ownership in a handoff file.
+
+Acceptance: a known owner can access the same central profile via browser and Telegram; anonymous/unlinked/revoked users and replay cannot; read-only mutation fails; secrets absent from client bundles; public routes and existing six mailing-list tests pass. Test actual Telegram clients in staging, not only mocked initData.

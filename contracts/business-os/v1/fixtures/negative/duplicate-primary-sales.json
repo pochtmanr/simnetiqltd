@@ -1,0 +1,84 @@
+{
+  "records": [
+    {
+      "record_id": "sale-a",
+      "revision": 1,
+      "change_sequence": "1",
+      "record_type": "sale",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "evt-a",
+      "economic_transaction_id": "eco-shared",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": "100.00",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "inflow",
+      "counts_as_new_revenue": true,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "100.00",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "content_hash": "eb27ca56b53c257010e79efbf910ae30eb1199c6454c0749a0457937534d6ad1"
+    },
+    {
+      "record_id": "sale-b",
+      "revision": 1,
+      "change_sequence": "1",
+      "record_type": "sale",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "evt-b",
+      "economic_transaction_id": "eco-shared",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": "100.00",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "inflow",
+      "counts_as_new_revenue": true,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "100.00",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "content_hash": "a41c1926aa0eb94a5d7b1a2718019a0fca867cad4bee4b771475ae980f2a4959"
+    }
+  ]
+}

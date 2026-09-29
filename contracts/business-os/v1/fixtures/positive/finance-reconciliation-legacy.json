@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-recon-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-01T00:00:00Z",
+    "to": "2026-09-28T00:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "posting": false,
+  "runs": [
+    {
+      "run_id": "recon-legacy-01",
+      "compared": [
+        "source_admin",
+        "legacy_sql"
+      ],
+      "status": "incomplete",
+      "residuals": [
+        {
+          "code": "missing_fx",
+          "amount": {
+            "amount": null,
+            "currency": "GBP",
+            "quality": "unavailable",
+            "reason": "fx_policy_not_configured"
+          },
+          "quality": "unavailable"
+        }
+      ],
+      "legacy_comparison": {
+        "formula_version": "sms-legacy-usd-v1",
+        "currency": "USD",
+        "cutoff": "2026-09-28T00:00:00Z",
+        "cash_net_is_bank_cash": false,
+        "fields": {
+          "gross": {
+            "amount": "100.00",
+            "currency": "USD",
+            "quality": "legacy_derived"
+          },
+          "apple_fee": {
+            "amount": "15.00",
+            "currency": "USD",
+            "quality": "legacy_derived",
+            "reason": "gross_minus_net"
+          },
+          "refunds": {
+            "amount": "8.00",
+            "currency": "USD",
+            "quality": "legacy_derived"
+          },
+          "cash_net": {
+            "amount": "77.00",
+            "currency": "USD",
+            "quality": "legacy_derived"
+          }
+        }
+      }
+    }
+  ],
+  "warnings": [
+    "Legacy cash_net is ledger-derived proceeds, not confirmed bank cash."
+  ]
+}

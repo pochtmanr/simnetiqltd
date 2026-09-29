@@ -1,0 +1,39 @@
+{
+  "record_id": "missing-prov-1",
+  "revision": 1,
+  "change_sequence": "1",
+  "record_type": "sale",
+  "project_id": "doppler",
+  "source_account_id": "acct-doppler-1",
+  "environment": "production",
+  "external_object_id": "evt-1",
+  "economic_transaction_id": "eco-1",
+  "occurred_at": "2026-09-27T10:00:00Z",
+  "updated_at": "2026-09-27T10:05:00Z",
+  "status": "posted",
+  "original_amount": {
+    "amount": "100.00",
+    "currency": "USD",
+    "quality": "actual"
+  },
+  "quality": "actual",
+  "formula_version": "unconfigured",
+  "economic_direction": "inflow",
+  "counts_as_new_revenue": true,
+  "source_as_of": "2026-09-27T10:05:00Z",
+  "retrieved_at": "2026-09-27T11:00:00Z",
+  "source_gbp_valuation": {
+    "amount": null,
+    "currency": "GBP",
+    "quality": "unavailable",
+    "reason": "fx_policy_not_configured",
+    "rate": null,
+    "rate_source": null,
+    "effective_at": null,
+    "policy_version": "gbp-unconfigured",
+    "source_amount": "100.00",
+    "source_currency": "USD"
+  },
+  "tax_inclusion": "unknown",
+  "content_hash": "4636dc0d4518f3820eaadb7fd1f188a90ddfcc9785a1d9a6ae5ca42e92db4761"
+}

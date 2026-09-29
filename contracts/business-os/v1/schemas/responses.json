@@ -1,0 +1,981 @@
+{
+  "$id": "https://simnetiq.store/contracts/business-os/v1/schemas/responses.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Business OS reporting responses",
+  "$defs": {
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "product_name",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "api_version",
+        "formula_versions",
+        "fx_policy_version",
+        "timezone",
+        "reporting_currency",
+        "supported_bases",
+        "datasets",
+        "earliest_data_at",
+        "limits",
+        "configured_sources"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "product_name": { "type": "string" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "api_version": { "const": "1.0.0" },
+        "formula_versions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" }
+        },
+        "fx_policy_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+        "timezone": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/timezone" },
+        "reporting_currency": { "const": "GBP" },
+        "supported_bases": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/basis" }
+        },
+        "datasets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["finance", "subscriptions", "operations", "analytics"],
+          "properties": {
+            "finance": { "type": "boolean" },
+            "subscriptions": { "type": "boolean" },
+            "operations": { "type": "boolean" },
+            "analytics": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ga4_overview_daily",
+                "ga4_breakdown",
+                "ga4_period_unique_users",
+                "gsc_daily_totals",
+                "gsc_dimension_rows",
+                "vercel_daily"
+              ],
+              "properties": {
+                "ga4_overview_daily": { "type": "boolean" },
+                "ga4_breakdown": { "type": "boolean" },
+                "ga4_period_unique_users": { "type": "boolean" },
+                "gsc_daily_totals": { "type": "boolean" },
+                "gsc_dimension_rows": { "type": "boolean" },
+                "vercel_daily": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "earliest_data_at": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        "earliest_data_reason": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_range_days", "max_page_size"],
+          "properties": {
+            "max_range_days": { "type": "integer", "minimum": 1, "maximum": 366 },
+            "max_page_size": { "type": "integer", "minimum": 1, "maximum": 500 }
+          }
+        },
+        "configured_sources": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 80 }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "project_id": { "const": "doppler" } }, "required": ["project_id"] },
+          "then": { "properties": { "product_name": { "const": "Doppler" } } }
+        },
+        {
+          "if": { "properties": { "project_id": { "const": "smscode" } }, "required": ["project_id"] },
+          "then": { "properties": { "product_name": { "const": "SMS Code" } } }
+        },
+        {
+          "if": { "properties": { "earliest_data_at": { "type": "null" } }, "required": ["earliest_data_at"] },
+          "then": { "required": ["earliest_data_reason"] }
+        }
+      ]
+    },
+    "overview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "period",
+        "reporting_currency",
+        "basis",
+        "formula_version",
+        "fx_policy_version",
+        "coverage",
+        "posting",
+        "metrics",
+        "subscriber_counts",
+        "traffic_highlights",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" },
+        "reporting_currency": { "const": "GBP" },
+        "basis": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/basis" },
+        "formula_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+        "fx_policy_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+        "coverage": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/coverage" },
+        "posting": { "const": false },
+        "metrics": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetrics" },
+        "subscriber_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["active_contracts", "active_customers", "paid_access_accounts"],
+          "properties": {
+            "active_contracts": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/countValue" },
+            "active_customers": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/countValue" },
+            "paid_access_accounts": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/countValue" }
+          }
+        },
+        "traffic_highlights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["provider", "metric", "value", "quality", "definition"],
+            "properties": {
+              "provider": { "type": "string", "enum": ["ga4", "gsc", "vercel"] },
+              "metric": { "type": "string", "minLength": 1, "maxLength": 80 },
+              "value": { "type": ["string", "integer", "null"] },
+              "quality": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/quality" },
+              "reason": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "definition": { "type": "string", "minLength": 1, "maxLength": 300 }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "quality": { "const": "unavailable" } }, "required": ["quality"] },
+                "then": {
+                  "required": ["reason"],
+                  "properties": { "value": { "type": "null" } }
+                }
+              }
+            ]
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      }
+    },
+    "financeSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "period",
+        "reporting_currency",
+        "basis",
+        "formula_version",
+        "fx_policy_version",
+        "coverage",
+        "posting",
+        "metrics",
+        "native_currency_subtotals",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" },
+        "reporting_currency": { "const": "GBP" },
+        "basis": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/basis" },
+        "formula_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+        "fx_policy_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+        "coverage": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/coverage" },
+        "posting": { "const": false },
+        "metrics": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetrics" },
+        "native_currency_subtotals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["currency", "metrics"],
+            "properties": {
+              "currency": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/isoCurrency" },
+              "metrics": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetrics" }
+            }
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      }
+    },
+    "financeDaily": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "period",
+        "reporting_currency",
+        "basis",
+        "formula_version",
+        "coverage",
+        "posting",
+        "balances_included",
+        "buckets",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" },
+        "reporting_currency": { "const": "GBP" },
+        "basis": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/basis" },
+        "formula_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+        "coverage": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/coverage" },
+        "posting": { "const": false },
+        "balances_included": { "const": false },
+        "buckets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date", "timezone", "partial", "bounds", "metrics"],
+            "properties": {
+              "date": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/localDate" },
+              "timezone": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/timezone" },
+              "partial": { "type": "boolean" },
+              "bounds": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["from", "to"],
+                "properties": {
+                  "from": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+                  "to": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" }
+                }
+              },
+              "covered_from": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+              "covered_to": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+              "metrics": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["gross_customer_sales", "net_proceeds"],
+                "properties": {
+                  "gross_customer_sales": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "refunded_principal": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "sales_tax": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "store_and_processor_fees": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "net_sales": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "net_proceeds": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "direct_costs": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "contribution_profit": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "operating_expenses": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "operating_profit": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" },
+                  "net_profit": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "partial": { "const": true } }, "required": ["partial"] },
+                "then": { "required": ["covered_from", "covered_to"] }
+              }
+            ]
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      }
+    },
+    "recordsPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "high_watermark",
+        "query_binding_sha256",
+        "records",
+        "page"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "high_watermark": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/changeSequence" },
+        "query_binding_sha256": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/sha256" },
+        "records": {
+          "type": "array",
+          "maxItems": 500,
+          "items": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financeRecord" }
+        },
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["limit", "has_more", "next_cursor", "cursor_expires_at", "next_sync_checkpoint"],
+          "properties": {
+            "limit": { "type": "integer", "minimum": 1, "maximum": 500 },
+            "has_more": { "type": "boolean" },
+            "next_cursor": { "type": ["string", "null"], "minLength": 1 },
+            "cursor_expires_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+            "next_sync_checkpoint": { "type": ["string", "null"], "minLength": 1 }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "has_more": { "const": true } }, "required": ["has_more"] },
+              "then": {
+                "properties": {
+                  "next_cursor": { "type": "string" },
+                  "next_sync_checkpoint": { "type": "null" }
+                }
+              }
+            },
+            {
+              "if": { "properties": { "has_more": { "const": false } }, "required": ["has_more"] },
+              "then": {
+                "properties": {
+                  "next_cursor": { "type": "null" },
+                  "next_sync_checkpoint": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "financeBalances": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "as_of_requested",
+        "posting",
+        "balances_are_not_additive",
+        "snapshots",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "as_of_requested": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "posting": { "const": false },
+        "balances_are_not_additive": { "const": true },
+        "snapshots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["financial_account_id", "account_kind", "as_of", "amount", "additive"],
+            "properties": {
+              "financial_account_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+              "account_kind": {
+                "type": "string",
+                "enum": ["cash", "prepaid", "frozen", "clearing", "reserve", "pending_payout"]
+              },
+              "as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+              "amount": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/money" },
+              "additive": { "const": false }
+            }
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      }
+    },
+    "financeReconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "period",
+        "posting",
+        "runs",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" },
+        "posting": { "const": false },
+        "runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["run_id", "compared", "status", "residuals"],
+            "properties": {
+              "run_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+              "compared": {
+                "type": "array",
+                "minItems": 2,
+                "items": { "type": "string", "enum": ["source_admin", "export_api", "legacy_sql", "central_journal"] }
+              },
+              "status": { "type": "string", "enum": ["match", "mismatch", "incomplete"] },
+              "residuals": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["code", "amount", "quality"],
+                  "properties": {
+                    "code": { "type": "string", "minLength": 1, "maxLength": 80 },
+                    "amount": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/money" },
+                    "quality": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/quality" }
+                  }
+                }
+              },
+              "legacy_comparison": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["formula_version", "currency", "cutoff", "cash_net_is_bank_cash", "fields"],
+                "properties": {
+                  "formula_version": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/formulaVersion" },
+                  "currency": { "const": "USD" },
+                  "cutoff": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+                  "cash_net_is_bank_cash": { "const": false },
+                  "fields": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["gross", "apple_fee", "refunds", "cash_net"],
+                    "properties": {
+                      "gross": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/money" },
+                      "apple_fee": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/money" },
+                      "refunds": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/money" },
+                      "cash_net": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/money" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      }
+    },
+    "subscriptionsSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "period",
+        "as_of",
+        "supported",
+        "posting",
+        "metrics",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" },
+        "as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "supported": { "type": "boolean" },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "posting": { "const": false },
+        "metrics": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["active_contracts", "active_customers", "paid_access_accounts", "mrr"],
+          "properties": {
+            "active_contracts": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/countValue" },
+            "active_customers": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/countValue" },
+            "paid_access_accounts": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/countValue" },
+            "mrr": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financialMetric" }
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "supported": { "const": false } }, "required": ["supported"] },
+          "then": {
+            "required": ["reason"],
+            "properties": { "metrics": { "type": "null" } }
+          }
+        }
+      ]
+    },
+    "operationsDaily": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "period",
+        "posting",
+        "buckets",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" },
+        "posting": { "const": false },
+        "buckets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date", "timezone", "partial", "flows", "stocks"],
+            "properties": {
+              "date": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/localDate" },
+              "timezone": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/timezone" },
+              "partial": { "type": "boolean" },
+              "flows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["name", "count", "additive"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "coins_bought",
+                        "coins_spent",
+                        "coins_refunded",
+                        "sms_delivered",
+                        "sms_attempted",
+                        "new_contracts",
+                        "renewal_failures",
+                        "chargeback_events"
+                      ]
+                    },
+                    "count": { "type": "integer", "minimum": 0 },
+                    "additive": { "const": true }
+                  }
+                }
+              },
+              "stocks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["name", "count", "additive", "as_of"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": ["coins_outstanding", "paid_access_accounts", "active_contracts", "active_customers"]
+                    },
+                    "count": { "type": "integer", "minimum": 0 },
+                    "additive": { "const": false },
+                    "as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "warnings": { "$ref": "#/$defs/warnings" }
+      }
+    },
+    "analyticsReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "provider",
+        "report",
+        "availability",
+        "data_state",
+        "source_timezone",
+        "coverage",
+        "posting",
+        "rows",
+        "page",
+        "limitations"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "provider": { "type": "string", "enum": ["ga4", "gsc", "vercel"] },
+        "report": {
+          "type": "string",
+          "enum": [
+            "ga4_overview_daily",
+            "ga4_breakdown",
+            "ga4_period_unique_users",
+            "gsc_daily_totals",
+            "gsc_dimension_rows",
+            "vercel_daily"
+          ]
+        },
+        "availability": { "type": "string", "enum": ["available", "unsupported", "unavailable"] },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "data_state": { "type": "string", "enum": ["final", "partial", "sampled", "unsupported", "unavailable"] },
+        "source_timezone": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/timezone" },
+        "property_ref": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "coverage": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/coverage" },
+        "posting": { "const": false },
+        "must_not_sum_daily_uniques": { "type": "boolean" },
+        "rows": { "type": "array", "maxItems": 500, "items": { "type": "object" } },
+        "page": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["limit", "has_more", "next_cursor", "complete_property_total"],
+          "properties": {
+            "limit": { "type": "integer", "minimum": 1, "maximum": 500 },
+            "has_more": { "type": "boolean" },
+            "next_cursor": { "type": ["string", "null"], "minLength": 1 },
+            "complete_property_total": { "type": "boolean" }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "has_more": { "const": true } }, "required": ["has_more"] },
+              "then": { "properties": { "next_cursor": { "type": "string" } } }
+            },
+            {
+              "if": { "properties": { "has_more": { "const": false } }, "required": ["has_more"] },
+              "then": { "properties": { "next_cursor": { "type": "null" } } }
+            }
+          ]
+        },
+        "limitations": { "$ref": "#/$defs/warnings" },
+        "period": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/period" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "availability": { "enum": ["unsupported", "unavailable"] } },
+            "required": ["availability"]
+          },
+          "then": {
+            "required": ["reason"],
+            "properties": { "rows": { "maxItems": 0 } }
+          }
+        },
+        {
+          "if": { "properties": { "availability": { "const": "unsupported" } }, "required": ["availability"] },
+          "then": { "properties": { "data_state": { "const": "unsupported" } } }
+        },
+        {
+          "if": { "properties": { "provider": { "const": "gsc" } }, "required": ["provider"] },
+          "then": { "properties": { "source_timezone": { "const": "America/Los_Angeles" } } }
+        },
+        {
+          "if": { "properties": { "report": { "const": "ga4_period_unique_users" } }, "required": ["report"] },
+          "then": {
+            "required": ["must_not_sum_daily_uniques"],
+            "properties": {
+              "must_not_sum_daily_uniques": { "const": true },
+              "rows": { "maxItems": 1, "items": { "$ref": "#/$defs/ga4PeriodUniqueRow" } }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "report": { "const": "gsc_dimension_rows" } }, "required": ["report"] },
+          "then": {
+            "properties": {
+              "page": {
+                "properties": { "complete_property_total": { "const": false } },
+                "required": ["complete_property_total"]
+              },
+              "rows": { "items": { "$ref": "#/$defs/gscDimensionRow" } }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "report": { "const": "ga4_overview_daily" }, "availability": { "const": "available" } },
+            "required": ["report", "availability"]
+          },
+          "then": { "properties": { "rows": { "items": { "$ref": "#/$defs/ga4DailyRow" } } } }
+        },
+        {
+          "if": {
+            "properties": { "report": { "const": "gsc_daily_totals" }, "availability": { "const": "available" } },
+            "required": ["report", "availability"]
+          },
+          "then": { "properties": { "rows": { "items": { "$ref": "#/$defs/gscDailyRow" } } } }
+        }
+      ]
+    },
+    "ga4PeriodUniqueRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["active_users"],
+      "properties": { "active_users": { "type": "integer", "minimum": 0 } }
+    },
+    "ga4DailyRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "active_users", "new_users", "sessions", "screen_page_views"],
+      "properties": {
+        "date": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/localDate" },
+        "active_users": { "type": "integer", "minimum": 0 },
+        "new_users": { "type": "integer", "minimum": 0 },
+        "sessions": { "type": "integer", "minimum": 0 },
+        "screen_page_views": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "gscDailyRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "clicks", "impressions", "ctr", "position", "search_type", "aggregation_type"],
+      "properties": {
+        "date": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/localDate" },
+        "clicks": { "type": "integer", "minimum": 0 },
+        "impressions": { "type": "integer", "minimum": 0 },
+        "ctr": { "type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "position": { "type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "search_type": { "type": "string", "enum": ["web", "image", "video", "news", "discover", "googleNews"] },
+        "aggregation_type": { "type": "string", "enum": ["auto", "byPage", "byProperty"] }
+      }
+    },
+    "gscDimensionRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clicks", "impressions", "ctr", "position"],
+      "properties": {
+        "date": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/localDate" },
+        "query": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "page": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "country": { "type": "string", "minLength": 2, "maxLength": 8 },
+        "device": { "type": "string", "enum": ["DESKTOP", "MOBILE", "TABLET"] },
+        "clicks": { "type": "integer", "minimum": 0 },
+        "impressions": { "type": "integer", "minimum": 0 },
+        "ctr": { "type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "position": { "type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" }
+      }
+    },
+    "health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "contract_version",
+        "project_id",
+        "environment",
+        "snapshot_id",
+        "generated_at",
+        "data_as_of",
+        "status",
+        "sources"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "contract_version": { "const": "business-os.contract.v1" },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "generated_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "status": { "type": "string", "enum": ["ok", "degraded", "unavailable"] },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source", "status", "last_successful_sync_at", "covered_through", "lag_seconds"],
+            "properties": {
+              "source": { "type": "string", "minLength": 1, "maxLength": 80 },
+              "status": { "type": "string", "enum": ["ok", "degraded", "unavailable", "unknown"] },
+              "last_successful_sync_at": {
+                "type": ["string", "null"],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+              },
+              "covered_through": {
+                "type": ["string", "null"],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+              },
+              "lag_seconds": { "type": ["integer", "null"], "minimum": 0 },
+              "reason": { "type": "string", "minLength": 1, "maxLength": 200 }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "status": { "const": "unknown" } }, "required": ["status"] },
+                "then": {
+                  "required": ["reason"],
+                  "properties": { "lag_seconds": { "type": "null" } }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "cursorPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "v",
+        "project_id",
+        "environment",
+        "endpoint",
+        "query_sha256",
+        "snapshot_id",
+        "high_watermark",
+        "after_change_sequence",
+        "expires_at"
+      ],
+      "properties": {
+        "v": { "const": 1 },
+        "project_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/projectId" },
+        "environment": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/environment" },
+        "endpoint": {
+          "type": "string",
+          "enum": ["/api/business-os/v1/finance/records", "/api/business-os/v1/analytics/report"]
+        },
+        "query_sha256": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/sha256" },
+        "snapshot_id": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/id" },
+        "high_watermark": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/changeSequence" },
+        "after_change_sequence": { "type": "string", "pattern": "^(0|[1-9][0-9]*)$" },
+        "expires_at": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" }
+      }
+    },
+    "cursorFixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["payload", "wire_base64url"],
+      "properties": {
+        "payload": { "$ref": "#/$defs/cursorPayload" },
+        "wire_base64url": { "type": "string", "minLength": 1 }
+      }
+    },
+    "recordSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["records"],
+      "properties": {
+        "records": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/financeRecord" }
+        }
+      }
+    },
+    "snapshotBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot_id", "data_as_of", "parts"],
+      "properties": {
+        "snapshot_id": { "type": "string", "minLength": 1 },
+        "data_as_of": { "$ref": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json#/$defs/utcInstant" },
+        "parts": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema", "document"],
+            "properties": {
+              "schema": { "type": "string", "minLength": 1 },
+              "document": { "type": "object" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

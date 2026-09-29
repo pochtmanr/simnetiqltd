@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "unsupported_basis",
+    "message": "Basis is not supported for this project.",
+    "retryable": false
+  }
+}

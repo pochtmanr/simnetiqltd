@@ -800,15 +800,25 @@ body > header {
 @media (max-width: 767px) {
   .hero-field {
     grid-template-columns: minmax(0, 1fr);
-    padding: 7.5rem 1.5rem 4rem;
-    min-height: min(760px, 100svh);
+    /* The -4rem pull-under is for the desktop overlay. On a phone the bar is
+       solid and in flow, so the overlap only gives Safari a layer to
+       recomposite across the first pixels of scroll. */
+    margin-top: 0;
+    padding: 3.5rem 1.5rem 4rem;
+    min-height: min(760px, calc(100svh - 4rem));
   }
   .hero-field__inner { padding-block: 0; text-align: center; }
   .hero-field__title { font-size: clamp(2.65rem, 9vw, 3.75rem); }
   .hero-field__body { margin: 1.5rem auto 0; max-width: 36ch; }
   .hero-field__actions { margin-top: 1.75rem; gap: .65rem; justify-content: center; }
   .hero-field__actions :is(.btn-primary, .btn-secondary) { padding-inline: 1rem; gap: .75rem; }
-  .hero-field__proof { margin-top: 1.5rem; font-size: .6875rem; }
+  .hero-field__proof {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.5rem;
+    font-size: .6875rem;
+  }
   .hero-field__visual { display: none; }
 }
 
@@ -854,6 +864,20 @@ body > header {
        photograph blurs under the bar. */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+}
+
+/* iOS Safari does not composite backdrop-filter on a sticky bar until scroll
+   leaves 0. The bar's backdrop-filter transition then animates that
+   correction across the first pixels. Mobile is a solid surface, so drop
+   the frost entirely. */
+@media (max-width: 767px) {
+  [data-site-header] {
+    background-color: var(--color-bg);
+    /* The blur utility reads this variable. `backdrop-filter: none` is
+       stripped in the CSS build, so the variable is what actually turns
+       the frost off. */
+    --tw-backdrop-blur: none;
   }
 }
 

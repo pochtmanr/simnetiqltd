@@ -1,0 +1,277 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-cutoff-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "reporting_currency": "GBP",
+  "basis": "purchase",
+  "formula_version": "unconfigured",
+  "fx_policy_version": "gbp-unconfigured",
+  "coverage": {
+    "status": "partial",
+    "missing": [
+      "sales_tax",
+      "processor_fees"
+    ]
+  },
+  "posting": false,
+  "metrics": {
+    "gross_customer_sales": {
+      "amount": "100.00",
+      "currency": "GBP",
+      "quality": "actual",
+      "coverage": "partial",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale"
+          ]
+        }
+      }
+    },
+    "refunded_principal": {
+      "amount": "10.00",
+      "currency": "GBP",
+      "quality": "actual",
+      "coverage": "complete",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "refund"
+          ]
+        }
+      }
+    },
+    "sales_tax": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale",
+            "refund"
+          ]
+        }
+      },
+      "reason": "missing_sales_tax"
+    },
+    "store_and_processor_fees": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "fee"
+          ]
+        }
+      },
+      "reason": "missing_processor_fees"
+    },
+    "net_sales": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale",
+            "refund"
+          ]
+        }
+      },
+      "reason": "missing_sales_tax"
+    },
+    "net_proceeds": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale",
+            "refund",
+            "fee"
+          ]
+        }
+      },
+      "reason": "missing_fee_and_tax_components"
+    },
+    "direct_costs": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "direct_cost"
+          ]
+        }
+      },
+      "reason": "missing_direct_costs"
+    },
+    "contribution_profit": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale",
+            "direct_cost"
+          ]
+        }
+      },
+      "reason": "incomplete_costs"
+    },
+    "operating_expenses": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "expense"
+          ]
+        }
+      },
+      "reason": "missing_operating_expenses"
+    },
+    "operating_profit": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale",
+            "expense"
+          ]
+        }
+      },
+      "reason": "incomplete_costs"
+    },
+    "net_profit": {
+      "amount": null,
+      "currency": "GBP",
+      "quality": "unavailable",
+      "coverage": "missing",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-cutoff-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale",
+            "expense"
+          ]
+        }
+      },
+      "reason": "incomplete_costs_and_taxes"
+    }
+  },
+  "subscriber_counts": {
+    "active_contracts": {
+      "value": 4
+    },
+    "active_customers": {
+      "value": 3
+    },
+    "paid_access_accounts": {
+      "value": 5
+    }
+  },
+  "traffic_highlights": [
+    {
+      "provider": "ga4",
+      "metric": "active_users",
+      "value": null,
+      "quality": "unavailable",
+      "reason": "provider_not_configured",
+      "definition": "GA4 activeUsers for the whole requested interval, not a sum of daily rows."
+    }
+  ],
+  "warnings": [
+    "Synthetic fixture. Not production evidence."
+  ]
+}

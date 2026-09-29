@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "v": 1,
+    "project_id": "doppler",
+    "environment": "production",
+    "endpoint": "/api/business-os/v1/finance/records",
+    "query_sha256": "333c04dd151a2a6831c039cb9a651df29198be8a04e16ce861d4b6a34a11c954",
+    "snapshot_id": "snap-records-01",
+    "high_watermark": "100",
+    "after_change_sequence": "0",
+    "expires_at": "2026-09-29T09:00:00Z"
+  },
+  "wire_base64url": "eyJ2IjoxLCJwcm9qZWN0X2lkIjoiZG9wcGxlciIsImVudmlyb25tZW50IjoicHJvZHVjdGlvbiIsImVuZHBvaW50IjoiL2FwaS9idXNpbmVzcy1vcy92MS9maW5hbmNlL3JlY29yZHMiLCJxdWVyeV9zaGEyNTYiOiIzMzNjMDRkZDE1MWEyYTY4MzFjMDM5Y2I5YTY1MWRmMjkxOThiZThhMDRlMTZjZTg2MWQ0YjZhMzRhMTFjOTU0Iiwic25hcHNob3RfaWQiOiJzbmFwLXJlY29yZHMtMDEiLCJoaWdoX3dhdGVybWFyayI6IjEwMCIsImFmdGVyX2NoYW5nZV9zZXF1ZW5jZSI6IjAiLCJleHBpcmVzX2F0IjoiMjAyNi0wOS0yOVQwOTowMDowMFoifQ"
+}

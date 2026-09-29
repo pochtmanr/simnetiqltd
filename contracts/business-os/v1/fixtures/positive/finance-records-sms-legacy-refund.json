@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-sms-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "high_watermark": "100",
+  "query_binding_sha256": "333c04dd151a2a6831c039cb9a651df29198be8a04e16ce861d4b6a34a11c954",
+  "records": [
+    {
+      "record_id": "sms-refund-1",
+      "revision": 1,
+      "change_sequence": "40",
+      "record_type": "refund",
+      "project_id": "smscode",
+      "source_system": "sms_ledger",
+      "source_account_id": "acct-smscode-1",
+      "environment": "production",
+      "external_object_id": "sms-refund-evt-1",
+      "economic_transaction_id": "eco-sms-refund-1",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": null,
+        "currency": "USD",
+        "quality": "unavailable",
+        "reason": "raw_gross_unknown"
+      },
+      "quality": "unavailable",
+      "formula_version": "sms-legacy-usd-v1",
+      "economic_direction": "outflow",
+      "counts_as_new_revenue": false,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": null,
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "parent_record_id": "sms-sale-1",
+      "counts_as_gross_refunded_principal": false,
+      "legacy_net_amount": {
+        "amount": "8.00",
+        "currency": "USD",
+        "quality": "legacy_derived"
+      },
+      "legacy_formula_version": "sms-legacy-usd-v1",
+      "gross_reconstructed": false,
+      "content_hash": "49b041344cab93103a12d79886e6d4815db8a671011f04279897be1bd486c08a"
+    }
+  ],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "cursor_expires_at": "2026-09-29T09:00:00Z",
+    "next_sync_checkpoint": "ckpt-snap-sms-01"
+  }
+}

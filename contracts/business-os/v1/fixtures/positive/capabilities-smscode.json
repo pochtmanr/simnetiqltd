@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-cap-smscode",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "product_name": "SMS Code",
+  "api_version": "1.0.0",
+  "fx_policy_version": "gbp-unconfigured",
+  "timezone": "Europe/London",
+  "reporting_currency": "GBP",
+  "earliest_data_at": null,
+  "earliest_data_reason": "history_start_unconfigured",
+  "limits": {
+    "max_range_days": 366,
+    "max_page_size": 500
+  },
+  "warnings": [
+    "Synthetic capabilities. Provider access is not confirmed."
+  ],
+  "formula_versions": [
+    "sms-legacy-usd-v1"
+  ],
+  "supported_bases": [
+    "sms_legacy",
+    "purchase"
+  ],
+  "datasets": {
+    "finance": true,
+    "subscriptions": false,
+    "operations": true,
+    "analytics": {
+      "ga4_overview_daily": false,
+      "ga4_breakdown": false,
+      "ga4_period_unique_users": false,
+      "gsc_daily_totals": false,
+      "gsc_dimension_rows": false,
+      "vercel_daily": false
+    }
+  },
+  "configured_sources": [
+    "revenuecat",
+    "onlinesim"
+  ]
+}

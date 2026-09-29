@@ -7,6 +7,7 @@ export const revalidate = 86400;
 // the homepage renders through a client component, so a crawler that can't
 // fetch /_next/static/chunks/ renders a near-empty page.
 const BLOCKED = ["/api/"];
+const PRIVATE = ["/admin", "/tg", "/login"];
 
 const USER_AGENTS: { ua: string; allow: string; disallow?: string[] }[] = [
   { ua: "*", allow: "/", disallow: BLOCKED },
@@ -25,10 +26,10 @@ const USER_AGENTS: { ua: string; allow: string; disallow?: string[] }[] = [
   { ua: "Claude-Web", allow: "/", disallow: BLOCKED },
 ];
 
-function buildRobotsTxt(): string {
+export function buildRobotsTxt(): string {
   const blocks = USER_AGENTS.map((rule) => {
     const lines: string[] = [`User-agent: ${rule.ua}`, `Allow: ${rule.allow}`];
-    for (const path of rule.disallow ?? []) lines.push(`Disallow: ${path}`);
+    for (const path of [...(rule.disallow ?? []), ...PRIVATE]) lines.push(`Disallow: ${path}`);
     return lines.join("\n");
   });
 

@@ -1,0 +1,629 @@
+{
+  "$id": "https://simnetiq.store/contracts/business-os/v1/schemas/common.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Business OS reporting contract primitives",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "utcInstant": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "localDate": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "timezone": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_+/-]{1,64}$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$"
+    },
+    "changeSequence": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "projectId": {
+      "type": "string",
+      "enum": ["doppler", "smscode"]
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["production", "staging", "test"]
+    },
+    "basis": {
+      "type": "string",
+      "enum": ["purchase", "earned_management", "settled_cash", "sms_legacy"]
+    },
+    "quality": {
+      "type": "string",
+      "enum": ["actual", "estimated", "legacy_derived", "unavailable"]
+    },
+    "coverageStatus": {
+      "type": "string",
+      "enum": ["complete", "partial", "missing"]
+    },
+    "isoCurrency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "recordType": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "refund",
+        "refund_reversal",
+        "chargeback",
+        "fee",
+        "expense",
+        "direct_cost",
+        "settlement",
+        "transfer",
+        "opening_balance"
+      ]
+    },
+    "formulaVersion": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "missing"],
+      "properties": {
+        "status": { "$ref": "#/$defs/coverageStatus" },
+        "missing": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 80 }
+        }
+      }
+    },
+    "period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "timezone"],
+      "properties": {
+        "from": { "$ref": "#/$defs/utcInstant" },
+        "to": { "$ref": "#/$defs/utcInstant" },
+        "timezone": { "$ref": "#/$defs/timezone" }
+      }
+    },
+    "drillThrough": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset", "snapshot_id", "filter"],
+      "properties": {
+        "dataset": {
+          "type": "string",
+          "enum": [
+            "finance.records",
+            "finance.balances",
+            "operations.daily",
+            "analytics.report",
+            "subscriptions.summary"
+          ]
+        },
+        "snapshot_id": { "$ref": "#/$defs/id" },
+        "filter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["project_id"],
+          "properties": {
+            "project_id": { "$ref": "#/$defs/projectId" },
+            "from": { "$ref": "#/$defs/utcInstant" },
+            "to": { "$ref": "#/$defs/utcInstant" },
+            "as_of": { "$ref": "#/$defs/utcInstant" },
+            "basis": { "$ref": "#/$defs/basis" },
+            "record_types": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/recordType" }
+            },
+            "source": { "type": "string", "minLength": 1, "maxLength": 80 },
+            "channel": { "type": "string", "minLength": 1, "maxLength": 80 }
+          },
+          "anyOf": [{ "required": ["from", "to"] }, { "required": ["as_of"] }]
+        }
+      }
+    },
+    "money": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "quality"],
+      "properties": {
+        "amount": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "currency": { "$ref": "#/$defs/isoCurrency" },
+        "asset": { "type": "string", "pattern": "^[A-Z0-9]{2,16}$" },
+        "network": { "type": "string", "pattern": "^[a-z0-9_-]{2,32}$" },
+        "quality": { "$ref": "#/$defs/quality" },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 200 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "amount": { "type": "null" } }, "required": ["amount"] },
+          "then": {
+            "required": ["reason"],
+            "properties": { "quality": { "const": "unavailable" } }
+          }
+        },
+        {
+          "if": { "properties": { "quality": { "const": "unavailable" } }, "required": ["quality"] },
+          "then": {
+            "required": ["reason"],
+            "properties": { "amount": { "type": "null" } }
+          }
+        },
+        {
+          "if": {
+            "properties": { "amount": { "type": "string", "pattern": "^0(\\.0+)?$" } },
+            "required": ["amount"]
+          },
+          "then": { "properties": { "quality": { "const": "actual" } } }
+        },
+        {
+          "oneOf": [
+            {
+              "required": ["currency"],
+              "not": { "anyOf": [{ "required": ["asset"] }, { "required": ["network"] }] }
+            },
+            {
+              "required": ["asset", "network"],
+              "not": { "required": ["currency"] }
+            }
+          ]
+        }
+      ]
+    },
+    "financialMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "currency", "quality", "coverage", "drill_through"],
+      "properties": {
+        "amount": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "currency": { "$ref": "#/$defs/isoCurrency" },
+        "quality": { "$ref": "#/$defs/quality" },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "coverage": { "$ref": "#/$defs/coverageStatus" },
+        "drill_through": { "$ref": "#/$defs/drillThrough" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "amount": { "type": "null" } }, "required": ["amount"] },
+          "then": {
+            "required": ["reason"],
+            "properties": { "quality": { "const": "unavailable" } }
+          }
+        },
+        {
+          "if": { "properties": { "quality": { "const": "unavailable" } }, "required": ["quality"] },
+          "then": {
+            "required": ["reason"],
+            "properties": { "amount": { "type": "null" } }
+          }
+        },
+        {
+          "if": {
+            "properties": { "amount": { "type": "string", "pattern": "^0(\\.0+)?$" } },
+            "required": ["amount"]
+          },
+          "then": { "properties": { "quality": { "const": "actual" } } }
+        }
+      ]
+    },
+    "financialMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gross_customer_sales",
+        "refunded_principal",
+        "sales_tax",
+        "store_and_processor_fees",
+        "net_sales",
+        "net_proceeds",
+        "direct_costs",
+        "contribution_profit",
+        "operating_expenses",
+        "operating_profit",
+        "net_profit"
+      ],
+      "properties": {
+        "gross_customer_sales": { "$ref": "#/$defs/financialMetric" },
+        "refunded_principal": { "$ref": "#/$defs/financialMetric" },
+        "sales_tax": { "$ref": "#/$defs/financialMetric" },
+        "store_and_processor_fees": { "$ref": "#/$defs/financialMetric" },
+        "net_sales": { "$ref": "#/$defs/financialMetric" },
+        "net_proceeds": { "$ref": "#/$defs/financialMetric" },
+        "direct_costs": { "$ref": "#/$defs/financialMetric" },
+        "contribution_profit": { "$ref": "#/$defs/financialMetric" },
+        "operating_expenses": { "$ref": "#/$defs/financialMetric" },
+        "operating_profit": { "$ref": "#/$defs/financialMetric" },
+        "net_profit": { "$ref": "#/$defs/financialMetric" }
+      }
+    },
+    "countValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value"],
+      "properties": {
+        "value": { "type": ["integer", "null"], "minimum": 0 },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 200 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "value": { "type": "null" } }, "required": ["value"] },
+          "then": { "required": ["reason"] }
+        }
+      ]
+    },
+    "sourceGbpValuation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "currency", "quality", "policy_version", "rate", "source_amount", "source_currency"],
+      "properties": {
+        "amount": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "currency": { "const": "GBP" },
+        "quality": { "$ref": "#/$defs/quality" },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "rate": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "rate_source": { "type": ["string", "null"], "minLength": 1 },
+        "effective_at": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$" },
+        "policy_version": { "$ref": "#/$defs/formulaVersion" },
+        "source_amount": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,18})?$" },
+        "source_currency": { "$ref": "#/$defs/isoCurrency" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "quality": { "const": "unavailable" } }, "required": ["quality"] },
+          "then": {
+            "required": ["reason"],
+            "properties": {
+              "amount": { "type": "null" },
+              "rate": { "type": "null" }
+            }
+          }
+        }
+      ]
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component_id", "component_type", "amount", "posting_role", "vat_recoverable"],
+      "properties": {
+        "component_id": { "$ref": "#/$defs/id" },
+        "component_type": {
+          "type": "string",
+          "enum": ["processor_fee", "store_commission", "sales_tax", "network_fee", "fee_reversal", "tax_reversal"]
+        },
+        "amount": { "$ref": "#/$defs/money" },
+        "posting_role": { "type": "string", "enum": ["primary", "alias"] },
+        "vat_recoverable": { "type": ["boolean", "null"] },
+        "vat_treatment_reason": { "type": "string", "minLength": 1, "maxLength": 200 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "vat_recoverable": { "type": "null" } }, "required": ["vat_recoverable"] },
+          "then": { "required": ["vat_treatment_reason"] }
+        }
+      ]
+    },
+    "financeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_id",
+        "revision",
+        "change_sequence",
+        "record_type",
+        "project_id",
+        "source_system",
+        "source_account_id",
+        "environment",
+        "external_object_id",
+        "economic_transaction_id",
+        "occurred_at",
+        "updated_at",
+        "status",
+        "original_amount",
+        "quality",
+        "formula_version",
+        "content_hash",
+        "economic_direction",
+        "counts_as_new_revenue",
+        "source_as_of",
+        "retrieved_at"
+      ],
+      "properties": {
+        "record_id": { "$ref": "#/$defs/id" },
+        "revision": { "type": "integer", "minimum": 1 },
+        "change_sequence": { "$ref": "#/$defs/changeSequence" },
+        "record_type": { "$ref": "#/$defs/recordType" },
+        "project_id": { "$ref": "#/$defs/projectId" },
+        "source_system": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "source_account_id": { "$ref": "#/$defs/id" },
+        "environment": { "$ref": "#/$defs/environment" },
+        "external_object_id": { "$ref": "#/$defs/id" },
+        "economic_transaction_id": { "$ref": "#/$defs/id" },
+        "alias_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "occurred_at": { "$ref": "#/$defs/utcInstant" },
+        "updated_at": { "$ref": "#/$defs/utcInstant" },
+        "status": { "type": "string", "enum": ["posted", "pending", "void"] },
+        "original_amount": { "$ref": "#/$defs/money" },
+        "quality": { "$ref": "#/$defs/quality" },
+        "coverage": { "$ref": "#/$defs/coverageStatus" },
+        "formula_version": { "$ref": "#/$defs/formulaVersion" },
+        "content_hash": { "$ref": "#/$defs/sha256" },
+        "economic_direction": { "type": "string", "enum": ["inflow", "outflow", "transfer"] },
+        "counts_as_new_revenue": { "type": "boolean" },
+        "counts_as_gross_refunded_principal": { "type": "boolean" },
+        "parent_record_id": { "$ref": "#/$defs/id" },
+        "supersedes_revision": { "type": "integer", "minimum": 1 },
+        "component_id": { "$ref": "#/$defs/id" },
+        "posting_role": { "type": "string", "enum": ["primary", "alias"] },
+        "components": { "type": "array", "items": { "$ref": "#/$defs/component" } },
+        "legacy_net_amount": { "$ref": "#/$defs/money" },
+        "legacy_formula_version": { "$ref": "#/$defs/formulaVersion" },
+        "gross_reconstructed": { "type": "boolean" },
+        "source_gbp_valuation": { "$ref": "#/$defs/sourceGbpValuation" },
+        "subscription_id": { "$ref": "#/$defs/id" },
+        "product_id": { "$ref": "#/$defs/id" },
+        "channel": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "store": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "processor": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "settled_at": { "$ref": "#/$defs/utcInstant" },
+        "service_period": { "$ref": "#/$defs/period" },
+        "expense_category": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "vendor_reference": { "$ref": "#/$defs/id" },
+        "financial_account_id": { "$ref": "#/$defs/id" },
+        "destination_account_id": { "$ref": "#/$defs/id" },
+        "tax_inclusion": { "type": "string", "enum": ["inclusive", "exclusive", "unknown"] },
+        "document_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["document_id", "checksum_sha256"],
+            "properties": {
+              "document_id": { "$ref": "#/$defs/id" },
+              "checksum_sha256": { "$ref": "#/$defs/sha256" },
+              "title": { "type": "string", "minLength": 1, "maxLength": 200 }
+            }
+          }
+        },
+        "acquisition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "consent"],
+          "properties": {
+            "source": { "type": "string", "minLength": 1, "maxLength": 80 },
+            "medium": { "type": ["string", "null"] },
+            "campaign": { "type": ["string", "null"] },
+            "model": { "type": ["string", "null"] },
+            "window_days": { "type": ["integer", "null"], "minimum": 0 },
+            "consent": { "type": "string", "enum": ["unknown", "granted", "denied", "not_applicable"] }
+          }
+        },
+        "source_as_of": { "$ref": "#/$defs/utcInstant" },
+        "retrieved_at": { "$ref": "#/$defs/utcInstant" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "record_type": { "const": "sale" } }, "required": ["record_type"] },
+          "then": {
+            "properties": {
+              "economic_direction": { "const": "inflow" },
+              "counts_as_new_revenue": { "const": true }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "refund" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["parent_record_id"],
+            "properties": {
+              "economic_direction": { "const": "outflow" },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "refund_reversal" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["parent_record_id"],
+            "properties": {
+              "economic_direction": { "const": "inflow" },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "chargeback" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["parent_record_id"],
+            "properties": {
+              "economic_direction": { "const": "outflow" },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "fee" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["component_id", "posting_role"],
+            "properties": {
+              "economic_direction": { "enum": ["inflow", "outflow"] },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "expense" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["expense_category"],
+            "properties": {
+              "economic_direction": { "const": "outflow" },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "direct_cost" } }, "required": ["record_type"] },
+          "then": {
+            "properties": {
+              "economic_direction": { "const": "outflow" },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "settlement" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["financial_account_id"],
+            "properties": {
+              "economic_direction": { "enum": ["inflow", "outflow"] },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "transfer" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["financial_account_id", "destination_account_id"],
+            "properties": {
+              "economic_direction": { "const": "transfer" },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "record_type": { "const": "opening_balance" } }, "required": ["record_type"] },
+          "then": {
+            "required": ["financial_account_id"],
+            "properties": {
+              "economic_direction": { "enum": ["inflow", "outflow"] },
+              "counts_as_new_revenue": { "const": false }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "void" } }, "required": ["status"] },
+          "then": {
+            "required": ["supersedes_revision"],
+            "properties": { "revision": { "minimum": 2 } }
+          }
+        },
+        {
+          "if": { "properties": { "revision": { "exclusiveMinimum": 1 } }, "required": ["revision"] },
+          "then": { "required": ["supersedes_revision"] }
+        },
+        {
+          "if": { "required": ["legacy_net_amount"] },
+          "then": {
+            "required": ["counts_as_gross_refunded_principal", "legacy_formula_version"],
+            "properties": { "counts_as_gross_refunded_principal": { "const": false } }
+          }
+        },
+        {
+          "if": { "properties": { "gross_reconstructed": { "const": true } }, "required": ["gross_reconstructed"] },
+          "then": { "properties": { "quality": { "enum": ["estimated", "legacy_derived"] } } }
+        }
+      ]
+    },
+    "basisQuery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis"],
+      "properties": { "basis": { "$ref": "#/$defs/basis" } }
+    },
+    "errorBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error"],
+      "properties": {
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message", "retryable"],
+          "properties": {
+            "code": {
+              "type": "string",
+              "enum": [
+                "missing_required_parameter",
+                "malformed_parameter",
+                "unexpected_body",
+                "authentication_failed",
+                "invalid_signature",
+                "timestamp_out_of_range",
+                "nonce_replayed",
+                "key_revoked",
+                "project_mismatch",
+                "environment_mismatch",
+                "missing_auth_headers",
+                "bad_signature_encoding",
+                "cursor_expired",
+                "snapshot_expired",
+                "unsupported_basis",
+                "invalid_interval",
+                "interval_too_large",
+                "page_limit_too_large",
+                "cursor_query_mismatch",
+                "unsupported_dataset",
+                "unknown_timezone",
+                "rate_limited",
+                "temporary_unavailable"
+              ]
+            },
+            "message": { "type": "string", "minLength": 1, "maxLength": 500 },
+            "retryable": { "type": "boolean" },
+            "resync": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["drop_cursor", "endpoint"],
+              "properties": {
+                "drop_cursor": { "const": true },
+                "endpoint": {
+                  "type": "string",
+                  "enum": ["/api/business-os/v1/finance/records", "/api/business-os/v1/analytics/report"]
+                },
+                "reuse_original_from_to": { "type": "boolean" }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "code": { "const": "rate_limited" } }, "required": ["code"] },
+              "then": { "properties": { "retryable": { "const": true } } }
+            },
+            {
+              "if": { "properties": { "code": { "const": "temporary_unavailable" } }, "required": ["code"] },
+              "then": { "properties": { "retryable": { "const": true } } }
+            },
+            {
+              "if": {
+                "properties": { "code": { "enum": ["cursor_expired", "snapshot_expired"] } },
+                "required": ["code"]
+              },
+              "then": { "required": ["resync"] }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

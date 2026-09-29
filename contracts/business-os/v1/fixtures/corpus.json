@@ -1,0 +1,336 @@
+{
+  "contract_version": "business-os.contract.v1",
+  "cases": [
+    {
+      "id": "money-gbp-actual",
+      "expect": "accept",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/positive/money-gbp-actual.json"
+    },
+    {
+      "id": "money-null-unavailable",
+      "expect": "accept",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/positive/money-null-unavailable.json"
+    },
+    {
+      "id": "crypto-btc",
+      "expect": "accept",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/positive/crypto-btc.json"
+    },
+    {
+      "id": "capabilities-doppler",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/capabilities",
+      "file": "fixtures/positive/capabilities-doppler.json"
+    },
+    {
+      "id": "capabilities-smscode",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/capabilities",
+      "file": "fixtures/positive/capabilities-smscode.json"
+    },
+    {
+      "id": "overview-partial-coverage",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/overview",
+      "file": "fixtures/positive/overview-partial-coverage.json"
+    },
+    {
+      "id": "finance-summary-missing-fx-tax",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/financeSummary",
+      "file": "fixtures/positive/finance-summary-missing-fx-tax.json"
+    },
+    {
+      "id": "finance-daily-partial-bucket",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/financeDaily",
+      "file": "fixtures/positive/finance-daily-partial-bucket.json"
+    },
+    {
+      "id": "finance-records-sale-refund-reversal",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/recordsPage",
+      "file": "fixtures/positive/finance-records-sale-refund-reversal.json"
+    },
+    {
+      "id": "finance-records-fee-alias",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/recordsPage",
+      "file": "fixtures/positive/finance-records-fee-alias.json"
+    },
+    {
+      "id": "finance-records-void-correction",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/recordsPage",
+      "file": "fixtures/positive/finance-records-void-correction.json"
+    },
+    {
+      "id": "finance-records-sms-legacy-refund",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/recordsPage",
+      "file": "fixtures/positive/finance-records-sms-legacy-refund.json"
+    },
+    {
+      "id": "finance-records-duplicate-aliases",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/recordsPage",
+      "file": "fixtures/positive/finance-records-duplicate-aliases.json"
+    },
+    {
+      "id": "finance-balances",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/financeBalances",
+      "file": "fixtures/positive/finance-balances.json"
+    },
+    {
+      "id": "finance-reconciliation-legacy",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/financeReconciliation",
+      "file": "fixtures/positive/finance-reconciliation-legacy.json"
+    },
+    {
+      "id": "subscriptions-doppler",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/subscriptionsSummary",
+      "file": "fixtures/positive/subscriptions-doppler.json"
+    },
+    {
+      "id": "subscriptions-smscode-unsupported",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/subscriptionsSummary",
+      "file": "fixtures/positive/subscriptions-smscode-unsupported.json"
+    },
+    {
+      "id": "operations-smscode",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/operationsDaily",
+      "file": "fixtures/positive/operations-smscode.json"
+    },
+    {
+      "id": "operations-doppler",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/operationsDaily",
+      "file": "fixtures/positive/operations-doppler.json"
+    },
+    {
+      "id": "analytics-ga4-period-uniques",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/positive/analytics-ga4-period-uniques.json"
+    },
+    {
+      "id": "analytics-ga4-daily-page",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/positive/analytics-ga4-daily-page.json"
+    },
+    {
+      "id": "analytics-gsc-dimension-rows",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/positive/analytics-gsc-dimension-rows.json"
+    },
+    {
+      "id": "analytics-gsc-daily",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/positive/analytics-gsc-daily.json"
+    },
+    {
+      "id": "analytics-vercel-unavailable",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/positive/analytics-vercel-unavailable.json"
+    },
+    {
+      "id": "analytics-unsupported-dataset",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/positive/analytics-unsupported-dataset.json"
+    },
+    {
+      "id": "health-degraded",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/health",
+      "file": "fixtures/positive/health-degraded.json"
+    },
+    {
+      "id": "cursor-payload",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/cursorFixture",
+      "file": "fixtures/positive/cursor-payload.json"
+    },
+    {
+      "id": "snapshot-bundle",
+      "expect": "accept",
+      "schema": "responses.json#/$defs/snapshotBundle",
+      "file": "fixtures/positive/snapshot-bundle.json"
+    },
+    {
+      "id": "error-unsupported-basis",
+      "expect": "accept",
+      "schema": "common.json#/$defs/errorBody",
+      "file": "fixtures/positive/error-unsupported-basis.json"
+    },
+    {
+      "id": "error-cursor-expired",
+      "expect": "accept",
+      "schema": "common.json#/$defs/errorBody",
+      "file": "fixtures/positive/error-cursor-expired.json"
+    },
+    {
+      "id": "error-rate-limited",
+      "expect": "accept",
+      "schema": "common.json#/$defs/errorBody",
+      "file": "fixtures/positive/error-rate-limited.json"
+    },
+    {
+      "id": "reject-money-float",
+      "expect": "reject",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/negative/money-float.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-money-unavailable-zero",
+      "expect": "reject",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/negative/money-unavailable-zero.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-money-null-without-reason",
+      "expect": "reject",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/negative/money-null-without-reason.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-money-negative",
+      "expect": "reject",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/negative/money-negative.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-money-crypto-as-fiat",
+      "expect": "reject",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/negative/money-crypto-as-fiat.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-money-excess-scale",
+      "expect": "reject",
+      "schema": "common.json#/$defs/money",
+      "file": "fixtures/negative/money-excess-scale.json",
+      "via": "invariant",
+      "code": "excess_scale"
+    },
+    {
+      "id": "reject-missing-provenance",
+      "expect": "reject",
+      "schema": "common.json#/$defs/financeRecord",
+      "file": "fixtures/negative/missing-provenance.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-unsupported-basis",
+      "expect": "reject",
+      "schema": "common.json#/$defs/basisQuery",
+      "file": "fixtures/negative/unsupported-basis.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-inconsistent-identity",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/recordSet",
+      "file": "fixtures/negative/inconsistent-identity.json",
+      "via": "invariant",
+      "code": "inconsistent_identity"
+    },
+    {
+      "id": "reject-duplicate-primary-sales",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/recordSet",
+      "file": "fixtures/negative/duplicate-primary-sales.json",
+      "via": "invariant",
+      "code": "duplicate_economic_primary"
+    },
+    {
+      "id": "reject-duplicate-fee-components",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/recordSet",
+      "file": "fixtures/negative/duplicate-fee-components.json",
+      "via": "invariant",
+      "code": "component_posting"
+    },
+    {
+      "id": "reject-sms-legacy-as-gross",
+      "expect": "reject",
+      "schema": "common.json#/$defs/financeRecord",
+      "file": "fixtures/negative/sms-legacy-as-gross.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-transfer-as-revenue",
+      "expect": "reject",
+      "schema": "common.json#/$defs/financeRecord",
+      "file": "fixtures/negative/transfer-as-revenue.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-daily-balance",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/financeDaily",
+      "file": "fixtures/negative/daily-balance.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-balance-additive",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/financeBalances",
+      "file": "fixtures/negative/balance-additive.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-uniques-summed",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/negative/uniques-summed.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-gsc-rows-as-total",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/negative/gsc-rows-as-total.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-unavailable-zeros",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/analyticsReport",
+      "file": "fixtures/negative/unavailable-zeros.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-smscode-zero-mrr",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/subscriptionsSummary",
+      "file": "fixtures/negative/smscode-zero-mrr.json",
+      "via": "schema"
+    },
+    {
+      "id": "reject-fabricated-tax-zero",
+      "expect": "reject",
+      "schema": "responses.json#/$defs/financeSummary",
+      "file": "fixtures/negative/fabricated-tax-zero.json",
+      "via": "invariant",
+      "code": "fabricated_tax"
+    }
+  ]
+}

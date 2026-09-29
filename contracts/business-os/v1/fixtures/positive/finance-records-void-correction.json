@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-void-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "high_watermark": "100",
+  "query_binding_sha256": "333c04dd151a2a6831c039cb9a651df29198be8a04e16ce861d4b6a34a11c954",
+  "records": [
+    {
+      "record_id": "sale-void-1",
+      "revision": 1,
+      "change_sequence": "30",
+      "record_type": "sale",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "invoice-void-1",
+      "economic_transaction_id": "eco-void-1",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": "100.00",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "inflow",
+      "counts_as_new_revenue": true,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "100.00",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "content_hash": "6cf4085700dc1d9894c843d8ec3b2e2eb7d20682ae151a5e39bd76ad8214f7c7"
+    },
+    {
+      "record_id": "sale-void-1",
+      "revision": 2,
+      "change_sequence": "31",
+      "record_type": "sale",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "invoice-void-1",
+      "economic_transaction_id": "eco-void-1",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T12:00:00Z",
+      "status": "void",
+      "original_amount": {
+        "amount": "100.00",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "inflow",
+      "counts_as_new_revenue": true,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "100.00",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "content_hash": "6c03e24db67bd4189edaaf7833c53cde2125d047dac96c41a83bbb5b9c7cc9c7",
+      "supersedes_revision": 1
+    }
+  ],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "cursor_expires_at": "2026-09-29T09:00:00Z",
+    "next_sync_checkpoint": "ckpt-snap-void-01"
+  }
+}

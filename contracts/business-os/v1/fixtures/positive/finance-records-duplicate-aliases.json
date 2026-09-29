@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-alias-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "high_watermark": "100",
+  "query_binding_sha256": "333c04dd151a2a6831c039cb9a651df29198be8a04e16ce861d4b6a34a11c954",
+  "records": [
+    {
+      "record_id": "sale-1",
+      "revision": 1,
+      "change_sequence": "10",
+      "record_type": "sale",
+      "project_id": "doppler",
+      "source_system": "revenuecat",
+      "source_account_id": "acct-doppler-1",
+      "environment": "production",
+      "external_object_id": "invoice-1",
+      "economic_transaction_id": "eco-sale-1",
+      "occurred_at": "2026-09-27T10:00:00Z",
+      "updated_at": "2026-09-27T10:05:00Z",
+      "status": "posted",
+      "original_amount": {
+        "amount": "100.00",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "quality": "actual",
+      "formula_version": "unconfigured",
+      "economic_direction": "inflow",
+      "counts_as_new_revenue": true,
+      "source_as_of": "2026-09-27T10:05:00Z",
+      "retrieved_at": "2026-09-27T11:00:00Z",
+      "source_gbp_valuation": {
+        "amount": null,
+        "currency": "GBP",
+        "quality": "unavailable",
+        "reason": "fx_policy_not_configured",
+        "rate": null,
+        "rate_source": null,
+        "effective_at": null,
+        "policy_version": "gbp-unconfigured",
+        "source_amount": "100.00",
+        "source_currency": "USD"
+      },
+      "tax_inclusion": "unknown",
+      "alias_ids": [
+        "webhook:evt_1",
+        "invoice:inv_1"
+      ],
+      "channel": "web",
+      "store": "app_store",
+      "processor": "revenuecat",
+      "acquisition": {
+        "source": "unknown",
+        "medium": null,
+        "campaign": null,
+        "model": null,
+        "window_days": null,
+        "consent": "unknown"
+      },
+      "content_hash": "92e54ba87ee94e64d64f0f5b0fa7d6713150e6f3ae223e591c1c53ccd5f78266"
+    }
+  ],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "cursor_expires_at": "2026-09-29T09:00:00Z",
+    "next_sync_checkpoint": "ckpt-snap-alias-01"
+  }
+}

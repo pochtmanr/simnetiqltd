@@ -44,3 +44,6 @@ next-env.d.ts
 
 # design scratch — kept locally, not committed
 /SVG Animated/
+
+# owner-supplied Business OS fixtures, never generated from this contract
+/contracts/business-os/v1/fixtures/redacted-real/

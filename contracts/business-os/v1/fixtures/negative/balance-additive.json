@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-bal-bad-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "as_of_requested": "2026-09-28T00:00:00Z",
+  "posting": false,
+  "balances_are_not_additive": true,
+  "snapshots": [
+    {
+      "financial_account_id": "acct-cash-1",
+      "account_kind": "cash",
+      "as_of": "2026-09-27T23:00:00Z",
+      "amount": {
+        "amount": "10.00",
+        "currency": "USD",
+        "quality": "actual"
+      },
+      "additive": true
+    }
+  ],
+  "warnings": [
+    "Invalid because additive is true."
+  ]
+}

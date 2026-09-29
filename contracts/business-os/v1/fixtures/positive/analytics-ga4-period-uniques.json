@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-ga4-uniques-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "provider": "ga4",
+  "report": "ga4_period_unique_users",
+  "availability": "available",
+  "data_state": "final",
+  "source_timezone": "Europe/London",
+  "property_ref": "redacted",
+  "coverage": {
+    "status": "complete",
+    "missing": []
+  },
+  "posting": false,
+  "rows": [
+    {
+      "active_users": 42
+    }
+  ],
+  "page": {
+    "limit": 100,
+    "has_more": false,
+    "next_cursor": null,
+    "complete_property_total": true
+  },
+  "limitations": [
+    "Period activeUsers come from one query. Do not sum daily or country rows."
+  ],
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "must_not_sum_daily_uniques": true
+}

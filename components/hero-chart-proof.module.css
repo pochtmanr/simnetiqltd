@@ -1,41 +1,47 @@
-/* Single-line proof reel; the text itself controls playback. */
-.proof { max-width: 100%; gap: .45rem; }
-.mark { display: block; flex-shrink: 0; }
+/* Single-line proof reel. The Apple mark stays put; the text scrolls. */
+.proof { max-width: 100%; }
+.row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .45rem;
+  max-width: 100%;
+}
+.mark {
+  display: block;
+  flex-shrink: 0;
+  width: calc(.78em * 15.7 / 19.2);
+  height: .78em;
+}
 .control {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 32px;
+  min-width: 0;
+  max-width: 100%;
   color: inherit;
   background: transparent;
   border: 0;
   cursor: pointer;
   font: inherit;
 }
-.control { min-width: 0; }
 .window {
   display: grid;
-  align-items: center;
+  position: relative;
   height: 1.8em;
-  width: 36ch;
-  max-width: calc(100vw - 5rem);
+  width: max-content;
+  max-width: 100%;
   overflow: hidden;
-  perspective: 500px;
   text-align: start;
 }
 .entry {
+  grid-area: 1 / 1;
   display: flex;
   align-items: center;
-  gap: .45rem;
+  height: 100%;
   white-space: nowrap;
-  transform-origin: center bottom;
-  animation: chart-proof-flip 480ms cubic-bezier(.2,.7,.2,1) both;
 }
 .control:hover { color: var(--color-text); }
-@keyframes chart-proof-flip {
-  from { opacity: 0; transform: translateY(60%) rotateX(-65deg); }
-  to { opacity: 1; transform: translateY(0) rotateX(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .entry { animation: none; }
+@media (max-width: 767px) {
+  .window { max-width: calc(100vw - 3rem); }
 }

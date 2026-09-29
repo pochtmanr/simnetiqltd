@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-ga4-daily-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "provider": "ga4",
+  "report": "ga4_overview_daily",
+  "availability": "available",
+  "data_state": "partial",
+  "source_timezone": "Europe/London",
+  "property_ref": "redacted",
+  "coverage": {
+    "status": "partial",
+    "missing": []
+  },
+  "posting": false,
+  "rows": [
+    {
+      "date": "2026-09-26",
+      "active_users": 10,
+      "new_users": 2,
+      "sessions": 12,
+      "screen_page_views": 20
+    },
+    {
+      "date": "2026-09-27",
+      "active_users": 11,
+      "new_users": 1,
+      "sessions": 14,
+      "screen_page_views": 22
+    }
+  ],
+  "page": {
+    "limit": 2,
+    "has_more": true,
+    "next_cursor": "cursor-ga4-page-2",
+    "complete_property_total": true
+  },
+  "limitations": [
+    "Daily active users are not a period unique count."
+  ],
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  }
+}

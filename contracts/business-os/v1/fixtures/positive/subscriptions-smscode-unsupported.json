@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-sub-sms-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "as_of": "2026-09-28T08:55:00Z",
+  "supported": false,
+  "reason": "not_applicable",
+  "posting": false,
+  "metrics": null,
+  "warnings": [
+    "SMS Code coin packs are not subscriptions. MRR is unsupported, not zero."
+  ]
+}

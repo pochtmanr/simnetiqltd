@@ -1,0 +1,44 @@
+# Local Business OS stack. Do not link this file to the marketing Supabase project.
+# Signup stays closed. This file is not started or applied to a remote database by M1.
+
+project_id = "business-os"
+
+[api]
+enabled = true
+port = 54331
+schemas = ["public", "graphql_public", "business_os"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54332
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54333
+
+[inbucket]
+enabled = true
+port = 54334
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = ["http://127.0.0.1:3000/login", "http://127.0.0.1:3000/tg"]
+jwt_expiry = 3600
+enable_signup = false
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true

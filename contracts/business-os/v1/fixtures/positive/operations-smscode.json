@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "smscode",
+  "environment": "production",
+  "snapshot_id": "snap-ops-sms-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "posting": false,
+  "buckets": [
+    {
+      "date": "2026-09-27",
+      "timezone": "Europe/London",
+      "partial": false,
+      "flows": [
+        {
+          "name": "coins_bought",
+          "count": 10,
+          "additive": true
+        },
+        {
+          "name": "coins_spent",
+          "count": 4,
+          "additive": true
+        },
+        {
+          "name": "sms_delivered",
+          "count": 4,
+          "additive": true
+        },
+        {
+          "name": "sms_attempted",
+          "count": 5,
+          "additive": true
+        }
+      ],
+      "stocks": [
+        {
+          "name": "coins_outstanding",
+          "count": 100,
+          "additive": false,
+          "as_of": "2026-09-27T22:59:59Z"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    "Outstanding coins are a stock. Do not sum them across days."
+  ]
+}

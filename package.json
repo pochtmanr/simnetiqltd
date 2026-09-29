@@ -7,24 +7,33 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint && npm run check:i18n",
-    "check:i18n": "tsx scripts/check-i18n.ts"
+    "check:i18n": "tsx scripts/check-i18n.ts",
+    "test:business-os-contract": "node contracts/business-os/v1/conformance.mjs",
+    "test:business-os-identity": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/identity/*.test.ts",
+    "test:business-os-finance": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/finance/*.test.ts",
+    "test:business-os-sync": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/sync/*.test.ts"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.2",
     "@vercel/analytics": "^2.0.1",
     "motion": "^12.38.0",
     "next": "^16.3.6",
     "nodemailer": "^10.0.11",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^9",
     "eslint-config-next": "^16.3.6",
     "tailwindcss": "^4",

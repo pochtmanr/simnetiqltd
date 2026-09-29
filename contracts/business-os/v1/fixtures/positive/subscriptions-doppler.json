@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "contract_version": "business-os.contract.v1",
+  "project_id": "doppler",
+  "environment": "production",
+  "snapshot_id": "snap-sub-01",
+  "generated_at": "2026-09-28T09:00:00Z",
+  "data_as_of": "2026-09-28T08:55:00Z",
+  "period": {
+    "from": "2026-09-26T23:00:00Z",
+    "to": "2026-09-27T23:00:00Z",
+    "timezone": "Europe/London"
+  },
+  "as_of": "2026-09-28T08:55:00Z",
+  "supported": true,
+  "posting": false,
+  "metrics": {
+    "active_contracts": {
+      "value": 4
+    },
+    "active_customers": {
+      "value": 3
+    },
+    "paid_access_accounts": {
+      "value": 5
+    },
+    "mrr": {
+      "amount": "20.00",
+      "currency": "GBP",
+      "quality": "actual",
+      "coverage": "complete",
+      "drill_through": {
+        "dataset": "finance.records",
+        "snapshot_id": "snap-sub-01",
+        "filter": {
+          "project_id": "doppler",
+          "from": "2026-09-26T23:00:00Z",
+          "to": "2026-09-27T23:00:00Z",
+          "basis": "purchase",
+          "record_types": [
+            "sale"
+          ]
+        }
+      }
+    }
+  },
+  "warnings": [
+    "Synthetic MRR. Trials and fixed-term purchases are excluded."
+  ]
+}

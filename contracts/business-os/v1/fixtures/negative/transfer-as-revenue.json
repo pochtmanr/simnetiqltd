@@ -1,0 +1,42 @@
+{
+  "record_id": "transfer-bad-1",
+  "revision": 1,
+  "change_sequence": "1",
+  "record_type": "transfer",
+  "project_id": "doppler",
+  "source_system": "revenuecat",
+  "source_account_id": "acct-doppler-1",
+  "environment": "production",
+  "external_object_id": "evt-1",
+  "economic_transaction_id": "eco-1",
+  "occurred_at": "2026-09-27T10:00:00Z",
+  "updated_at": "2026-09-27T10:05:00Z",
+  "status": "posted",
+  "original_amount": {
+    "amount": "50.00",
+    "currency": "GBP",
+    "quality": "actual"
+  },
+  "quality": "actual",
+  "formula_version": "unconfigured",
+  "economic_direction": "transfer",
+  "counts_as_new_revenue": true,
+  "source_as_of": "2026-09-27T10:05:00Z",
+  "retrieved_at": "2026-09-27T11:00:00Z",
+  "source_gbp_valuation": {
+    "amount": null,
+    "currency": "GBP",
+    "quality": "unavailable",
+    "reason": "fx_policy_not_configured",
+    "rate": null,
+    "rate_source": null,
+    "effective_at": null,
+    "policy_version": "gbp-unconfigured",
+    "source_amount": "50.00",
+    "source_currency": "GBP"
+  },
+  "tax_inclusion": "unknown",
+  "financial_account_id": "acct-bank-1",
+  "destination_account_id": "acct-clearing-1",
+  "content_hash": "8305915848fb24915b2ef094573479d00bf36244b63ad6995b85cc0877b3f090"
+}
