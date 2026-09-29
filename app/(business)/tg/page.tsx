@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Script from "next/script";
 import { LoginForm } from "@/components/business-os/login-form";
 import { PrivateShell } from "@/components/business-os/private-shell";
 import { BusinessWorkspace } from "@/components/business-os/workspace";
@@ -16,7 +17,14 @@ export default async function TelegramPage({
   try {
     const identity = await loadIdentity();
     if (identity.kind === "denied") redirect("/api/business-os/auth/clear-revoked");
-    if (identity.kind !== "ready") return <LoginForm nextPath="/tg" />;
+    if (identity.kind !== "ready") {
+      return (
+        <>
+          <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
+          <LoginForm nextPath="/tg" telegram />
+        </>
+      );
+    }
     const query = parseWorkspaceQuery(params, "tg");
     const data = await loadWorkspace(identity.profile, query);
     const config = readBusinessOsConfig();
