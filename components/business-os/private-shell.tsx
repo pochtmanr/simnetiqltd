@@ -1,5 +1,5 @@
 export function PrivateShell({ surface }: { surface: "admin" | "tg" }) {
-  const title = surface === "tg" ? "Telegram" : "Admin";
+  const title = surface === "tg" ? "Not configured" : "Admin";
   return (
     <main className="mx-auto flex w-full max-w-lg flex-col gap-4 px-6 py-12">
       <p className="text-xs tracking-wide text-text-dim uppercase">Business OS</p>

@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { IdentityActions } from "@/components/business-os/identity-actions";
 import { WorkspaceSection } from "@/components/business-os/sections";
 import { TelegramFrame } from "@/components/business-os/telegram-frame";
@@ -30,8 +29,6 @@ const TG_LINKS = [
   ["more", "More"],
 ] as const;
 
-const fieldClass = "min-h-11 rounded-md border border-border bg-surface px-3 text-base";
-
 export function BusinessWorkspace({
   surface,
   base,
@@ -53,28 +50,31 @@ export function BusinessWorkspace({
   const backHref = surface === "tg" ? telegramBack(query) : null;
   return (
     <TelegramFrame backHref={backHref}>
-      {surface === "tg" ? <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" /> : null}
-      <div className={surface === "tg" ? "mx-auto flex min-h-full w-full max-w-lg flex-col gap-6 px-4 pt-[env(safe-area-inset-top)] pb-[calc(5.5rem+env(safe-area-inset-bottom))]" : "mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 md:flex-row md:px-6"}>
-        <nav aria-label={surface === "tg" ? "Telegram" : "Admin"} className={surface === "tg" ? "fixed inset-x-0 bottom-0 z-10 border-t border-border bg-bg pb-[env(safe-area-inset-bottom)]" : "flex gap-2 overflow-x-auto md:w-52 md:shrink-0 md:flex-col"}>
+      <div className={surface === "tg" ? "flex min-h-full w-full flex-col gap-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))]" : "mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 md:flex-row md:px-6"}>
+        <nav aria-label={surface === "tg" ? "Sections" : "Admin"} className={surface === "tg" ? "fixed inset-x-0 bottom-0 z-10 border-t border-border bg-bg px-4 pb-[env(safe-area-inset-bottom)]" : "flex gap-2 overflow-x-auto md:w-52 md:shrink-0 md:flex-col"}>
           <div className={surface === "tg" ? "mx-auto grid w-full max-w-lg grid-cols-5" : "contents"}>
             {links.map(([section, label]) => (
               <a
                 key={section}
                 href={workspaceHref(base, query, { section, metric: null })}
                 aria-current={query.section === section ? "page" : undefined}
-                className="min-h-11 px-2 py-2 text-center text-sm md:text-left"
+                className={
+                  surface === "tg"
+                    ? `min-h-11 px-2 py-2 text-center text-xs font-semibold ${query.section === section ? "text-primary" : "text-text-dim"}`
+                    : "min-h-11 px-2 py-2 text-center text-sm md:text-left"
+                }
               >
                 {label}
               </a>
             ))}
           </div>
         </nav>
-        <div className="flex min-w-0 flex-1 flex-col gap-6">
+        <div className="flex min-w-0 flex-1 flex-col gap-5">
           <header>
-            <p className="text-xs tracking-wide text-text-dim uppercase">Business OS</p>
-            <h1 className="text-2xl font-medium">{surface === "tg" ? "Telegram" : "Admin"}</h1>
+            <p className={surface === "tg" ? "text-xs font-semibold tracking-wider text-text-dim uppercase" : "text-xs tracking-wide text-text-dim uppercase"}>Business OS</p>
+            <h1 className={surface === "tg" ? "font-display text-2xl font-bold" : "text-2xl font-medium"}>{surface === "tg" ? periodTitle(query) : "Admin"}</h1>
           </header>
-          <FilterBar base={base} query={query} projects={data.projects} />
+          <FilterBar base={base} query={query} projects={data.projects} presentation={surface === "tg" ? "sheet" : "inline"} />
           <WorkspaceSection surface={surface} base={base} query={query} data={data} canWrite={profile.role !== "read_only"} />
           {query.section === "settings" ? (
             <>
@@ -100,9 +100,43 @@ export function BusinessWorkspace({
   );
 }
 
-function FilterBar({ base, query, projects }: { base: "/admin" | "/tg"; query: WorkspaceQuery; projects: { slug: string; name: string }[] }) {
-  return (
-    <form action={base} className="grid gap-3 rounded-md border border-border p-3 sm:grid-cols-2">
+function periodTitle(query: WorkspaceQuery): string {
+  if (query.grain === "year") return query.anchor.slice(0, 4);
+  if (query.grain === "month") {
+    const year = Number(query.anchor.slice(0, 4));
+    const month = Number(query.anchor.slice(5, 7));
+    const day = Number(query.anchor.slice(8, 10));
+    return new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "Europe/London" }).format(new Date(Date.UTC(year, month - 1, day, 12)));
+  }
+  const format = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "Europe/London",
+  });
+  return `${format.format(new Date(query.from))} to ${format.format(new Date(query.to))}`;
+}
+
+function filterSummary(query: WorkspaceQuery, projects: { slug: string; name: string }[]): string {
+  const grain = query.grain === "month" ? "Month" : query.grain === "year" ? "Year" : "Custom";
+  const project = query.project ? (projects.find((item) => item.slug === query.project)?.name ?? query.project) : "All projects";
+  return `${grain} · ${query.basis.replaceAll("_", " ")} · ${query.anchor} · ${project}`;
+}
+
+function FilterBar({
+  base,
+  query,
+  projects,
+  presentation,
+}: {
+  base: "/admin" | "/tg";
+  query: WorkspaceQuery;
+  projects: { slug: string; name: string }[];
+  presentation: "inline" | "sheet";
+}) {
+  const fieldClass = presentation === "sheet" ? "min-h-11 rounded-xl border border-border bg-bg px-3 text-base" : "min-h-11 rounded-md border border-border bg-surface px-3 text-base";
+  const fields = (
+    <>
       <input type="hidden" name="section" value={query.section} />
       <label className="flex flex-col gap-1 text-sm">
         Grain
@@ -139,11 +173,11 @@ function FilterBar({ base, query, projects }: { base: "/admin" | "/tg"; query: W
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-sm sm:col-span-2">
+      <label className={`flex flex-col gap-1 text-sm ${presentation === "inline" ? "sm:col-span-2" : ""}`}>
         Custom from
         <input name="from" defaultValue={query.from} className={fieldClass} />
       </label>
-      <label className="flex flex-col gap-1 text-sm sm:col-span-2">
+      <label className={`flex flex-col gap-1 text-sm ${presentation === "inline" ? "sm:col-span-2" : ""}`}>
         Custom to
         <input name="to" defaultValue={query.to} className={fieldClass} />
       </label>
@@ -159,12 +193,30 @@ function FilterBar({ base, query, projects }: { base: "/admin" | "/tg"; query: W
         Status
         <input name="status" defaultValue={query.status ?? ""} className={fieldClass} />
       </label>
-      <p className="text-xs text-text-dim sm:col-span-2">
+      <p className={`text-xs text-text-dim ${presentation === "inline" ? "sm:col-span-2" : ""}`}>
         Window {query.from} to {query.to}. Month and year use the anchor in Europe/London. Custom uses the from and to instants. Currency, source, and status narrow listed rows.
       </p>
-      <button type="submit" className="min-h-11 w-fit rounded-md bg-primary px-4 text-sm text-white">
+      <button type="submit" className={presentation === "sheet" ? "min-h-11 w-fit rounded-xl bg-primary px-4 text-sm font-semibold text-white" : "min-h-11 w-fit rounded-md bg-primary px-4 text-sm text-white"}>
         Apply filters
       </button>
+    </>
+  );
+  if (presentation === "sheet") {
+    return (
+      <details className="rounded-2xl border border-border bg-surface">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-3 text-sm [&::-webkit-details-marker]:hidden">
+          <span className="min-w-0 flex-1 truncate font-semibold">{filterSummary(query, projects)}</span>
+          <span className="font-semibold text-primary">Filters</span>
+        </summary>
+        <form action={base} className="grid gap-3 border-t border-border p-3">
+          {fields}
+        </form>
+      </details>
+    );
+  }
+  return (
+    <form action={base} className="grid gap-3 rounded-md border border-border p-3 sm:grid-cols-2">
+      {fields}
     </form>
   );
 }

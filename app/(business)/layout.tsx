@@ -15,7 +15,8 @@ export const viewport: Viewport = {
 
 export default function BusinessLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
+    // telegram-web-app.js writes data-theme and viewport variables onto <html> before hydration.
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="min-h-full bg-bg text-text antialiased">{children}</body>
     </html>
   );

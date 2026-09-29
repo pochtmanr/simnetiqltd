@@ -1,0 +1,84 @@
+/* Phone palette for /tg only. Tokens stay on .tg-root so /admin and the
+   marketing site keep their own colours. Teal is the action colour. */
+
+.tg-root {
+  --color-bg: #141414;
+  --color-surface: #1c1c1c;
+  --color-surface-raised: #242424;
+  --color-text: #f5f5f5;
+  --color-text-muted: #c5c5c5;
+  --color-text-dim: #8a8a8a;
+  --color-text-faint: #8a8a8a;
+  --color-border: rgb(255 255 255 / 0.1);
+  --color-border-strong: rgb(255 255 255 / 0.18);
+  --color-border-faint: rgb(255 255 255 / 0.04);
+  --color-primary: #008c8c;
+  --color-primary-dim: #007070;
+  --color-primary-glow: #00abab;
+  --color-error: #dc2626;
+  --color-background: #141414;
+  --color-foreground: #f5f5f5;
+  font-family: var(--font-body), "Space Grotesk", system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+[data-theme="light"] .tg-root {
+  --color-bg: #f5f5f7;
+  --color-surface: #edeef1;
+  --color-surface-raised: #e3e4e8;
+  --color-text: #1a1a1a;
+  --color-text-muted: #5a5c63;
+  --color-text-dim: #8a8a8a;
+  --color-text-faint: #8a8a8a;
+  --color-border: rgb(0 0 0 / 0.1);
+  --color-border-strong: rgb(0 0 0 / 0.22);
+  --color-border-faint: rgb(0 0 0 / 0.04);
+  --color-primary: #007070;
+  --color-primary-dim: #005858;
+  --color-primary-glow: #008080;
+  --color-error: #b91c1c;
+  --color-background: #f5f5f7;
+  --color-foreground: #1a1a1a;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .tg-root {
+    --color-bg: #f5f5f7;
+    --color-surface: #edeef1;
+    --color-surface-raised: #e3e4e8;
+    --color-text: #1a1a1a;
+    --color-text-muted: #5a5c63;
+    --color-text-dim: #8a8a8a;
+    --color-text-faint: #8a8a8a;
+    --color-border: rgb(0 0 0 / 0.1);
+    --color-border-strong: rgb(0 0 0 / 0.22);
+    --color-border-faint: rgb(0 0 0 / 0.04);
+    --color-primary: #007070;
+    --color-primary-dim: #005858;
+    --color-primary-glow: #008080;
+    --color-error: #b91c1c;
+    --color-background: #f5f5f7;
+    --color-foreground: #1a1a1a;
+  }
+}
+
+.tg-root .font-display {
+  font-family: var(--font-display), Nunito, system-ui, sans-serif;
+}
+
+/* @theme inline bakes hex into utilities, so the phone palette has to
+   restate the classes. The values still come from the variables above. */
+.tg-root .bg-bg { background-color: var(--color-bg); }
+.tg-root .bg-surface { background-color: var(--color-surface); }
+.tg-root .bg-surface-raised { background-color: var(--color-surface-raised); }
+.tg-root .bg-primary { background-color: var(--color-primary); }
+.tg-root .text-text { color: var(--color-text); }
+.tg-root .text-text-dim { color: var(--color-text-dim); }
+.tg-root .text-text-muted { color: var(--color-text-muted); }
+.tg-root .text-primary { color: var(--color-primary); }
+.tg-root .text-error { color: var(--color-error); }
+.tg-root .border-border { border-color: var(--color-border); }
+.tg-root .divide-border > :not([hidden]) ~ :not([hidden]) { border-color: var(--color-border); }

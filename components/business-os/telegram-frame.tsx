@@ -12,47 +12,61 @@ type TelegramBackButton = {
 type TelegramWebApp = {
   ready?: () => void;
   expand?: () => void;
-  themeParams?: { bg_color?: string; text_color?: string; hint_color?: string; secondary_bg_color?: string };
+  colorScheme?: string;
+  isVersionAtLeast?: (version: string) => boolean;
+  setHeaderColor?: (color: string) => void;
+  setBackgroundColor?: (color: string) => void;
+  onEvent?: (event: string, callback: () => void) => void;
+  offEvent?: (event: string, callback: () => void) => void;
   BackButton?: TelegramBackButton;
 };
 
+function webApp(): TelegramWebApp | undefined {
+  return (window as Window & { Telegram?: { WebApp?: TelegramWebApp } }).Telegram?.WebApp;
+}
+
+function paintChrome(app: TelegramWebApp) {
+  const scheme = app.colorScheme === "light" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", scheme);
+  document.documentElement.style.colorScheme = scheme;
+  if (!app.isVersionAtLeast?.("6.9")) return;
+  requestAnimationFrame(() => {
+    const root = document.querySelector(".tg-root");
+    if (!root) return;
+    const bg = getComputedStyle(root).getPropertyValue("--color-bg").trim();
+    if (!bg) return;
+    try {
+      app.setHeaderColor?.(bg);
+      app.setBackgroundColor?.(bg);
+    } catch {
+      /* older client keeps its own chrome */
+    }
+  });
+}
+
 export function TelegramFrame({ backHref, children }: { backHref: string | null; children: ReactNode }) {
   useEffect(() => {
+    const app = webApp();
+    if (!app) return;
+    app.ready?.();
+    app.expand?.();
+    const apply = () => paintChrome(app);
+    apply();
+    app.onEvent?.("themeChanged", apply);
+    const button = app.BackButton;
     let detach = () => {};
-    const bind = () => {
-      const webApp = (window as Window & { Telegram?: { WebApp?: TelegramWebApp } }).Telegram?.WebApp;
-      if (!webApp) return false;
-      detach();
-      webApp.ready?.();
-      webApp.expand?.();
-      const root = document.documentElement;
-      const theme = webApp.themeParams;
-      if (theme?.bg_color) root.style.setProperty("--color-bg", theme.bg_color);
-      if (theme?.text_color) root.style.setProperty("--color-text", theme.text_color);
-      if (theme?.hint_color) root.style.setProperty("--color-text-dim", theme.hint_color);
-      if (theme?.secondary_bg_color) root.style.setProperty("--color-surface", theme.secondary_bg_color);
-      const button = webApp.BackButton;
-      if (backHref && button) {
-        const goBack = () => {
-          window.location.assign(backHref);
-        };
-        button.show();
-        button.onClick(goBack);
-        detach = () => button.offClick(goBack);
-      } else {
-        button?.hide();
-        detach = () => {};
-      }
-      return true;
-    };
-    if (bind()) return () => detach();
-    const timer = window.setInterval(() => {
-      if (bind()) window.clearInterval(timer);
-    }, 250);
-    const stop = window.setTimeout(() => window.clearInterval(timer), 4000);
+    if (backHref && button) {
+      const goBack = () => {
+        window.location.assign(backHref);
+      };
+      button.show();
+      button.onClick(goBack);
+      detach = () => button.offClick(goBack);
+    } else {
+      button?.hide();
+    }
     return () => {
-      window.clearInterval(timer);
-      window.clearTimeout(stop);
+      app.offEvent?.("themeChanged", apply);
       detach();
     };
   }, [backHref]);
