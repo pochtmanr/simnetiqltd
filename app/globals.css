@@ -817,10 +817,11 @@ body > header {
 /* ------------------------------------------------------------------ */
 
 /*
- * The base state — scroll 0, homepage, no menu open — is selected purely in
- * CSS via :has() on the hero sentinel, so the server-rendered HTML already
- * paints it and there is no hydration flash. JavaScript only ever switches
- * AWAY from it, once the sentinel reports the seam has reached the bar.
+ * The base state — scroll 0, homepage, viewport at least 768px, no menu
+ * open — is selected purely in CSS via :has() on the hero sentinel, so the
+ * server-rendered HTML already paints it and there is no hydration flash.
+ * Narrower viewports keep the solid bar. JavaScript only ever switches AWAY
+ * from the overlay, once the sentinel reports the seam has reached the bar.
  *
  * Rather than adding light-on-dark variants to every element in the bar, this
  * redefines the palette custom properties on <header>. Descendants inherit,
@@ -834,22 +835,26 @@ body > header {
   transition: background-color 180ms ease, backdrop-filter 180ms ease;
 }
 
-body:has(#hero-nav-sentinel:not([data-passed]))
-  [data-site-header]:not([data-menu-open]),
-body:has([data-nav-hero]:not([data-nav-passed]))
-  [data-site-header]:not([data-menu-open]) {
-  /* transparent here neutralises BOTH bg-[var(--color-bg)] and the
-     color-mix(...85%, transparent) backdrop variant in one go. The rest of
-     the palette is left alone: the field follows the theme, so the bar's own
-     themed colours already read correctly against it. */
-  --color-bg: transparent;
-  --color-border: transparent;
+/* Below md the bar is always the solid themed surface. Transparent overlay
+   is a desktop treatment for a real hero that slides under the bar. */
+@media (min-width: 768px) {
+  body:has(#hero-nav-sentinel:not([data-passed]))
+    [data-site-header]:not([data-menu-open]),
+  body:has([data-nav-hero]:not([data-nav-passed]))
+    [data-site-header]:not([data-menu-open]) {
+    /* transparent here neutralises BOTH bg-[var(--color-bg)] and the
+       color-mix(...85%, transparent) backdrop variant in one go. The rest of
+       the palette is left alone: the field follows the theme, so the bar's own
+       themed colours already read correctly against it. */
+    --color-bg: transparent;
+    --color-border: transparent;
 
-  background-color: transparent;
-  /* Set directly by backdrop-blur, so it needs its own reset or the
-     photograph blurs under the bar. */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+    background-color: transparent;
+    /* Set directly by backdrop-blur, so it needs its own reset or the
+       photograph blurs under the bar. */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

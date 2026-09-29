@@ -347,7 +347,7 @@ export function Navigation({
             </div>
 
             <div className="flex items-center gap-3">
-              <div ref={settingsRef} className={styles.settings} onBlur={(event) => {
+              <div ref={settingsRef} className={`hidden md:block ${styles.settings}`} onBlur={(event) => {
                 if (!event.currentTarget.contains(event.relatedTarget)) setSettingsOpen(false);
               }}>
                 <button
@@ -539,6 +539,16 @@ export function Navigation({
                   </div>
                 );
               })}
+              <div className={styles.mobilePrefs}>
+                <div>
+                  <p className={styles.settingsLabel}>{dict.languageLabel}</p>
+                  <LocaleSwitcher current={locale} label={dict.languageLabel} variant="choices" className={styles.languageOptions} />
+                </div>
+                <div>
+                  <p className={styles.settingsLabel}>{dict.themeLabel}</p>
+                  <ThemeToggle variant="choices" className={styles.themeOptions} labels={{ auto: dict.themes.auto, dark: dict.themes.dark, light: dict.themes.light, generic: dict.themes.toggle }} />
+                </div>
+              </div>
               <div className={styles.mobileWordmark} aria-hidden="true">SIMNETIQ</div>
             </div>
           </div>

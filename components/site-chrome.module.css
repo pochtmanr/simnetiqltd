@@ -1,12 +1,15 @@
 .navLink,
-.settings { --nav-hover: #0F1115; }
+.settings,
+.mobilePrefs { --nav-hover: #0F1115; }
 
 :global([data-theme="light"]) .navLink,
-:global([data-theme="light"]) .settings { --nav-hover: #F8F9FB; }
+:global([data-theme="light"]) .settings,
+:global([data-theme="light"]) .mobilePrefs { --nav-hover: #F8F9FB; }
 
 @media (prefers-color-scheme: light) {
   :global(:root:not([data-theme])) .navLink,
-  :global(:root:not([data-theme])) .settings { --nav-hover: #F8F9FB; }
+  :global(:root:not([data-theme])) .settings,
+  :global(:root:not([data-theme])) .mobilePrefs { --nav-hover: #F8F9FB; }
 }
 
 .brand {
@@ -227,6 +230,7 @@
 }
 
 .mobileInner { display: flex; flex-direction: column; min-height: 100%; padding: 1.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom)); }
+.mobilePrefs { display: grid; gap: 1.75rem; margin-top: 1.5rem; }
 .mobileRow { padding-block: .25rem; border-bottom: 1px solid var(--color-border-strong); }
 .mobileWordmark { margin-top: auto; padding-top: 3rem; font-family: var(--font-inter), Arial, sans-serif; font-size: 17.4vw; font-weight: 750; letter-spacing: -.075em; line-height: 1; direction: ltr; }
 @media (max-width: 767px) {
