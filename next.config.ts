@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async rewrites() {
+    // The bot menu was saved as /tg. and that path 404s. Serve the mini app there.
+    return [{ source: "/tg.", destination: "/tg" }];
+  },
   async redirects() {
     return [
       // Consolidate old domains and www before locale or page routing.
