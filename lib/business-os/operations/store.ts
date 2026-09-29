@@ -3,7 +3,7 @@ import { createSecretClient } from "@/lib/business-os/db/client";
 import type { OperationsStore, ReminderClaim } from "@/lib/business-os/operations/tick";
 import type { SendOutcome } from "@/lib/business-os/operations/delivery";
 
-async function rpc(name: string, args: Record<string, unknown>): Promise<unknown> {
+async function rpc(name: string, args: Record<string, unknown> = {}): Promise<unknown> {
   const result = await createSecretClient().schema("business_os").rpc(name, args);
   if (result.error) throw new Error(result.error.message);
   return result.data;

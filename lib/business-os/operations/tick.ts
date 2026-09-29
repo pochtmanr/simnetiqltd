@@ -46,7 +46,7 @@ export async function runOperationsTick(
   if (!options.transportReady) return result;
   const claims = await store.claim(londonTime(options.now));
   for (const claim of claims) {
-    let outcome: SendOutcome | "suppressed";
+    let outcome: SendOutcome;
     try {
       outcome = await options.send({ ...claim, text: reminderMessage(claim.title, claim.path) });
     } catch (error) {
@@ -55,7 +55,6 @@ export async function runOperationsTick(
     await store.finish(claim.id, outcome);
     if (outcome === "sent") result.sent += 1;
     else if (outcome === "ambiguous") result.ambiguous += 1;
-    else if (outcome === "suppressed") result.suppressed += 1;
     else result.failed += 1;
   }
   return result;

@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const profile = await beginFinanceRead();
   if (profile instanceof NextResponse) return profile;
   const query = drillQuery(request.nextUrl.searchParams);
-  if ("error" in query) return jsonError(query.error, 400);
+  if ("error" in query && query.error) return jsonError(query.error, 400);
   try {
     return financeRpc("report_drill", { actor_id: profile.userId, payload: query });
   } catch (error) {
