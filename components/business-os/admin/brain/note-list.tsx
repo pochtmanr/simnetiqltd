@@ -2,9 +2,9 @@
 
 import { useEffect, useId, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import { businessGet } from "@/components/business-os/business-post";
-import { CalendarIcon, ChevronDownIcon, NoteIcon, PlusIcon, SearchIcon, SortIcon } from "@/components/business-os/ui/icons";
+import { AudienceIcon, CalendarIcon, ChartIcon, CheckCircleIcon, ChevronDownIcon, CloseIcon, NoteIcon, PlusIcon, ProjectIcon, SearchIcon, SortIcon, UserIcon } from "@/components/business-os/ui/icons";
 import { Popover, useSheetClose } from "@/components/business-os/ui/overlay";
-import { Button, Card, EmptyState, Input } from "@/components/business-os/ui/primitives";
+import { Button, Card, EmptyState } from "@/components/business-os/ui/primitives";
 import { DAILY_FOLDER, NOTE_TEMPLATES, dailyBody, dayStamp } from "@/lib/business-os/brain/templates";
 import { noteKey } from "@/lib/business-os/brain/wikilinks";
 import { relativeTime } from "@/lib/business-os/workspace/format";
@@ -50,30 +50,42 @@ function plural(count: number, word: string) {
   return `${count} ${count === 1 ? word : `${word}s`}`;
 }
 
-/** Contents of the "New note" popover; closes it after a choice. */
-function NewNoteOptions({ onBlank, onDaily, onTemplate }: { onBlank: () => void; onDaily: () => void; onTemplate: (id: string) => void }) {
+const TEMPLATE_ICONS: Record<string, ReactNode> = {
+  meeting: <AudienceIcon size={16} />,
+  decision: <CheckCircleIcon size={16} />,
+  contact: <UserIcon size={16} />,
+  project: <ProjectIcon size={16} />,
+  weekly: <ChartIcon size={16} />,
+};
+
+function StartItem({ icon, label, hint, onSelect }: { icon: ReactNode; label: string; hint: string; onSelect: () => void }) {
+  return (
+    <button type="button" role="menuitem" className="bos-menu-item bos-notes-start-item" onClick={onSelect}>
+      <span className="bos-notes-start-item__icon">{icon}</span>
+      <span className="bos-notes-start-item__text">
+        <span className="bos-notes-start-item__label">{label}</span>
+        <span className="bos-notes-start-item__hint">{hint}</span>
+      </span>
+    </button>
+  );
+}
+
+/** Contents of the "Start a note" popover; closes it after a choice. */
+function NewNoteOptions({ daily, onBlank, onDaily, onTemplate }: { daily: boolean; onBlank: () => void; onDaily: () => void; onTemplate: (id: string) => void }) {
   const close = useSheetClose();
   const pick = (action: () => void) => () => {
     close();
     action();
   };
+  const today = new Date().toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
   return (
-    <div className="bos-notes-menu">
-      <button type="button" className="bos-menu-item" onClick={pick(onBlank)}>
-        <PlusIcon size={16} />
-        Blank note
-      </button>
-      <button type="button" className="bos-menu-item" onClick={pick(onDaily)}>
-        <CalendarIcon size={16} />
-        Today&apos;s daily note
-      </button>
+    <div className="bos-notes-menu" role="menu" aria-label="Start a note">
+      <StartItem icon={<PlusIcon size={16} />} label="Blank note" hint="An empty page. Same as the New button." onSelect={pick(onBlank)} />
+      <StartItem icon={<CalendarIcon size={16} />} label={daily ? "Open today's daily note" : "Today's daily note"} hint={`${today} · focus, notes and what got done`} onSelect={pick(onDaily)} />
       <div className="bos-menu-sep" />
-      <p className="bos-menu-label">From a template</p>
+      <p className="bos-menu-label">Templates</p>
       {NOTE_TEMPLATES.map((template) => (
-        <button key={template.id} type="button" className="bos-menu-item bos-notes-menu__template" onClick={pick(() => onTemplate(template.id))}>
-          <span className="bos-notes-menu__label">{template.label}</span>
-          <span className="bos-caption bos-notes-menu__desc">{template.description}</span>
-        </button>
+        <StartItem key={template.id} icon={TEMPLATE_ICONS[template.id] ?? <NoteIcon size={16} />} label={template.label} hint={template.description} onSelect={pick(() => onTemplate(template.id))} />
       ))}
     </div>
   );
@@ -217,6 +229,8 @@ export function NoteList({
     onFilter("");
   }
 
+  const dailyExists = notes.some((note) => note.key === noteKey(dayStamp(new Date())));
+
   function openDaily() {
     const day = dayStamp(new Date());
     const existing = notes.find((note) => note.key === noteKey(day));
@@ -242,18 +256,18 @@ export function NoteList({
 
   return (
     <aside className="bos-notes__list" aria-label="Notes">
-      <div className="flex gap-2">
-        <div className="relative min-w-0 flex-1">
-          <span className="pointer-events-none absolute inset-y-0 start-3 flex items-center text-[var(--color-text-dim)]">
-            <SearchIcon size={16} />
-          </span>
-          <Input
+      <div className="bos-notes-bar">
+        <div className="bos-notes-search">
+          <SearchIcon size={16} />
+          <input
             id={searchId}
+            className="bos-notes-search__input"
             type="search"
             aria-label="Search notes"
             aria-keyshortcuts="/"
             placeholder="Search notes"
-            title="Press / to search"
+            autoComplete="off"
+            spellCheck={false}
             value={filter}
             onChange={(event) => onFilter(event.target.value)}
             onKeyDown={(event) => {
@@ -262,16 +276,26 @@ export function NoteList({
                 onFilter("");
               }
             }}
-            className="ps-9"
           />
+          {filter ? (
+            <button type="button" className="bos-notes-search__clear" aria-label="Clear search" onClick={() => {
+              onFilter("");
+              document.getElementById(searchId)?.focus();
+            }}>
+              <CloseIcon size={14} />
+            </button>
+          ) : (
+            <kbd className="bos-notes-search__key" aria-hidden="true" title="Press / to search">/</kbd>
+          )}
         </div>
         {canWrite ? (
           <div className="bos-notes-new">
-            <Button variant="primary" iconOnly aria-label="New blank note" title="New note" onClick={() => onCreate()}>
+            <button type="button" className="bos-notes-new__main" title="New blank note" onClick={() => onCreate()}>
               <PlusIcon size={16} />
-            </Button>
-            <Popover label={<ChevronDownIcon size={14} />} title="New note" ariaLabel="More ways to start a note" variant="primary" iconOnly align="end" buttonClassName="bos-notes-new__more">
-              <NewNoteOptions onBlank={() => onCreate()} onDaily={openDaily} onTemplate={createFromTemplate} />
+              New
+            </button>
+            <Popover label={<ChevronDownIcon size={14} />} title="Start a note" ariaLabel="More ways to start a note" variant="primary" iconOnly align="end" buttonClassName="bos-notes-new__more">
+              <NewNoteOptions daily={dailyExists} onBlank={() => onCreate()} onDaily={openDaily} onTemplate={createFromTemplate} />
             </Popover>
           </div>
         ) : null}
@@ -287,7 +311,7 @@ export function NoteList({
         </div>
         <span className="flex-1" />
         {notes.length > 1 ? (
-          <Popover label={<SortIcon size={16} />} title="Sort notes" ariaLabel={`Sort notes: ${sort === "title" ? "A–Z" : "recently edited"}`} variant="ghost" size="sm" iconOnly align="end">
+          <Popover label={<><SortIcon size={14} />{sort === "title" ? "A–Z" : "Recent"}</>} title="Sort notes" ariaLabel={`Sort notes: ${sort === "title" ? "A–Z" : "recently edited"}`} variant="ghost" size="sm" align="end">
             <SortOptions sort={sort} />
           </Popover>
         ) : null}
