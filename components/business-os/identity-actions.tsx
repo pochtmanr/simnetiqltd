@@ -20,12 +20,14 @@ export function IdentityActions({
   surface,
   telegramConfigured,
   focus = "session",
+  projects = [],
 }: {
   role: "owner" | "admin" | "read_only";
   assurance: "aal1" | "aal2";
   surface: "admin" | "tg";
   telegramConfigured: boolean;
   focus?: "session" | "integration";
+  projects?: { slug: string; name: string }[];
 }) {
   const [message, setMessage] = useState<string | null>(null);
   const [secret, setSecret] = useState<string | null>(null);
@@ -36,7 +38,7 @@ export function IdentityActions({
   const [provider, setProvider] = useState("");
   const [environment, setEnvironment] = useState("staging");
   const [secretReference, setSecretReference] = useState("");
-  const [projectSlug, setProjectSlug] = useState("doppler");
+  const [projectSlug, setProjectSlug] = useState(projects[0]?.slug ?? "");
 
   async function logout() {
     const headers = await csrfHeader();
@@ -126,7 +128,7 @@ export function IdentityActions({
     <div className="flex flex-col gap-6">
       {focus === "session" ? (
         <>
-          <button type="button" onClick={logout} className="min-h-11 w-fit rounded-md border border-border px-3 py-2 text-sm">
+          <button type="button" onClick={logout} className={surface === "admin" ? "btn-secondary w-fit text-sm" : "min-h-11 w-fit rounded-md border border-border px-3 py-2 text-sm"}>
             Log out
           </button>
           {assurance === "aal1" ? (
@@ -192,8 +194,11 @@ export function IdentityActions({
               onChange={(event) => setProjectSlug(event.target.value)}
               className="min-h-11 rounded-md border border-border bg-surface px-3 text-base"
             >
-              <option value="doppler">Doppler</option>
-              <option value="smscode">SMS Code</option>
+              {projects.map((project) => (
+                <option key={project.slug} value={project.slug}>
+                  {project.name}
+                </option>
+              ))}
             </select>
           </label>
           <label className="flex flex-col gap-1 text-sm">

@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import { SITE_URL } from "./lib/site";
 
 const nextConfig: NextConfig = {
+  // Next 16 blocks cross-origin HMR by default. Opening the app as
+  // http://127.0.0.1:3000 while the server advertises localhost trips that.
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
   experimental: {
     globalNotFound: true,
   },

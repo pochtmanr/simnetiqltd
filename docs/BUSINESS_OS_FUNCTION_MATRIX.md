@@ -1,5 +1,7 @@
 # Project reporting APIs — function and delivery matrix
 
+> 8 November 2026 amendment (hybrid data path, owner decision): company-level accounts connect directly to Business OS — the Revolut Business bank account (balances and bank transactions) and App Store Connect sales/finance reports. RevenueCat also connects directly, read-only, for pulse metrics only (MRR, active subscriptions, trials). Direct pulls emit the same v1 contract pages and go through the same validation, quarantine and snapshot storage. The money ledger still comes from project exports; direct data is displayed and used for reconciliation, never posted as a second sale. See [the v2 design](superpowers/specs/2026-11-08-business-os-v2-design.md).
+
 Updated 28 September 2026. This supplements the audit with deeper Doppler analytics inspection. **Design and source-code status only; no API implemented or production integration certified by this document.**
 
 ## Architecture decision for this iteration

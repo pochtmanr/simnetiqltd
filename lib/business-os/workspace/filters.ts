@@ -22,6 +22,8 @@ export type MetricName = (typeof METRICS)[number];
 export type Surface = "admin" | "tg";
 
 const ADMIN_SECTIONS = [
+  "home",
+  "project",
   "overview",
   "projects",
   "sales",
@@ -29,12 +31,16 @@ const ADMIN_SECTIONS = [
   "subscriptions",
   "traffic",
   "accounts",
+  "bank",
   "reports",
   "integrations",
   "settings",
   "documents",
   "records",
   "timeline",
+  "appstore",
+  "notes",
+  "ask",
 ] as const;
 
 const TG_SECTIONS = [
@@ -117,7 +123,7 @@ export function parseWorkspaceQuery(
   const source = one(params, "source")?.trim();
   const status = one(params, "status")?.trim();
   return {
-    section: member(requested, allowed) ?? "overview",
+    section: member(requested, allowed) ?? (surface === "admin" ? "home" : "overview"),
     grain,
     basis,
     anchor,

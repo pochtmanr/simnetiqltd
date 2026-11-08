@@ -1,5 +1,7 @@
 # Business OS — integration contracts and dependencies
 
+> 8 November 2026 amendment (hybrid data path, owner decision): company-level accounts connect directly to Business OS — the Revolut Business bank account (balances and bank transactions) and App Store Connect sales/finance reports. RevenueCat also connects directly, read-only, for pulse metrics only (MRR, active subscriptions, trials). Direct pulls emit the same v1 contract pages and go through the same validation, quarantine and snapshot storage. The money ledger still comes from project exports; direct data is displayed and used for reconciliation, never posted as a second sale. See [the v2 design](superpowers/specs/2026-11-08-business-os-v2-design.md).
+
 > 28 September refinement: project-local reporting services now own their calculations and provider imports; Simnetiq consumes versioned read-only exports. Read [function matrix](BUSINESS_OS_FUNCTION_MATRIX.md) and [project API contract](BUSINESS_OS_PROJECT_API_CONTRACT.md) before implementing. These refine the earlier central-ingestion proposal below.
 
 Production connections have not been tested. All integration status starts unverified. Two live-product targets: Doppler VPN and SMS Code. Provider account membership and RevenueCat account/project structure are still unknown.
@@ -39,6 +41,26 @@ Inventory project/app/store/product identifiers first. SMS uses consumables; Dop
 New read-only receiver or durable source outbox must coexist with existing entitlement webhooks. Identify one authoritative normalized sale across source ledger and RevenueCat; use other observations to reconcile/enrich it. Renewal transaction ids differ from original subscription id. Refunds, reversals, cancellations, expirations, pauses, transfers and billing retries are distinct events.
 
 Store gross purchased-currency amount, USD provider value if supplied, estimated tax/commission, product, store, transaction and subscription ids. Later store financial reports/bank payouts establish actual cash; estimated proceeds and actual settlements remain visibly separate. Official reference: [RevenueCat event fields](https://www.revenuecat.com/docs/integrations/webhooks/event-types-and-fields).
+
+## Revolut Business (direct, company bank account)
+
+Shown on **Money › Bank**. Read-only: the consent asks for scope `READ` only, so nothing in Business OS can move money. Bank rows are cash movements and never post to the ledger.
+
+Storage differs from the 8 November note above: bank data goes to its own tables (`bank_accounts`, `bank_transactions`, `bank_category_rules`, `provider_runs`, `provider_tokens` in migration `20261108140000_bank.sql`), not to contract snapshot pages. Categorisation, statements and agent queries need row-level data that can be updated. Each transaction leg is one row keyed `<transaction id>:<leg id>`. The first pull reads 400 days; later pulls re-read 14 days (or from the oldest pending row) every 30 minutes through `/api/business-os/providers/tick`.
+
+Categories: rules (text → category) apply to new rows and, when saved, to uncategorised and rule-set rows. A category set by hand is never changed by a rule or a re-pull. Exchanges and transfers between own accounts default to "Own-account transfer" and are kept out of money in/out.
+
+Setup (owner):
+
+1. Generate a key and certificate (keep `revolut.key` secret; it never leaves the server env):
+   `openssl req -x509 -newkey rsa:2048 -nodes -keyout revolut.key -out revolut.cer -days 1825 -subj "/CN=simnetiq-business-os"`
+2. Revolut Business › Settings › APIs › Business API › add API certificate. Upload `revolut.cer`. OAuth redirect URI: `https://<production host>/api/business-os/providers/revolut/callback` (for local testing, a second certificate with `http://localhost:3000/...`). Copy the client ID.
+3. Token key: `openssl rand -base64 32`.
+4. Set in Vercel (`vercel env add`) and `.env.local`: `REVOLUT_CLIENT_ID`, `REVOLUT_PRIVATE_KEY` (contents of `revolut.key`; `\n` escapes are accepted), `REVOLUT_REDIRECT_URI` (exactly as in step 2), `BUSINESS_OS_TOKEN_KEY`. Optional `REVOLUT_ENVIRONMENT=sandbox` to use Revolut's sandbox.
+5. Apply `20261108140000_bank.sql` to the Business OS Supabase project.
+6. Open Money › Bank as the owner with step-up and click **Connect Revolut**. Approve in Revolut; the first pull runs on the way back.
+
+Unverified until the first sandbox connect: the auth flow (consent page `app-confirm`, `/auth/token`, client-assertion claims `iss` = redirect host, `aud` = `https://revolut.com`) follows Revolut's developer guide, which could not be fetched for this change. `/accounts` and `/transactions` follow Revolut's published OpenAPI spec. A refused refresh shows "Reconnect needed" on the Bank tab.
 
 ## Analytics and business imports
 

@@ -24,6 +24,11 @@ The identity migration aborts if `public.marketing_contacts` is present. Do not 
 
 Later phases append new files under `migrations/`. Do not edit a migration that has already been applied.
 
+Business OS v2 files, applied in the same SQL editor after the files above:
+
+- `migrations/20261108120000_files_folders.sql` — Files: folders, wider file types, 50 MB cap, extracted text and search. Also raises the `business-os-documents` bucket limit to 50 MB.
+- `migrations/20261108130000_brain.sql` — Brain: notes, `[[links]]`, note search and vault import.
+
 Local config uses database port `54332` and leaves public signup disabled. M1 does not start this stack and does not seed an owner. `scripts/business-os/bootstrap-owner.mjs` is a manual, server-side step once `BUSINESS_OS_SUPABASE_URL`, `BUSINESS_OS_SUPABASE_SECRET_KEY`, `BUSINESS_OS_OWNER_EMAIL`, and `BUSINESS_OS_OWNER_PASSWORD` are set in the server environment.
 
 Recovery before any later migration has been applied: drop schema `business_os` and remove the `business-os-private` bucket plus its storage policy. Do not cascade those drops onto a marketing database.

@@ -14,6 +14,10 @@ const INVALID = [
   "amount_scale",
   "currency_invalid",
   "currency_unsupported",
+  "folder_invalid",
+  "query_invalid",
+  "document_linked",
+  "source_read_only",
 ];
 
 export function operationsRpcStatus(message: string): number | null {

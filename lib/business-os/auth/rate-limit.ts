@@ -13,6 +13,8 @@ export const RATE_LIMITS = {
   sync: 20,
   finance: 30,
   operations: 30,
+  /** Each upload is two calls; a folder of files arrives in one burst. */
+  files: 300,
   refresh: 30,
   logout: 30,
 } as const;

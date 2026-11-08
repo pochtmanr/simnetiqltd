@@ -1,25 +1,10 @@
+import { AdminWorkspace } from "@/components/business-os/admin/shell";
 import { IdentityActions } from "@/components/business-os/identity-actions";
 import { WorkspaceSection } from "@/components/business-os/sections";
 import { TelegramFrame } from "@/components/business-os/telegram-frame";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
 import { BASES, GRAINS, telegramBack, workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import type { WorkspaceData } from "@/lib/business-os/workspace/load";
-
-const ADMIN_LINKS = [
-  ["overview", "Overview"],
-  ["projects", "Projects"],
-  ["sales", "Sales"],
-  ["expenses", "Expenses"],
-  ["subscriptions", "Subscriptions"],
-  ["traffic", "Traffic"],
-  ["accounts", "Accounts"],
-  ["reports", "Reports"],
-  ["integrations", "Integrations"],
-  ["documents", "Documents"],
-  ["records", "Business records"],
-  ["timeline", "Timeline"],
-  ["settings", "Settings"],
-] as const;
 
 const TG_LINKS = [
   ["overview", "Overview"],
@@ -46,35 +31,39 @@ export function BusinessWorkspace({
   brokerEnabled: boolean;
   telegramConfigured: boolean;
 }) {
-  const links = surface === "tg" ? TG_LINKS : ADMIN_LINKS;
-  const backHref = surface === "tg" ? telegramBack(query) : null;
+  if (surface === "admin") {
+    return (
+      <TelegramFrame backHref={null}>
+        <AdminWorkspace query={query} data={data} profile={profile} brokerEnabled={brokerEnabled} telegramConfigured={telegramConfigured} />
+      </TelegramFrame>
+    );
+  }
+
+  const backHref = telegramBack(query);
+
   return (
     <TelegramFrame backHref={backHref}>
-      <div className={surface === "tg" ? "flex min-h-full w-full flex-col gap-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))]" : "mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 md:flex-row md:px-6"}>
-        <nav aria-label={surface === "tg" ? "Sections" : "Admin"} className={surface === "tg" ? "fixed inset-x-0 bottom-0 z-10 border-t border-border bg-bg px-4 pb-[env(safe-area-inset-bottom)]" : "flex gap-2 overflow-x-auto md:w-52 md:shrink-0 md:flex-col"}>
-          <div className={surface === "tg" ? "mx-auto grid w-full max-w-lg grid-cols-5" : "contents"}>
-            {links.map(([section, label]) => (
+      <div className="flex min-h-full w-full flex-col gap-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))]">
+        <nav aria-label="Sections" className="fixed inset-x-0 bottom-0 z-10 border-t border-border bg-bg px-4 pb-[env(safe-area-inset-bottom)]">
+          <div className="mx-auto grid w-full max-w-lg grid-cols-5">
+            {TG_LINKS.map(([section, label]) => (
               <a
                 key={section}
                 href={workspaceHref(base, query, { section, metric: null })}
                 aria-current={query.section === section ? "page" : undefined}
-                className={
-                  surface === "tg"
-                    ? `min-h-11 px-2 py-2 text-center text-xs font-semibold ${query.section === section ? "text-primary" : "text-text-dim"}`
-                    : "min-h-11 px-2 py-2 text-center text-sm md:text-left"
-                }
+                className={`min-h-11 px-2 py-2 text-center text-xs font-semibold ${query.section === section ? "text-primary" : "text-text-dim"}`}
               >
                 {label}
               </a>
             ))}
           </div>
         </nav>
-        <div className="flex min-w-0 flex-1 flex-col gap-5">
+        <div className="flex min-w-0 flex-1 flex-col gap-5 px-4 pt-4">
           <header>
-            <p className={surface === "tg" ? "text-xs font-semibold tracking-wider text-text-dim uppercase" : "text-xs tracking-wide text-text-dim uppercase"}>Business OS</p>
-            <h1 className={surface === "tg" ? "font-display text-2xl font-bold" : "text-2xl font-medium"}>{surface === "tg" ? periodTitle(query) : "Admin"}</h1>
+            <p className="text-xs font-semibold tracking-wider text-text-dim uppercase">Business OS</p>
+            <h1 className="font-display text-2xl font-bold">{periodTitle(query)}</h1>
           </header>
-          <FilterBar base={base} query={query} projects={data.projects} presentation={surface === "tg" ? "sheet" : "inline"} />
+          <FilterBar base={base} query={query} projects={data.projects} />
           <WorkspaceSection surface={surface} base={base} query={query} data={data} canWrite={profile.role !== "read_only"} />
           {query.section === "settings" ? (
             <>
@@ -92,7 +81,7 @@ export function BusinessWorkspace({
             </>
           ) : null}
           {query.section === "integrations" ? (
-            <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="integration" />
+            <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="integration" projects={data.projects} />
           ) : null}
         </div>
       </div>
@@ -127,19 +116,17 @@ function FilterBar({
   base,
   query,
   projects,
-  presentation,
 }: {
   base: "/admin" | "/tg";
   query: WorkspaceQuery;
   projects: { slug: string; name: string }[];
-  presentation: "inline" | "sheet";
 }) {
-  const fieldClass = presentation === "sheet" ? "min-h-11 rounded-xl border border-border bg-bg px-3 text-base" : "min-h-11 rounded-md border border-border bg-surface px-3 text-base";
+  const fieldClass = "min-h-11 rounded-xl border border-border bg-bg px-3 text-base";
   const fields = (
     <>
       <input type="hidden" name="section" value={query.section} />
       <label className="flex flex-col gap-1 text-sm">
-        Grain
+        <span>Grain</span>
         <select name="grain" defaultValue={query.grain} className={fieldClass}>
           {GRAINS.map((grain) => (
             <option key={grain} value={grain}>
@@ -149,7 +136,7 @@ function FilterBar({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Basis
+        <span>Basis</span>
         <select name="basis" defaultValue={query.basis} className={fieldClass}>
           {BASES.map((basis) => (
             <option key={basis} value={basis}>
@@ -159,11 +146,11 @@ function FilterBar({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Anchor date
+        <span>Anchor date</span>
         <input name="anchor" type="date" defaultValue={query.anchor} className={fieldClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Project
+        <span>Project</span>
         <select name="project" defaultValue={query.project ?? ""} className={fieldClass}>
           <option value="">All</option>
           {projects.map((project) => (
@@ -173,50 +160,45 @@ function FilterBar({
           ))}
         </select>
       </label>
-      <label className={`flex flex-col gap-1 text-sm ${presentation === "inline" ? "sm:col-span-2" : ""}`}>
-        Custom from
+      <label className="flex flex-col gap-1 text-sm">
+        <span>Custom from</span>
         <input name="from" defaultValue={query.from} className={fieldClass} />
       </label>
-      <label className={`flex flex-col gap-1 text-sm ${presentation === "inline" ? "sm:col-span-2" : ""}`}>
-        Custom to
+      <label className="flex flex-col gap-1 text-sm">
+        <span>Custom to</span>
         <input name="to" defaultValue={query.to} className={fieldClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Currency
+        <span>Currency</span>
         <input name="currency" defaultValue={query.currency ?? ""} maxLength={3} className={fieldClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Source
+        <span>Source</span>
         <input name="source" defaultValue={query.source ?? ""} className={fieldClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Status
+        <span>Status</span>
         <input name="status" defaultValue={query.status ?? ""} className={fieldClass} />
       </label>
-      <p className={`text-xs text-text-dim ${presentation === "inline" ? "sm:col-span-2" : ""}`}>
+      <p className="text-xs text-text-dim">
         Window {query.from} to {query.to}. Month and year use the anchor in Europe/London. Custom uses the from and to instants. Currency, source, and status narrow listed rows.
       </p>
-      <button type="submit" className={presentation === "sheet" ? "min-h-11 w-fit rounded-xl bg-primary px-4 text-sm font-semibold text-white" : "min-h-11 w-fit rounded-md bg-primary px-4 text-sm text-white"}>
-        Apply filters
-      </button>
+      <div>
+        <button type="submit" className="min-h-11 w-fit rounded-xl bg-primary px-4 text-sm font-semibold text-white">
+          Apply filters
+        </button>
+      </div>
     </>
   );
-  if (presentation === "sheet") {
-    return (
-      <details className="rounded-2xl border border-border bg-surface">
-        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-3 text-sm [&::-webkit-details-marker]:hidden">
-          <span className="min-w-0 flex-1 truncate font-semibold">{filterSummary(query, projects)}</span>
-          <span className="font-semibold text-primary">Filters</span>
-        </summary>
-        <form action={base} className="grid gap-3 border-t border-border p-3">
-          {fields}
-        </form>
-      </details>
-    );
-  }
   return (
-    <form action={base} className="grid gap-3 rounded-md border border-border p-3 sm:grid-cols-2">
-      {fields}
-    </form>
+    <details className="rounded-2xl border border-border bg-surface">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-3 text-sm [&::-webkit-details-marker]:hidden">
+        <span className="min-w-0 flex-1 truncate font-semibold">{filterSummary(query, projects)}</span>
+        <span className="font-semibold text-primary">Filters</span>
+      </summary>
+      <form action={base} className="grid gap-3 border-t border-border p-3">
+        {fields}
+      </form>
+    </details>
   );
 }

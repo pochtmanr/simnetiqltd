@@ -2,10 +2,9 @@ import type { ReactNode } from "react";
 import { EntryForm } from "@/components/business-os/entry-form";
 import { ExpenseActions } from "@/components/business-os/expense-actions";
 import { csvHref, workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
+import { attentionFor, headlineMetrics, primaryReport, verifiedFor } from "@/lib/business-os/workspace/derive";
 import type { WorkspaceData } from "@/lib/business-os/workspace/load";
 import {
-  attentionItems,
-  balancesVerified,
   cashCaption,
   displayAmount,
   filterLabeledRows,
@@ -35,17 +34,7 @@ const METRIC_LABELS: Record<string, string> = {
 const TG_CARD = "rounded-2xl border border-border bg-surface";
 const TG_ROW = "flex min-h-11 w-full items-center gap-3 rounded-xl px-3 py-3 text-start text-sm font-semibold";
 
-function LaterPanel({ title, surface }: { title: string; surface: "admin" | "tg" }) {
-  if (surface === "admin") {
-    return (
-      <section className="flex flex-col gap-2">
-        <h2 className="text-lg font-medium">{title}</h2>
-        <p className="text-sm text-text-dim">
-          This section is the next step. Document search, the business registry, and the timeline are not available in this workspace yet.
-        </p>
-      </section>
-    );
-  }
+function LaterPanel({ title }: { title: string }) {
   return (
     <section className={`${TG_CARD} px-4 py-4`}>
       <h2 className="font-display text-lg font-bold">{title}</h2>
@@ -64,29 +53,9 @@ function Glyph({ children }: { children: ReactNode }) {
   );
 }
 
-function attentionFor(data: WorkspaceData): string[] {
-  const primary = primaryReport(data);
-  const health = "error" in data.health ? [] : data.health.rows;
-  const stale = "error" in data.snapshots ? [] : data.snapshots.rows.filter((row) => row.status === "stale").map((row) => row.dataset);
-  const unmatched = primary.report?.buckets.reduce((sum, bucket) => sum + bucket.cash.residuals.length, 0) ?? 0;
-  const unverified = "error" in data.gates ? 0 : data.gates.rows.filter((gate) => gate.state !== "verified").length;
-  return attentionItems({
-    coverage: primary.report?.coverage ?? null,
-    exclusions: primary.report?.exclusions ?? [],
-    health: health.map((row) => ({ status: row.status, lastErrorCode: row.lastErrorCode })),
-    staleDatasets: stale,
-    unmatchedCount: unmatched,
-    unverifiedGates: unverified,
-  });
-}
-
 function homeBlock(report: FinancialReportView | null): { metrics: Record<string, MoneyMetric | null> | null; limit: string | null; bucket: ReportBucket | null } {
   const bucket = report?.buckets[0] ?? null;
-  if (!bucket) return { metrics: null, limit: null, bucket: null };
-  if (bucket.gbp.metrics) return { metrics: bucket.gbp.metrics, limit: null, bucket };
-  if (bucket.native.length === 1) return { metrics: bucket.native[0]?.metrics ?? null, limit: null, bucket };
-  if (bucket.native.length > 1) return { metrics: null, limit: "Several native currencies", bucket };
-  return { metrics: null, limit: bucket.gbp.reason, bucket };
+  return { ...headlineMetrics(bucket), bucket };
 }
 
 function figureDetail(metric: MoneyMetric | null, limit: string | null): string {
@@ -354,7 +323,7 @@ export function WorkspaceSection({
   const section = query.section;
   if (section === "documents" || section === "records" || section === "timeline") {
     const title = section === "documents" ? "Documents" : section === "records" ? "Business records" : "Timeline";
-    return <LaterPanel title={title} surface={surface} />;
+    return <LaterPanel title={title} />;
   }
   if (section === "more") return <MoreLinks base={base} query={query} />;
   if (section === "add" || section === "expenses") {
@@ -374,74 +343,7 @@ export function WorkspaceSection({
   if (section === "integrations") return <Integrations data={data} surface={surface} />;
   if (section === "settings") return null;
   if (section === "money") return <Money data={data} query={query} base={base} />;
-  if (surface === "tg") return <TgHome data={data} query={query} base={base} />;
-  return <Overview data={data} query={query} base={base} />;
-}
-
-function primaryReport(data: WorkspaceData): { report: FinancialReportView | null; error: string | null } {
-  if (data.company.report || data.company.error) return data.company;
-  return data.byProject[0] ?? { report: null, error: null };
-}
-
-function verifiedFor(data: WorkspaceData, basis: string): boolean {
-  if ("error" in data.gates) return false;
-  return balancesVerified(data.gates.rows, basis);
-}
-
-function ProjectPerformance({ data, query, base }: { data: WorkspaceData; query: WorkspaceQuery; base: "/admin" | "/tg" }) {
-  return (
-    <section>
-      <h3 className="text-sm font-medium">Projects</h3>
-      <ul className="mt-2 flex flex-col gap-2 text-sm">
-        {data.byProject.map((project) => {
-          const name = data.projects.find((item) => item.slug === project.slug)?.name ?? project.slug;
-          const bucket = project.report?.buckets[0];
-          const period = bucket ? windowLabel(bucket.from, bucket.to) : null;
-          return (
-            <li key={project.slug} className="rounded-md border border-border px-3 py-2">
-              <a className="font-medium" href={workspaceHref(base, query, { project: project.slug, section: "overview", metric: null })}>
-                {name}
-              </a>
-              {project.error ? <p className="text-text-dim">Report {project.error.replaceAll("_", " ")}.</p> : null}
-              {project.report ? <p className="text-text-dim">Coverage {project.report.coverage ?? "unavailable"}</p> : null}
-              {bucket?.native.map((block) => (
-                <div key={block.currency} className="mt-2">
-                  <p className="text-xs text-text-dim">{block.currency}</p>
-                  {PROJECT_METRICS.map((metric) => (
-                    <div key={metric}>
-                      <p className="text-xs text-text-dim">{METRIC_LABELS[metric]}</p>
-                      <MoneyValue metric={block.metrics[metric] ?? null} basis={project.report?.basis ?? query.basis} windowLabel={period} />
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
-}
-
-function SourceFreshness({ data }: { data: WorkspaceData }) {
-  const healthRows = "error" in data.health ? null : data.health.rows;
-  return (
-    <section>
-      <h3 className="text-sm font-medium">Source freshness</h3>
-      {data.connections.length === 0 ? <p className="mt-2 text-sm text-text-dim">No source connection is registered.</p> : null}
-      <ul className="mt-2 flex flex-col gap-2 text-sm">
-        {data.connections.map((connection) => {
-          const health = healthRows?.find((row) => row.connectionId === connection.id);
-          const status = health?.status ?? (healthRows ? "unconfigured" : "unavailable");
-          return (
-            <li key={connection.id}>
-              {connection.projectSlug ?? "project"} · {connection.environment} · {status} · {health?.lastSuccessAt ?? "no successful sync"}
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
+  return <TgHome data={data} query={query} base={base} />;
 }
 
 function TgHome({ data, query, base }: { data: WorkspaceData; query: WorkspaceQuery; base: "/admin" | "/tg" }) {
@@ -583,37 +485,6 @@ function CashIcon() {
       <rect x="3" y="7" width="18" height="12" rx="2" />
       <path d="M3 11h18" />
     </Glyph>
-  );
-}
-
-function Overview({ data, query, base }: { data: WorkspaceData; query: WorkspaceQuery; base: "/admin" | "/tg" }) {
-  const primary = primaryReport(data);
-  const coverage = primary.report?.coverage ?? null;
-  const attention = attentionFor(data);
-  return (
-    <div className="flex flex-col gap-6">
-      <header>
-        <h2 className="text-lg font-medium">Overview</h2>
-        <p className="text-sm text-text-dim">
-          {query.from} to {query.to} · {query.basis} · coverage {coverage ?? "unavailable"}
-        </p>
-      </header>
-      {primary.error ? <p className="text-sm text-error">Report {primary.error.replaceAll("_", " ")}.</p> : null}
-      {"error" in data.gates ? <p className="text-sm text-text-dim">Dataset gates are unavailable.</p> : null}
-      {"error" in data.health ? <p className="text-sm text-text-dim">Source health is unavailable.</p> : null}
-      {primary.report ? <ReportBlocks report={primary.report} query={query} base={base} verifiedCash={verifiedFor(data, query.basis)} /> : null}
-      <ProjectPerformance data={data} query={query} base={base} />
-      <SourceFreshness data={data} />
-      <section>
-        <h3 className="text-sm font-medium">Attention</h3>
-        {attention.length === 0 ? <p className="mt-2 text-sm text-text-dim">No attention items in this window.</p> : null}
-        <ul className="mt-2 list-disc pl-5 text-sm">
-          {attention.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
-    </div>
   );
 }
 

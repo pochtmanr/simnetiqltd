@@ -1,15 +1,39 @@
 "use client";
 
-export async function businessPost(path: string, body: unknown): Promise<{ ok: boolean; payload: Record<string, unknown> }> {
+async function csrfToken(): Promise<string> {
   await fetch("/api/business-os/auth/csrf", { credentials: "same-origin" });
   const raw = document.cookie.split("; ").find((row) => row.startsWith("bos_csrf="));
-  const token = raw ? decodeURIComponent(raw.slice("bos_csrf=".length)) : "";
-  const response = await fetch(path, {
+  return raw ? decodeURIComponent(raw.slice("bos_csrf=".length)) : "";
+}
+
+/** Swaps the 14-day refresh token for a new hour-long access token. True when the session was renewed. */
+export async function renewSession(): Promise<boolean> {
+  const response = await fetch("/api/business-os/auth/refresh", {
     method: "POST",
     credentials: "same-origin",
-    headers: { "content-type": "application/json", "x-business-os-csrf": token },
-    body: JSON.stringify(body),
+    headers: { "content-type": "application/json", "x-business-os-csrf": await csrfToken() },
   });
+  return response.ok;
+}
+
+/** GET a Business OS route, renewing an expired session once before giving up. */
+export async function businessGet(path: string, init: RequestInit = {}): Promise<Response> {
+  const response = await fetch(path, { ...init, credentials: "same-origin" });
+  if (response.status !== 401 || !(await renewSession())) return response;
+  return fetch(path, { ...init, credentials: "same-origin" });
+}
+
+/** POST JSON with the CSRF header. An expired session is renewed once and the request retried. */
+export async function businessPost(path: string, body: unknown): Promise<{ ok: boolean; payload: Record<string, unknown> }> {
+  const send = async () =>
+    fetch(path, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "content-type": "application/json", "x-business-os-csrf": await csrfToken() },
+      body: JSON.stringify(body),
+    });
+  let response = await send();
+  if (response.status === 401 && (await renewSession())) response = await send();
   const payload = (await response.json().catch(() => ({}))) as Record<string, unknown>;
   return { ok: response.ok, payload };
 }

@@ -4,7 +4,10 @@ import { ACCESS_COOKIE } from "@/lib/business-os/auth/cookies";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
 import { createUserClient } from "@/lib/business-os/db/client";
 import { financeRpcCode } from "@/lib/business-os/finance/rpc-status";
+import { londonDate, londonWallToUtc } from "@/lib/business-os/finance/london";
 import { readFinanceRpc } from "@/lib/business-os/finance/rpc";
+import { selectAll } from "@/lib/business-os/brain/read";
+import type { BankData } from "@/lib/business-os/bank/load";
 import type { WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import { parseReport, type FinancialReportView } from "@/lib/business-os/workspace/present";
 
@@ -58,6 +61,7 @@ export type SnapshotRow = {
   coverage: string | null;
   dataAsOf: string | null;
   projectSlug: string | null;
+  connectionId?: string | null;
   body: unknown;
 };
 
@@ -75,7 +79,55 @@ export type WorkspaceData = {
   gates: { rows: { projectSlug: string | null; dataset: string; basis: string; state: string }[] } | { error: string };
   runs: { rows: { endpoint: string; status: string; errorCode: string | null; startedAt: string | null }[] } | { error: string };
   quarantine: { rows: { endpoint: string; reason: string; createdAt: string }[] } | { error: string };
+  /** Monthly buckets ending with the selected window, for trend charts. Absent when not requested. */
+  trend?: { report: FinancialReportView | null; error: string | null } | null;
+  /** Timeline items from 30 days back to 14 days ahead, for Today. Absent when not requested. */
+  upcoming?: { rows: UpcomingRow[] } | { error: string };
+  /** Files for the data folder. Absent when not requested. */
+  documents?: { rows: DocumentRow[] } | { error: string };
+  /** Note titles and the link graph for the Brain. Absent when not requested. */
+  notes?: { rows: NoteMeta[]; links: NoteLink[] } | { error: string };
+  /** Bank balances, transactions and rules for the Bank tab. Absent when not requested. */
+  bank?: BankData | { error: string };
+  /** Result code of the redirect back from Revolut's consent page, shown once on the Bank tab. */
+  bankNotice?: string | null;
 };
+
+export type DocumentRow = {
+  id: string;
+  title: string;
+  folder: string;
+  origin: "central" | "source";
+  category: string | null;
+  vendor: string | null;
+  tags: string[];
+  projectSlug: string | null;
+  documentOn: string | null;
+  mimeType: string | null;
+  byteSize: number | null;
+  uploadStatus: string;
+  summary: string | null;
+  createdAt: string;
+};
+
+/** Newest files loaded for the Files page; the page says so when the cap is reached. */
+export const DOCUMENT_LIMIT = 1000;
+
+export type NoteMeta = { id: string; title: string; key: string; folder: string; tags: string[]; documentId: string | null; updatedAt: string };
+export type NoteLink = { from: string; toKey: string };
+
+/** Notes and links loaded for the Brain; bodies are fetched when a note opens. */
+export const NOTE_LIMIT = 5000;
+export const NOTE_LINK_LIMIT = 30000;
+
+export type UpcomingRow = { kind: string; sourceId: string; occursOn: string; title: string; projectSlug: string | null; editable: boolean };
+
+/** Days of history and lookahead Today shows from the timeline. */
+export const UPCOMING_BACK_DAYS = 30;
+export const UPCOMING_AHEAD_DAYS = 14;
+
+/** Observation rows fetched per window; the UI says so when the cap is reached. */
+export const OBSERVATION_LIMIT = 500;
 
 function text(value: unknown): string | null {
   return typeof value === "string" ? value : null;
@@ -85,7 +137,11 @@ function moneyText(value: unknown): string | null {
   return typeof value === "string" ? value : value === null || value === undefined ? null : null;
 }
 
-async function reportFor(actorId: string, query: WorkspaceQuery, project: string | null): Promise<{ report: FinancialReportView | null; error: string | null }> {
+async function reportFor(
+  actorId: string,
+  query: Pick<WorkspaceQuery, "from" | "to" | "basis" | "grain">,
+  project: string | null,
+): Promise<{ report: FinancialReportView | null; error: string | null }> {
   const read = await readFinanceRpc("financial_report", {
     actor_id: actorId,
     payload: {
@@ -100,7 +156,33 @@ async function reportFor(actorId: string, query: WorkspaceQuery, project: string
   return { report: parseReport(read.data), error: null };
 }
 
-export async function loadWorkspace(profile: IdentityProfile, query: WorkspaceQuery): Promise<WorkspaceData> {
+/**
+ * Twelve monthly buckets ending with the selected month, the months of the selected
+ * year, or the months of a custom range longer than a month. Null when one bucket
+ * would be all the chart had.
+ */
+export function trendWindow(query: WorkspaceQuery): Pick<WorkspaceQuery, "from" | "to" | "basis" | "grain"> | null {
+  if (query.grain === "year") return { from: query.from, to: query.to, basis: query.basis, grain: "month" };
+  if (query.grain === "month") {
+    const year = Number(query.anchor.slice(0, 4));
+    const month = Number(query.anchor.slice(5, 7));
+    const start = new Date(Date.UTC(year, month - 12, 1));
+    return {
+      from: londonWallToUtc(start.getUTCFullYear(), start.getUTCMonth() + 1, 1).toISOString(),
+      to: query.to,
+      basis: query.basis,
+      grain: "month",
+    };
+  }
+  const days = (new Date(query.to).getTime() - new Date(query.from).getTime()) / 86_400_000;
+  return days > 45 ? { from: query.from, to: query.to, basis: query.basis, grain: "month" } : null;
+}
+
+export async function loadWorkspace(
+  profile: IdentityProfile,
+  query: WorkspaceQuery,
+  options: { trend?: boolean; upcoming?: boolean; documents?: boolean; notes?: boolean } = {},
+): Promise<WorkspaceData> {
   const access = (await cookies()).get(ACCESS_COOKIE)?.value;
   if (!access) {
     return emptyWorkspace("unauthenticated");
@@ -121,7 +203,9 @@ export async function loadWorkspace(profile: IdentityProfile, query: WorkspaceQu
   });
   const projectById = new Map(projects.map((project) => [project.id, project.slug]));
   const slugs = query.project ? [query.project] : projects.map((project) => project.slug);
-  const [company, byProject, categories, observations, components, expenses, allocations, snapshots, connections, health, gates, runs, quarantine] =
+  const trendQuery = options.trend ? trendWindow(query) : null;
+  const today = londonDate(new Date());
+  const [company, byProject, categories, observations, components, expenses, allocations, snapshots, connections, health, gates, runs, quarantine, trend, upcoming, documents, noteRows, noteLinks] =
     await Promise.all([
       query.project ? Promise.resolve({ report: null, error: null }) : reportFor(profile.userId, query, null),
       Promise.all(slugs.map(async (slug) => ({ slug, ...(await reportFor(profile.userId, query, slug)) }))),
@@ -135,7 +219,7 @@ export async function loadWorkspace(profile: IdentityProfile, query: WorkspaceQu
         .lt("occurred_at", query.to)
         .eq("recognition_basis", query.basis)
         .order("occurred_at", { ascending: false })
-        .limit(100),
+        .limit(OBSERVATION_LIMIT),
       db.from("observation_components").select("observation_id, component_id, component_type, amount, currency, quality, reason, posting_role"),
       db
         .from("expenses")
@@ -150,6 +234,33 @@ export async function loadWorkspace(profile: IdentityProfile, query: WorkspaceQu
       db.from("dataset_verifications").select("project_id, dataset, basis, state"),
       db.from("sync_runs").select("endpoint, status, error_code, started_at").order("started_at", { ascending: false }).limit(20),
       db.from("import_quarantine").select("endpoint, reason, created_at").order("created_at", { ascending: false }).limit(20),
+      trendQuery ? reportFor(profile.userId, trendQuery, query.project) : Promise.resolve(null),
+      options.upcoming
+        ? db
+            .from("timeline_items")
+            .select("kind, source_id, occurs_on, title, project_id, editable")
+            .gte("occurs_on", addDays(today, -UPCOMING_BACK_DAYS))
+            .lte("occurs_on", addDays(today, UPCOMING_AHEAD_DAYS))
+            .order("occurs_on", { ascending: true })
+            .limit(40)
+        : Promise.resolve(null),
+      options.documents
+        ? db
+            .from("documents")
+            .select("id, title, folder, origin, category, vendor, tags, project_id, document_on, mime_type, byte_size, upload_status, summary, created_at")
+            .neq("upload_status", "orphaned")
+            .order("created_at", { ascending: false })
+            .limit(DOCUMENT_LIMIT)
+        : Promise.resolve(null),
+      options.notes
+        ? selectAll<Record<string, unknown>>(
+            (from, to) => db.from("notes").select("id, title, link_key, folder, tags, document_id, updated_at").order("updated_at", { ascending: false }).order("id").range(from, to),
+            NOTE_LIMIT,
+          )
+        : Promise.resolve(null),
+      options.notes
+        ? selectAll<Record<string, unknown>>((from, to) => db.from("note_links").select("from_note, to_key").order("from_note").order("to_key").range(from, to), NOTE_LINK_LIMIT)
+        : Promise.resolve(null),
     ]);
 
   let drill: WorkspaceData["drill"] = null;
@@ -297,6 +408,7 @@ export async function loadWorkspace(profile: IdentityProfile, query: WorkspaceQu
                 coverage: text(row.coverage),
                 dataAsOf: text(row.data_as_of),
                 projectSlug: text(row.connection_id) ? (connectionProject.get(text(row.connection_id) as string) ?? null) : null,
+                connectionId: text(row.connection_id),
                 body: row.body,
               },
             ];
@@ -352,7 +464,97 @@ export async function loadWorkspace(profile: IdentityProfile, query: WorkspaceQu
             return [{ endpoint, reason, createdAt }];
           }),
         },
+    trend,
+    ...(upcoming
+      ? {
+          upcoming: upcoming.error
+            ? { error: "unavailable" }
+            : {
+                rows: (upcoming.data ?? []).flatMap((row) => {
+                  const kind = text(row.kind);
+                  const sourceId = text(row.source_id);
+                  const occursOn = text(row.occurs_on);
+                  const title = text(row.title);
+                  if (!kind || !sourceId || !occursOn || !title) return [];
+                  const projectId = text(row.project_id);
+                  return [{ kind, sourceId, occursOn, title, projectSlug: projectId ? (projectById.get(projectId) ?? null) : null, editable: row.editable === true }];
+                }),
+              },
+        }
+      : {}),
+    ...(documents
+      ? {
+          documents: documents.error
+            ? { error: "unavailable" }
+            : {
+                rows: (documents.data ?? []).flatMap((row): DocumentRow[] => {
+                  const id = text(row.id);
+                  const title = text(row.title);
+                  const createdAt = text(row.created_at);
+                  const uploadStatus = text(row.upload_status);
+                  if (!id || !title || !createdAt || !uploadStatus) return [];
+                  const projectId = text(row.project_id);
+                  return [
+                    {
+                      id,
+                      title,
+                      folder: text(row.folder) ?? "",
+                      origin: row.origin === "source" ? "source" : "central",
+                      category: text(row.category),
+                      vendor: text(row.vendor),
+                      tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === "string") : [],
+                      projectSlug: projectId ? (projectById.get(projectId) ?? null) : null,
+                      documentOn: text(row.document_on),
+                      mimeType: text(row.mime_type),
+                      byteSize: typeof row.byte_size === "number" ? row.byte_size : null,
+                      uploadStatus,
+                      summary: text(row.summary),
+                      createdAt,
+                    },
+                  ];
+                }),
+              },
+        }
+      : {}),
+    ...(options.notes
+      ? {
+          notes:
+            noteRows === null || noteLinks === null
+              ? { error: "unavailable" }
+              : {
+                  rows: noteRows.flatMap((row): NoteMeta[] => {
+                    const id = text(row.id);
+                    const title = text(row.title);
+                    const key = text(row.link_key);
+                    const updatedAt = text(row.updated_at);
+                    if (!id || !title || !key || !updatedAt) return [];
+                    return [
+                      {
+                        id,
+                        title,
+                        key,
+                        folder: text(row.folder) ?? "",
+                        tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === "string") : [],
+                        documentId: text(row.document_id),
+                        updatedAt,
+                      },
+                    ];
+                  }),
+                  links: noteLinks.flatMap((row): NoteLink[] => {
+                    const from = text(row.from_note);
+                    const toKey = text(row.to_key);
+                    return from && toKey ? [{ from, toKey }] : [];
+                  }),
+                },
+        }
+      : {}),
   };
+}
+
+function addDays(date: string, days: number): string {
+  const value = new Date(`${date}T12:00:00Z`);
+  value.setUTCDate(value.getUTCDate() + days);
+  return value.toISOString().slice(0, 10);
 }
 
 function emptyWorkspace(error: string): WorkspaceData {

@@ -2,6 +2,7 @@ import "server-only";
 import { NextRequest, NextResponse } from "next/server";
 import { assertFinanceWriter, assertOwner, assertStepUp, type IdentityProfile } from "@/lib/business-os/auth/authorize";
 import { gateWrite, jsonError, mapAuthError } from "@/lib/business-os/auth/http";
+import type { RateBucket } from "@/lib/business-os/auth/rate-limit";
 import { loadIdentity } from "@/lib/business-os/auth/session";
 
 async function readyProfile(): Promise<IdentityProfile | NextResponse> {
@@ -18,8 +19,8 @@ export async function beginOperationsRead(): Promise<IdentityProfile | NextRespo
   return readyProfile();
 }
 
-export async function beginOperationsWrite(request: NextRequest): Promise<IdentityProfile | NextResponse> {
-  const blocked = gateWrite(request, "operations");
+export async function beginOperationsWrite(request: NextRequest, bucket: RateBucket = "operations"): Promise<IdentityProfile | NextResponse> {
+  const blocked = gateWrite(request, bucket);
   if (blocked) return blocked;
   const profile = await readyProfile();
   if (profile instanceof NextResponse) return profile;

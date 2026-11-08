@@ -7,6 +7,10 @@
     {
       "path": "/api/business-os/operations/tick",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/business-os/providers/tick",
+      "schedule": "*/30 * * * *"
     }
   ]
 }
