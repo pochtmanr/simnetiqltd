@@ -9,6 +9,8 @@ export const RATE_LIMITS = {
   mfa: 10,
   telegram_link: 5,
   telegram_exchange: 10,
+  telegram_code_send: 5,
+  telegram_code_verify: 10,
   integration: 20,
   sync: 20,
   finance: 30,

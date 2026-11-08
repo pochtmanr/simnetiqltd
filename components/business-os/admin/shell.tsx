@@ -1,9 +1,9 @@
+import { cookies } from "next/headers";
 import { MobileTabBar, ProjectSwitcher } from "@/components/business-os/admin/chrome";
-import { NAV_GROUPS, SETTINGS_ITEM, isCurrent, navHref, navItem, navKey } from "@/components/business-os/admin/nav";
-import { sectionIcon } from "@/components/business-os/admin/nav-icons";
+import { navItem } from "@/components/business-os/admin/nav";
 import { AdminSection } from "@/components/business-os/admin/sections";
-import { Logo } from "@/components/logo";
-import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
+import { AdminSidebar } from "@/components/business-os/admin/sidebar";
+import { SIDEBAR_COOKIE, parseSidebarPrefs } from "@/components/business-os/admin/sidebar-prefs";
 import { PeriodControl } from "@/components/business-os/ui/date-picker";
 import { CloseIcon, FilterIcon } from "@/components/business-os/ui/icons";
 import { SheetButton, ToastProvider } from "@/components/business-os/ui/overlay";
@@ -16,7 +16,7 @@ import type { WorkspaceData } from "@/lib/business-os/workspace/load";
 
 const BASE = "/admin" as const;
 
-export function AdminWorkspace({
+export async function AdminWorkspace({
   query,
   data,
   profile,
@@ -34,57 +34,18 @@ export function AdminWorkspace({
   const categories = "error" in data.categories ? null : data.categories.rows;
   const sourcesAlert = sourcesNeedAttention(data);
   const attentionCount = attentionFor(data).length;
+  const sidebarPrefs = parseSidebarPrefs((await cookies()).get(SIDEBAR_COOKIE)?.value);
 
   return (
     <div className="bos admin-shell bos-app">
       <ToastProvider>
-          <aside className="bos-sidebar" aria-label="Workspace">
-            <a href={navHref(BASE, query, NAV_GROUPS[0].items[0])} className="bos-side-brand">
-              <Logo width={22} height={22} />
-              <span>Business OS</span>
-            </a>
-            <nav aria-label="Admin" className="flex flex-col">
-              {NAV_GROUPS.map((group) => (
-                <div key={group.id} className="bos-side-group">
-                  {group.label ? <p className="bos-side-group__title">{group.label}</p> : null}
-                  {group.items.map((entry) => (
-                    <a
-                      key={navKey(entry)}
-                      href={navHref(BASE, query, entry)}
-                      className="bos-side-link"
-                      aria-current={isCurrent(query, entry) ? "page" : undefined}
-                      title={entry.label}
-                    >
-                      {entry.project && hasProjectLogo(entry.project) ? (
-                        <span className="bos-side-link__logo">
-                          <ProjectLogo project={entry.project} alt="" size={18} />
-                        </span>
-                      ) : (
-                        sectionIcon(entry.section)
-                      )}
-                      <span className="bos-side-link__text">{entry.label}</span>
-                      {entry.section === "home" && attentionCount > 0 ? (
-                        <span className="bos-side-link__badge bos-count" aria-label={`${attentionCount} items need attention`}>
-                          {attentionCount}
-                        </span>
-                      ) : null}
-                      {entry.section === "integrations" && sourcesAlert ? (
-                        <span className="bos-side-link__badge bos-count" aria-label="A source needs attention">
-                          !
-                        </span>
-                      ) : null}
-                    </a>
-                  ))}
-                </div>
-              ))}
-              <div className="bos-side-foot">
-                <a href={navHref(BASE, query, SETTINGS_ITEM)} className="bos-side-link" aria-current={query.section === "settings" ? "page" : undefined} title={SETTINGS_ITEM.label}>
-                  {sectionIcon("settings")}
-                  <span className="bos-side-link__text">{SETTINGS_ITEM.label}</span>
-                </a>
-              </div>
-            </nav>
-          </aside>
+          <AdminSidebar
+            query={query}
+            initialPrefs={sidebarPrefs}
+            attentionCount={attentionCount}
+            sourcesAlert={sourcesAlert}
+            account={{ name: humanize(profile.organizationSlug) || "Account", role: humanize(profile.role) }}
+          />
 
           <div className="bos-main">
             <main className="bos-content">

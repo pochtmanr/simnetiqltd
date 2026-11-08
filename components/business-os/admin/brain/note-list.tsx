@@ -2,7 +2,9 @@
 
 import { useEffect, useId, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import { businessGet } from "@/components/business-os/business-post";
-import { AudienceIcon, CalendarIcon, ChartIcon, CheckCircleIcon, ChevronDownIcon, CloseIcon, NoteIcon, PlusIcon, ProjectIcon, SearchIcon, SortIcon, UserIcon } from "@/components/business-os/ui/icons";
+import { AudienceIcon, CalendarIcon, ChartIcon, CheckCircleIcon, ChevronDownIcon, ChevronRightIcon, CloseIcon, FolderIcon, NoteIcon, PlusIcon, ProjectIcon, SearchIcon, SortIcon, UserIcon } from "@/components/business-os/ui/icons";
+import { useFolderColors } from "@/components/business-os/admin/brain/folder-colors";
+import { buildFolderTree, folderAncestors, folderColor, type FolderColors, type FolderNode } from "@/components/business-os/admin/brain/note-shared";
 import { Popover, useSheetClose } from "@/components/business-os/ui/overlay";
 import { Button, Card, EmptyState } from "@/components/business-os/ui/primitives";
 import { DAILY_FOLDER, NOTE_TEMPLATES, dailyBody, dayStamp } from "@/lib/business-os/brain/templates";
@@ -118,6 +120,79 @@ function SortOptions({ sort }: { sort: Sort }) {
   );
 }
 
+type RowProps = { selected: string | null; onSelect: (id: string) => void; hits: Hit[] | null; backlinks: Map<string, Set<string>>; pickedColors: FolderColors };
+
+function NoteRow({ note, showFolder, selected, onSelect, hits, backlinks, pickedColors }: RowProps & { note: NoteMeta; showFolder: boolean }) {
+  const snippet = hits?.find((item) => item.id === note.id)?.snippet;
+  const from = backlinks.get(note.key);
+  const linked = from ? from.size - (from.has(note.id) ? 1 : 0) : 0;
+  return (
+    <li>
+      <button type="button" className="bos-note-item" aria-current={note.id === selected ? "true" : undefined} onClick={() => onSelect(note.id)}>
+        <span className="bos-notes-row__head">
+          <span className="bos-note-item__title">{note.title}</span>
+          {linked > 0 ? (
+            <span className="bos-notes-row__links" title={`Linked from ${plural(linked, "note")}`} aria-label={`Linked from ${plural(linked, "note")}`}>
+              ← {linked}
+            </span>
+          ) : null}
+        </span>
+        <span className="bos-notes-row__meta">
+          {showFolder && note.folder ? <span className="bos-folder-dot" style={{ background: folderColor(note.folder, pickedColors) }} aria-hidden="true" /> : null}
+          <span className="bos-caption truncate">
+            {showFolder && note.folder ? `${note.folder} · ` : ""}
+            {relativeTime(note.updatedAt)}
+          </span>
+        </span>
+        {snippet ? (
+          <span className="bos-caption bos-snippet bos-notes-row__snippet">
+            <Snippet text={snippet} />
+          </span>
+        ) : null}
+        {note.tags.length > 0 ? (
+          <span className="bos-notes-row__tags">
+            {note.tags.slice(0, 3).map((tag) => (
+              <span key={tag} className="bos-notes-row__tag">
+                #{tag}
+              </span>
+            ))}
+            {note.tags.length > 3 ? <span className="bos-caption">+{note.tags.length - 3}</span> : null}
+          </span>
+        ) : null}
+      </button>
+    </li>
+  );
+}
+
+/** One folder level of the list: closed folders first, then the notes in it. */
+function FolderTree({ node, open, onToggle, ...row }: RowProps & { node: FolderNode<NoteMeta>; open: Set<string>; onToggle: (path: string) => void }) {
+  return (
+    <>
+      {node.folders.map((child) => {
+        const expanded = open.has(child.path);
+        return (
+          <li key={child.path}>
+            <button type="button" className="bos-notes-folder" aria-expanded={expanded} onClick={() => onToggle(child.path)}>
+              {expanded ? <ChevronDownIcon size={14} /> : <ChevronRightIcon size={14} />}
+              <FolderIcon size={16} style={{ color: folderColor(child.path, row.pickedColors) }} />
+              <span className="bos-notes-folder__name">{child.name}</span>
+              <span className="bos-notes-chip__count">{child.count}</span>
+            </button>
+            {expanded ? (
+              <ul className="bos-notes-folder__items">
+                <FolderTree node={child} open={open} onToggle={onToggle} {...row} />
+              </ul>
+            ) : null}
+          </li>
+        );
+      })}
+      {node.notes.map((note) => (
+        <NoteRow key={note.id} note={note} showFolder={false} {...row} />
+      ))}
+    </>
+  );
+}
+
 /** Left panel: search, filters, view switch, vault menu and the list of notes. */
 export function NoteList({
   notes,
@@ -146,12 +221,30 @@ export function NoteList({
   /** The vault import/export menu, rendered in the toolbar for writers. */
   vault: ReactNode;
 }) {
+  const [pickedColors] = useFolderColors();
   const searchId = useId();
   const sort = useSyncExternalStore(subscribeSort, readSort, () => "recent" as Sort);
   const [folder, setFolder] = useState<string | null>(null);
   const [allTags, setAllTags] = useState(false);
   const [open, setOpen] = useState({ folders: false, tags: false });
   const [textHits, setTextHits] = useState<{ q: string; hits: Hit[] } | null>(null);
+  // Folders start closed; the folder of the open note is opened so it stays in view.
+  const folderOf = (id: string | null) => notes.find((note) => note.id === id)?.folder ?? "";
+  const [openFolders, setOpenFolders] = useState(() => new Set(folderAncestors(folderOf(selected))));
+  const [shownFor, setShownFor] = useState(selected);
+  if (selected !== shownFor) {
+    setShownFor(selected);
+    const missing = folderAncestors(folderOf(selected)).filter((path) => !openFolders.has(path));
+    if (missing.length > 0) setOpenFolders(new Set([...openFolders, ...missing]));
+  }
+  function toggleFolder(path: string) {
+    setOpenFolders((current) => {
+      const next = new Set(current);
+      if (next.has(path)) next.delete(path);
+      else next.add(path);
+      return next;
+    });
+  }
 
   const query = filter.trim().toLowerCase();
   const tagFilter = /^#\S+$/.test(query) ? query.slice(1) : null;
@@ -222,6 +315,8 @@ export function NoteList({
   }, [notes, folder, tagFilter, query, hits, sort]);
 
   const filtered = folder !== null || query !== "";
+  const tree = useMemo(() => buildFolderTree(visible), [visible]);
+  const rowProps: RowProps = { selected, onSelect, hits, backlinks, pickedColors };
   const folderName = (name: string) => name || "Top level";
 
   function clear() {
@@ -326,6 +421,7 @@ export function NoteList({
               <div className="bos-chips">
                 {folders.map(([name, count]) => (
                   <button key={name || "_top"} type="button" className="bos-chip bos-notes-chip" aria-pressed={folder === name} onClick={() => setFolder(folder === name ? null : name)}>
+                    <span className="bos-folder-dot" style={{ background: folderColor(name, pickedColors) }} aria-hidden="true" />
                     {folderName(name)} <span className="bos-notes-chip__count">{count}</span>
                   </button>
                 ))}
@@ -405,44 +501,9 @@ export function NoteList({
             </EmptyState>
           ) : (
             <ul className="flex flex-col p-1">
-              {visible.map((note) => {
-                const snippet = hits?.find((item) => item.id === note.id)?.snippet;
-                const from = backlinks.get(note.key);
-                const linked = from ? from.size - (from.has(note.id) ? 1 : 0) : 0;
-                return (
-                  <li key={note.id}>
-                    <button type="button" className="bos-note-item" aria-current={note.id === selected ? "true" : undefined} onClick={() => onSelect(note.id)}>
-                      <span className="bos-notes-row__head">
-                        <span className="bos-note-item__title">{note.title}</span>
-                        {linked > 0 ? (
-                          <span className="bos-notes-row__links" title={`Linked from ${plural(linked, "note")}`} aria-label={`Linked from ${plural(linked, "note")}`}>
-                            ← {linked}
-                          </span>
-                        ) : null}
-                      </span>
-                      <span className="bos-caption truncate">
-                        {note.folder ? `${note.folder} · ` : ""}
-                        {relativeTime(note.updatedAt)}
-                      </span>
-                      {snippet ? (
-                        <span className="bos-caption bos-snippet bos-notes-row__snippet">
-                          <Snippet text={snippet} />
-                        </span>
-                      ) : null}
-                      {note.tags.length > 0 ? (
-                        <span className="bos-notes-row__tags">
-                          {note.tags.slice(0, 3).map((tag) => (
-                            <span key={tag} className="bos-notes-row__tag">
-                              #{tag}
-                            </span>
-                          ))}
-                          {note.tags.length > 3 ? <span className="bos-caption">+{note.tags.length - 3}</span> : null}
-                        </span>
-                      ) : null}
-                    </button>
-                  </li>
-                );
-              })}
+              {filtered
+                ? visible.map((note) => <NoteRow key={note.id} note={note} showFolder {...rowProps} />)
+                : <FolderTree node={tree} open={openFolders} onToggle={toggleFolder} {...rowProps} />}
             </ul>
           )}
         </Card>

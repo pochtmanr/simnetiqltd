@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
 import { businessGet, businessPost } from "@/components/business-os/business-post";
+import { FolderColorPicker, useFolderColors } from "@/components/business-os/admin/brain/folder-colors";
 import { explain, NOTE_ERRORS, type SaveResult } from "@/components/business-os/admin/brain/note-shared";
 import { DocumentIcon, DownloadIcon, MoreIcon, PlusIcon, TrashIcon } from "@/components/business-os/ui/icons";
 import { Markdown } from "@/components/business-os/ui/markdown";
@@ -195,6 +196,7 @@ export function NoteEditor({
   /** Called when a tag chip is clicked, to filter the list by that tag. */
   onTag?: (tag: string) => void;
 }) {
+  const [pickedColors, pickColor] = useFolderColors();
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [title, setTitle] = useState(meta.title);
@@ -585,25 +587,28 @@ export function NoteEditor({
           }}
         />
         <div className="bos-note-folder">
-          <label className="bos-caption flex items-center gap-2">
-            Folder
-            <input
-              className="bos-input"
-              data-size="sm"
-              value={folder}
-              readOnly={!canWrite}
-              placeholder="Top level"
-              maxLength={200}
-              list={canWrite ? folderListId : undefined}
-              onChange={(event) => {
-                setFolder(event.target.value);
-                setState("dirty");
-              }}
-              onBlur={() => {
-                if (state === "dirty") void save();
-              }}
-            />
-          </label>
+          <div className="flex items-center gap-2">
+            <FolderColorPicker folder={folder} picked={pickedColors} onPick={pickColor} disabled={!canWrite} />
+            <label className="bos-caption flex flex-1 items-center gap-2">
+              Folder
+              <input
+                className="bos-input"
+                data-size="sm"
+                value={folder}
+                readOnly={!canWrite}
+                placeholder="Top level"
+                maxLength={200}
+                list={canWrite ? folderListId : undefined}
+                onChange={(event) => {
+                  setFolder(event.target.value);
+                  setState("dirty");
+                }}
+                onBlur={() => {
+                  if (state === "dirty") void save();
+                }}
+              />
+            </label>
+          </div>
           {canWrite ? <span className="bos-caption">Group related notes, e.g. Clients or Meetings/2026</span> : null}
           {canWrite ? (
             <datalist id={folderListId}>

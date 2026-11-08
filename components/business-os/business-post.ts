@@ -39,7 +39,7 @@ export async function businessPost(path: string, body: unknown): Promise<{ ok: b
 }
 
 export function explainFinanceError(payload: Record<string, unknown>): string {
-  if (payload.error === "step_up_required") return "Step-up required. Open Settings and confirm the authenticator.";
+  if (payload.error === "step_up_required") return "Confirm it's you: open Settings and enter the code we send to your Telegram.";
   if (payload.error === "forbidden") return "This membership cannot change finance records.";
   if (payload.error === "csrf") return "The form token was rejected. Reload and try again.";
   if (typeof payload.error === "string") return payload.error.replaceAll("_", " ");

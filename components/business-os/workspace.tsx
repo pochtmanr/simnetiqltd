@@ -77,7 +77,7 @@ export function BusinessWorkspace({
                 <dt className="text-text-dim">Session broker</dt>
                 <dd>{brokerEnabled ? "Enabled" : "Off until staging proof"}</dd>
               </dl>
-              <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="session" />
+              <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="session" stepUpUntil={profile.stepUpUntil} />
             </>
           ) : null}
           {query.section === "integrations" ? (

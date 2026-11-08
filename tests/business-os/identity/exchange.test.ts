@@ -107,10 +107,9 @@ test("a second session cannot replay initData, and an unlinked id is refused", a
   assert.equal(unlinked.status, "unlinked");
 });
 
-test("linking requires an owner AAL2 session and does not run before that", async () => {
+test("linking needs the owner, and a second account needs a Telegram-confirmed session", async () => {
   let created = 0;
-  const stepUp = await linkTelegramIdentity({
-    actor: { userId: "user-1", role: "owner", assurance: "aal1", sessionId: "session-a" },
+  const base = {
     rawInitData: initData(),
     botToken: BOT,
     botId: "123456",
@@ -120,20 +119,32 @@ test("linking requires an owner AAL2 session and does not run before that", asyn
       return "challenge";
     },
     consumeChallenge: async () => undefined,
+  };
+
+  const admin = await linkTelegramIdentity({
+    ...base,
+    actor: { userId: "user-1", role: "admin", assurance: "aal2", sessionId: "session-a", telegramLinked: false },
   });
-  assert.equal(stepUp.status, "step_up_required");
+  assert.equal(admin.status, "forbidden");
+
+  const another = await linkTelegramIdentity({
+    ...base,
+    actor: { userId: "user-1", role: "owner", assurance: "aal1", sessionId: "session-a", telegramLinked: true },
+  });
+  assert.equal(another.status, "step_up_required");
   assert.equal(created, 0);
 
-  const linked = await linkTelegramIdentity({
-    actor: { userId: "user-1", role: "owner", assurance: "aal2", sessionId: "session-a" },
-    rawInitData: initData(),
-    botToken: BOT,
-    botId: "123456",
-    nowMs: NOW,
-    createChallenge: async () => "challenge",
-    consumeChallenge: async () => undefined,
+  const first = await linkTelegramIdentity({
+    ...base,
+    actor: { userId: "user-1", role: "owner", assurance: "aal1", sessionId: "session-a", telegramLinked: false },
   });
-  assert.equal(linked.status, "linked");
+  assert.equal(first.status, "linked");
+
+  const confirmed = await linkTelegramIdentity({
+    ...base,
+    actor: { userId: "user-1", role: "owner", assurance: "aal2", sessionId: "session-a", telegramLinked: true },
+  });
+  assert.equal(confirmed.status, "linked");
 });
 
 test("a revoked membership does not become a profile", () => {

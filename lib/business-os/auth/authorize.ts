@@ -44,6 +44,8 @@ export type IdentityProfile = {
   telegramLinked: boolean;
   sessionId: string;
   projects: IdentityProject[];
+  /** Ms timestamp until which a Telegram code confirmation keeps this session at AAL2. */
+  stepUpUntil?: number | null;
 };
 
 export function profileFromMembership(input: {
@@ -56,6 +58,7 @@ export function profileFromMembership(input: {
   telegramLinked: boolean;
   sessionId: string;
   projects: IdentityProject[];
+  stepUpUntil?: number | null;
 } | null): IdentityProfile | null {
   if (!input || input.revokedAt) return null;
   if (!isRole(input.role)) return null;
@@ -68,6 +71,7 @@ export function profileFromMembership(input: {
     telegramLinked: input.telegramLinked,
     sessionId: input.sessionId,
     projects: input.projects,
+    stepUpUntil: input.stepUpUntil ?? null,
   };
 }
 

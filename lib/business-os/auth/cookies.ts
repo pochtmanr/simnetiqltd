@@ -6,6 +6,8 @@ export const REFRESH_COOKIE = "bos_refresh";
 export const CSRF_COOKIE = "bos_csrf";
 export const SESSION_COOKIE = "bos_session";
 export const PENDING_COOKIE = "bos_pending";
+export const STEP_UP_COOKIE = "bos_step_up";
+export const TELEGRAM_CODE_COOKIE = "bos_tg_code";
 
 export type CookiePolicy = {
   httpOnly: boolean;
@@ -35,6 +37,14 @@ export function sessionCookiePolicy(secure: boolean): CookiePolicy {
 
 export function pendingCookiePolicy(secure: boolean): CookiePolicy {
   return { httpOnly: true, secure, sameSite: "lax", path: "/api/business-os/auth", maxAge: 60 * 5 };
+}
+
+export function stepUpCookiePolicy(secure: boolean, maxAgeSeconds: number): CookiePolicy {
+  return { httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: maxAgeSeconds };
+}
+
+export function telegramCodeCookiePolicy(secure: boolean) {
+  return { httpOnly: true, secure, sameSite: "strict" as const, path: "/api/business-os/auth/telegram-code", maxAge: 60 * 5 };
 }
 
 export type SessionTokens = {
@@ -67,6 +77,7 @@ export function clearSessionCookies(response: NextResponse, secure: boolean) {
   response.cookies.set(REFRESH_COOKIE, "", { ...refreshCookiePolicy(secure), maxAge: 0 });
   response.cookies.set(SESSION_COOKIE, "", { ...sessionCookiePolicy(secure), maxAge: 0 });
   response.cookies.set(PENDING_COOKIE, "", { ...pendingCookiePolicy(secure), maxAge: 0 });
+  response.cookies.set(STEP_UP_COOKIE, "", stepUpCookiePolicy(secure, 0));
 }
 
 export function readPendingSession(value: string | undefined): { accessToken: string; refreshToken: string } | null {

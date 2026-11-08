@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { applySessionCookies, SESSION_COOKIE, sessionCookiePolicy } from "@/lib/business-os/auth/cookies";
+import {
+  applySessionCookies,
+  SESSION_COOKIE,
+  sessionCookiePolicy,
+  STEP_UP_COOKIE,
+  stepUpCookiePolicy,
+} from "@/lib/business-os/auth/cookies";
 import { gateWrite, isSecureRequest, jsonError, mapAuthError, mapRpcError } from "@/lib/business-os/auth/http";
 import { findLinkedMember, mintBrokerSession } from "@/lib/business-os/auth/session";
 import { exchangeTelegramSession } from "@/lib/business-os/auth/telegram-exchange";
+import { signStepUp, STEP_UP_TTL_MS, stepUpKey } from "@/lib/business-os/auth/telegram-code";
 import { createSecretClient } from "@/lib/business-os/db/client";
 import { requireBusinessOsConfig } from "@/lib/business-os/env";
 
@@ -45,12 +52,21 @@ export async function POST(request: NextRequest) {
     });
 
     if (result.status === "session") {
+      const secure = isSecureRequest(request);
       const response = NextResponse.json({ status: "authenticated", userId: result.userId });
       applySessionCookies(
         response,
         { accessToken: result.accessToken, refreshToken: result.refreshToken, sessionId: result.sessionId },
-        isSecureRequest(request),
+        secure,
       );
+      // Signed init data from a linked account is the same proof a Telegram code gives, so this session is stepped up.
+      const stepUp = signStepUp({
+        userId: result.userId,
+        sessionId: result.sessionId,
+        nowMs: Date.now(),
+        key: stepUpKey(config.telegramBotToken),
+      });
+      response.cookies.set(STEP_UP_COOKIE, stepUp.value, stepUpCookiePolicy(secure, STEP_UP_TTL_MS / 1000));
       return response;
     }
     if (result.status === "identity_mismatch") {

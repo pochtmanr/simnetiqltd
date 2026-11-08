@@ -58,7 +58,7 @@ export type LinkResult =
   | { status: "linked" };
 
 export async function linkTelegramIdentity(input: {
-  actor: { userId: string; role: Role; assurance: Assurance; sessionId: string };
+  actor: { userId: string; role: Role; assurance: Assurance; sessionId: string; telegramLinked: boolean };
   rawInitData: string;
   botToken: string;
   botId: string;
@@ -81,7 +81,9 @@ export async function linkTelegramIdentity(input: {
 }): Promise<LinkResult> {
   try {
     assertOwner(input.actor.role);
-    assertStepUp(input.actor.assurance);
+    // The first link is how Telegram becomes the second factor, so it needs the owner only.
+    // Adding another account once one is linked needs a Telegram-confirmed session.
+    if (input.actor.telegramLinked) assertStepUp(input.actor.assurance);
   } catch (error) {
     const code = error instanceof Error ? error.message : "";
     if (code === "step_up_required") return { status: "step_up_required" };

@@ -1,27 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation, type SimulationLinkDatum, type SimulationNodeDatum } from "d3-force";
+import { FolderColorPicker, useFolderColors } from "@/components/business-os/admin/brain/folder-colors";
+import { folderColor, topFolder } from "@/components/business-os/admin/brain/note-shared";
 
-type GraphNode = SimulationNodeDatum & { id: string; title: string; ghost: boolean; degree: number };
+type GraphNode = SimulationNodeDatum & { id: string; title: string; ghost: boolean; degree: number; folder: string };
 type GraphLink = SimulationLinkDatum<GraphNode>;
 
 export type GraphInput = {
-  notes: { id: string; title: string; key: string }[];
+  notes: { id: string; title: string; key: string; folder: string }[];
   links: { from: string; toKey: string }[];
 };
 
 /** Notes as nodes, links as edges. Links to notes that do not exist yet become faint "ghost" nodes, as in Obsidian. */
 export function buildGraph({ notes, links }: GraphInput): { nodes: GraphNode[]; edges: { source: string; target: string }[] } {
   const byKey = new Map(notes.map((note) => [note.key, note.id]));
-  const nodes = new Map<string, GraphNode>(notes.map((note) => [note.id, { id: note.id, title: note.title, ghost: false, degree: 0 }]));
+  const nodes = new Map<string, GraphNode>(notes.map((note) => [note.id, { id: note.id, title: note.title, ghost: false, degree: 0, folder: note.folder }]));
   const edges: { source: string; target: string }[] = [];
   for (const link of links) {
     if (!nodes.has(link.from)) continue;
     let target = byKey.get(link.toKey);
     if (!target) {
       target = `ghost:${link.toKey}`;
-      if (!nodes.has(target)) nodes.set(target, { id: target, title: link.toKey, ghost: true, degree: 0 });
+      if (!nodes.has(target)) nodes.set(target, { id: target, title: link.toKey, ghost: true, degree: 0, folder: "" });
     }
     if (target === link.from) continue;
     edges.push({ source: link.from, target });
@@ -46,6 +48,12 @@ export function NoteGraph({ input, current, onOpen }: { input: GraphInput; curre
   const currentRef = useRef(current);
   const openRef = useRef(onOpen);
   const drawRef = useRef<() => void>(() => {});
+  const [picked, pick] = useFolderColors();
+  const pickedRef = useRef(picked);
+  useEffect(() => {
+    pickedRef.current = picked;
+    drawRef.current();
+  }, [picked]);
   useEffect(() => {
     openRef.current = onOpen;
   }, [onOpen]);
@@ -73,6 +81,11 @@ export function NoteGraph({ input, current, onOpen }: { input: GraphInput; curre
       accent: cssVar(canvas, "--bos-accent", "#5473a1"),
       text: cssVar(canvas, "--color-text", "#eee"),
       edge: cssVar(canvas, "--color-border-strong", "#444"),
+      top: cssVar(canvas, "--bos-muted", "#888"),
+    };
+    const fill = (node: GraphNode) => {
+      if (node.ghost) return colors.node;
+      return topFolder(node.folder) ? folderColor(node.folder, pickedRef.current) : colors.top;
     };
     let view = { x: 0, y: 0, k: 1 };
     let width = 0;
@@ -114,10 +127,18 @@ export function NoteGraph({ input, current, onOpen }: { input: GraphInput; curre
         const active = node.id === focus || node.id === currentRef.current;
         const dim = focus && !active && !near?.has(node.id);
         context.globalAlpha = node.ghost ? (dim ? 0.15 : 0.4) : dim ? 0.3 : 1;
-        context.fillStyle = active ? colors.accent : colors.node;
+        context.fillStyle = fill(node);
         context.beginPath();
         context.arc(node.x ?? 0, node.y ?? 0, radius(node), 0, Math.PI * 2);
         context.fill();
+        if (active) {
+          context.strokeStyle = colors.accent;
+          context.lineWidth = 2.5 / view.k;
+          context.beginPath();
+          context.arc(node.x ?? 0, node.y ?? 0, radius(node) + 2.5 / view.k, 0, Math.PI * 2);
+          context.stroke();
+          context.lineWidth = 1 / view.k;
+        }
         if (view.k > 0.8 || active || near?.has(node.id) || node.degree > 4) {
           context.fillStyle = colors.text;
           context.globalAlpha = dim ? 0.3 : node.ghost ? 0.5 : 0.9;
@@ -228,9 +249,21 @@ export function NoteGraph({ input, current, onOpen }: { input: GraphInput; curre
     };
   }, [input]);
 
+  const legend = useMemo(() => [...new Set(input.notes.map((note) => topFolder(note.folder)))].sort((a, b) => (a === "" ? 1 : b === "" ? -1 : a.localeCompare(b))), [input]);
+
   return (
     <div className="bos-graph">
       <canvas ref={canvasRef} data-hover={hover ? "" : undefined} aria-label="Note graph. Click a note to open it." role="img" />
+      {legend.length > 1 ? (
+        <ul className="bos-graph-legend" aria-label="Folder colours">
+          {legend.map((name) => (
+            <li key={name || "_top"}>
+              <FolderColorPicker folder={name} picked={picked} onPick={pick} />
+              {name || "Top level"}
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }

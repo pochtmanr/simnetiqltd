@@ -84,7 +84,7 @@ export function Settings({
           <KeyValues
             rows={[
               ["Role", humanize(profile.role)],
-              ["Sign-in strength", profile.assurance === "aal2" ? <StatusPill key="a" status="verified" label="Two-factor" /> : <StatusPill key="a" status="unverified" label="Password only" />],
+              ["Sign-in strength", profile.assurance === "aal2" ? <StatusPill key="a" status="verified" label={profile.stepUpUntil ? "Confirmed with Telegram" : "Two-factor"} /> : <StatusPill key="a" status="unverified" label="Password only" />],
               ["Telegram", profile.telegramLinked ? <StatusPill key="t" status="ok" label="Linked" /> : <StatusPill key="t" status="unconfigured" label="Not linked" />],
               ["Session broker", brokerEnabled ? "Enabled" : "Off until staging proof"],
             ]}
@@ -93,9 +93,9 @@ export function Settings({
       </Section>
       <Section title="Security">
         <Card>
-          <CardHead title="Two-factor and Telegram" meta="Step up before changing finance records or secrets." />
+          <CardHead title="Two-factor and Telegram" meta="Confirm with a Telegram code before changing finance records or secrets." />
           <div className="p-4 md:p-5">
-            <IdentityActions role={profile.role} assurance={profile.assurance} surface="admin" telegramConfigured={telegramConfigured} focus="session" />
+            <IdentityActions role={profile.role} assurance={profile.assurance} surface="admin" telegramConfigured={telegramConfigured} focus="session" stepUpUntil={profile.stepUpUntil} />
           </div>
         </Card>
       </Section>
