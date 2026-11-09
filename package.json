@@ -14,7 +14,8 @@
     "test:business-os-sync": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/sync/*.test.ts",
     "test:business-os-files": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/files/*.test.ts",
     "test:business-os-brain": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/brain/*.test.ts",
-    "test:business-os-bank": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/bank/*.test.ts"
+    "test:business-os-bank": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/bank/*.test.ts",
+    "test:business-os-calendar": "node --import ./tests/business-os/stub-server-only.mjs --import tsx --test tests/business-os/calendar/*.test.ts"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",

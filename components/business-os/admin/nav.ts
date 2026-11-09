@@ -65,7 +65,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "plan",
     label: "Plan",
     items: [
-      { section: "timeline", label: "Calendar", description: "Events, renewals, deadlines and reminders in one view.", periodic: false },
+      { section: "timeline", label: "Calendar", description: "Campaigns, bills, deadlines, meetings and everything dated from the other tabs, in one view.", periodic: false },
       { section: "records", label: "Registrations", description: "Company, tax and service registrations.", periodic: false },
     ],
   },

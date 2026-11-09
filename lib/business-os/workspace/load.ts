@@ -2,6 +2,7 @@ import "server-only";
 import { cookies } from "next/headers";
 import { ACCESS_COOKIE } from "@/lib/business-os/auth/cookies";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
+import type { CalendarData } from "@/lib/business-os/calendar/types";
 import { createUserClient } from "@/lib/business-os/db/client";
 import { financeRpcCode } from "@/lib/business-os/finance/rpc-status";
 import { londonDate, londonWallToUtc } from "@/lib/business-os/finance/london";
@@ -91,6 +92,8 @@ export type WorkspaceData = {
   bank?: BankData | { error: string };
   /** Result code of the redirect back from Revolut's consent page, shown once on the Bank tab. */
   bankNotice?: string | null;
+  /** Everything dated in and around the visible calendar range. Absent when not requested. */
+  calendar?: CalendarData;
 };
 
 export type DocumentRow = {

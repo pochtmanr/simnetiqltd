@@ -1,6 +1,6 @@
 import { AppSettings } from "@/components/business-os/admin/chrome";
 import { IdentityActions } from "@/components/business-os/identity-actions";
-import { AppIcon, ProjectIcon, RegistryIcon, SparkIcon, TimelineIcon } from "@/components/business-os/ui/icons";
+import { AppIcon, ProjectIcon, RegistryIcon, SparkIcon } from "@/components/business-os/ui/icons";
 import { Card, CardHead, EmptyState, KeyValues, Section, StatusPill } from "@/components/business-os/ui/primitives";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
 import { humanize } from "@/lib/business-os/workspace/format";
@@ -51,7 +51,6 @@ export function Projects({ data }: { data: WorkspaceData }) {
 
 const LATER: Record<string, { title: string; icon: React.ReactNode; body: string }> = {
   records: { title: "Registrations are coming next", icon: <RegistryIcon />, body: "Company, tax and service registrations with their renewal dates will live here." },
-  timeline: { title: "The calendar is coming next", icon: <TimelineIcon />, body: "Google Calendar events, renewals, deadlines and reminders will appear here in one view." },
   ask: { title: "Ask is coming next", icon: <SparkIcon />, body: "Ask Claude about your notes, files and figures, with sources cited and token usage shown." },
   appstore: { title: "App Store is coming next", icon: <AppIcon />, body: "Daily units, proceeds and countries from App Store Connect sales and finance reports." },
 };

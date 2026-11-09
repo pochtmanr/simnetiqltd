@@ -1,5 +1,6 @@
 import { Later, Projects, Settings } from "@/components/business-os/admin/sections/company";
 import { Bank } from "@/components/business-os/admin/sections/bank";
+import { Calendar } from "@/components/business-os/admin/calendar/calendar";
 import { Audience, Subscriptions } from "@/components/business-os/admin/sections/insights";
 import { Notes } from "@/components/business-os/admin/brain/notes";
 import { Files } from "@/components/business-os/admin/sections/files";
@@ -69,8 +70,9 @@ export function AdminSection({
           canWrite={canWrite}
         />
       );
-    case "records":
     case "timeline":
+      return <Calendar query={query} data={data} canWrite={canWrite} />;
+    case "records":
     case "ask":
     case "appstore":
       return <Later section={query.section} />;

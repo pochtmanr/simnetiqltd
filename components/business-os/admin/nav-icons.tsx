@@ -3,6 +3,7 @@ import {
   AppIcon,
   AudienceIcon,
   BankIcon,
+  CalendarIcon,
   CashIcon,
   ChartIcon,
   DocumentIcon,
@@ -17,7 +18,6 @@ import {
   SourcesIcon,
   SparkIcon,
   StatementIcon,
-  TimelineIcon,
   UserIcon,
 } from "@/components/business-os/ui/icons";
 
@@ -74,7 +74,7 @@ export function sectionIcon(section: string, size = 18): ReactNode {
     case "records":
       return <RegistryIcon {...props} />;
     case "timeline":
-      return <TimelineIcon {...props} />;
+      return <CalendarIcon {...props} />;
     case "settings":
       return <UserIcon {...props} />;
     default:

@@ -18,6 +18,16 @@ const INVALID = [
   "query_invalid",
   "document_linked",
   "source_read_only",
+  "calendar_title_invalid",
+  "calendar_notes_invalid",
+  "calendar_category_invalid",
+  "calendar_dates_invalid",
+  "calendar_time_invalid",
+  "calendar_money_invalid",
+  "calendar_recurrence_invalid",
+  "calendar_status_invalid",
+  "calendar_link_invalid",
+  "calendar_event_not_found",
 ];
 
 export function operationsRpcStatus(message: string): number | null {
