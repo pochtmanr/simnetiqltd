@@ -33,14 +33,14 @@ export function buildRobotsTxt(): string {
     return lines.join("\n");
   });
 
-  // Sitemap, host, and the LLMs-Txt directive go after the user-agent
-  // blocks per common crawler convention. LLMs-Txt is a non-standard
-  // hint that AI crawlers (and audit tools like agentindexc.com) read
-  // to discover the llmstxt.org-spec file.
+  // Sitemap and host go after the user-agent blocks per common crawler
+  // convention. The llms.txt pointer is a comment: "LLMs-Txt" is not a
+  // robots.txt directive, so validators (Lighthouse) reject it as one, and
+  // AI crawlers look for the llmstxt.org-spec file at /llms.txt anyway.
   const trailer = [
     `Sitemap: ${SITE_URL}/sitemap.xml`,
     `Host: ${SITE_URL}`,
-    `LLMs-Txt: ${SITE_URL}/llms.txt`,
+    `# LLMs-Txt: ${SITE_URL}/llms.txt`,
   ].join("\n");
 
   return `${blocks.join("\n\n")}\n\n${trailer}\n`;
