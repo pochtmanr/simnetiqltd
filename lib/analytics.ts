@@ -1,4 +1,4 @@
-import { track as vercelTrack } from "@vercel/analytics";
+import { sendGTMEvent } from "@next/third-parties/google";
 import type { Locale } from "@/lib/i18n";
 
 type ServiceCode = "mobile" | "web" | "aiAutomation";
@@ -89,11 +89,12 @@ export function track<E extends AnalyticsEvent>(name: E["name"], props: E["props
     path,
   };
   if (clientId) payload.client_id = clientId;
-  // Vercel Analytics has its own debug mode (?debug=1). console.log here is
-  // intentional during the build-out period so engineers can verify catalog
-  // events fire on the right interactions.
+  // console.log here is intentional during the build-out period so engineers
+  // can verify catalog events fire on the right interactions.
   if (process.env.NODE_ENV !== "production") {
     console.log("[analytics]", name, payload);
   }
-  vercelTrack(name, payload);
+  // Without a container ID Google Tag Manager is not loaded, so there is nothing to send to.
+  if (!process.env.NEXT_PUBLIC_GTM_ID) return;
+  sendGTMEvent({ event: name, ...payload });
 }

@@ -19,15 +19,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Consolidate old domains and www before locale or page routing.
-      ...["simnetiq.store", "www.simnetiq.store", "www.simnetiq.com"].map(
-        (host) => ({
-          source: "/:path*",
-          has: [{ type: "host" as const, value: host.replaceAll(".", "\\.") }],
-          destination: `${SITE_URL}/:path*`,
-          permanent: true,
-        })
-      ),
+      // Consolidate www before locale or page routing.
+      {
+        source: "/:path*",
+        has: [{ type: "host" as const, value: "www\\.simnetiq\\.com" }],
+        destination: `${SITE_URL}/:path*`,
+        permanent: true,
+      },
       {
         source: "/:locale(en|he|ru)/services/ai-integration",
         destination: "/:locale/services/ai-automation",

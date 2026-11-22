@@ -13,7 +13,7 @@ import {
   Cormorant_Garamond,
 } from "next/font/google";
 import "../globals.css";
-import { Analytics } from "@vercel/analytics/next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { GlobalStructuredData } from "@/components/structured-data";
@@ -330,7 +330,9 @@ export default async function RootLayout({
           />
           <main className="flex-1">{children}</main>
           <Footer locale={locale} dict={dict.footer} themeLabels={dict.nav.themes} />
-          <Analytics />
+          {process.env.NEXT_PUBLIC_GTM_ID ? (
+            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+          ) : null}
         </ThemeProvider>
       </body>
     </html>
