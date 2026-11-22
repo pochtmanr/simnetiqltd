@@ -8,6 +8,11 @@ first round of indexing defects (`22961f6`).
 
 ## 0. DO THIS FIRST — Vercel dashboard, no conversation needed
 
+> **Superseded on 2026-11-22.** The site left Vercel and runs on Azure VMs behind nginx (see
+> README → Hosting). `www.simnetiq.com` redirects to the apex in nginx. `simnetiq.store` was
+> allowed to expire, so its redirects and the Change of Address step below no longer apply.
+> Cloudflare stays the DNS provider, records **DNS only**. The rest of this section is history.
+
 The canonical host is `simnetiq.com`. The old `simnetiq.store` and
 `www.simnetiq.store` hosts must 308 to `https://simnetiq.com` and must not
 serve the site themselves.
@@ -288,4 +293,4 @@ can't be substantiated, say so instead of marking it up.
 3. **A Search Console MCP server**, if one exists that you trust. There is no GSC
    integration available by default.
 
-Vercel MCP is already connected — deployments and runtime logs need no extra setup.
+Deployments and runtime logs are on the Azure apps VM since 2026-11-22 (pm2 logs, journald).

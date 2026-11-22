@@ -1,5 +1,11 @@
 # Business OS database
 
+> **Current state (2026-11-22).** The Business OS database was copied from Supabase cloud into a
+> self-hosted Supabase stack and is served at `https://db.simnetiq.com`. Auth's site URL is
+> `https://simnetiq.com`, with `/login` and `/tg` allowed. The mailing-list tables now live in the
+> same stack's `public` schema. New migration files are applied to that stack; the project refs and
+> `simnetiq.store` URLs below describe the original cloud setup and are history.
+
 M1 owns this directory. C0 owns `contracts/business-os/v1` and is unchanged by identity work.
 
 Apply these files only in the closed eSIM project [pwvtjuklkfelpxzxjmsi](https://supabase.com/dashboard/project/pwvtjuklkfelpxzxjmsi), in the SQL editor, in this order. eSIM accounts are already gone. You run the files; this repo does not apply them remotely.

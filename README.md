@@ -29,8 +29,20 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Hosting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Since 2026-11-22 the site runs on self-managed Azure Linux VMs, not Vercel.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **App:** `next start` under pm2 behind nginx, on the apps VM. A deploy is: pull the branch into a
+  copy of the app directory, `npm ci && npm run build`, then switch with the swap script.
+- **Database:** a self-hosted Supabase stack (Postgres, the database API, Auth, Storage) on the
+  database VM, reached at `https://db.simnetiq.com`. Only Storage is open to browsers.
+- **Scheduled jobs:** three systemd timers call `/api/business-os/{sync,operations,providers}/tick`
+  with `Authorization: Bearer $BUSINESS_OS_JOB_SECRET`.
+- **Env vars:** `.env.production` on the apps VM. `NEXT_PUBLIC_*` values are compiled in, so a
+  change to them needs a rebuild.
+- **Backups:** nightly database dump and stored files, kept 14 days on the VM and 90 days in Azure
+  Storage.
+
+Server configs, scripts and runbooks live in the private `doppler-infra` repository under
+`azure/simnetiq/`.

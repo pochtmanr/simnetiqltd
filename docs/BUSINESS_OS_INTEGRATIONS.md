@@ -56,7 +56,7 @@ Setup (owner):
    `openssl req -x509 -newkey rsa:2048 -nodes -keyout revolut.key -out revolut.cer -days 1825 -subj "/CN=simnetiq-business-os"`
 2. Revolut Business › Settings › APIs › Business API › add API certificate. Upload `revolut.cer`. OAuth redirect URI: `https://<production host>/api/business-os/providers/revolut/callback` (for local testing, a second certificate with `http://localhost:3000/...`). Copy the client ID.
 3. Token key: `openssl rand -base64 32`.
-4. Set in Vercel (`vercel env add`) and `.env.local`: `REVOLUT_CLIENT_ID`, `REVOLUT_PRIVATE_KEY` (contents of `revolut.key`; `\n` escapes are accepted), `REVOLUT_REDIRECT_URI` (exactly as in step 2), `BUSINESS_OS_TOKEN_KEY`. Optional `REVOLUT_ENVIRONMENT=sandbox` to use Revolut's sandbox.
+4. Set in `.env.production` on the apps VM (then restart the app) and `.env.local`: `REVOLUT_CLIENT_ID`, `REVOLUT_PRIVATE_KEY` (contents of `revolut.key`; `\n` escapes are accepted), `REVOLUT_REDIRECT_URI` (exactly as in step 2), `BUSINESS_OS_TOKEN_KEY`. Optional `REVOLUT_ENVIRONMENT=sandbox` to use Revolut's sandbox.
 5. Apply `20261108140000_bank.sql` to the Business OS Supabase project.
 6. Open Money › Bank as the owner with step-up and click **Connect Revolut**. Approve in Revolut; the first pull runs on the way back.
 

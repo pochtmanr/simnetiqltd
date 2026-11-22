@@ -47,8 +47,10 @@ Required server environment variables:
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`: transactional mailbox.
   The current SMTP transport uses TLS (`secure: true`); OPS documents port 465.
 
-These variable names were present in Vercel production during the read-only
-check. Their presence does not verify SMTP delivery. Confirmation messages are
+Since 2026-11-22 these tables live in the `public` schema of the self-hosted stack at
+`https://db.simnetiq.com`, next to the Business OS schema, and the variables are set in
+`.env.production` on the apps VM. They were present in Vercel production during the earlier
+read-only check. Their presence does not verify SMTP delivery. Confirmation messages are
 rendered in English, Hebrew, or Russian with plain text and HTML alternatives,
 without tracking pixels or remote images. Confirmation and cancellation URLs
 are supplied by the API.

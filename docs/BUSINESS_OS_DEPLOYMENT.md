@@ -1,6 +1,6 @@
 # Business OS — deployment and operating runbook proposal
 
-Nothing has been provisioned or deployed by this audit. Local Vercel metadata is not a verified production target. Confirm deployment account/project/domain before publishing.
+Nothing was provisioned or deployed by this audit. Since 2026-11-22 production is `simnetiq.com` on self-managed Azure VMs with a self-hosted Supabase stack at `db.simnetiq.com` (see README → Hosting); the text below is the original proposal.
 
 ## Environment separation
 

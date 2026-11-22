@@ -11,7 +11,7 @@ existing n8n instance to mirror the contact-form notification flow.
 
 1. In n8n at `https://n8n.dopplervpn.org`, create a new webhook trigger node
    with the path `simnetiq-booking`. Save and copy the production webhook URL.
-2. Add the URL to `.env.local` (and Vercel env) as:
+2. Add the URL to `.env.local` (and `.env.production` on the apps VM) as:
 
    ```
    N8N_BOOKING_WEBHOOK="https://n8n.dopplervpn.org/webhook/simnetiq-booking"
@@ -73,7 +73,7 @@ legitimate sends too. Tight discipline during staging is the only protection.
    ```
 3. **Apply Supabase migration** `20260510_create_outreach_prospects.sql` —
    see "Apply the Supabase migration" subsection further down.
-4. **`.env.local` + Vercel env**: see the STAGING block in `.env.example`.
+4. **`.env.local` + `.env.production` on the apps VM**: see the STAGING block in `.env.example`.
 5. **Import Cold_Sequencer** from
    `~/Developer/doppler/servers/n8n/workflows/Simnetiq_Cold_Sequencer.json`
    (already in STAGING mode — read its sticky note before activating). Open
@@ -254,8 +254,8 @@ Hostinger SMTP/IMAP server settings (same for all four):
 
 ### 5. Wire credentials into the Next.js app
 
-In `.env.local` (and the same keys in **Vercel → Project
-Settings → Environment Variables → Production**):
+In `.env.local` (and the same keys in `.env.production` on the apps VM, then
+restart the app):
 
 ```
 COLD_OUTREACH_DOMAIN=simnetiq.xyz
