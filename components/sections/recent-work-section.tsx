@@ -150,7 +150,7 @@ export function RecentWorkSection({
                   >
                     <Image
                       src={project.image}
-                      alt=""
+                      alt={meta.title}
                       fill
                       sizes="(min-width: 1440px) 432px, (min-width: 1100px) 30vw, (min-width: 768px) 45vw, 100vw"
                       className="object-cover"

@@ -83,7 +83,12 @@ function readSystemTheme(): ResolvedTheme {
 function readInitialChoice(initialChoice: ThemeChoice | undefined): ThemeChoice {
   if (initialChoice) return initialChoice;
   if (typeof document === "undefined") return "system";
-  // Inline script may have set localStorage already.
+  // The inline init script has already resolved cookie → localStorage →
+  // "system" and recorded the result on <html> before hydration.
+  const fromScript = document.documentElement.getAttribute("data-theme-choice");
+  if (fromScript === "light" || fromScript === "dark" || fromScript === "system") {
+    return fromScript;
+  }
   try {
     const ls = localStorage.getItem(THEME_STORAGE_KEY);
     if (ls === "light" || ls === "dark" || ls === "system") return ls;

@@ -165,11 +165,21 @@ export async function generateMetadata({
       siteName: "Simnetiq",
       type: "website",
       locale: { en: "en_GB", he: "he_IL", ru: "ru_RU" }[locale],
+      images: [
+        {
+          url: "/opengraph-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${fullTitle} — Simnetiq`,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${fullTitle} — Simnetiq`,
       description,
+      images: ["/opengraph-image.png"],
     },
   };
 }
@@ -205,7 +215,6 @@ export default async function ServicePage({
         name={getServiceFullTitle(service)}
         slug={service.slug}
         summary={service.summary}
-        serviceTypes={slugKeywords[service.slug]}
         locale={locale}
       />
       <section data-nav-hero="" className={styles.hero}>

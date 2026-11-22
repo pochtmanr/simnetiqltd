@@ -13,6 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
@@ -52,7 +53,7 @@ export async function generateMetadata({
     routeKey: "caseStudyDoppler",
     path: "/projects/doppler-vpn",
     keywords: DOPPLER_KEYWORDS,
-    ogImage: "/doppler-header.avif",
+    ogImage: "/og/doppler-vpn.jpg",
     ogType: "article",
     markdownAlternate: true,
   });
@@ -109,7 +110,7 @@ export default async function DopplerVpnPage({ params }: { params: Params }) {
         image="/doppler-header.avif"
         locale={locale}
         datePublished="2025-09-01"
-        dateModified={new Date().toISOString().slice(0, 10)}
+        dateModified={lastModifiedFor("/projects/doppler-vpn")}
         keywords={DOPPLER_KEYWORDS}
       />
 

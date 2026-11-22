@@ -4,9 +4,10 @@ import { MD_ROUTES } from "@/lib/agent-routes";
 
 const LOCALE_COOKIE = "NEXT_LOCALE";
 
-// Every page path (after the locale segment) the app serves. Anything else —
-// mostly old eSIM-store URLs Google still has indexed — is sent to the home
-// page instead of 404ing.
+// Every page path (after the locale segment) the app serves. Only these get the
+// locale redirect when requested without a prefix. Anything else falls through
+// to the router and gets a real 404 — a blanket redirect to the home page is a
+// soft 404 to search engines.
 const KNOWN_PATHS = new Set<string>([
   ...MD_ROUTES.flatMap((r) => [r.path, `${r.path}/markdown`]),
   "/legal",
@@ -42,16 +43,11 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const pathLocale = LOCALES.find(
+  const hasLocale = LOCALES.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)
   );
-  if (pathLocale) {
-    if (isKnownPath(pathname.slice(pathLocale.length + 1))) return;
-    const home = request.nextUrl.clone();
-    home.pathname = `/${pathLocale}`;
-    home.search = "";
-    return NextResponse.redirect(home, 308);
-  }
+  if (hasLocale) return;
+  if (!isKnownPath(pathname === "/" ? "" : pathname)) return;
 
   const cookieValue = request.cookies.get(LOCALE_COOKIE)?.value;
   const cookieLocale =
@@ -61,17 +57,10 @@ export function proxy(request: NextRequest) {
     pickLocaleFromAcceptLanguage(request.headers.get("accept-language"));
 
   const target = request.nextUrl.clone();
-  let response: NextResponse;
-  if (isKnownPath(pathname === "/" ? "" : pathname)) {
-    target.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
-    target.search = search;
-    response = NextResponse.redirect(target);
-  } else {
-    target.pathname = `/${locale}`;
-    target.search = "";
-    response = NextResponse.redirect(target, 308);
-  }
+  target.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
+  target.search = search;
 
+  const response = NextResponse.redirect(target);
   if (cookieLocale !== locale) {
     response.cookies.set(LOCALE_COOKIE, locale, {
       path: "/",

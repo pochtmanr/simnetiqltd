@@ -13,6 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
@@ -51,7 +52,7 @@ export async function generateMetadata({
     routeKey: "caseStudyPhysics",
     path: "/projects/physics-explained",
     keywords: PHYSICS_KEYWORDS,
-    ogImage: "/physics-header.avif",
+    ogImage: "/og/physics-explained.jpg",
     ogType: "article",
     markdownAlternate: true,
   });
@@ -106,7 +107,7 @@ export default async function PhysicsExplainedPage({
         image="/physics-header.avif"
         locale={locale}
         datePublished="2026-01-15"
-        dateModified={new Date().toISOString().slice(0, 10)}
+        dateModified={lastModifiedFor("/projects/physics-explained")}
         keywords={PHYSICS_KEYWORDS}
       />
 

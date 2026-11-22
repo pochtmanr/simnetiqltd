@@ -13,6 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
@@ -58,7 +59,7 @@ export async function generateMetadata({
     routeKey: "caseStudySmsCode",
     path: "/projects/sms-code",
     keywords: SMSCODE_KEYWORDS,
-    ogImage: "/smscode-header.avif",
+    ogImage: "/og/sms-code.jpg",
     ogType: "article",
     markdownAlternate: true,
   });
@@ -137,7 +138,7 @@ export default async function SmsCodePage({ params }: { params: Params }) {
         image="/smscode-header.avif"
         locale={locale}
         datePublished="2026-07-16"
-        dateModified={new Date().toISOString().slice(0, 10)}
+        dateModified={lastModifiedFor("/projects/sms-code")}
         keywords={SMSCODE_KEYWORDS}
       />
 

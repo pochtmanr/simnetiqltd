@@ -34,7 +34,7 @@ export function ServiceWork({ locale, dict, slug }: { locale: Locale; dict: Dict
           const href = localizePath(locale, project.path);
           return <article className={styles.workItem} key={key}>
             <Link href={href} className={styles.workImage} aria-label={`${dict.projects.caseStudy}: ${copy.title}`}>
-              <Image src={project.image} alt="" fill sizes="(min-width: 1440px) 650px, (min-width: 768px) 45vw, 100vw" />
+              <Image src={project.image} alt={copy.title} fill sizes="(min-width: 1440px) 650px, (min-width: 768px) 45vw, 100vw" />
             </Link>
             <p className={styles.number}>{copy.badge}</p>
             <h3>{copy.title}</h3>

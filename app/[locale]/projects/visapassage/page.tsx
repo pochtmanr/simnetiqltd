@@ -13,6 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
@@ -52,7 +53,7 @@ export async function generateMetadata({
     routeKey: "caseStudyVisaPassage",
     path: "/projects/visapassage",
     keywords: VISAPASSAGE_KEYWORDS,
-    ogImage: "/visapassage-header.avif",
+    ogImage: "/og/visapassage.jpg",
     ogType: "article",
     markdownAlternate: true,
   });
@@ -106,7 +107,7 @@ export default async function VisaPassagePage({ params }: { params: Params }) {
         image="/visapassage-header.avif"
         locale={locale}
         datePublished="2026-07-16"
-        dateModified={new Date().toISOString().slice(0, 10)}
+        dateModified={lastModifiedFor("/projects/visapassage")}
         keywords={VISAPASSAGE_KEYWORDS}
       />
 

@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "skills": {
+    "ai-seo": {
+      "source": "coreyhaines31/marketingskills",
+      "commit": "5b2b400eec1e7e1cec76245a715d0b0d4fd2a9c1",
+      "sourceType": "github",
+      "skillPath": "skills/ai-seo/SKILL.md",
+      "computedHash": "bb68811a6f0f5e2f734ae2683132d5932bdf4a1a9e109fd719fe9cf2a727a0ff"
+    },
+    "seo": {
+      "source": "AgriciDaniel/claude-seo",
+      "commit": "468ed5b0d9e3249394783710e54abb02837e326b",
+      "sourceType": "github",
+      "skillPath": "skills/seo/SKILL.md",
+      "computedHash": "70afc0c9ac0af4329789a719b4c7407997e138dba46e3551d76ca2e20f9c9417"
+    }
+  }
+}

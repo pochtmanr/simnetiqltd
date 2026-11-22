@@ -13,6 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
@@ -51,9 +52,7 @@ export async function generateMetadata({
     routeKey: "caseStudyArgus",
     path: "/projects/argus-browser",
     keywords: ARGUS_KEYWORDS,
-    ogImage: "/argus-header.avif",
-    ogImageWidth: 1600,
-    ogImageHeight: 900,
+    ogImage: "/og/argus-browser.jpg",
     ogType: "article",
     markdownAlternate: true,
   });
@@ -107,7 +106,7 @@ export default async function ArgusBrowserPage({ params }: { params: Params }) {
         image="/argus-header.avif"
         locale={locale}
         datePublished="2026-08-19"
-        dateModified={new Date().toISOString().slice(0, 10)}
+        dateModified={lastModifiedFor("/projects/argus-browser")}
         keywords={ARGUS_KEYWORDS}
       />
 

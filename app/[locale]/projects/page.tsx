@@ -265,7 +265,7 @@ export default async function ProjectsPage({ params }: { params: Params }) {
                     >
                       <Image
                         src={proj.image}
-                        alt=""
+                        alt={item.title}
                         loading={proj.key === "argus" ? "eager" : "lazy"}
                         fill
                         sizes="(min-width: 1440px) 600px, (min-width: 1024px) 44vw, 90vw"

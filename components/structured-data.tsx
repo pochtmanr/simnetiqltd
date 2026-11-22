@@ -1,3 +1,4 @@
+import { lastModifiedFor } from "@/lib/content-dates";
 import type { Locale } from "@/lib/i18n";
 import { SITE_URL as BASE_URL } from "@/lib/site";
 
@@ -20,7 +21,11 @@ const organization = {
     "Simnetiq is a London-based software engineering studio building high-integrity mobile apps, web platforms, AI systems, and VPN infrastructure for global clients.",
   foundingDate: "2025",
   founders: [
-    { "@type": "Person", name: "Roman Pochtman" },
+    {
+      "@type": "Person",
+      name: "Roman Pochtman",
+      sameAs: ["https://www.linkedin.com/in/romanpochtman/"],
+    },
     { "@type": "Person", name: "David Zitomirsky" },
   ],
   address: {
@@ -37,19 +42,19 @@ const organization = {
       contactType: "customer support",
       email: "support@simnetiq.com",
       areaServed: "Worldwide",
-      availableLanguage: ["English"],
+      availableLanguage: ["English", "Hebrew", "Russian"],
     },
     {
       "@type": "ContactPoint",
       contactType: "sales",
       email: "support@simnetiq.com",
       areaServed: "Worldwide",
-      availableLanguage: ["English"],
+      availableLanguage: ["English", "Hebrew", "Russian"],
     },
   ],
   sameAs: [
     "https://www.instagram.com/simnetiq/",
-    "https://www.linkedin.com/in/romanpochtman/",
+    "https://find-and-update.company-information.service.gov.uk/company/16861177",
   ],
   identifier: [
     {
@@ -58,8 +63,6 @@ const organization = {
       value: "16861177",
     },
   ],
-  vatID: "On request",
-  taxID: "16861177",
 };
 
 const professionalService = {
@@ -82,8 +85,9 @@ const professionalService = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 51.5074,
-    longitude: -0.1278,
+    // Street-level approximation for Frederick Street, WC1X 0ND.
+    latitude: 51.5273,
+    longitude: -0.1172,
   },
   areaServed: [
     { "@type": "Country", name: "United Kingdom" },
@@ -301,11 +305,39 @@ export function FaqSchema({ items, path, locale }: FaqSchemaInput) {
   );
 }
 
+/**
+ * Plain service categories per service slug. Kept separate from the pages'
+ * meta-keyword lists: `serviceType` names what the service is, without place
+ * names or search phrases.
+ */
+const SERVICE_TYPES_BY_SLUG: Record<string, string[]> = {
+  "mobile-desktop": [
+    "Mobile app development",
+    "iOS app development",
+    "Android app development",
+    "Desktop app development",
+    "Cross-platform app development",
+  ],
+  "web-platforms": [
+    "Website development",
+    "Web application development",
+    "SaaS development",
+    "Payment and subscription integration",
+    "Internal tools development",
+  ],
+  "ai-automation": [
+    "AI integration",
+    "Workflow automation",
+    "Business process automation",
+    "LLM application development",
+    "Systems integration",
+  ],
+};
+
 type ServiceSchemaInput = {
   name: string;
   slug: string;
   summary: string;
-  serviceTypes?: string[];
   locale?: Locale;
 };
 
@@ -313,7 +345,6 @@ export function ServiceSchema({
   name,
   slug,
   summary,
-  serviceTypes,
   locale = "en",
 }: ServiceSchemaInput) {
   const url = `${BASE_URL}/${locale}/services/${slug}`;
@@ -332,7 +363,7 @@ export function ServiceSchema({
       { "@type": "Country", name: "United States" },
       { "@type": "Place", name: "Worldwide" },
     ],
-    serviceType: serviceTypes,
+    serviceType: SERVICE_TYPES_BY_SLUG[slug],
   };
   return (
     <script
@@ -356,7 +387,7 @@ type CaseStudySchemaInput = {
   locale: Locale;
   /** ISO date — first published. Defaults to studio founding year. */
   datePublished?: string;
-  /** ISO date — last meaningful edit. */
+  /** ISO date — last meaningful edit. Defaults to the route's entry in lib/content-dates. */
   dateModified?: string;
   /** Tags / keywords for the article. */
   keywords?: string[];
@@ -385,7 +416,7 @@ export function CaseStudyArticleSchema({
     description,
     image: [absoluteImage],
     datePublished,
-    dateModified: dateModified ?? datePublished,
+    dateModified: dateModified ?? lastModifiedFor(path),
     inLanguage: { en: "en-GB", he: "he-IL", ru: "ru-RU" }[locale],
     author: { "@id": `${BASE_URL}/#organization` },
     publisher: { "@id": `${BASE_URL}/#organization` },

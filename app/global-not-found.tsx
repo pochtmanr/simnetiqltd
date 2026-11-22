@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Inter, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SpecRow } from "@/components/panel";
 import { NotFoundActions } from "@/components/not-found-actions";
@@ -10,9 +10,8 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
 });
 
@@ -34,7 +33,7 @@ export default function GlobalNotFound() {
     <html
       lang="en-GB"
       dir="ltr"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full`}
+      className={`${inter.variable} ${bricolage.variable} ${jetbrainsMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
         <main className="flex-1">

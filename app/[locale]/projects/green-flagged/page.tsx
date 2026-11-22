@@ -13,6 +13,7 @@ import {
   CaseStudyArticleSchema,
 } from "@/components/structured-data";
 import { getDictionary } from "@/lib/dictionaries";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { buildLocalizedMetadata } from "@/lib/seo-meta";
 import { SITE_URL } from "@/lib/site";
@@ -54,7 +55,7 @@ export async function generateMetadata({
     routeKey: "caseStudyGreenFlagged",
     path: "/projects/green-flagged",
     keywords: GREENFLAGGED_KEYWORDS,
-    ogImage: "/greenflagged-header.avif",
+    ogImage: "/og/green-flagged.jpg",
     ogType: "article",
     markdownAlternate: true,
   });
@@ -108,7 +109,7 @@ export default async function GreenFlaggedPage({ params }: { params: Params }) {
         image="/greenflagged-header.avif"
         locale={locale}
         datePublished="2026-05-12"
-        dateModified={new Date().toISOString().slice(0, 10)}
+        dateModified={lastModifiedFor("/projects/green-flagged")}
         keywords={GREENFLAGGED_KEYWORDS}
       />
 

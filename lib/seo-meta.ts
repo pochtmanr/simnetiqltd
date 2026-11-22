@@ -10,7 +10,17 @@ const OG_LOCALE: Record<Locale, string> = {
   ru: "ru_RU",
 };
 
-type LocalizedCopy = { title: string; description: string };
+type LocalizedCopy = {
+  title: string;
+  description: string;
+  /**
+   * Short (140-160 character) description for the meta, Open Graph and
+   * Twitter tags. Set it where `description` is too long for a search snippet
+   * but must stay as it is because the markdown routes and llms-full.txt
+   * render it as body copy.
+   */
+  metaDescription?: string;
+};
 
 type RouteCopy = Record<Locale, LocalizedCopy>;
 
@@ -57,17 +67,17 @@ const PROJECTS: RouteCopy = {
   en: {
     title: "Projects — Simnetiq Deployments",
     description:
-      "Simnetiq production deployments: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (LLM content platform on Anthropic and OpenAI), Physics.explained (open-source interactive physics), and Go Delivery / ISR Shipping (GPS-tracked logistics platform). Portfolio, case studies, and live apps from the London studio.",
+      "Simnetiq case studies: Argus Browser, Doppler VPN, Physics.explained, SMS Code, VisaPassage and Green Flagged — production software from a London studio.",
   },
   he: {
     title: "פרויקטים — פריסות של סימנטיק",
     description:
-      "פריסות ייצור של סימנטיק: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (פלטפורמת תוכן LLM על Anthropic ו-OpenAI), Physics.explained (פיזיקה אינטראקטיבית בקוד פתוח) ו-Go Delivery / ISR Shipping (פלטפורמת לוגיסטיקה עם מעקב GPS). תיק עבודות, מקרי בוחן ואפליקציות חיות מהאולפן בלונדון.",
+      "מקרי הבוחן של סימנטיק: Argus Browser, Doppler VPN, Physics.explained, SMS Code, VisaPassage ו-Green Flagged — תוכנה בייצור מסטודיו תוכנה בלונדון.",
   },
   ru: {
     title: "Проекты — примеры Simnetiq",
     description:
-      "Примеры Simnetiq: Doppler VPN (VLESS-Reality, iOS/Android), Creator AI (LLM-платформа контента на Anthropic и OpenAI), Physics.explained (open-source интерактивная физика) и Go Delivery / ISR Shipping (логистическая платформа с GPS-трекингом). Портфолио, кейсы и живые приложения лондонской студии.",
+      "Кейсы Simnetiq: Argus Browser, Doppler VPN, Physics.explained, SMS Code, VisaPassage и Green Flagged — работающие продукты лондонской студии разработки.",
   },
 };
 
@@ -91,17 +101,23 @@ const SERVICES: RouteCopy = {
 
 const CASE_DOPPLER: RouteCopy = {
   en: {
-    title: "Doppler VPN — Case Study",
+    title: "Doppler VPN — VLESS-Reality VPN Case Study | Simnetiq",
+    metaDescription:
+      "Doppler VPN is a censorship-resistant VPN built on VLESS-Reality. Traffic looks like normal HTTPS. No registration, no logs; iOS, Android, macOS and Windows.",
     description:
       "Doppler VPN is a censorship-resistant VPN built on VLESS-Reality. Traffic is indistinguishable from normal HTTPS, defeats deep packet inspection, TSPU, and active probing. No registration, no logs, native apps on iOS, Android, macOS, and Windows. Pay with card or crypto.",
   },
   he: {
-    title: "Doppler VPN — מקרה בוחן",
+    title: "Doppler VPN — מקרה בוחן: VPN על VLESS-Reality | סימנטיק",
+    metaDescription:
+      "Doppler VPN הוא VPN עמיד לצנזורה על VLESS-Reality. התעבורה נראית כמו HTTPS רגיל. ללא רישום וללא לוגים, עם אפליקציות ל-iOS, Android, macOS ו-Windows.",
     description:
       "Doppler VPN הוא VPN עמיד-צנזורה הבנוי על VLESS-Reality. התעבורה נראית כמו HTTPS רגיל — בלתי ניתנת לזיהוי על ידי DPI, עמידה מול TSPU וגישוש אקטיבי. ללא רישום, ללא לוגים, אפליקציות מקוריות ל-iOS, Android, macOS ו-Windows. תשלום בכרטיס או בקריפטו.",
   },
   ru: {
-    title: "Doppler VPN — кейс",
+    title: "Doppler VPN — кейс: VPN на VLESS-Reality | Simnetiq",
+    metaDescription:
+      "Doppler VPN — устойчивый к цензуре VPN на VLESS-Reality. Трафик неотличим от обычного HTTPS. Без регистрации и логов; iOS, Android, macOS и Windows.",
     description:
       "Doppler VPN — устойчивый к цензуре VPN на основе VLESS-Reality. Трафик неотличим от обычного HTTPS, обходит DPI, ТСПУ и активное зондирование. Без регистрации, без логов, нативные клиенты для iOS, Android, macOS и Windows. Оплата картой или криптовалютой.",
   },
@@ -109,17 +125,23 @@ const CASE_DOPPLER: RouteCopy = {
 
 const CASE_PHYSICS: RouteCopy = {
   en: {
-    title: "Physics.explained — Case Study",
+    title: "Physics.explained — Physics Education Case Study | Simnetiq",
+    metaDescription:
+      "Physics.explained is an open-source interactive physics encyclopedia built by Simnetiq, with unit-tested ODE solvers, WebGL visualisations and an AI tutor.",
     description:
       "Physics.explained is an open-source interactive physics encyclopedia built by Simnetiq. A live encyclopedia spanning classical mechanics, electromagnetism, thermodynamics, relativity, quantum and modern physics — powered by unit-tested ODE solvers, WebGL visualisations, a cross-linked concept graph, and an AI tutor at /ask that answers questions with derivations grounded in the library.",
   },
   he: {
-    title: "Physics.explained — מקרה בוחן",
+    title: "Physics.explained — מקרה בוחן: אנציקלופדיית פיזיקה | סימנטיק",
+    metaDescription:
+      "Physics.explained היא אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח שבנתה סימנטיק: פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL ומורה AI שעונה על שאלות.",
     description:
       "Physics.explained היא אנציקלופדיית פיזיקה אינטראקטיבית בקוד פתוח שנבנתה על ידי סימנטיק. אנציקלופדיה חיה המקיפה מכניקה קלאסית, אלקטרומגנטיות, תרמודינמיקה, יחסות, קוונטים ופיזיקה מודרנית — מבוססת פותרי ODE עם בדיקות יחידה, ויזואליזציות WebGL, גרף מושגים מקושר ומורה בינה מלאכותית ב-/ask.",
   },
   ru: {
-    title: "Physics.explained — кейс",
+    title: "Physics.explained — кейс: энциклопедия физики | Simnetiq",
+    metaDescription:
+      "Physics.explained — открытая интерактивная энциклопедия физики от Simnetiq: покрытые тестами решатели ОДУ, WebGL-визуализации и AI-репетитор на /ask.",
     description:
       "Physics.explained — open-source интерактивная энциклопедия физики, созданная Simnetiq. Живая энциклопедия, охватывающая классическую механику, электромагнетизм, термодинамику, теорию относительности, квантовую и современную физику — построена на покрытых тестами решателях ОДУ, WebGL-визуализациях, связном графе понятий и AI-репетиторе на /ask с обоснованными выводами на материале библиотеки.",
   },
@@ -127,17 +149,23 @@ const CASE_PHYSICS: RouteCopy = {
 
 const CASE_GREENFLAGGED: RouteCopy = {
   en: {
-    title: "Green Flagged — Case Study",
+    title: "Green Flagged — AI Contract Review Case Study | Simnetiq",
+    metaDescription:
+      "Green Flagged is an AI contract reviewer for freelancers and small teams: flagged clauses, severity grades and suggested redlines in under eight minutes.",
     description:
       "Green Flagged is an AI contract reviewer for freelancers and small teams. Drop a PDF or paste contract text and get a plain-language verdict — flagged clauses, severity grades, and suggested redlines — in under eight minutes. Built around an editorial / spec-sheet aesthetic with a light-first token system.",
   },
   he: {
-    title: "Green Flagged — מקרה בוחן",
+    title: "Green Flagged — מקרה בוחן: בדיקת חוזים עם AI | סימנטיק",
+    metaDescription:
+      "Green Flagged הוא סוקר חוזים מבוסס AI לפרילנסרים ולצוותים קטנים: סעיפים מסומנים, דרגות חומרה והצעות לתיקון בשפה פשוטה, בתוך פחות משמונה דקות.",
     description:
       "Green Flagged הוא סוקר חוזים מבוסס AI לפרילנסרים וצוותים קטנים. גוררים PDF או מדביקים טקסט חוזה ומקבלים פסיקה בשפה פשוטה — סעיפים מסומנים, דרגות חומרה והצעות לתיקון — בפחות משמונה דקות. עיצוב במראה של דף מפרט עריכתי עם מערכת טוקנים שמתחילה במצב בהיר.",
   },
   ru: {
-    title: "Green Flagged — кейс",
+    title: "Green Flagged — кейс: AI-проверка договоров | Simnetiq",
+    metaDescription:
+      "Green Flagged — AI-ревьюер контрактов для фрилансеров и небольших команд: отмеченные пункты, оценка рисков и предложения правок менее чем за восемь минут.",
     description:
       "Green Flagged — AI-ревьюер контрактов для фрилансеров и небольших команд. Загрузите PDF или вставьте текст договора и получите вердикт простым языком — отмеченные пункты, оценку рисков и предложения правок — менее чем за восемь минут. Построен на редакторско-спецификационной эстетике со светлой токен-системой.",
   },
@@ -145,17 +173,23 @@ const CASE_GREENFLAGGED: RouteCopy = {
 
 const CASE_SMSCODE: RouteCopy = {
   en: {
-    title: "SMS Code — Case Study",
+    title: "SMS Code — Virtual Number Verification Case Study | Simnetiq",
+    metaDescription:
+      "SMS Code by SIMNETIQ gives you a real carrier number in 150+ countries to receive a verification code. 100+ services, no SIM or subscription. Web and iOS.",
     description:
       "SMS Code by SIMNETIQ hands you a real carrier number in 150+ countries for exactly as long as a verification code takes to arrive. 100+ services from Telegram to Steam, codes in about thirty seconds, single-use numbers, and one-time coin packs that never expire — no SIM, no eSIM, no subscription, no personal number handed over. Formerly SMS Activate. Web and iOS.",
   },
   he: {
-    title: "SMS Code — מקרה בוחן",
+    title: "SMS Code — מקרה בוחן: מספרים וירטואליים לאימות | סימנטיק",
+    metaDescription:
+      "SMS Code מבית SIMNETIQ נותן מספר סלולרי אמיתי לשימוש חד-פעמי ביותר מ-150 מדינות לקבלת קוד אימות. יותר מ-100 שירותים, בלי SIM ובלי מנוי. זמין בווב וב-iOS.",
     description:
       "SMS Code מבית SIMNETIQ נותן לך מספר אמיתי ברשת סלולרית ביותר מ-150 מדינות בדיוק לפרק הזמן שלוקח לקוד אימות להגיע. יותר מ-100 שירותים — מטלגרם ועד סטים, קודים בתוך כשלושים שניות, מספרים לשימוש חד-פעמי וחבילות מטבעות חד-פעמיות שאינן פגות תוקף — בלי SIM, בלי eSIM, בלי מנוי ובלי למסור את המספר האישי. לשעבר SMS Activate. ווב ו-iOS.",
   },
   ru: {
-    title: "SMS Code — кейс",
+    title: "SMS Code — кейс: виртуальные номера для SMS-кодов | Simnetiq",
+    metaDescription:
+      "SMS Code от SIMNETIQ выдаёт настоящий номер оператора в 150+ странах для получения кода подтверждения. 100+ сервисов, без SIM и подписки. Веб и iOS.",
     description:
       "SMS Code от SIMNETIQ выдаёт настоящий номер оператора в 150+ странах ровно на то время, которое нужно коду подтверждения. 100+ сервисов — от Telegram до Steam, код приходит примерно за тридцать секунд, номера одноразовые, а разовые пакеты монет не сгорают — без SIM, без eSIM, без подписки и без передачи личного номера. Ранее — SMS Activate. Веб и iOS.",
   },
@@ -163,17 +197,23 @@ const CASE_SMSCODE: RouteCopy = {
 
 const CASE_VISAPASSAGE: RouteCopy = {
   en: {
-    title: "VisaPassage — Case Study",
+    title: "VisaPassage — Visa Route Comparison Case Study | Simnetiq",
+    metaDescription:
+      "VisaPassage is multi-passport visa intelligence: one encrypted profile holds every passport, and a comparison engine ranks routes by paperwork, wait and cost.",
     description:
       "VisaPassage is multi-passport visa intelligence. One encrypted profile holds every passport, residency and document; the comparison engine ranks routes across all of them by least paperwork, shortest wait and lowest cost, then generates a country-specific checklist and auto-fills the government forms. Versioned, expiry-aware document vault with access logging. Free to start, no card required.",
   },
   he: {
-    title: "VisaPassage — מקרה בוחן",
+    title: "VisaPassage — מקרה בוחן: השוואת מסלולי ויזה | סימנטיק",
+    metaDescription:
+      "VisaPassage היא פלטפורמת מודיעין ויזות לבעלי כמה דרכונים: פרופיל מוצפן אחד לכל הדרכונים, ומנוע השוואה שמדרג מסלולים לפי ניירת, זמן המתנה ועלות.",
     description:
       "VisaPassage היא פלטפורמת מודיעין ויזות לבעלי דרכונים מרובים. פרופיל מוצפן אחד מחזיק כל דרכון, תושבות ומסמך; מנוע ההשוואה מדרג מסלולים על פני כולם לפי מינימום ניירת, זמן ההמתנה הקצר ביותר והעלות הנמוכה ביותר, ואז מייצר רשימת מסמכים ייעודית למדינה וממלא אוטומטית את הטפסים הממשלתיים. כספת מסמכים עם ניהול גרסאות, מעקב תפוגה ותיעוד גישה. התחלה חינם, ללא כרטיס אשראי.",
   },
   ru: {
-    title: "VisaPassage — кейс",
+    title: "VisaPassage — кейс: сравнение визовых маршрутов | Simnetiq",
+    metaDescription:
+      "VisaPassage — визовая аналитика для владельцев нескольких паспортов: один зашифрованный профиль и сравнение маршрутов по объёму бумаг, срокам и стоимости.",
     description:
       "VisaPassage — визовая аналитика для владельцев нескольких паспортов. Один зашифрованный профиль хранит все паспорта, виды на жительство и документы; движок сравнения ранжирует маршруты по всем из них — меньше бумаг, короче ожидание, ниже стоимость, — затем формирует чек-лист под конкретную страну и автоматически заполняет государственные формы. Хранилище документов с версиями, контролем сроков и журналом доступа. Начать бесплатно, без карты.",
   },
@@ -181,17 +221,23 @@ const CASE_VISAPASSAGE: RouteCopy = {
 
 const CASE_ARGUS: RouteCopy = {
   en: {
-    title: "Argus Browser — Case Study",
+    title: "Argus Browser — Anti-Detect Browser Case Study | Simnetiq",
+    metaDescription:
+      "Argus Browser is an anti-detect browser on a custom Chromium fork. Fingerprint, WebRTC address and cookie jar are applied inside the engine. macOS and Windows.",
     description:
       "Argus Browser is an anti-detect browser built on a custom Chromium fork. The identity — fingerprint, WebRTC address and cookie jar — is applied below the page, inside the engine, where a script cannot read around it. A desktop control plane owns the profiles, proxies, cookie sets, automations, schedules and datasets, and hands each browser session one launch payload and nothing more. Signed and notarised builds for macOS (Apple Silicon) and Windows, with MCP and a local HTTP API for driving it from your own tooling.",
   },
   he: {
-    title: "Argus Browser — מקרה בוחן",
+    title: "Argus Browser — מקרה בוחן: דפדפן אנטי-דיטקט | סימנטיק",
+    metaDescription:
+      "Argus Browser הוא דפדפן אנטי-דיטקט על fork ייעודי של Chromium. טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות מוחלים בתוך המנוע עצמו. ל-macOS ול-Windows.",
     description:
       "Argus Browser הוא דפדפן אנטי-דיטקט הבנוי על fork ייעודי של Chromium. הזהות — טביעת האצבע, כתובת ה-WebRTC ומאגר העוגיות — מוחלת מתחת לדף, בתוך המנוע עצמו, במקום שסקריפט אינו יכול לעקוף. אפליקציית שליטה שולחנית מחזיקה את הפרופילים, הפרוקסי, ערכות העוגיות, האוטומציות, לוחות הזמנים ומאגרי הנתונים, ומוסרת לכל הפעלת דפדפן מטען שיגור אחד בלבד ולא יותר מכך. גרסאות חתומות ומאושרות ל-macOS (Apple Silicon) ול-Windows, עם MCP ו-API מקומי להנעת המערכת מתוך הכלים שלכם.",
   },
   ru: {
-    title: "Argus Browser — кейс",
+    title: "Argus Browser — кейс: анти-детект браузер | Simnetiq",
+    metaDescription:
+      "Argus Browser — анти-детект браузер на собственном форке Chromium. Отпечаток, адрес WebRTC и хранилище cookie применяются внутри движка. Для macOS и Windows.",
     description:
       "Argus Browser — анти-детект браузер на собственном форке Chromium. Личность профиля — отпечаток, адрес WebRTC и хранилище cookie — применяется под страницей, внутри самого движка, где скрипт не может её обойти. Настольная панель управления владеет профилями, прокси, наборами cookie, автоматизациями, расписаниями и таблицами данных и передаёт каждой сессии браузера ровно один стартовый пакет и ничего сверх того. Подписанные и нотаризованные сборки для macOS (Apple Silicon) и Windows, с MCP и локальным HTTP API для управления из собственных инструментов.",
   },
@@ -376,7 +422,8 @@ export function buildLocalizedMetadata({
   ogType = "website",
   markdownAlternate = false,
 }: BuildMetaInput): Metadata {
-  const copy = ROUTE_COPY[routeKey][locale];
+  const copy: LocalizedCopy = ROUTE_COPY[routeKey][locale];
+  const description = copy.metaDescription ?? copy.description;
   const url = `${SITE_URL}/${locale}${path}`;
 
   const languages: Record<string, string> = Object.fromEntries(
@@ -401,18 +448,21 @@ export function buildLocalizedMetadata({
 
   return {
     title: { absolute: copy.title },
-    description: copy.description,
+    description,
     keywords,
     alternates: {
       canonical: url,
       languages,
-      ...(markdownAlternate
-        ? { types: { "text/markdown": `${url}/markdown` } }
-        : {}),
+      // llms.txt is linked from every page head: agents reach discovery files
+      // through links far more often than by guessing the path.
+      types: {
+        ...(markdownAlternate ? { "text/markdown": `${url}/markdown` } : {}),
+        "text/plain": `${SITE_URL}/${locale}/llms.txt`,
+      },
     },
     openGraph: {
       title: copy.title,
-      description: copy.description,
+      description,
       url,
       siteName: SITE_NAME,
       type: ogType,
@@ -431,7 +481,7 @@ export function buildLocalizedMetadata({
     twitter: {
       card: "summary_large_image",
       title: copy.title,
-      description: copy.description,
+      description,
       images: [image],
     },
   };

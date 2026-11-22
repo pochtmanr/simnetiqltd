@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { lastModifiedFor } from "@/lib/content-dates";
 import { getAllHowWeWorkSlugs } from "@/lib/how-we-work";
 import { getAllServiceSlugs } from "@/lib/services";
 import { LOCALES, LOCALE_HTML_LANG } from "@/lib/i18n";
@@ -9,9 +10,9 @@ type ChangeFreq = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 function buildEntry(
   path: string,
   changeFrequency: ChangeFreq,
-  priority: number,
-  lastModified: Date
+  priority: number
 ): MetadataRoute.Sitemap {
+  const lastModified = lastModifiedFor(path);
   return LOCALES.map((locale) => {
     const languages: Record<string, string> = Object.fromEntries(
       LOCALES.map((l) => [LOCALE_HTML_LANG[l], `${SITE_URL}/${l}${path}`])
@@ -28,8 +29,6 @@ function buildEntry(
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const localizedRoutes: { path: string; freq: ChangeFreq; priority: number }[] = [
     { path: "", freq: "weekly", priority: 1 },
     { path: "/projects", freq: "monthly", priority: 0.9 },
@@ -45,16 +44,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const staticEntries: MetadataRoute.Sitemap = localizedRoutes.flatMap((r) =>
-    buildEntry(r.path, r.freq, r.priority, now)
+    buildEntry(r.path, r.freq, r.priority)
   );
 
   const serviceEntries: MetadataRoute.Sitemap = getAllServiceSlugs().flatMap(
-    (slug) => buildEntry(`/services/${slug}`, "monthly", 0.8, now)
+    (slug) => buildEntry(`/services/${slug}`, "monthly", 0.8)
   );
 
   const howWeWorkEntries: MetadataRoute.Sitemap =
     getAllHowWeWorkSlugs().flatMap((slug) =>
-      buildEntry(`/how-we-work/${slug}`, "monthly", 0.8, now)
+      buildEntry(`/how-we-work/${slug}`, "monthly", 0.8)
     );
 
   return [...staticEntries, ...serviceEntries, ...howWeWorkEntries];

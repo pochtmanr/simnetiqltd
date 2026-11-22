@@ -11,6 +11,7 @@ import {
 import { ROUTE_COPY } from "@/lib/seo-meta";
 import type { Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
+import { CONTENT_LAST_MODIFIED, lastModifiedFor } from "@/lib/content-dates";
 import en from "@/messages/en.json";
 import he from "@/messages/he.json";
 import ru from "@/messages/ru.json";
@@ -86,14 +87,17 @@ type Phrasebook = {
   howWeWorkOverview: string;
   howWeWorkPageHeading: string;
   faqLabel: string;
+  keyFactsHeading: string;
+  emailLabel: string;
+  markdownNote: string;
 };
 
 const PHRASEBOOK: Record<Locale, Phrasebook> = {
   en: {
     intro:
-      "Simnetiq Ltd is a London-based software engineering studio. We build production iOS, Android, macOS, Windows and Linux applications; Next.js / Supabase / Stripe web platforms; LLM, RAG and agentic automation on Anthropic, OpenAI and open-weight models; and censorship-resistant VPN infrastructure on VLESS-Reality. Two owner-operators, registered in England & Wales (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
+      "Simnetiq Ltd is a London software studio that plans, builds and supports custom software for businesses: iOS, Android and desktop apps, websites and SaaS platforms, and AI and workflow automation. The two owners do the work themselves, so clients deal directly with the engineer building their product. Registered in England & Wales, company no. 16861177.",
     postIntro:
-      "Every engagement is priced in GBP against a signed SOW. Brief to production, end-to-end. No agency retainers, no black-box reporting.",
+      "Projects are fixed-price in GBP against a statement of work (SOW) signed before development starts, and typically run 2–10 weeks. Clients own the source code from the first commit and pay no licence fee to Simnetiq. We work in English, Hebrew and Russian.",
     servicesHeading: "Services",
     projectsHeading: "Projects",
     projectLines: (url) => [
@@ -128,14 +132,14 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     fullIntro:
       "Inlined content of every primary page on simnetiq.com, in Markdown, for single-fetch consumption by AI agents.",
     fullCanonical: "Canonical site",
-    fullLastGenerated: "Last generated",
+    fullLastGenerated: "Last updated",
     fullSeeAlso: "See also",
     homeHeading: "Home",
     liveDeploymentsHeading:
       "Live deployments referenced from the homepage",
     liveDeployments: () => [
       `- **Argus Browser** (https://www.browserargus.com) — Anti-detect browser on a custom Chromium fork, with a desktop control plane for profiles, proxies, automations, schedules and datasets. macOS and Windows.`,
-      `- **Doppler VPN** (https://dopplervpn.org) — Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS and Android clients.`,
+      `- **Doppler VPN** (https://dopplervpn.org) — Custom VLESS-Reality VPN with zero-log geo-distributed nodes. Native iOS, Android, macOS and Windows clients.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source interactive physics learning platform with accurate ODE solvers and a concepts dictionary.`,
       `- **SMS Code by SIMNETIQ** (https://simnetiq.xyz/) — Virtual numbers for sign-up verification. Real carrier numbers in 150+ countries, 100+ services, codes in about thirty seconds. Web and iOS.`,
       `- **VisaPassage** (https://visapassage.com/) — Multi-passport visa intelligence. Compare visa routes across every passport and residency you hold from one encrypted profile.`,
@@ -185,7 +189,8 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     visaPassageStack: "Stack: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "Contact & booking",
     contactLines: (url) => [
-      `- **Book an intro call:** Cal.com widget on ${url}`,
+      `- **Book an intro call:** ${url}#contact`,
+      `- **Email:** support@simnetiq.com`,
       `- **Registered office:** Simnetiq Ltd, 2 Frederick Street, Kings Cross, London WC1X 0ND, United Kingdom`,
       `- **Companies House:** 16861177 (England & Wales)`,
       `- **Languages served:** English (en-GB), Hebrew (he-IL), Russian (ru-RU)`,
@@ -208,12 +213,16 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     howWeWorkOverview: "How we work — engagement terms",
     howWeWorkPageHeading: "How we work",
     faqLabel: "FAQ",
+    keyFactsHeading: "Key facts",
+    emailLabel: "Email",
+    markdownNote:
+      "Every page linked below also has a Markdown version: append /markdown to its URL.",
   },
   he: {
     intro:
-      "Simnetiq Ltd הוא אולפן הנדסת תוכנה מבוסס לונדון. אנחנו בונים אפליקציות ייצור ל-iOS, Android, macOS, Windows ו-Linux; פלטפורמות ווב על Next.js / Supabase / Stripe; אוטומציה של LLM, RAG ו-Agentic על מודלים של Anthropic, OpenAI ו-open-weight; ותשתית VPN עמידה לצנזורה על VLESS-Reality. שני שותפים-מפעילים, רשומים באנגליה ובוויילס (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
+      "Simnetiq Ltd הוא סטודיו תוכנה מלונדון שמתכנן, בונה ומתחזק תוכנה בהתאמה אישית לעסקים: אפליקציות ל-iOS, ל-Android ולמחשב, אתרים ופלטפורמות SaaS, ואוטומציה של תהליכים עם AI. שני בעלי החברה מבצעים את העבודה בעצמם, כך שהלקוח עובד ישירות מול המהנדס שבונה את המוצר שלו. החברה רשומה באנגליה ובוויילס, מספר חברה 16861177.",
     postIntro:
-      "כל התקשרות מתומחרת ב-GBP מול SOW חתום. מתיק עד ייצור, מקצה לקצה. ללא ריטיינרים סוכנותיים, ללא דיווח קופסה שחורה.",
+      "הפרויקטים מתומחרים במחיר קבוע ב-GBP לפי הסכם היקף עבודה (SOW) שנחתם לפני תחילת הפיתוח, ונמשכים בדרך כלל 2–10 שבועות. קוד המקור שייך ללקוח מהשינוי הראשון, ואין דמי רישיון לסימנטיק. אנחנו עובדים באנגלית, בעברית וברוסית.",
     servicesHeading: "שירותים",
     projectsHeading: "פרויקטים",
     projectLines: (url) => [
@@ -248,13 +257,13 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     fullIntro:
       "תוכן משובץ של כל עמוד עיקרי ב-simnetiq.com, ב-Markdown, לצריכה בבקשה אחת על ידי סוכני AI.",
     fullCanonical: "אתר קנוני",
-    fullLastGenerated: "נוצר לאחרונה",
+    fullLastGenerated: "עודכן לאחרונה",
     fullSeeAlso: "ראו גם",
     homeHeading: "בית",
     liveDeploymentsHeading: "פריסות חיות בעמוד הבית",
     liveDeployments: () => [
       `- **Argus Browser** (https://www.browserargus.com) — דפדפן אנטי-דיטקט על fork ייעודי של Chromium, עם לוח בקרה שולחני לפרופילים, פרוקסי, אוטומציות, לוחות זמנים ומאגרי נתונים. ל-macOS ול-Windows.`,
-      `- **Doppler VPN** (https://dopplervpn.org) — VPN VLESS-Reality מותאם אישית עם צמתים גיאו-מבוזרים ללא לוגים. לקוחות מקוריים ל-iOS ו-Android.`,
+      `- **Doppler VPN** (https://dopplervpn.org) — VPN VLESS-Reality מותאם אישית עם צמתים גיאו-מבוזרים ללא לוגים. לקוחות מקוריים ל-iOS, Android, macOS ו-Windows.`,
       `- **Physics.explained** (https://physics.it.com/) — פלטפורמת לימוד פיזיקה אינטראקטיבית בקוד פתוח עם פותרי ODE מדויקים ומילון מושגים.`,
       `- **SMS Code מבית SIMNETIQ** (https://simnetiq.xyz/) — מספרים וירטואליים לאימות בהרשמה. מספרים אמיתיים ברשתות סלולריות ביותר מ-150 מדינות, יותר מ-100 שירותים, קודים תוך כשלושים שניות. ווב ו-iOS.`,
       `- **VisaPassage** (https://visapassage.com/) — מודיעין ויזות לבעלי דרכונים מרובים. השוואת מסלולי ויזה על פני כל דרכון ותושבות שברשותכם מתוך פרופיל מוצפן אחד.`,
@@ -305,7 +314,8 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     visaPassageStack: "סטאק: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "יצירת קשר והזמנה",
     contactLines: (url) => [
-      `- **הזמנת שיחת היכרות:** ווידג'ט Cal.com ב-${url}`,
+      `- **הזמנת שיחת היכרות:** ${url}#contact`,
+      `- **אימייל:** support@simnetiq.com`,
       `- **כתובת רשומה:** Simnetiq Ltd, 2 Frederick Street, Kings Cross, London WC1X 0ND, United Kingdom`,
       `- **Companies House:** 16861177 (אנגליה ווויילס)`,
       `- **שפות נתמכות:** אנגלית (en-GB), עברית (he-IL), רוסית (ru-RU)`,
@@ -328,12 +338,16 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     howWeWorkOverview: "איך אנחנו עובדים — תנאי התקשרות",
     howWeWorkPageHeading: "איך אנחנו עובדים",
     faqLabel: "שאלות נפוצות",
+    keyFactsHeading: "עובדות מרכזיות",
+    emailLabel: "אימייל",
+    markdownNote:
+      "לכל עמוד שמקושר כאן יש גם גרסת Markdown: מוסיפים ‎/markdown‎ לסוף הכתובת.",
   },
   ru: {
     intro:
-      "Simnetiq Ltd — лондонская студия разработки ПО. Мы собираем production-приложения для iOS, Android, macOS, Windows и Linux; веб-платформы на Next.js / Supabase / Stripe; LLM, RAG и агентную автоматизацию на моделях Anthropic, OpenAI и open-weight; устойчивую к цензуре VPN-инфраструктуру на VLESS-Reality. Два владельца-практика, регистрация в Англии и Уэльсе (Companies House 16861177), 2 Frederick Street, Kings Cross, London WC1X 0ND.",
+      "Simnetiq Ltd — лондонская студия разработки, которая проектирует, создаёт и поддерживает заказное ПО для бизнеса: приложения для iOS, Android и десктопа, сайты и SaaS-платформы, AI и автоматизацию процессов. Работу выполняют сами два владельца компании, поэтому клиент общается напрямую с инженером, который делает его продукт. Компания зарегистрирована в Англии и Уэльсе, номер 16861177.",
     postIntro:
-      "Каждый контракт оценивается в GBP по подписанному SOW. От брифа до продакшена, от и до. Без агентских ретейнеров, без чёрно-ящичных отчётов.",
+      "Проекты ведутся по фиксированной цене в GBP на основании технического задания (SOW), подписанного до начала разработки, и обычно занимают 2–10 недель. Исходный код принадлежит клиенту с первого коммита, лицензионных платежей Simnetiq нет. Работаем на английском, иврите и русском.",
     servicesHeading: "Услуги",
     projectsHeading: "Проекты",
     projectLines: (url) => [
@@ -368,14 +382,14 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     fullIntro:
       "Встроенный контент каждой основной страницы simnetiq.com в Markdown — для одного запроса AI-агентами.",
     fullCanonical: "Канонический сайт",
-    fullLastGenerated: "Последняя генерация",
+    fullLastGenerated: "Последнее обновление",
     fullSeeAlso: "См. также",
     homeHeading: "Главная",
     liveDeploymentsHeading:
-      "Живые продакшен-, упомянутые на главной",
+      "Работающие продукты, упомянутые на главной",
     liveDeployments: () => [
       `- **Argus Browser** (https://www.browserargus.com) — Анти-детект браузер на собственном форке Chromium с настольной панелью управления профилями, прокси, автоматизациями, расписаниями и таблицами данных. macOS и Windows.`,
-      `- **Doppler VPN** (https://dopplervpn.org) — Кастомный VPN на VLESS-Reality с гео-распределёнными нодами без логов. Нативные клиенты для iOS и Android.`,
+      `- **Doppler VPN** (https://dopplervpn.org) — Кастомный VPN на VLESS-Reality с гео-распределёнными нодами без логов. Нативные клиенты для iOS, Android, macOS и Windows.`,
       `- **Physics.explained** (https://physics.it.com/) — Open-source интерактивная платформа изучения физики с точными решателями ОДУ и словарём концепций.`,
       `- **SMS Code от SIMNETIQ** (https://simnetiq.xyz/) — Виртуальные номера для подтверждения при регистрации. Настоящие номера операторов в 150+ странах, 100+ сервисов, код примерно за тридцать секунд. Веб и iOS.`,
       `- **VisaPassage** (https://visapassage.com/) — Визовая аналитика для владельцев нескольких паспортов. Сравнение визовых маршрутов по всем вашим паспортам и видам на жительство из одного зашифрованного профиля.`,
@@ -426,7 +440,8 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     visaPassageStack: "Стек: Next.js, React, Supabase, Tailwind CSS, Vercel.",
     contactBookingHeading: "Контакты и запись",
     contactLines: (url) => [
-      `- **Запись на ознакомительный звонок:** виджет Cal.com на ${url}`,
+      `- **Запись на ознакомительный звонок:** ${url}#contact`,
+      `- **Email:** support@simnetiq.com`,
       `- **Юридический адрес:** Simnetiq Ltd, 2 Frederick Street, Kings Cross, London WC1X 0ND, United Kingdom`,
       `- **Companies House:** 16861177 (Англия и Уэльс)`,
       `- **Поддерживаемые языки:** английский (en-GB), иврит (he-IL), русский (ru-RU)`,
@@ -449,6 +464,10 @@ const PHRASEBOOK: Record<Locale, Phrasebook> = {
     howWeWorkOverview: "Как мы работаем — условия сотрудничества",
     howWeWorkPageHeading: "Как мы работаем",
     faqLabel: "Частые вопросы",
+    keyFactsHeading: "Ключевые факты",
+    emailLabel: "Email",
+    markdownNote:
+      "У каждой страницы из списка ниже есть версия в Markdown: добавьте /markdown к её адресу.",
   },
 };
 
@@ -534,11 +553,26 @@ export function buildLlmsTxt(locale: Locale): string {
     })
     .join("\n");
 
+  const about = { en, he, ru }[locale].about;
+  const keyFacts = [
+    `- **${about.founded}:** 2025`,
+    ...getHowWeWork(locale).flatMap((e) =>
+      e.meta.map((m) => `- **${m.label}:** ${m.value}`)
+    ),
+    `- **${p.fullLastGenerated}:** ${LATEST_CONTENT_DATE}`,
+  ].join("\n");
+
   return `# Simnetiq
 
 > ${p.intro}
 
 ${p.postIntro}
+
+${p.markdownNote}
+
+## ${p.keyFactsHeading}
+
+${keyFacts}
 
 ## ${p.servicesHeading}
 
@@ -558,19 +592,20 @@ ${howWeWorkLinks}
 - [${p.servicesOverview}](${localeUrl("/services")})
 - [${p.projectsIndex}](${localeUrl("/projects")})
 - [${p.howWeWorkOverview}](${localeUrl("/how-we-work")})
+- [llms-full.txt](${SITE_URL}/${locale}/llms-full.txt): ${p.llmsFullLine}
 
 ## ${p.contactHeading}
 
 - ${p.registeredOffice}
 - ${p.companiesHouse}
-- ${p.bookingLine}: ${localeUrl("")} — Cal.com
+- ${p.emailLabel}: support@simnetiq.com
+- ${p.bookingLine}: ${localeUrl("")}#contact
 
 ## ${p.optionalHeading}
 
 - [${p.legalNotice}](${localeUrl("/legal")})
 - [${p.privacyPolicy}](${localeUrl("/privacy-policy")})
 ${p.alternateLocaleLines.join("\n")}
-- [llms-full.txt](${SITE_URL}/${locale}/llms-full.txt): ${p.llmsFullLine}
 - [${p.sitemapLine}](${SITE_URL}/sitemap.xml)
 `;
 }
@@ -581,11 +616,16 @@ ${p.alternateLocaleLines.join("\n")}
 // advertises a `text/markdown` alternate must have a matching handler here —
 // see lib/seo-meta.ts `markdownAlternate`.
 
+/** Most recent content change across every public route. */
+const LATEST_CONTENT_DATE = Object.values(CONTENT_LAST_MODIFIED).sort().at(-1)!;
+
 function buildHeader(p: Phrasebook, title: string, url: string): string {
+  // `url` is always `${SITE_URL}/${locale}${path}`; recover the route path.
+  const path = url.slice(SITE_URL.length).replace(/^\/[a-z]{2}/, "");
   return `# ${title}
 
 > ${p.fullCanonical}: ${url}
-> ${p.fullLastGenerated}: ${new Date().toISOString().slice(0, 10)}
+> ${p.fullLastGenerated}: ${lastModifiedFor(path)}
 `;
 }
 
@@ -854,7 +894,7 @@ export function buildLlmsFullTxt(locale: Locale): string {
 
 > ${p.fullIntro}
 > ${p.fullCanonical}: ${localeUrl("")}
-> ${p.fullLastGenerated}: ${new Date().toISOString().slice(0, 10)}
+> ${p.fullLastGenerated}: ${LATEST_CONTENT_DATE}
 > ${p.fullSeeAlso}: ${SITE_URL}/${locale}/llms.txt · ${SITE_URL}/sitemap.xml
 
 ---
