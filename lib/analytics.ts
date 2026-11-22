@@ -91,7 +91,8 @@ export function track<E extends AnalyticsEvent>(name: E["name"], props: E["props
     ...(props as Record<string, string | number | boolean | null>),
     path,
   };
-  if (clientId) payload.client_id = clientId;
+  // Not named client_id: gtag reserves that name for its own visitor identifier.
+  if (clientId) payload.visitor_id = clientId;
   // console.log here is intentional during the build-out period so engineers
   // can verify catalog events fire on the right interactions.
   if (process.env.NODE_ENV !== "production") {
