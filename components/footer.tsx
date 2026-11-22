@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "@/components/footer.module.css";
+import { CookieSettingsButton } from "@/components/cookie-consent";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { localizePath, type Locale } from "@/lib/i18n";
 
@@ -20,6 +21,7 @@ type FooterDict = {
     legal: string;
     privacy: string;
     deletion: string;
+    cookies: string;
     studio: string;
     hours: string;
   };
@@ -87,6 +89,9 @@ export function Footer({
                   <Link href={localizePath(locale, item.href)}>{item.text}</Link>
                 </li>
               ))}
+              <li>
+                <CookieSettingsButton label={dict.lines.cookies} />
+              </li>
             </ul>
           </nav>
           <div className={styles.contact}>

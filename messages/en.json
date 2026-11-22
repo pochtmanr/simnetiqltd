@@ -11,7 +11,14 @@
     "previous": "Previous",
     "live": "Released",
     "liveNominal": "Released",
-    "inDevNominal": "In development"
+    "inDevNominal": "In development",
+    "cookieConsent": {
+      "label": "Cookie preferences",
+      "body": "We'd like to use Google Analytics to see how this site is used. It sets cookies only if you accept, and you can change your choice any time from the footer.",
+      "privacy": "Privacy policy",
+      "accept": "Accept analytics",
+      "decline": "Decline"
+    }
   },
   "nav": {
     "links": {
@@ -238,6 +245,7 @@
       "legal": "Legal",
       "privacy": "Privacy",
       "deletion": "Data Deletion",
+      "cookies": "Cookie settings",
       "studio": "Technical studio",
       "hours": "Mon–Fri · 09:00–18:00 BST"
     },
@@ -576,7 +584,7 @@
         },
         {
           "title": "Cookies & Tracking",
-          "body": "This website does not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only."
+          "body": "With your consent, this website uses Google Analytics 4 (Google Ireland Limited) to measure visits and interactions. Analytics cookies are set, and your IP address and device information are processed, only after you accept in the cookie banner; if you decline, the service is not loaded. You can change your choice at any time through \"Cookie settings\" in the footer. Essential cookies are used for basic website functionality, such as remembering your language and theme."
         }
       ]
     },
@@ -645,7 +653,7 @@
       },
       {
         "title": "Cookies & Tracking",
-        "body": "This website and our mobile applications do not use tracking cookies or third-party analytics services. Essential cookies may be used for basic website functionality only."
+        "body": "Our mobile applications do not use tracking cookies or third-party analytics services. With your consent, this website uses Google Analytics 4 (Google Ireland Limited) to measure visits and interactions. Analytics cookies are set, and your IP address and device information are processed, only after you accept in the cookie banner; if you decline, the service is not loaded. You can change your choice at any time through \"Cookie settings\" in the footer. Essential cookies are used for basic website functionality, such as remembering your language and theme."
       },
       {
         "title": "Children's Privacy",

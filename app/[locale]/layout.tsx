@@ -1,23 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import {
-  Inter,
-  Bricolage_Grotesque,
-  JetBrains_Mono,
-  Instrument_Serif,
-  Rubik,
-  Lunasima,
-  Geist,
-  Geist_Mono,
-  Cormorant_Garamond,
-} from "next/font/google";
+import { Inter, Lunasima } from "next/font/google";
 import "../globals.css";
-import { GoogleTagManager } from "@next/third-parties/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { CookieConsent } from "@/components/cookie-consent";
 import { GlobalStructuredData } from "@/components/structured-data";
-import { ThemeProvider, type ThemeChoice } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeInitScript } from "@/components/theme-init-script";
 import { getDictionary } from "@/lib/dictionaries";
 import {
@@ -25,6 +14,7 @@ import {
   LOCALE_HTML_LANG,
   getDirection,
   isLocale,
+  localizePath,
   type Locale,
 } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
@@ -35,59 +25,19 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// Display voice. Variable (opsz/wdth/wght) — next/font ships the variable
-// file when no explicit weight is given.
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  variable: "--font-display",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains",
-});
-
-// Doppler reference fonts — used on /projects/doppler-vpn design-system section.
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-});
-
-const rubik = Rubik({
-  subsets: ["latin", "cyrillic"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-rubik",
-});
-
+// Hebrew face for the he locale and the locale switcher's Hebrew label. Not
+// preloaded: a root-layout preload is emitted for every locale, and en/ru
+// pages need it for two glyphs at most. The browser fetches the subsets it
+// needs through unicode-range.
 const lunasima = Lunasima({
   subsets: ["latin", "hebrew"],
   weight: ["400", "700"],
   variable: "--font-lunasima",
+  preload: false,
 });
 
-// VisaPassage reference fonts — used on /projects/visapassage design-system section.
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-geist",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-geist-mono",
-});
-
-// SMS Code reference font — used on /projects/sms-code design-system section.
-// Light only: the brand sets it at 300 for section headings and stat figures.
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300"],
-  variable: "--font-cormorant",
-});
+// Project reference fonts (Bricolage, JetBrains Mono, Instrument Serif, Rubik,
+// Geist, Geist Mono, Cormorant) are loaded by projects/<slug>/layout.tsx.
 
 const SITE_NAME = "Simnetiq";
 const DEFAULT_TITLE = "Simnetiq — London Software Engineering Studio";
@@ -270,28 +220,16 @@ export default async function RootLayout({
   const dir = getDirection(locale);
   const dict = await getDictionary(locale);
 
-  const themeCookie = (await cookies()).get("theme-pref")?.value;
-  const choice: ThemeChoice =
-    themeCookie === "light" || themeCookie === "dark" || themeCookie === "system"
-      ? themeCookie
-      : "system";
-  // For explicit overrides we set data-theme during SSR so first paint matches.
-  // For "system" we omit the attribute and let the @media rule in globals.css
-  // drive the palette from the OS preference — no JS, no FOUC.
-  const dataTheme = choice === "system" ? undefined : choice;
-  // colorScheme on <html> tells the UA which native control palette to use.
-  // For system mode we leave it unset and let the inline init script set it
-  // synchronously based on prefers-color-scheme before first paint.
-  const colorSchemeStyle =
-    choice === "system" ? undefined : { colorScheme: choice };
-
+  // The theme is NOT read here: cookies() would make every route under this
+  // layout render per request. ThemeInitScript reads the theme-pref cookie /
+  // localStorage in the browser and writes data-theme, data-theme-choice and
+  // color-scheme onto <html> before first paint; suppressHydrationWarning
+  // covers those script-written attributes.
   return (
     <html
       lang={LOCALE_HTML_LANG[locale]}
       dir={dir}
-      data-theme={dataTheme}
-      style={colorSchemeStyle}
-      className={`${inter.variable} ${bricolage.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${rubik.variable} ${lunasima.variable} ${geist.variable} ${geistMono.variable} ${cormorantGaramond.variable} h-full`}
+      className={`${inter.variable} ${lunasima.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans antialiased">
@@ -308,7 +246,7 @@ export default async function RootLayout({
             (which would log "Scripts inside React components are never
             executed when rendering on the client"). */}
         <ThemeInitScript />
-        <ThemeProvider initialChoice={choice}>
+        <ThemeProvider>
           <GlobalStructuredData />
           <Navigation
             locale={locale}
@@ -330,8 +268,12 @@ export default async function RootLayout({
           />
           <main className="flex-1">{children}</main>
           <Footer locale={locale} dict={dict.footer} themeLabels={dict.nav.themes} />
-          {process.env.NEXT_PUBLIC_GTM_ID ? (
-            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+          {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
+            <CookieConsent
+              gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+              privacyHref={localizePath(locale, "/privacy-policy")}
+              labels={dict.common.cookieConsent}
+            />
           ) : null}
         </ThemeProvider>
       </body>

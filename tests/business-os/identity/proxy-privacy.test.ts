@@ -56,5 +56,5 @@ test("business os client code has no public secrets, signup, or marketing analyt
   assert.equal(source.includes("SUPABASE_SERVICE_ROLE_KEY"), false);
   const layout = readFileSync(join(root, "app/(business)/layout.tsx"), "utf8");
   assert.equal(layout.includes("Navigation"), false);
-  assert.equal(layout.includes("<GoogleTagManager"), false);
+  assert.equal(layout.includes("<CookieConsent"), false);
 });

@@ -1,4 +1,5 @@
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGAEvent } from "@next/third-parties/google";
+import { readConsent } from "@/lib/consent";
 import type { Locale } from "@/lib/i18n";
 
 type ServiceCode = "mobile" | "web" | "aiAutomation";
@@ -82,6 +83,8 @@ function getClientId(): string | null {
 
 export function track<E extends AnalyticsEvent>(name: E["name"], props: E["props"]): void {
   if (typeof window === "undefined") return;
+  // Nothing is stored or sent without the visitor's consent (components/cookie-consent.tsx).
+  if (readConsent() !== "granted") return;
   const clientId = getClientId();
   const path = window.location.pathname;
   const payload: Record<string, string | number | boolean | null> = {
@@ -94,7 +97,7 @@ export function track<E extends AnalyticsEvent>(name: E["name"], props: E["props
   if (process.env.NODE_ENV !== "production") {
     console.log("[analytics]", name, payload);
   }
-  // Without a container ID Google Tag Manager is not loaded, so there is nothing to send to.
-  if (!process.env.NEXT_PUBLIC_GTM_ID) return;
-  sendGTMEvent({ event: name, ...payload });
+  // Without a measurement ID Google Analytics is not loaded, so there is nothing to send to.
+  if (!process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) return;
+  sendGAEvent("event", name, payload);
 }
