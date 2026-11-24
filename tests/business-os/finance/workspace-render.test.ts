@@ -404,12 +404,14 @@ test("admin keeps the grouped sidebar, the mobile tab bar, and the period filter
   assert.match(markup, /class="bos-side-foot"[\s\S]*>Account</);
 });
 
-test("today opens with a hub per product linking its Supabase, Vercel and sites", () => {
+test("today opens with a hub per product linking its backend, hosting and sites", () => {
   const markup = html("home");
-  assert.match(markup, /Doppler VPN[\s\S]*SMS Code[\s\S]*Up next/);
-  assert.match(markup, /supabase\.com\/dashboard\/project\/fzlrhmjdjjzcgstaeblu/);
+  assert.match(markup, /Doppler VPN[\s\S]*SMS Code[\s\S]*Physics\.explained[\s\S]*VisaPassage[\s\S]*Simnetiq[\s\S]*Up next/);
+  assert.match(markup, /db\.dopplervpn\.org/);
   assert.match(markup, /supabase\.com\/dashboard\/project\/zkuwqvtwlomktysuymyw/);
-  assert.match(markup, /vercel\.com\/romans-projects-a19aa0c4\/dopplervpn/);
+  assert.match(markup, /Azure · doppler-core/);
+  assert.match(markup, /href="https:\/\/admin\.dopplervpn\.org\/admin-dvpn\/statistics"/);
+  assert.doesNotMatch(markup, /vercel\.com\/romans-projects-a19aa0c4/);
   assert.match(markup, /href="https:\/\/simnetiq\.xyz\/admin"/);
   assert.match(markup, /Microsoft Azure[\s\S]*🇸🇪[\s\S]*Sweden/);
   assert.match(markup, /href="https:\/\/my\.fotbo\.com\/openstack\/instances"[\s\S]*Netherlands/);

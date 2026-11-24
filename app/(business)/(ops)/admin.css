@@ -422,7 +422,25 @@
 .bos-side-account__role { font-size: 0.75rem; font-weight: 400; color: var(--color-text-dim); }
 .bos-side-account__chevron { color: var(--color-text-dim); }
 .bos-side-account__menu { top: auto; bottom: calc(100% + 6px); left: 0; width: 100%; min-width: 220px; }
-.bos-side-account__themes { display: flex; gap: 4px; padding: 2px 6px; }
+.bos-side-account__who { display: flex; align-items: center; gap: 10px; padding: 6px 8px; }
+.bos-side-account__label { padding: 4px 10px 6px; font-size: 0.75rem; color: var(--color-text-dim); }
+.bos-side-account__themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 6px 4px; }
+.bos-side-account__theme {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-dim);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.bos-side-account__theme:hover { background: var(--bos-hover); color: var(--color-text); }
+.bos-side-account__theme[aria-pressed="true"] { border-color: var(--bos-accent); color: var(--color-text); font-weight: 500; }
+.bos-side-account__logout { color: var(--bos-bad); }
 
 @media (max-width: 1023px) {
   /* Tablets always get the rail; collapsing is a wide-screen choice. */
@@ -820,6 +838,12 @@ a.bos-hub-link:focus-visible { outline: 2px solid var(--bos-accent); outline-off
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) .bos-hub-brand--dark { filter: none; }
 }
+/* Live up/down dot for project health checks. */
+.bos-live { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.bos-live__dot { width: 8px; height: 8px; border-radius: 999px; background: var(--color-text-dim); }
+.bos-live[data-tone="ok"] .bos-live__dot { background: var(--bos-ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bos-ok) 25%, transparent); }
+.bos-live[data-tone="bad"] .bos-live__dot { background: var(--bos-bad); }
+.bos-live[data-tone="pending"] .bos-live__dot { opacity: 0.5; }
 .bos-hub-servers { display: flex; flex-wrap: wrap; gap: 6px; }
 .bos-hub-server { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; padding: 4px 10px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.8125rem; }
 .bos-hub-server .bos-caption { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -1,4 +1,5 @@
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
+import { ProjectLiveDot, ProjectLiveList } from "@/components/business-os/admin/project-status";
 import { AttentionCard, HeadlineKpis, SourceFreshness } from "@/components/business-os/admin/sections/overview";
 import { ExternalIcon, ServerIcon, TimelineIcon } from "@/components/business-os/ui/icons";
 import { Card, CardHead, EmptyState, Notice, Section, StatusPill } from "@/components/business-os/ui/primitives";
@@ -72,15 +73,25 @@ function ProjectHub({ stack, project, overviewHref }: { stack: ProjectStack; pro
             {hasProjectLogo(stack.slug) ? <ProjectLogo project={stack.slug} alt="" size={22} /> : null}
             {stack.name}
             {project ? <StatusPill status={project.state} label={humanize(project.state)} compact /> : null}
+            {stack.health ? <ProjectLiveDot urls={stack.health} /> : null}
           </span>
         }
         meta={stack.tagline}
         actions={
-          <a className="bos-caption bos-link" href={overviewHref}>
-            Figures
-          </a>
+          // Figures need a business_os.projects row; stacks without one have nothing to report yet.
+          project ? (
+            <a className="bos-caption bos-link" href={overviewHref}>
+              Figures
+            </a>
+          ) : null
         }
       />
+      {stack.health ? (
+        <div className="bos-hub-group">
+          <p className="bos-label">Live</p>
+          <ProjectLiveList urls={stack.health} />
+        </div>
+      ) : null}
       {stack.groups.map((group) => (
         <div key={group.title} className="bos-hub-group">
           <p className="bos-label">{group.title}</p>

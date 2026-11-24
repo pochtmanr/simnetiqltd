@@ -2,10 +2,16 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { PROJECT_STACKS } from "@/lib/business-os/projects/stack";
 
-test("project stacks use unique slugs that match the seeded projects", () => {
+test("project stacks use unique slugs and include the seeded projects", () => {
   const slugs = PROJECT_STACKS.map((stack) => stack.slug);
   assert.equal(new Set(slugs).size, slugs.length);
-  assert.deepEqual([...slugs].sort(), ["doppler", "smscode"]);
+  assert.deepEqual([...slugs].sort(), ["doppler", "physics", "simnetiq", "smscode", "visapassage"]);
+});
+
+test("health URLs are https site roots", () => {
+  for (const stack of PROJECT_STACKS) {
+    for (const url of stack.health ?? []) assert.match(url, /^https:\/\/[a-z0-9.-]+$/, `${stack.slug}: ${url}`);
+  }
 });
 
 test("project stack links are https and never expose a raw IP address", () => {

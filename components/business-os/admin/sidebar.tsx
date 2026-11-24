@@ -5,7 +5,7 @@ import { NAV_GROUPS, SETTINGS_ITEM, isCurrent, navHref, navKey, type NavGroup, t
 import { sectionIcon } from "@/components/business-os/admin/nav-icons";
 import { SIDEBAR_COOKIE, serializeSidebarPrefs, type SidebarPrefs } from "@/components/business-os/admin/sidebar-prefs";
 import { businessPost } from "@/components/business-os/business-post";
-import { ChevronDownIcon, EyeIcon, EyeOffIcon, LogoutIcon, MoonIcon, SettingsIcon, SidebarIcon, SortIcon, SunIcon } from "@/components/business-os/ui/icons";
+import { ChevronDownIcon, EyeIcon, EyeOffIcon, LogoutIcon, MonitorIcon, MoonIcon, SidebarIcon, SortIcon, SunIcon } from "@/components/business-os/ui/icons";
 import { Logo } from "@/components/logo";
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import { useTheme, type ThemeChoice } from "@/components/theme-provider";
@@ -263,7 +263,7 @@ function AccountMenu({
   }
 
   const themes: [ThemeChoice, string, ReactNode][] = [
-    ["system", "Match device", <SettingsIcon key="s" size={16} />],
+    ["system", "System", <MonitorIcon key="s" size={16} />],
     ["light", "Light", <SunIcon key="l" size={16} />],
     ["dark", "Dark", <MoonIcon key="d" size={16} />],
   ];
@@ -276,33 +276,39 @@ function AccountMenu({
         data-current={onSettings ? "" : undefined}
         aria-haspopup="menu"
         aria-expanded={open}
-        title={`${account.name} · ${account.role}`}
+        title="Settings"
         onClick={() => setOpen((value) => !value)}
       >
-        <span className="bos-avatar" aria-hidden>
-          {account.name.charAt(0).toUpperCase()}
-        </span>
-        <span className="bos-side-link__text bos-side-account__meta">
-          <span className="bos-side-account__name">{account.name}</span>
-          <span className="bos-side-account__role">{account.role}</span>
-        </span>
+        {sectionIcon("settings")}
+        <span className="bos-side-link__text bos-side-account__meta">Settings</span>
         <SortIcon size={14} className="bos-side-account__chevron" />
       </button>
       {open ? (
-        <div className="bos-pop bos-side-account__menu" role="menu" aria-label="Account">
-          <a className="bos-menu-item" role="menuitem" href={settingsHref}>
-            {sectionIcon("settings", 16)}
-            Account and security
-          </a>
+        <div className="bos-pop bos-side-account__menu" role="menu" aria-label="Settings">
+          <div className="bos-side-account__who">
+            <span className="bos-avatar" aria-hidden>
+              {account.name.charAt(0).toUpperCase()}
+            </span>
+            <span className="bos-side-account__meta">
+              <span className="bos-side-account__name">{account.name}</span>
+              <span className="bos-side-account__role">{account.role}</span>
+            </span>
+          </div>
           <div className="bos-menu-sep" />
+          <p className="bos-side-account__label">Theme</p>
           <div className="bos-side-account__themes" role="group" aria-label="Theme">
             {themes.map(([value, label, icon]) => (
-              <button key={value} type="button" className="bos-side-icon-btn" aria-pressed={choice === value} aria-label={label} title={label} onClick={() => setChoice(value)}>
+              <button key={value} type="button" className="bos-side-account__theme" aria-pressed={choice === value} onClick={() => setChoice(value)}>
                 {icon}
+                {label}
               </button>
             ))}
           </div>
           <div className="bos-menu-sep" />
+          <a className="bos-menu-item" role="menuitem" href={settingsHref}>
+            {sectionIcon("settings", 16)}
+            Account and security
+          </a>
           <button
             type="button"
             role="menuitem"
@@ -328,7 +334,7 @@ function AccountMenu({
             {collapsed ? "Expand sidebar" : "Icons only"}
           </button>
           <div className="bos-menu-sep" />
-          <button type="button" role="menuitem" className="bos-menu-item" onClick={logout}>
+          <button type="button" role="menuitem" className="bos-menu-item bos-side-account__logout" onClick={logout}>
             <LogoutIcon size={16} />
             Log out
           </button>
