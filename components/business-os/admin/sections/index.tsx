@@ -49,7 +49,7 @@ export function AdminSection({
     case "traffic":
       return <Audience data={data} />;
     case "integrations":
-      return <Sources query={query} data={data} profile={profile} telegramConfigured={telegramConfigured} />;
+      return <Sources query={query} data={data} profile={profile} />;
     case "projects":
       return <Projects data={data} />;
     case "home":

@@ -2,10 +2,10 @@ import { Amount, KpiCard, QualityPill, deltaOf, series, trendPoints } from "@/co
 import { SeriesChart } from "@/components/business-os/ui/charts";
 import { CashIcon, ProfitIcon, ProceedsIcon, SalesIcon } from "@/components/business-os/admin/sections/glyphs";
 import { Card, CardHead, EmptyState, Notice, Section, StatusPill } from "@/components/business-os/ui/primitives";
-import { SourcesIcon } from "@/components/business-os/ui/icons";
-import { attentionFor, headlineMetrics, primaryReport, verifiedFor } from "@/lib/business-os/workspace/derive";
+import { AudienceIcon, SourcesIcon } from "@/components/business-os/ui/icons";
+import { attentionFor, headlineMetrics, mauTotal, primaryReport, sourceStateFor, verifiedFor } from "@/lib/business-os/workspace/derive";
 import { workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
-import { formatMoney, humanize, relativeTime } from "@/lib/business-os/workspace/format";
+import { formatMoney, groupDigits, humanize } from "@/lib/business-os/workspace/format";
 import type { WorkspaceData } from "@/lib/business-os/workspace/load";
 import { cashCaption } from "@/lib/business-os/workspace/present";
 
@@ -72,8 +72,9 @@ export function AttentionCard({ query, data }: { query: WorkspaceQuery; data: Wo
   );
 }
 
-/** The four headline figures for the window. Sparklines and deltas appear only when trend data was loaded. */
-export function HeadlineKpis({ query, data }: { query: WorkspaceQuery; data: WorkspaceData }) {
+/** The headline figures for the window; the Dashboard adds monthly users. Sparklines and deltas appear only when trend data was loaded. */
+export function HeadlineKpis({ query, data, users: showUsers = false }: { query: WorkspaceQuery; data: WorkspaceData; users?: boolean }) {
+  const users = showUsers ? mauTotal(data) : null;
   const primary = primaryReport(data);
   const bucket = primary.report?.buckets[0] ?? null;
   const headline = headlineMetrics(bucket);
@@ -133,6 +134,15 @@ export function HeadlineKpis({ query, data }: { query: WorkspaceQuery; data: Wor
                 : "No balance snapshot in this window."
             }
           />
+          {users ? (
+            <KpiCard
+              label="Monthly users"
+              icon={<AudienceIcon />}
+              value={users.value === null ? "—" : groupDigits(String(users.value))}
+              href={link("traffic")}
+              caption={users.value === null ? "No analytics imported yet" : `Website visitors, last 30 days · ${users.counted} product${users.counted === 1 ? "" : "s"}`}
+            />
+          ) : null}
         </div>
       )}
     </Section>
@@ -140,34 +150,28 @@ export function HeadlineKpis({ query, data }: { query: WorkspaceQuery; data: Wor
 }
 
 export function SourceFreshness({ data, href }: { data: WorkspaceData; href: string }) {
-  const healthRows = "error" in data.health ? null : data.health.rows;
   return (
     <Card>
-      <CardHead title="Sources" meta="Last successful sync" actions={<a className="bos-caption bos-link" href={href}>Manage</a>} />
-      {healthRows === null ? (
+      <CardHead title="Sources" meta="Where each product's data stands" actions={<a className="bos-caption bos-link" href={href}>Manage</a>} />
+      {"error" in data.health ? (
         <div className="p-4">
           <Notice>Source health is unavailable.</Notice>
         </div>
       ) : null}
-      {data.connections.length === 0 ? (
-        <EmptyState icon={<SourcesIcon />} title="No sources yet">
-          No source connection is registered.
+      {data.projects.length === 0 ? (
+        <EmptyState icon={<SourcesIcon />} title="No projects yet">
+          No project is registered.
         </EmptyState>
       ) : (
         <ul className="bos-rows">
-          {data.connections.map((connection) => {
-            const health = healthRows?.find((row) => row.connectionId === connection.id);
-            const status = health?.status ?? (healthRows ? "unconfigured" : "unavailable");
-            const name = data.projects.find((project) => project.slug === connection.projectSlug)?.name ?? connection.projectSlug ?? "Unassigned";
+          {data.projects.map((project) => {
+            const state = sourceStateFor(data, project.slug);
             return (
-              <li key={connection.id} className="bos-row">
+              <li key={project.id} className="bos-row">
                 <span className="bos-row__main">
-                  <span className="bos-row__title">{name}</span>
-                  <span className="bos-caption" title={health?.lastSuccessAt ?? undefined}>
-                    {connection.environment} · {health?.lastSuccessAt ? `synced ${relativeTime(health.lastSuccessAt)}` : "no successful sync"}
-                  </span>
+                  <span className="bos-row__title">{project.name}</span>
                 </span>
-                <StatusPill status={status} />
+                <StatusPill tone={state.tone} label={state.label} title={state.lastSuccessAt ?? undefined} />
               </li>
             );
           })}

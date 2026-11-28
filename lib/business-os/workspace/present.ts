@@ -229,23 +229,35 @@ export function parseReport(value: unknown): FinancialReportView | null {
   };
 }
 
+/**
+ * What needs the owner today. A project with no synced source is reported once as
+ * "not connected" rather than as missing coverage, and an in-progress month being
+ * partial is not a problem to act on. Verification gates stay on the Sources page.
+ */
 export function attentionItems(input: {
   coverage: string | null;
-  exclusions: { projectSlug: string; reason: string }[];
+  exclusions: { projectSlug: string; reason: string; included?: boolean }[];
+  /** Slugs of projects whose source has synced at least once. */
+  connectedProjects: string[];
   health: { status: string; lastErrorCode: string | null }[];
   staleDatasets: string[];
   unmatchedCount: number;
-  unverifiedGates: number;
 }): string[] {
   const items: string[] = [];
-  if (input.coverage && input.coverage !== "complete") items.push(`Report coverage is ${input.coverage}.`);
-  for (const exclusion of input.exclusions) items.push(`${exclusion.projectSlug}: ${exclusion.reason}.`);
+  if (input.connectedProjects.length === 0) {
+    items.push("No data source is connected yet.");
+  } else {
+    if (input.coverage === "missing") items.push("No sales data for this period yet.");
+    for (const exclusion of input.exclusions) {
+      if (exclusion.included === true || !input.connectedProjects.includes(exclusion.projectSlug)) continue;
+      items.push(`${exclusion.projectSlug}: ${exclusion.reason.replaceAll("_", " ")}.`);
+    }
+  }
   for (const row of input.health) {
     if (row.status !== "ok") items.push(`Source health is ${row.status}${row.lastErrorCode ? ` (${row.lastErrorCode})` : ""}.`);
   }
   for (const dataset of input.staleDatasets) items.push(`${dataset} snapshot is stale.`);
   if (input.unmatchedCount > 0) items.push(`${input.unmatchedCount} unmatched settlement${input.unmatchedCount === 1 ? "" : "s"}.`);
-  if (input.unverifiedGates > 0) items.push(`${input.unverifiedGates} dataset gates are unverified.`);
   return items;
 }
 

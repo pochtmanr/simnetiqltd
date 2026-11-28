@@ -10,6 +10,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "../../..");
 const pullsSql = readFileSync(join(root, "supabase/business-os/migrations/20260929180000_project_pulls.sql"), "utf8");
 const reconciliationSql = readFileSync(join(root, "supabase/business-os/migrations/20260929210000_reconciliation.sql"), "utf8");
 
+const coverageSql = readFileSync(join(root, "supabase/business-os/migrations/20261128150000_report_coverage.sql"), "utf8");
+
 const from = "2026-06-01T00:00:00.000Z";
 const to = "2026-07-01T00:00:00.000Z";
 
@@ -38,6 +40,7 @@ async function withBooks() {
   const db = await withLedger();
   await db.exec(pullsSql);
   await db.exec(reconciliationSql);
+  await db.exec(coverageSql);
   return db;
 }
 
@@ -399,6 +402,10 @@ test("shared overhead is shown before and after one allocation", async () => {
   assert.equal(await moneyIs(db, body.buckets[0].allocation.profit_after ?? null, "88"), true);
   assert.equal(await moneyIs(db, body.buckets[0].allocation.company_cost ?? null, "30"), true);
   assert.equal(await moneyIs(db, body.buckets[0].allocation.unallocated ?? null, "8"), true);
+  // One project with rows across the whole window is complete; an empty window is missing.
+  assert.equal(body.coverage, "complete");
+  const empty = await report(db, { project_slug: "doppler", from: "2026-03-01T00:00:00.000Z", to: "2026-04-01T00:00:00.000Z", basis: "purchase", grain: "custom" });
+  assert.equal(empty.coverage, "missing");
   await db.close();
 });
 

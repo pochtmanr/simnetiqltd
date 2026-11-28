@@ -815,7 +815,16 @@ a.bos-kpi:hover { border-color: var(--color-border-strong); }
 .bos-dash .bos-kpis > :nth-child(2) { --bos-kpi: var(--bos-series-2); }
 .bos-dash .bos-kpis > :nth-child(3) { --bos-kpi: var(--bos-ok); }
 .bos-dash .bos-kpis > :nth-child(4) { --bos-kpi: var(--bos-series-5); }
-.bos-dash .bos-kpi { border-top: 2px solid var(--bos-kpi, var(--bos-card-border)); }
+.bos-dash .bos-kpis > :nth-child(5) { --bos-kpi: var(--bos-series-3); }
+/* Each figure carries its own colour as a soft wash from the icon's corner, not as a rule across the top. */
+.bos-dash .bos-kpi {
+  border-color: color-mix(in srgb, var(--bos-kpi, var(--bos-card-border)) 22%, var(--bos-card-border));
+  background:
+    radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--bos-kpi, transparent) 13%, transparent), transparent 62%),
+    var(--bos-card);
+}
+.bos-dash a.bos-kpi:hover { border-color: color-mix(in srgb, var(--bos-kpi, var(--color-border-strong)) 55%, var(--bos-card-border)); }
+.bos-dash .bos-kpi__spark { color: var(--bos-kpi, var(--bos-series-1)); }
 .bos-dash .bos-kpi__icon {
   display: grid;
   place-items: center;
@@ -1196,7 +1205,8 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
 
 /* ---------- Company strip and checklist ---------- */
 
-.bos-company-strip { display: grid; gap: 16px; padding: 0 16px 16px; }
+.bos-company-strip { display: grid; gap: 16px; padding: 16px; }
+@media (min-width: 768px) { .bos-company-strip { padding: 16px 20px 20px; } }
 @container main (min-width: 680px) and (max-width: 999.98px) { .bos-company-strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; } }
 @container main (min-width: 1250px) { .bos-company-strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; } }
 
@@ -1207,7 +1217,6 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
 .bos-dash__main, .bos-dash__rail { display: contents; }
 .bos-dash__slot { min-width: 0; }
 .bos-dash__slot:empty { display: none; }
-.bos-dash__hubs { display: flex; flex-direction: column; gap: 16px; }
 .bos-dash__slot[data-slot="company"] { order: 1; }
 .bos-dash__slot[data-slot="steps"] { order: 2; }
 .bos-dash__slot[data-slot="hubs"] { order: 3; }
@@ -1233,20 +1242,29 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
   .bos-dash .bos-dash__slot[data-slot="kpis"] { order: -1; }
   /* The four figures share the full row instead of leaving empty tracks. */
   .bos-dash .bos-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bos-dash .bos-kpis > :last-child:nth-child(odd) { grid-column: span 2; }
 }
 
 @container main (min-width: 1400px) {
-  .bos-dash .bos-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bos-dash .bos-kpis { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .bos-dash .bos-kpis > :last-child:nth-child(odd) { grid-column: auto; }
 }
 
 @container main (min-width: 1700px) {
   .bos-dash { grid-template-columns: minmax(0, 1fr) 440px; gap: 32px; }
   .bos-dash__main { gap: 28px; }
-  /* Project cards differ a lot in height, so they pack as two masonry columns. */
-  .bos-dash__hubs { display: block; columns: 2; column-gap: 16px; }
-  .bos-dash__hubs > * { break-inside: avoid; margin-bottom: 16px; }
-  .bos-dash__hubs > :last-child { margin-bottom: 0; }
 }
+
+/* Dashboard project rows and icon-led card titles. */
+.bos-icon-title { display: inline-flex; align-items: center; gap: 8px; vertical-align: bottom; }
+.bos-icon-title svg { color: var(--bos-tone, var(--color-text-dim)); flex-shrink: 0; }
+/* The icon already marks the card's role, so the tone dot would say it twice. */
+.bos-card[data-tone] > .bos-card__head .bos-h3:has(.bos-icon-title)::before { content: none; }
+.bos-project-row { min-height: 64px; }
+.bos-project-row__logo { display: grid; place-items: center; width: 44px; height: 28px; flex-shrink: 0; }
+.bos-project-row__status { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.bos-project-row__stat { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; font-size: 0.9375rem; font-weight: 600; }
+.bos-project-row__stat .bos-caption { font-weight: 400; white-space: nowrap; }
 
 /* ---------- Account ---------- */
 

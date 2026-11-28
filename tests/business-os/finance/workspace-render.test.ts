@@ -108,6 +108,8 @@ function tgSection(section: WorkspaceQuery["section"], extra: Partial<WorkspaceD
   );
 }
 
+const PROJECT_SLUGS = ["doppler", "smscode", "physics", "visapassage", "simnetiq"];
+
 const profile = {
   userId: "u1",
   organizationId: "o1",
@@ -154,6 +156,24 @@ function workspaceHtml(surface: "admin" | "tg", section: WorkspaceQuery["section
     return renderToStaticMarkup(createElement(AppRouterContext.Provider, { value: router as never }, workspace));
   }
   return renderToStaticMarkup(createElement(ThemeProvider, { initialChoice: "dark" }, workspace));
+}
+
+/** One project's own tab, where its sites, consoles and servers live. */
+function projectHtml(project: string) {
+  return renderToStaticMarkup(
+    createElement(
+      AppRouterContext.Provider,
+      { value: router as never },
+      createElement(AdminSection, {
+        query: { ...query, section: "project", project },
+        data,
+        profile,
+        canWrite: true,
+        brokerEnabled: false,
+        telegramConfigured: false,
+      }),
+    ),
+  );
 }
 
 test("overview renders unavailable money distinctly from an estimate and an actual zero", () => {
@@ -264,14 +284,14 @@ test("overview shows the last successful sync", () => {
         environment: "production",
         baseUrl: "https://example.test",
         secretReference: "BUSINESS_OS_SOURCE_DOPPLER_PRODUCTION",
+        enabled: true,
       },
     ],
     health: { rows: [{ connectionId: "c1", status: "ok", lastSuccessAt: "2026-09-29T12:00:00.000Z", lastErrorCode: null }] },
   });
   assert.match(markup, /Doppler/);
-  assert.match(markup, /production · synced/);
+  assert.match(markup, /Synced \d+ days ago/);
   assert.match(markup, /title="2026-09-29T12:00:00.000Z"/);
-  assert.match(markup, /Healthy/);
 });
 
 test("money and more link the remaining desktop sections", () => {
@@ -335,7 +355,9 @@ test("tg home shows the period, headline figures, and project rows", () => {
   assert.match(markup, /4\.00 GBP/);
   assert.doesNotMatch(markup, /0\.00 GBP/);
   assert.match(markup, /Attention/);
-  assert.match(markup, /Report coverage is partial/);
+  // Nothing has synced, so the one thing to act on is connecting a source, not the coverage it causes.
+  assert.match(markup, /No data source is connected yet/);
+  assert.doesNotMatch(markup, /Report coverage is|dataset gates are unverified/);
   assert.match(markup, /9\.00 USD/);
   assert.match(markup, /8\.00 USD/);
   assert.match(markup, /1\.00 USD/);
@@ -366,6 +388,7 @@ test("tg home shows verified cash when attention is empty", () => {
         })),
       },
     },
+    connections: [{ id: "c1", projectSlug: "doppler", environment: "production", baseUrl: "https://example.test", secretReference: "BUSINESS_OS_SOURCE_DOPPLER_PRODUCTION", enabled: true }],
     health: { rows: [{ connectionId: "c1", status: "ok", lastSuccessAt: "2026-09-29T12:00:00.000Z", lastErrorCode: null }] },
     gates: { rows: [{ projectSlug: "doppler", dataset: "finance/balances", basis: "purchase", state: "verified" }] },
   });
@@ -411,15 +434,52 @@ test("admin keeps the grouped sidebar, the mobile tab bar, and the period filter
   assert.match(markup, /class="bos-side-foot"[\s\S]*>Account</);
 });
 
-test("today opens with a hub per product linking its backend, hosting and sites", () => {
+test("today lists every product with its status and links each to its own tab", () => {
   const markup = html("home");
-  assert.match(markup, /Doppler VPN[\s\S]*SMS Code[\s\S]*Physics\.explained[\s\S]*VisaPassage[\s\S]*Simnetiq[\s\S]*Up next/);
+  assert.match(markup, /Doppler VPN[\s\S]*SMS Code[\s\S]*Physics\.explained[\s\S]*VisaPassage[\s\S]*Simnetiq[\s\S]*Calendar/);
+  assert.match(markup, /class="bos-row bos-project-row" href="\/admin\?section=project[^"]*project=doppler"/);
+  assert.match(markup, /class="bos-row bos-project-row" href="\/admin\?section=project[^"]*project=smscode"/);
+  assert.match(markup, /logos%2Fdoppler\.svg|logos\/doppler\.svg/);
+  assert.match(markup, /logos%2Fsmscode\.svg|logos\/smscode\.svg/);
+  // The project in the books has no source yet: it says so instead of "Unverified", and shows no invented user count.
+  assert.match(markup, /Not connected/);
+  assert.doesNotMatch(markup, /Unverified<|dataset gates/);
+  assert.match(markup, /monthly users/);
+  assert.match(html("home", { tasks: { rows: [] } }), /class="bos-icon-title"><svg[^>]*>.*?<\/svg>Tasks</);
+  assert.doesNotMatch(markup, /Next steps|Up next/);
+  // Links, consoles and servers moved to the project tab.
+  assert.doesNotMatch(markup, /db\.dopplervpn\.org|bos-hub-link/);
+});
+
+test("monthly users come from the imported analytics snapshot, per product and in total", () => {
+  const markup = html("home", {
+    snapshots: {
+      rows: [
+        {
+          dataset: "analytics/ga4_period_unique_users",
+          snapshotId: "s-mau",
+          status: "current",
+          grain: null,
+          timezone: "Europe/London",
+          coverage: "complete",
+          dataAsOf: "2026-09-29T12:00:00.000Z",
+          projectSlug: "doppler",
+          connectionId: "c1",
+          body: { project_id: "doppler", provider: "ga4", report: "ga4_period_unique_users", availability: "available", rows: [{ active_users: 12345 }] },
+        },
+      ],
+    },
+  });
+  assert.match(markup, /12,345<\/span><span class="bos-caption">monthly users/);
+  assert.match(markup, /Monthly users[\s\S]*12,345[\s\S]*Website visitors, last 30 days · 1 product</);
+});
+
+test("a project tab holds its backend, hosting, sites and servers", () => {
+  const markup = projectHtml("doppler");
   assert.match(markup, /db\.dopplervpn\.org/);
-  assert.match(markup, /supabase\.com\/dashboard\/project\/zkuwqvtwlomktysuymyw/);
   assert.match(markup, /Azure · doppler-core/);
   assert.match(markup, /href="https:\/\/admin\.dopplervpn\.org\/admin-dvpn\/statistics"/);
   assert.doesNotMatch(markup, /vercel\.com\/romans-projects-a19aa0c4/);
-  assert.match(markup, /href="https:\/\/simnetiq\.xyz\/admin"/);
   assert.match(markup, /Microsoft Azure[\s\S]*🇸🇪[\s\S]*Sweden/);
   assert.match(markup, /href="https:\/\/my\.fotbo\.com\/openstack\/instances"[\s\S]*Netherlands/);
   assert.match(markup, /href="https:\/\/my\.digitalcloud\.pro\/"[\s\S]*St Petersburg/);
@@ -427,13 +487,15 @@ test("today opens with a hub per product linking its backend, hosting and sites"
   assert.match(markup, /src="\/logos\/providers\/azure\.svg"/);
   assert.match(markup, /src="\/logos\/providers\/fotbo\.png"/);
   assert.match(markup, /src="\/logos\/providers\/digitalcloud\.png"/);
-  assert.match(markup, /logos%2Fdoppler\.svg|logos\/doppler\.svg/);
-  assert.match(markup, /logos%2Fsmscode\.svg|logos\/smscode\.svg/);
   assert.match(markup, /section=overview(?:&amp;|&)[^"]*project=doppler|project=doppler[^"]*section=overview/);
+  assert.match(markup, /Not connected/);
+  const sms = projectHtml("smscode");
+  assert.match(sms, /supabase\.com\/dashboard\/project\/zkuwqvtwlomktysuymyw/);
+  assert.match(sms, /href="https:\/\/simnetiq\.xyz\/admin"/);
 });
 
 test("hub links carry their brand icon, with dark marks flagged for the dark theme", () => {
-  const markup = html("home");
+  const markup = PROJECT_SLUGS.map(projectHtml).join("");
   assert.match(markup, /src="\/logos\/brands\/supabase\.svg"/);
   assert.match(markup, /src="\/logos\/brands\/telegram\.svg"[^>]*>[\s\S]*?Telegram mini app/);
   assert.match(markup, /src="\/logos\/brands\/vercel\.svg"[^>]*bos-hub-brand--dark/);
@@ -532,7 +594,7 @@ test("account page holds account, security and app settings", () => {
 
 test("admin sources page lists connections, datasets, and unknown datasets generically", () => {
   const markup = html("integrations", {
-    connections: [{ id: "c1", projectSlug: "doppler", environment: "production", baseUrl: "https://example.test", secretReference: "BUSINESS_OS_SOURCE_DOPPLER_PRODUCTION" }],
+    connections: [{ id: "c1", projectSlug: "doppler", environment: "production", baseUrl: "https://example.test", secretReference: "BUSINESS_OS_SOURCE_DOPPLER_PRODUCTION", enabled: true }],
     health: { rows: [{ connectionId: "c1", status: "degraded", lastSuccessAt: null, lastErrorCode: "timeout" }] },
     snapshots: {
       rows: [
@@ -541,10 +603,19 @@ test("admin sources page lists connections, datasets, and unknown datasets gener
     },
   });
   assert.match(markup, /Doppler/);
-  assert.match(markup, /Degraded/);
+  assert.match(markup, /Sync failing/);
   assert.match(markup, /Timeout/);
+  assert.match(markup, /Refresh datasets/);
   assert.match(markup, /billing · invoices/);
   assert.match(markup, /BUSINESS_OS_SOURCE_DOPPLER_PRODUCTION/);
+});
+
+test("sources shows an unconnected project with a way to connect it", () => {
+  const markup = html("integrations");
+  assert.match(markup, /Doppler/);
+  assert.match(markup, /Not connected/);
+  assert.match(markup, />Connect</);
+  assert.doesNotMatch(markup, /No sources yet|Add reference/);
 });
 
 function isoDay(offset: number): string {

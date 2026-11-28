@@ -182,3 +182,30 @@ test("job authorization compares the bearer token without accepting a missing se
   assert.equal(jobAuthorized("Bearer secret-value", "other"), false);
   assert.equal(jobAuthorized("Bearer secret-value", "secret-value"), true);
 });
+
+test("records carry no window and continue from the checkpoint; period datasets follow the London month", () => {
+  assert.deepEqual(queryFor(claim).pairs, [["limit", "100"]]);
+  assert.deepEqual(queryFor({ ...claim, cursor: "page-2", phase: "backfill", checkpoint: "old" }).pairs, [
+    ["limit", "100"],
+    ["cursor", "page-2"],
+  ]);
+  assert.deepEqual(queryFor({ ...claim, phase: "incremental", checkpoint: "after-full-pass" }).pairs, [
+    ["limit", "100"],
+    ["cursor", "after-full-pass"],
+  ]);
+
+  const summary = { ...claim, endpoint: "finance/summary" };
+  const backfill = new Map(queryFor(summary).pairs);
+  assert.equal(backfill.get("from"), "2026-01-01T00:00:00Z");
+  assert.equal(backfill.get("to"), "2026-02-01T00:00:00Z");
+  // 28 November 2026 is in GMT; July is in BST, so the month starts at 23:00 UTC the day before.
+  const winter = new Map(queryFor({ ...summary, phase: "incremental" }, new Date("2026-11-28T10:00:00Z")).pairs);
+  assert.equal(winter.get("from"), "2026-11-01T00:00:00Z");
+  assert.equal(winter.get("to"), "2026-12-01T00:00:00Z");
+  const summer = new Map(queryFor({ ...summary, phase: "incremental" }, new Date("2026-07-15T10:00:00Z")).pairs);
+  assert.equal(summer.get("from"), "2026-06-30T23:00:00Z");
+  assert.equal(summer.get("to"), "2026-07-31T23:00:00Z");
+  assert.deepEqual(queryFor({ ...claim, endpoint: "finance/balances", phase: "incremental" }, new Date("2026-11-28T10:00:00Z")).pairs, [
+    ["as_of", "2026-12-01T00:00:00Z"],
+  ]);
+});

@@ -1,6 +1,12 @@
+import { londonWindow } from "@/lib/business-os/finance/london";
+
 export type PullClaim = {
   endpoint: string;
   cursor: string | null;
+  /** `incremental` once the first full pass has been committed. */
+  phase?: string | null;
+  /** Where the last full pass of records ended; continues from there. */
+  checkpoint?: string | null;
   initial_from: string;
   initial_to: string;
   page_limit: number;
@@ -17,19 +23,20 @@ const ANALYTICS = {
   vercel_daily: "vercel",
 } as const;
 
-export function queryFor(claim: PullClaim): { path: string; pairs: [string, string][] } {
-  const from = claim.initial_from;
-  const to = claim.initial_to;
+export function queryFor(claim: PullClaim, now: Date = new Date()): { path: string; pairs: [string, string][] } {
+  // After the backfill, period datasets follow the current London month, which is the window the dashboard reports on.
+  const month = claim.phase === "incremental" ? londonWindow("month", now) : null;
+  // Sources accept instants without milliseconds only.
+  const from = month ? month.from.replace(".000Z", "Z") : claim.initial_from;
+  const to = month ? month.to.replace(".000Z", "Z") : claim.initial_to;
   if (claim.endpoint === "capabilities") {
     return { path: "/api/business-os/v1/capabilities", pairs: [] };
   }
   if (claim.endpoint === "finance/records") {
-    const pairs: [string, string][] = [
-      ["from", from],
-      ["to", to],
-      ["limit", String(claim.page_limit)],
-    ];
-    if (claim.cursor) pairs.push(["cursor", claim.cursor]);
+    // No window: a cursor is bound to its query, so a fixed from/to would stop new sales arriving after `initial_to`.
+    const pairs: [string, string][] = [["limit", String(claim.page_limit)]];
+    const cursor = claim.cursor ?? (claim.phase === "incremental" ? claim.checkpoint : null);
+    if (cursor) pairs.push(["cursor", cursor]);
     return { path: "/api/business-os/v1/finance/records", pairs };
   }
   if (claim.endpoint === "finance/balances") {

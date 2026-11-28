@@ -3,7 +3,7 @@ import { assertOwner, assertStepUp } from "@/lib/business-os/auth/authorize";
 import { ACCESS_COOKIE } from "@/lib/business-os/auth/cookies";
 import { gateWrite, jsonError, mapAuthError, mapRpcError } from "@/lib/business-os/auth/http";
 import { loadIdentity } from "@/lib/business-os/auth/session";
-import { createSecretClient } from "@/lib/business-os/db/client";
+import { createSecretClient, createUserClient } from "@/lib/business-os/db/client";
 import { isUuid } from "@/lib/business-os/finance/body";
 import { pullSigned } from "@/lib/business-os/sync/pull";
 import { readSourceSecret } from "@/lib/business-os/sync/store";
@@ -41,17 +41,17 @@ export async function POST(request: NextRequest) {
     const access = (await cookies()).get(ACCESS_COOKIE)?.value;
     if (!access) return jsonError("unauthenticated", 401);
 
+    // The service key can only execute functions in business_os; table reads go through the owner's own session.
+    const reader = createUserClient(access).schema("business_os");
     const secret = createSecretClient();
-    const connection = await secret
-      .schema("business_os")
+    const connection = await reader
       .from("source_connections")
       .select("id, project_id, source_environment, base_url, key_id, secret_reference")
       .eq("id", body.connectionId)
       .maybeSingle();
     if (connection.error) return jsonError("unavailable", 500);
     if (!connection.data) return jsonError("not_found", 404);
-    const project = await secret
-      .schema("business_os")
+    const project = await reader
       .from("projects")
       .select("slug")
       .eq("id", connection.data.project_id)

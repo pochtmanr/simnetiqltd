@@ -12,6 +12,8 @@ export type SyncClaim = {
   secret_reference: string;
   endpoint: string;
   cursor: string | null;
+  phase?: string | null;
+  checkpoint?: string | null;
   initial_from: string;
   initial_to: string;
   page_limit: number;

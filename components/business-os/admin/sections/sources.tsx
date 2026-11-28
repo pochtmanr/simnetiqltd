@@ -1,5 +1,6 @@
 import { DatasetButton } from "@/components/business-os/admin/sections/dataset-button";
-import { IdentityActions } from "@/components/business-os/identity-actions";
+import { SourceConnect } from "@/components/business-os/admin/sections/source-connect";
+import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import { DatabaseIcon, SourcesIcon } from "@/components/business-os/ui/icons";
 import { Markdown } from "@/components/business-os/ui/markdown";
 import { SheetButton } from "@/components/business-os/ui/overlay";
@@ -8,74 +9,114 @@ import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
 import { workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import { formatDateTime, humanize, relativeTime } from "@/lib/business-os/workspace/format";
 import type { SnapshotRow, WorkspaceData } from "@/lib/business-os/workspace/load";
+import { sourceStateFor } from "@/lib/business-os/workspace/derive";
 import { describeDataset, genericRows } from "@/lib/business-os/workspace/sources";
 
+/** Where each product's export API lives. A project without an entry can be connected by typing its address. */
+const EXPORT_HOSTS: Record<string, string> = {
+  doppler: "https://www.dopplervpn.org",
+  smscode: "https://simnetiq.xyz",
+};
+
+const NOT_CONNECTED: Record<string, string> = {
+  not_connected: "Business OS has not pulled anything from this product yet. Connect its export API to bring in sales, costs and visitors.",
+  off: "The connection is registered but not switched on.",
+};
+
 /**
- * Sources: one card per connection with its health, datasets and gates, then
- * sync runs and quarantine. Datasets come from what was imported, so a new
- * integration appears here without UI changes.
+ * Sources: one card per project, connected or not, with its health, datasets
+ * and gates, then sync runs and quarantine. Datasets come from what was
+ * imported, so a new integration appears here without UI changes.
  */
-export function Sources({ query, data, profile, telegramConfigured }: { query: WorkspaceQuery; data: WorkspaceData; profile: IdentityProfile; telegramConfigured: boolean }) {
+export function Sources({ query, data, profile }: { query: WorkspaceQuery; data: WorkspaceData; profile: IdentityProfile }) {
   const healthRows = "error" in data.health ? null : data.health.rows;
   const snapshots = "error" in data.snapshots ? [] : data.snapshots.rows;
   const gates = "error" in data.gates ? [] : data.gates.rows;
   const orphanSnapshots = snapshots.filter((row) => !row.connectionId || !data.connections.some((connection) => connection.id === row.connectionId));
+  const owner = profile.role === "owner";
 
   return (
     <div className="flex flex-col gap-8">
       {healthRows === null ? <Notice>Source health is unavailable.</Notice> : null}
 
-      <Section
-        title="Connections"
-        description="Each connection pulls signed data from one project and environment."
-        actions={
-          <SheetButton title="Integration reference" size="sm" label="Add reference">
-            <IdentityActions role={profile.role} assurance={profile.assurance} surface="admin" telegramConfigured={telegramConfigured} focus="integration" projects={data.projects} />
-          </SheetButton>
-        }
-      >
-        {data.connections.length === 0 ? (
+      <Section title="Connections" description="Each product has its own export API. Business OS pulls signed data from it on a timer.">
+        {data.projects.length === 0 ? (
           <Card>
-            <EmptyState icon={<SourcesIcon />} title="No sources yet">
-              No source connection is registered. Register one through the sync API, then it appears here with its health and datasets.
+            <EmptyState icon={<SourcesIcon />} title="No projects yet">
+              No project is registered, so there is nothing to connect.
             </EmptyState>
           </Card>
         ) : (
           <div className="bos-grid-3">
-            {data.connections.map((connection) => {
-              const health = healthRows?.find((row) => row.connectionId === connection.id);
-              const status = health?.status ?? (healthRows ? "unconfigured" : "unavailable");
-              const datasets = snapshots.filter((row) => row.connectionId === connection.id);
-              const projectGates = gates.filter((gate) => gate.projectSlug === connection.projectSlug);
-              const name = data.projects.find((project) => project.slug === connection.projectSlug)?.name ?? connection.projectSlug ?? "Unassigned";
+            {data.projects.map((project) => {
+              const connection = data.connections.find((row) => row.projectSlug === project.slug);
+              const state = sourceStateFor(data, project.slug);
+              const health = connection ? healthRows?.find((row) => row.connectionId === connection.id) : undefined;
+              const datasets = connection ? snapshots.filter((row) => row.connectionId === connection.id) : [];
+              const projectGates = gates.filter((gate) => gate.projectSlug === project.slug);
+              const verified = projectGates.filter((gate) => gate.state === "verified").length;
+              const connect = owner ? (
+                <SheetButton
+                  title={connection ? `Refresh ${project.name}` : `Connect ${project.name}`}
+                  size="sm"
+                  variant={connection?.enabled ? "ghost" : "primary"}
+                  label={connection?.enabled ? "Refresh datasets" : connection ? "Switch on" : "Connect"}
+                >
+                  <SourceConnect
+                    projectSlug={project.slug}
+                    baseUrl={connection?.baseUrl ?? EXPORT_HOSTS[project.slug] ?? ""}
+                    secretReference={connection?.secretReference ?? `BUSINESS_OS_SOURCE_${project.slug.toUpperCase().replace(/[^A-Z0-9]/g, "_")}_PRODUCTION`}
+                    connectionId={connection?.id ?? null}
+                  />
+                </SheetButton>
+              ) : null;
               return (
-                <Card key={connection.id} as="article">
-                  <CardHead title={name} meta={humanize(connection.environment)} actions={<StatusPill status={status} />} />
+                <Card key={project.id} as="article">
+                  <CardHead
+                    title={
+                      <span className="flex items-center gap-2">
+                        {hasProjectLogo(project.slug) ? <ProjectLogo project={project.slug} alt="" size={20} /> : null}
+                        {project.name}
+                      </span>
+                    }
+                    meta={connection ? humanize(connection.environment) : undefined}
+                    actions={<StatusPill tone={state.tone} label={state.label} />}
+                  />
                   <div className="flex flex-col gap-4 p-4 md:p-5">
-                    <KeyValues
-                      rows={[
-                        ["Last sync", <span key="s" title={health?.lastSuccessAt ?? undefined}>{health?.lastSuccessAt ? relativeTime(health.lastSuccessAt) : "Never"}</span>],
-                        ["Last error", health?.lastErrorCode ? humanize(health.lastErrorCode) : "None"],
-                        ["Endpoint", <span key="u" className="bos-mono break-all">{connection.baseUrl}</span>],
-                        ["Secret reference", <span key="r" className="bos-mono break-all">{connection.secretReference}</span>],
-                      ]}
-                    />
-                    <div className="flex flex-col gap-2">
-                      <p className="bos-label">Datasets</p>
-                      {datasets.length === 0 ? <p className="bos-caption">Nothing imported yet.</p> : <DatasetList rows={datasets} query={query} />}
-                    </div>
+                    {connection?.enabled ? (
+                      <>
+                        <KeyValues
+                          rows={[
+                            ["Last sync", <span key="s" title={health?.lastSuccessAt ?? undefined}>{health?.lastSuccessAt ? relativeTime(health.lastSuccessAt) : "Not yet"}</span>],
+                            ["Last error", health?.lastErrorCode ? humanize(health.lastErrorCode) : "None"],
+                            ["Endpoint", <span key="u" className="bos-mono break-all">{connection.baseUrl}</span>],
+                            ["Secret reference", <span key="r" className="bos-mono break-all">{connection.secretReference}</span>],
+                          ]}
+                        />
+                        <div className="flex flex-col gap-2">
+                          <p className="bos-label">Datasets</p>
+                          {datasets.length === 0 ? <p className="bos-caption">Nothing imported yet. The first pass takes a while: one page per timer tick.</p> : <DatasetList rows={datasets} query={query} />}
+                        </div>
+                      </>
+                    ) : (
+                      <p className="bos-body">{NOT_CONNECTED[state.status] ?? NOT_CONNECTED.not_connected}</p>
+                    )}
                     {projectGates.length > 0 ? (
-                      <div className="flex flex-col gap-2">
-                        <p className="bos-label">Verification gates</p>
-                        <ul className="flex flex-wrap gap-1.5">
+                      <details className="flex flex-col gap-2">
+                        <summary className="bos-caption cursor-pointer">
+                          Verification gates · {verified} of {projectGates.length} verified
+                        </summary>
+                        <p className="bos-caption mt-2">A gate turns green once imported figures are checked against the product&apos;s own admin. That check is not built yet.</p>
+                        <ul className="mt-2 flex flex-wrap gap-1.5">
                           {projectGates.map((gate) => (
                             <li key={`${gate.dataset}-${gate.basis}`}>
                               <StatusPill status={gate.state} label={`${describeDataset(gate.dataset).label} · ${humanize(gate.basis).toLowerCase()}`} />
                             </li>
                           ))}
                         </ul>
-                      </div>
+                      </details>
                     ) : null}
+                    {connect ? <div>{connect}</div> : !connection ? <p className="bos-caption">Connecting a source needs the owner.</p> : null}
                   </div>
                 </Card>
               );

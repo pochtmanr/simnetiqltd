@@ -78,7 +78,7 @@ export type WorkspaceData = {
   expenses: { rows: ExpenseRow[] } | { error: string };
   snapshots: { rows: SnapshotRow[] } | { error: string };
   health: { rows: { connectionId: string; status: string; lastSuccessAt: string | null; lastErrorCode: string | null }[] } | { error: string };
-  connections: { id: string; projectSlug: string | null; environment: string; baseUrl: string; secretReference: string }[];
+  connections: { id: string; projectSlug: string | null; environment: string; baseUrl: string; secretReference: string; enabled: boolean }[];
   gates: { rows: { projectSlug: string | null; dataset: string; basis: string; state: string }[] } | { error: string };
   runs: { rows: { endpoint: string; status: string; errorCode: string | null; startedAt: string | null }[] } | { error: string };
   quarantine: { rows: { endpoint: string; reason: string; createdAt: string }[] } | { error: string };
@@ -240,7 +240,7 @@ export async function loadWorkspace(
         .from("imported_snapshots")
         .select("dataset, snapshot_id, body, grain, timezone, coverage, data_as_of, status, connection_id")
         .in("status", ["current", "stale"]),
-      db.from("source_connections").select("id, project_id, environment, base_url, secret_reference"),
+      db.from("source_connections").select("id, project_id, environment, base_url, secret_reference, enabled"),
       db.from("source_health").select("connection_id, status, last_success_at, last_error_code"),
       db.from("dataset_verifications").select("project_id, dataset, basis, state"),
       db.from("sync_runs").select("endpoint, status, error_code, started_at").order("started_at", { ascending: false }).limit(20),
@@ -446,7 +446,7 @@ export async function loadWorkspace(
       const baseUrl = text(row.base_url);
       const secretReference = text(row.secret_reference);
       if (!id || !environment || !baseUrl || !secretReference) return [];
-      return [{ id, projectSlug: text(row.project_id) ? (projectById.get(text(row.project_id) as string) ?? null) : null, environment, baseUrl, secretReference }];
+      return [{ id, projectSlug: text(row.project_id) ? (projectById.get(text(row.project_id) as string) ?? null) : null, environment, baseUrl, secretReference, enabled: row.enabled === true }];
     }),
     gates: gates.error
       ? { error: "unavailable" }
