@@ -40,7 +40,15 @@ export function queryFor(claim: PullClaim, now: Date = new Date()): { path: stri
     return { path: "/api/business-os/v1/finance/records", pairs };
   }
   if (claim.endpoint === "finance/balances") {
-    return { path: "/api/business-os/v1/finance/balances", pairs: [["as_of", to]] };
+    // The contract asks for `as_of` only, but Doppler's export also requires the window, and other sources ignore it.
+    return {
+      path: "/api/business-os/v1/finance/balances",
+      pairs: [
+        ["from", from],
+        ["to", to],
+        ["as_of", to],
+      ],
+    };
   }
   if (claim.endpoint === "subscriptions/summary") {
     return {

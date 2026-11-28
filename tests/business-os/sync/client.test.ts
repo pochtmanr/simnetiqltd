@@ -206,6 +206,8 @@ test("records carry no window and continue from the checkpoint; period datasets 
   assert.equal(summer.get("from"), "2026-06-30T23:00:00Z");
   assert.equal(summer.get("to"), "2026-07-31T23:00:00Z");
   assert.deepEqual(queryFor({ ...claim, endpoint: "finance/balances", phase: "incremental" }, new Date("2026-11-28T10:00:00Z")).pairs, [
+    ["from", "2026-11-01T00:00:00Z"],
+    ["to", "2026-12-01T00:00:00Z"],
     ["as_of", "2026-12-01T00:00:00Z"],
   ]);
 });
