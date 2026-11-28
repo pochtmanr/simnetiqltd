@@ -10,7 +10,8 @@ export type PullResult = PullOk | PullRetry | PullOutage | PullResync;
 type FetchImpl = (url: string, init: { method: string; headers: Record<string, string>; redirect: "manual"; signal: AbortSignal }) => Promise<Response>;
 
 const DEFAULT_ATTEMPTS = 3;
-const DEFAULT_TIMEOUT_MS = 10_000;
+// A year of daily finance takes Doppler about 12 s. Three attempts must still fit inside the 60 s lease.
+const DEFAULT_TIMEOUT_MS = 18_000;
 const DEFAULT_INLINE_WAIT_MS = 2_000;
 
 function retryAfterSeconds(header: string | null): number | null {
