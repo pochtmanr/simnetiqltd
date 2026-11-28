@@ -75,9 +75,11 @@ export function mapRecord(
 ): MappedRecord {
   const legacy = record.legacy_formula_version === "sms-legacy-usd-v1";
   const role = record.posting_role ?? "primary";
-  const posting = record.status === "posted" && role === "primary" && !legacy;
-  const pair = accounts(record);
   const money = record.original_amount;
+  // A zero-value record (a free trial, a fully discounted sale) is kept as an observation but moves no money, so it makes no journal entry.
+  const zero = typeof money.amount === "string" && /^-?0+(\.0+)?$/.test(money.amount);
+  const posting = record.status === "posted" && role === "primary" && !legacy && !zero;
+  const pair = accounts(record);
   const mapped: MappedRecord = {
     project_slug: record.project_id,
     environment: connection.environment,

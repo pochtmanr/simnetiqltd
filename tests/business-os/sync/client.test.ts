@@ -171,6 +171,9 @@ test("record mapping keeps source identity and does not post legacy or void rows
     connection,
   );
   assert.equal(wrong.quarantine[0]?.detail, "project_mismatch");
+  const free = mapRecord({ ...records.records[0], original_amount: { ...records.records[0].original_amount, amount: "0.00" } } as never, connection);
+  assert.equal(free.posting, false);
+  assert.equal(free.original_amount, "0.00");
   const legacy = mapRecord(sms.records[0] as never, connection);
   assert.equal(legacy.posting, false);
   assert.equal(legacy.recognition_basis, "sms_legacy");
