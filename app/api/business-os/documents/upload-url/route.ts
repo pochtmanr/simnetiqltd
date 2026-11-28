@@ -4,6 +4,8 @@ import { createSecretClient } from "@/lib/business-os/db/client";
 import { requireBusinessOsConfig } from "@/lib/business-os/env";
 import { DOCUMENTS_BUCKET } from "@/lib/business-os/files/bucket";
 import { MAX_FILE_BYTES, mimeFromName, normalizeFolder, parseTags, titleFromName } from "@/lib/business-os/files/kinds";
+import { wouldExceedQuota } from "@/lib/business-os/files/quota";
+import { readStorageUsage } from "@/lib/business-os/files/usage";
 import { operationsData } from "@/lib/business-os/operations/rpc";
 import { beginOperationsWrite } from "@/lib/business-os/operations/route-guard";
 
@@ -35,6 +37,10 @@ export async function POST(request: NextRequest) {
   if (folder === null) return jsonError("folder_invalid", 400);
   const tags = parseTags(Array.isArray(body.tags) ? body.tags.filter((tag): tag is string => typeof tag === "string") : (text(body.tags) ?? ""));
   if (tags === null) return jsonError("tag_invalid", 400);
+
+  const usage = await readStorageUsage(profile.userId);
+  if ("error" in usage) return jsonError("unavailable", 500);
+  if (wouldExceedQuota(usage.usedBytes, size)) return jsonError("storage_quota_exceeded", 413);
 
   const created = await operationsData("register_upload", {
     actor_id: profile.userId,

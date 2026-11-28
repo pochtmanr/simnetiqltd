@@ -1,7 +1,9 @@
 import { AdminWorkspace } from "@/components/business-os/admin/shell";
 import { IdentityActions } from "@/components/business-os/identity-actions";
 import { WorkspaceSection } from "@/components/business-os/sections";
+import { StepUpProvider } from "@/components/business-os/step-up";
 import { TelegramFrame } from "@/components/business-os/telegram-frame";
+import { ToastProvider } from "@/components/business-os/ui/overlay";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
 import { BASES, GRAINS, telegramBack, workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import type { WorkspaceData } from "@/lib/business-os/workspace/load";
@@ -43,47 +45,51 @@ export function BusinessWorkspace({
 
   return (
     <TelegramFrame backHref={backHref}>
-      <div className="flex min-h-full w-full flex-col gap-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))]">
-        <nav aria-label="Sections" className="fixed inset-x-0 bottom-0 z-10 border-t border-border bg-bg px-4 pb-[env(safe-area-inset-bottom)]">
-          <div className="mx-auto grid w-full max-w-lg grid-cols-5">
-            {TG_LINKS.map(([section, label]) => (
-              <a
-                key={section}
-                href={workspaceHref(base, query, { section, metric: null })}
-                aria-current={query.section === section ? "page" : undefined}
-                className={`min-h-11 px-2 py-2 text-center text-xs font-semibold ${query.section === section ? "text-primary" : "text-text-dim"}`}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </nav>
-        <div className="flex min-w-0 flex-1 flex-col gap-5 px-4 pt-4">
-          <header>
-            <p className="text-xs font-semibold tracking-wider text-text-dim uppercase">Business OS</p>
-            <h1 className="font-display text-2xl font-bold">{periodTitle(query)}</h1>
-          </header>
-          <FilterBar base={base} query={query} projects={data.projects} />
-          <WorkspaceSection surface={surface} base={base} query={query} data={data} canWrite={profile.role !== "read_only"} />
-          {query.section === "settings" ? (
-            <>
-              <dl className="grid grid-cols-[8rem_1fr] gap-y-2 text-sm">
-                <dt className="text-text-dim">Role</dt>
-                <dd>{profile.role}</dd>
-                <dt className="text-text-dim">Assurance</dt>
-                <dd>{profile.assurance}</dd>
-                <dt className="text-text-dim">Telegram</dt>
-                <dd>{profile.telegramLinked ? "Linked" : "Not linked"}</dd>
-                <dt className="text-text-dim">Session broker</dt>
-                <dd>{brokerEnabled ? "Enabled" : "Off until staging proof"}</dd>
-              </dl>
-              <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="session" stepUpUntil={profile.stepUpUntil} />
-            </>
-          ) : null}
-          {query.section === "integrations" ? (
-            <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="integration" projects={data.projects} />
-          ) : null}
-        </div>
+      <div className="bos flex min-h-full w-full flex-col gap-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))]">
+        <ToastProvider>
+          <StepUpProvider>
+            <nav aria-label="Sections" className="fixed inset-x-0 bottom-0 z-10 border-t border-border bg-bg px-4 pb-[env(safe-area-inset-bottom)]">
+              <div className="mx-auto grid w-full max-w-lg grid-cols-5">
+                {TG_LINKS.map(([section, label]) => (
+                  <a
+                    key={section}
+                    href={workspaceHref(base, query, { section, metric: null })}
+                    aria-current={query.section === section ? "page" : undefined}
+                    className={`min-h-11 px-2 py-2 text-center text-xs font-semibold ${query.section === section ? "text-primary" : "text-text-dim"}`}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </nav>
+            <div className="flex min-w-0 flex-1 flex-col gap-5 px-4 pt-4">
+              <header>
+                <p className="text-xs font-semibold tracking-wider text-text-dim uppercase">Business OS</p>
+                <h1 className="font-display text-2xl font-bold">{periodTitle(query)}</h1>
+              </header>
+              <FilterBar base={base} query={query} projects={data.projects} />
+              <WorkspaceSection surface={surface} base={base} query={query} data={data} canWrite={profile.role !== "read_only"} />
+              {query.section === "settings" ? (
+                <>
+                  <dl className="grid grid-cols-[8rem_1fr] gap-y-2 text-sm">
+                    <dt className="text-text-dim">Role</dt>
+                    <dd>{profile.role}</dd>
+                    <dt className="text-text-dim">Assurance</dt>
+                    <dd>{profile.assurance}</dd>
+                    <dt className="text-text-dim">Telegram</dt>
+                    <dd>{profile.telegramLinked ? "Linked" : "Not linked"}</dd>
+                    <dt className="text-text-dim">Session broker</dt>
+                    <dd>{brokerEnabled ? "Enabled" : "Off until staging proof"}</dd>
+                  </dl>
+                  <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="session" stepUpUntil={profile.stepUpUntil} />
+                </>
+              ) : null}
+              {query.section === "integrations" ? (
+                <IdentityActions role={profile.role} assurance={profile.assurance} surface={surface} telegramConfigured={telegramConfigured} focus="integration" projects={data.projects} />
+              ) : null}
+            </div>
+          </StepUpProvider>
+        </ToastProvider>
       </div>
     </TelegramFrame>
   );

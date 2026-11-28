@@ -1,5 +1,6 @@
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import { ProjectLiveDot, ProjectLiveList } from "@/components/business-os/admin/project-status";
+import { CompanyStrip } from "@/components/business-os/admin/sections/company-strip";
 import { AttentionCard, HeadlineKpis, SourceFreshness } from "@/components/business-os/admin/sections/overview";
 import { ExternalIcon, ServerIcon, TimelineIcon } from "@/components/business-os/ui/icons";
 import { Card, CardHead, EmptyState, Notice, Section, StatusPill } from "@/components/business-os/ui/primitives";
@@ -26,6 +27,7 @@ export function Today({ query, data }: { query: WorkspaceQuery; data: WorkspaceD
   const link = (section: string) => workspaceHref(BASE, query, { section, metric: null });
   return (
     <div className="flex flex-col gap-8">
+      <CompanyStrip query={query} checklist={data.checklist} />
       <div className="flex flex-col gap-4">
         {PROJECT_STACKS.map((stack) => (
           <ProjectHub

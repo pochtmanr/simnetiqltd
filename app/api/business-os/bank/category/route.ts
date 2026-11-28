@@ -4,11 +4,11 @@ import { CATEGORY_SLUG } from "@/lib/business-os/bank/categories";
 import { bankRpcFailure } from "@/lib/business-os/bank/route-errors";
 import { isUuid } from "@/lib/business-os/finance/body";
 import { readFinanceRpc } from "@/lib/business-os/finance/rpc";
-import { beginOperationsWrite } from "@/lib/business-os/operations/route-guard";
+import { beginOperationsSensitive } from "@/lib/business-os/operations/route-guard";
 
 /** Sets a transaction's category by hand (null clears it). A hand-set category is never overwritten by rules or re-pulls. */
 export async function POST(request: NextRequest) {
-  const profile = await beginOperationsWrite(request);
+  const profile = await beginOperationsSensitive(request);
   if (profile instanceof NextResponse) return profile;
   const body = (await request.json().catch(() => null)) as { id?: unknown; category?: unknown } | null;
   if (!body || !isUuid(body.id)) return jsonError("invalid_body", 400);

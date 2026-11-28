@@ -149,9 +149,11 @@ function workspaceHtml(surface: "admin" | "tg", section: WorkspaceQuery["section
     brokerEnabled: false,
     telegramConfigured: false,
   });
-  return renderToStaticMarkup(
-    surface === "admin" ? createElement(ThemeProvider, { initialChoice: "dark" }, workspace) : workspace,
-  );
+  // TG Files uses useRouter; admin BusinessWorkspace is an async server tree and must not go through AppRouterContext here.
+  if (surface === "tg") {
+    return renderToStaticMarkup(createElement(AppRouterContext.Provider, { value: router as never }, workspace));
+  }
+  return renderToStaticMarkup(createElement(ThemeProvider, { initialChoice: "dark" }, workspace));
 }
 
 test("overview renders unavailable money distinctly from an estimate and an actual zero", () => {
@@ -171,9 +173,14 @@ test("overview renders unavailable money distinctly from an estimate and an actu
   assert.match(cash, /not additive/);
 });
 
-test("source expenses stay read-only and registrations stay unfinished", () => {
+test("source expenses stay read-only and the company checklist counts tagged files", () => {
   assert.match(html("expenses"), /edited in the source project and stays read-only/);
-  assert.match(html("records"), /not available in this workspace yet/);
+  assert.match(html("records"), /The checklist could not be loaded/);
+  const checklist = html("records", { checklist: { filesByTag: { "req-articles": [{ id: "d1", title: "Articles.pdf" }] }, recent: [] } });
+  assert.match(checklist, /1 of \d+ required documents on file/);
+  assert.match(checklist, /Certificate of incorporation/);
+  assert.match(checklist, /On file: Articles\.pdf/);
+  assert.match(checklist, /Confirmation statement/);
   assert.match(html("traffic"), /Distinct users stay with their provider/);
   assert.match(html("traffic"), /Visitor totals stay unavailable/);
   assert.match(html("subscriptions"), /MRR stays unavailable/);
@@ -374,8 +381,8 @@ test("tg money, more, documents, and reports stay in the same system", () => {
   assert.match(workspaceHtml("tg", "money"), /Source health is outage/);
   assert.match(workspaceHtml("tg", "more"), /section=integrations/);
   assert.match(workspaceHtml("tg", "more"), /section=timeline/);
-  assert.match(workspaceHtml("tg", "documents"), /not available in this workspace yet/);
-  assert.match(workspaceHtml("tg", "documents"), /rounded-2xl/);
+  assert.match(workspaceHtml("tg", "documents", { documents: { rows: [] } }), /Company info/);
+  assert.match(workspaceHtml("tg", "documents", { documents: { rows: [] } }), /No files yet/);
   const reports = workspaceHtml("tg", "reports");
   assert.match(reports, /0\.00 GBP/);
   assert.match(reports, /Unavailable/);
@@ -593,7 +600,11 @@ const documentRow = {
 
 test("files shows the folder tree, upload controls, and an empty root", () => {
   const markup = html("documents", { documents: { rows: [documentRow, { ...documentRow, id: "d2", title: "Half upload", folder: "", uploadStatus: "pending" }] } });
+  assert.match(markup, /Company info/);
+  assert.match(markup, /Simnetiq Ltd/);
   assert.match(markup, /aria-label="Folders"/);
+  assert.match(markup, /Connectors/);
+  assert.match(markup, /Storage/);
   assert.match(markup, />Finance</);
   assert.match(markup, />2026</);
   assert.match(markup, />Upload</);
@@ -604,6 +615,7 @@ test("files shows the folder tree, upload controls, and an empty root", () => {
 
 test("files says when it cannot load instead of showing an empty folder", () => {
   assert.match(html("documents", { documents: { error: "unavailable" } }), /Files are unavailable/);
+  assert.match(html("documents", { documents: { error: "unavailable" } }), /Company info/);
   assert.match(html("documents", { documents: { rows: [] } }), /No files yet/);
 });
 

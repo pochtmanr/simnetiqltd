@@ -2,12 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState, type DragEvent, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { businessGet, businessPost, explainFinanceError } from "@/components/business-os/business-post";
+import { CompanyInfoCard, ConnectorsStub } from "@/components/business-os/admin/sections/company-card";
+import { UPLOAD_ERRORS, explainUpload, uploadDocument } from "@/components/business-os/admin/upload";
+import { businessGet, businessPost } from "@/components/business-os/business-post";
 import { DataTable, type TableColumn } from "@/components/business-os/ui/data-table";
 import { DocumentIcon, FolderIcon, ImageIcon, PlusIcon, SearchIcon, TrashIcon, UploadIcon } from "@/components/business-os/ui/icons";
 import { Sheet, useToast } from "@/components/business-os/ui/overlay";
 import { Button, Card, CardHead, EmptyState, Field, Input, KeyValues, Notice, Select, StatusPill } from "@/components/business-os/ui/primitives";
-import { ACCEPTED_EXTENSIONS, MAX_FILE_BYTES, formatBytes, kindOf, mimeFromName, normalizeFolder, parseTags } from "@/lib/business-os/files/kinds";
+import { ACCEPTED_EXTENSIONS, formatBytes, kindOf, normalizeFolder, parseTags } from "@/lib/business-os/files/kinds";
+import { formatQuotaBytes, STORAGE_QUOTA_BYTES, type StorageUsage } from "@/lib/business-os/files/quota";
 import { safeNoteTitle } from "@/lib/business-os/brain/prepare";
 import { formatDate, humanize } from "@/lib/business-os/workspace/format";
 import type { DocumentRow } from "@/lib/business-os/workspace/load";
@@ -17,41 +20,6 @@ type UploadState = { key: string; name: string; status: "hashing" | "uploading" 
 type SearchHit = { id: string; snippet: string | null };
 
 const PARALLEL_UPLOADS = 3;
-
-const UPLOAD_ERRORS: Record<string, string> = {
-  mime_invalid: "This file type is not supported, or the file is not what its extension says.",
-  document_too_large: "Files can be up to 50 MB.",
-  checksum_invalid: "The upload arrived damaged. Try again.",
-  folder_invalid: "Folder names use letters, numbers, spaces, dots, dashes and underscores.",
-  tag_invalid: "Tags use lowercase letters, numbers and dashes, up to 12 per file.",
-  document_linked: "This file is attached to a record. Detach it before deleting.",
-  upload_incomplete: "The upload did not finish. Try again.",
-};
-
-function explain(payload: Record<string, unknown>): string {
-  return (typeof payload.error === "string" && UPLOAD_ERRORS[payload.error]) || explainFinanceError(payload);
-}
-
-async function sha256Hex(file: File): Promise<string> {
-  const digest = await crypto.subtle.digest("SHA-256", await file.arrayBuffer());
-  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-
-/** PUT with progress events; fetch cannot report upload progress. */
-function putWithProgress(url: string, apikey: string | undefined, file: File, mime: string, onProgress: (fraction: number) => void): Promise<boolean> {
-  return new Promise((resolve) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("PUT", url);
-    xhr.setRequestHeader("content-type", mime);
-    if (apikey) xhr.setRequestHeader("apikey", apikey);
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) onProgress(event.loaded / event.total);
-    };
-    xhr.onload = () => resolve(xhr.status >= 200 && xhr.status < 300);
-    xhr.onerror = () => resolve(false);
-    xhr.send(file);
-  });
-}
 
 function parentOf(folder: string): string {
   const cut = folder.lastIndexOf("/");
@@ -89,10 +57,36 @@ function Snippet({ text }: { text: string }) {
   );
 }
 
+function StorageUsageBar({ usedBytes, quotaBytes, fileCount }: { usedBytes: number; quotaBytes: number; fileCount: number | null }) {
+  const usagePct = Math.min(100, Math.round((usedBytes / quotaBytes) * 100));
+  return (
+    <div className="bos-usage" aria-label="Storage usage">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <span className="text-sm font-medium">Storage</span>
+        <span className="bos-caption bos-num">
+          {formatQuotaBytes(usedBytes)} / {formatQuotaBytes(quotaBytes)}
+          {fileCount !== null ? ` · ${fileCount} files` : null}
+        </span>
+      </div>
+      <div className="bos-usage__track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={usagePct}>
+        <div className="bos-usage__fill" style={{ width: `${usagePct}%` }} data-warn={usagePct >= 80 ? "" : undefined} data-full={usagePct >= 100 ? "" : undefined} />
+      </div>
+    </div>
+  );
+}
+
+function uploadStatusLabel(status: UploadState["status"]): string {
+  if (status === "hashing") return "Preparing";
+  if (status === "uploading") return "Uploading";
+  if (status === "verifying") return "Checking";
+  if (status === "done") return "Stored";
+  return "Failed";
+}
+
 export function Files({ rows, error, projects, canWrite, limit }: { rows: DocumentRow[]; error: string | null; projects: Projects; canWrite: boolean; limit: number }) {
   const router = useRouter();
   const toast = useToast();
-  const [folder, setFolder] = useState("");
+  const [folder, setFolderState] = useState("");
   const [madeFolders, setMadeFolders] = useState<string[]>([]);
   const [queue, setQueue] = useState<UploadState[]>([]);
   const [over, setOver] = useState(false);
@@ -101,7 +95,41 @@ export function Files({ rows, error, projects, canWrite, limit }: { rows: Docume
   const [searchError, setSearchError] = useState<string | null>(null);
   const [selected, setSelected] = useState<DocumentRow | null>(null);
   const [newFolderOpen, setNewFolderOpen] = useState(false);
+  const [usage, setUsage] = useState<StorageUsage | null>(null);
+  const [panel, setPanel] = useState<"files" | "connectors">("files");
   const input = useRef<HTMLInputElement>(null);
+
+  // The folder lives in the URL so other screens can link straight into one.
+  useEffect(() => {
+    const wanted = normalizeFolder(new URLSearchParams(window.location.search).get("folder") ?? "");
+    if (!wanted) return;
+    setFolderState(wanted);
+    // An empty folder has no files to build the tree from, so keep it listed.
+    setMadeFolders((list) => (list.includes(wanted) ? list : [...list, wanted]));
+  }, []);
+
+  function setFolder(next: string) {
+    setFolderState(next);
+    const url = new URL(window.location.href);
+    if (next) url.searchParams.set("folder", next);
+    else url.searchParams.delete("folder");
+    window.history.replaceState(window.history.state, "", url);
+  }
+
+  useEffect(() => {
+    const controller = new AbortController();
+    async function loadUsage() {
+      try {
+        const response = await businessGet("/api/business-os/documents/usage", { signal: controller.signal });
+        const payload = (await response.json().catch(() => ({}))) as { result?: StorageUsage };
+        if (response.ok && payload.result) setUsage(payload.result);
+      } catch {
+        if (!controller.signal.aborted) setUsage(null);
+      }
+    }
+    void loadUsage();
+    return () => controller.abort();
+  }, [rows]);
 
   const folders = useMemo(() => allFolders(rows, madeFolders), [rows, madeFolders]);
   const counts = useMemo(() => {
@@ -155,37 +183,9 @@ export function Files({ rows, error, projects, canWrite, limit }: { rows: Docume
   }
 
   async function uploadOne(file: File, key: string, target: string): Promise<boolean> {
-    const mime = mimeFromName(file.name);
-    if (!mime) {
-      patch(key, { status: "failed", error: UPLOAD_ERRORS.mime_invalid });
-      return false;
-    }
-    if (file.size < 1 || file.size > MAX_FILE_BYTES) {
-      patch(key, { status: "failed", error: file.size < 1 ? "The file is empty." : UPLOAD_ERRORS.document_too_large });
-      return false;
-    }
-    const sha256 = await sha256Hex(file);
-    patch(key, { status: "uploading" });
-    const started = await businessPost("/api/business-os/documents/upload-url", { fileName: file.name, size: file.size, sha256, folder: target });
-    const result = started.payload.result as { documentId?: string; uploadUrl?: string; apikey?: string } | undefined;
-    if (!started.ok || !result?.documentId || !result.uploadUrl) {
-      patch(key, { status: "failed", error: explain(started.payload) });
-      return false;
-    }
-    const sent = await putWithProgress(result.uploadUrl, result.apikey, file, mime, (progress) => patch(key, { progress }));
-    if (!sent) {
-      await businessPost("/api/business-os/documents/delete", { documentId: result.documentId });
-      patch(key, { status: "failed", error: UPLOAD_ERRORS.upload_incomplete });
-      return false;
-    }
-    patch(key, { status: "verifying", progress: 1 });
-    const done = await businessPost("/api/business-os/documents/complete", { documentId: result.documentId, fileName: file.name, sha256 });
-    if (!done.ok) {
-      patch(key, { status: "failed", error: explain(done.payload) });
-      return false;
-    }
-    patch(key, { status: "done" });
-    return true;
+    const error = await uploadDocument(file, { folder: target }, (stage) => patch(key, stage));
+    patch(key, error ? { status: "failed", error } : { status: "done" });
+    return !error;
   }
 
   async function upload(files: File[]) {
@@ -248,198 +248,235 @@ export function Files({ rows, error, projects, canWrite, limit }: { rows: Docume
     },
   ];
 
+  const crumbs = folder ? folder.split("/") : [];
+  const usedBytes = usage?.usedBytes ?? rows.reduce((sum, row) => sum + (row.byteSize ?? 0), 0);
+  const quotaBytes = usage?.quotaBytes ?? STORAGE_QUOTA_BYTES;
+
   if (error) {
-    return <Notice tone="bad">Files are unavailable right now.</Notice>;
+    return (
+      <div className="bos-files-layout flex flex-col gap-4">
+        <CompanyInfoCard />
+        <Notice tone="bad">Files are unavailable right now.</Notice>
+      </div>
+    );
   }
 
-  const crumbs = folder ? folder.split("/") : [];
-
   return (
-    <div className="bos-files">
-      <nav className="bos-files__tree" aria-label="Folders">
-        <button type="button" className="bos-folder" aria-current={folder === "" && !searching ? "true" : undefined} onClick={() => setFolder("")}>
-          <FolderIcon size={16} />
-          <span className="bos-folder__name">All files</span>
-          <span className="bos-folder__count">{counts.get("") ?? 0}</span>
-        </button>
-        {folders.map((item) => (
+    <div className="bos-files-layout flex flex-col gap-4">
+      <CompanyInfoCard />
+
+      <div className="bos-files">
+        <nav className="bos-files__tree" aria-label="Folders">
           <button
-            key={item}
             type="button"
             className="bos-folder"
-            style={{ paddingInlineStart: `${10 + 14 * item.split("/").length}px` }}
-            aria-current={folder === item && !searching ? "true" : undefined}
+            aria-current={panel === "files" && folder === "" && !searching ? "true" : undefined}
             onClick={() => {
-              setQuery("");
-              setFolder(item);
+              setPanel("files");
+              setFolder("");
             }}
           >
             <FolderIcon size={16} />
-            <span className="bos-folder__name">{leafOf(item)}</span>
-            <span className="bos-folder__count">{counts.get(item) ?? 0}</span>
+            <span className="bos-folder__name">All files</span>
+            <span className="bos-folder__count">{counts.get("") ?? 0}</span>
           </button>
-        ))}
-      </nav>
-
-      <div
-        className="bos-drop flex min-w-0 flex-col gap-4"
-        data-over={over ? "" : undefined}
-        onDragOver={(event) => {
-          if (!canWrite) return;
-          event.preventDefault();
-          setOver(true);
-        }}
-        onDragLeave={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOver(false);
-        }}
-        onDrop={onDrop}
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="relative min-w-[12rem] flex-1">
-            <span className="pointer-events-none absolute inset-y-0 start-3 flex items-center text-[var(--color-text-dim)]">
-              <SearchIcon size={16} />
-            </span>
-            <Input type="search" aria-label="Search files" placeholder="Search names, folders, vendors and text" value={query} onChange={(event) => setQuery(event.target.value)} className="ps-9" />
-          </div>
-          {canWrite ? (
-            <>
-              <Button onClick={() => setNewFolderOpen(true)}>
-                <PlusIcon size={16} />
-                Folder
-              </Button>
-              <Button variant="primary" onClick={() => input.current?.click()}>
-                <UploadIcon size={16} />
-                Upload
-              </Button>
-              <input
-                ref={input}
-                type="file"
-                multiple
-                hidden
-                accept={ACCEPTED_EXTENSIONS.join(",")}
-                onChange={(event) => {
-                  void upload(Array.from(event.target.files ?? []));
-                  event.target.value = "";
-                }}
-              />
-            </>
-          ) : null}
-        </div>
-
-        {searchError ? <Notice tone="warn">{searchError}</Notice> : null}
-
-        {!searching ? (
-          <div className="bos-crumbs" aria-label="Current folder">
-            <button type="button" aria-current={folder === "" ? "true" : undefined} onClick={() => setFolder("")}>
-              All files
+          {folders.map((item) => (
+            <button
+              key={item}
+              type="button"
+              className="bos-folder"
+              style={{ paddingInlineStart: `${10 + 14 * item.split("/").length}px` }}
+              aria-current={panel === "files" && folder === item && !searching ? "true" : undefined}
+              onClick={() => {
+                setPanel("files");
+                setQuery("");
+                setFolder(item);
+              }}
+            >
+              <FolderIcon size={16} />
+              <span className="bos-folder__name">{leafOf(item)}</span>
+              <span className="bos-folder__count">{counts.get(item) ?? 0}</span>
             </button>
-            {crumbs.map((part, index) => {
-              const path = crumbs.slice(0, index + 1).join("/");
-              return (
-                <span key={path} className="inline-flex items-center gap-1">
-                  <span className="bos-caption">/</span>
-                  <button type="button" aria-current={path === folder ? "true" : undefined} onClick={() => setFolder(path)}>
-                    {part}
-                  </button>
+          ))}
+          <button type="button" className="bos-folder bos-folder--sep" aria-current={panel === "connectors" ? "true" : undefined} onClick={() => setPanel("connectors")}>
+            <FolderIcon size={16} />
+            <span className="bos-folder__name">Connectors</span>
+          </button>
+        </nav>
+
+        {panel === "connectors" ? (
+          <div className="flex min-w-0 flex-col gap-4">
+            <Button type="button" variant="ghost" className="self-start lg:hidden" onClick={() => setPanel("files")}>
+              Back to files
+            </Button>
+            <ConnectorsStub />
+          </div>
+        ) : (
+          <div
+            className="bos-drop flex min-w-0 flex-col gap-4"
+            data-over={over ? "" : undefined}
+            onDragOver={(event) => {
+              if (!canWrite) return;
+              event.preventDefault();
+              setOver(true);
+            }}
+            onDragLeave={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOver(false);
+            }}
+            onDrop={onDrop}
+          >
+            <StorageUsageBar usedBytes={usedBytes} quotaBytes={quotaBytes} fileCount={usage?.fileCount ?? null} />
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="relative min-w-[12rem] flex-1">
+                <span className="pointer-events-none absolute inset-y-0 start-3 flex items-center text-[var(--color-text-dim)]">
+                  <SearchIcon size={16} />
                 </span>
-              );
-            })}
-          </div>
-        ) : null}
-
-        {queue.length > 0 ? (
-          <Card>
-            <CardHead
-              title="Uploads"
-              actions={
-                queue.every((item) => item.status === "done" || item.status === "failed") ? (
-                  <button type="button" className="bos-caption bos-link" onClick={() => setQueue([])}>
-                    Clear
-                  </button>
-                ) : null
-              }
-            />
-            <ul className="bos-queue">
-              {queue.map((item) => (
-                <li key={item.key} className="bos-queue__item">
-                  <span className="bos-queue__name" title={item.error ?? item.name}>
-                    {item.name}
-                    {item.error ? <span className="bos-caption block whitespace-normal">{item.error}</span> : null}
-                  </span>
-                  {item.status === "uploading" ? <span className="bos-caption bos-num">{Math.round(item.progress * 100)}%</span> : null}
-                  <StatusPill
-                    tone={item.status === "done" ? "ok" : item.status === "failed" ? "bad" : "info"}
-                    label={item.status === "hashing" ? "Preparing" : item.status === "uploading" ? "Uploading" : item.status === "verifying" ? "Checking" : item.status === "done" ? "Stored" : "Failed"}
+                <Input type="search" aria-label="Search files" placeholder="Search names, folders, vendors and text" value={query} onChange={(event) => setQuery(event.target.value)} className="ps-9" />
+              </div>
+              <Button type="button" variant="ghost" className="lg:hidden" onClick={() => setPanel("connectors")}>
+                Connectors
+              </Button>
+              {canWrite ? (
+                <>
+                  <Button onClick={() => setNewFolderOpen(true)}>
+                    <PlusIcon size={16} />
+                    Folder
+                  </Button>
+                  <Button variant="primary" onClick={() => input.current?.click()}>
+                    <UploadIcon size={16} />
+                    Upload
+                  </Button>
+                  <input
+                    ref={input}
+                    type="file"
+                    multiple
+                    hidden
+                    accept={ACCEPTED_EXTENSIONS.join(",")}
+                    onChange={(event) => {
+                      void upload(Array.from(event.target.files ?? []));
+                      event.target.value = "";
+                    }}
                   />
-                </li>
-              ))}
-            </ul>
-          </Card>
-        ) : null}
+                </>
+              ) : null}
+            </div>
 
-        {!searching && children.length > 0 ? (
-          <div className="bos-chips flex flex-wrap gap-2">
-            {children.map((item) => (
-              <button key={item} type="button" className="bos-chip" style={{ paddingInlineEnd: "10px" }} onClick={() => setFolder(item)}>
-                <FolderIcon size={14} />
-                {leafOf(item)}
-                <span className="bos-caption">{counts.get(item) ?? 0}</span>
-              </button>
-            ))}
+            {searchError ? <Notice tone="warn">{searchError}</Notice> : null}
+
+            {!searching ? (
+              <div className="bos-crumbs" aria-label="Current folder">
+                <button type="button" aria-current={folder === "" ? "true" : undefined} onClick={() => setFolder("")}>
+                  All files
+                </button>
+                {crumbs.map((part, index) => {
+                  const path = crumbs.slice(0, index + 1).join("/");
+                  return (
+                    <span key={path} className="inline-flex items-center gap-1">
+                      <span className="bos-caption">/</span>
+                      <button type="button" aria-current={path === folder ? "true" : undefined} onClick={() => setFolder(path)}>
+                        {part}
+                      </button>
+                    </span>
+                  );
+                })}
+              </div>
+            ) : null}
+
+            {queue.length > 0 ? (
+              <Card>
+                <CardHead
+                  title="Uploads"
+                  actions={
+                    queue.every((item) => item.status === "done" || item.status === "failed") ? (
+                      <button type="button" className="bos-caption bos-link" onClick={() => setQueue([])}>
+                        Clear
+                      </button>
+                    ) : null
+                  }
+                />
+                <ul className="bos-queue">
+                  {queue.map((item) => (
+                    <li key={item.key} className="bos-queue__item">
+                      <span className="bos-queue__name" title={item.error ?? item.name}>
+                        {item.name}
+                        {item.error ? <span className="bos-caption block whitespace-normal">{item.error}</span> : null}
+                      </span>
+                      {item.status === "uploading" ? <span className="bos-caption bos-num">{Math.round(item.progress * 100)}%</span> : null}
+                      <StatusPill
+                        tone={item.status === "done" ? "ok" : item.status === "failed" ? "bad" : "info"}
+                        label={uploadStatusLabel(item.status)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            ) : null}
+
+            {!searching && children.length > 0 ? (
+              <div className="bos-chips flex flex-wrap gap-2">
+                {children.map((item) => (
+                  <button key={item} type="button" className="bos-chip" style={{ paddingInlineEnd: "10px" }} onClick={() => setFolder(item)}>
+                    <FolderIcon size={14} />
+                    {leafOf(item)}
+                    <span className="bos-caption">{counts.get(item) ?? 0}</span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            <Card className="overflow-hidden">
+              <DataTable
+                label={searching ? "Search results" : "Files"}
+                rows={visible}
+                columns={columns}
+                rowKey={(row) => row.id}
+                initialSort={searching ? undefined : { id: "added", desc: true }}
+                onRowClick={setSelected}
+                mobileRow={(row) => ({
+                  title: row.title,
+                  caption: `${humanize(kindOf(row.mimeType) ?? "file")} · ${formatBytes(row.byteSize)} · ${formatDate(row.createdAt)}`,
+                  badge: row.uploadStatus === "stored" || row.origin === "source" ? undefined : <StatusPill status="pending" label="Incomplete" />,
+                })}
+                empty={
+                  searching ? (
+                    <EmptyState icon={<SearchIcon />} title="No matches">
+                      Text inside PDFs and images becomes searchable once AI reading is switched on.
+                    </EmptyState>
+                  ) : (
+                    <EmptyState icon={<FolderIcon />} title={folder ? "This folder is empty" : "No files yet"}>
+                      {canWrite ? "Drop files here or use Upload. PDF, images, text, Markdown, CSV, Excel and Word, up to 50 MB each." : "Nothing has been uploaded."}
+                    </EmptyState>
+                  )
+                }
+              />
+            </Card>
+            {rows.length >= limit ? <p className="bos-caption">Showing the newest {limit} files. Use search to find older ones.</p> : null}
           </div>
-        ) : null}
+        )}
 
-        <Card className="overflow-hidden">
-          <DataTable
-            label={searching ? "Search results" : "Files"}
-            rows={visible}
-            columns={columns}
-            rowKey={(row) => row.id}
-            initialSort={searching ? undefined : { id: "added", desc: true }}
-            onRowClick={setSelected}
-            mobileRow={(row) => ({
-              title: row.title,
-              caption: `${humanize(kindOf(row.mimeType) ?? "file")} · ${formatBytes(row.byteSize)} · ${formatDate(row.createdAt)}`,
-              badge: row.uploadStatus === "stored" || row.origin === "source" ? undefined : <StatusPill status="pending" label="Incomplete" />,
-            })}
-            empty={
-              searching ? (
-                <EmptyState icon={<SearchIcon />} title="No matches">
-                  Text inside PDFs and images becomes searchable once AI reading is switched on.
-                </EmptyState>
-              ) : (
-                <EmptyState icon={<FolderIcon />} title={folder ? "This folder is empty" : "No files yet"}>
-                  {canWrite ? "Drop files here or use Upload. PDF, images, text, Markdown, CSV, Excel and Word, up to 50 MB each." : "Nothing has been uploaded."}
-                </EmptyState>
-              )
-            }
-          />
-        </Card>
-        {rows.length >= limit ? <p className="bos-caption">Showing the newest {limit} files. Use search to find older ones.</p> : null}
+        <NewFolderSheet
+          open={newFolderOpen}
+          parent={folder}
+          onClose={() => setNewFolderOpen(false)}
+          onCreate={(path) => {
+            setMadeFolders((list) => [...list, path]);
+            setFolder(path);
+            setNewFolderOpen(false);
+          }}
+        />
+        <FileSheet
+          key={selected?.id ?? "none"}
+          row={selected}
+          folders={folders}
+          projects={projects}
+          canWrite={canWrite}
+          onClose={() => setSelected(null)}
+          onChanged={() => {
+            setSelected(null);
+            router.refresh();
+          }}
+        />
       </div>
-
-      <NewFolderSheet
-        open={newFolderOpen}
-        parent={folder}
-        onClose={() => setNewFolderOpen(false)}
-        onCreate={(path) => {
-          setMadeFolders((list) => [...list, path]);
-          setFolder(path);
-          setNewFolderOpen(false);
-        }}
-      />
-      <FileSheet
-        key={selected?.id ?? "none"}
-        row={selected}
-        folders={folders}
-        projects={projects}
-        canWrite={canWrite}
-        onClose={() => setSelected(null)}
-        onChanged={() => {
-          setSelected(null);
-          router.refresh();
-        }}
-      />
     </div>
   );
 }
@@ -505,7 +542,7 @@ function FileSheet({
     const url = typeof response.payload.url === "string" ? response.payload.url : null;
     if (!response.ok || !url) {
       popup?.close();
-      setError(explain(response.payload));
+      setError(explainUpload(response.payload));
       return;
     }
     if (popup) popup.location.href = url;
@@ -522,7 +559,7 @@ function FileSheet({
     setPending(null);
     const id = (response.payload.result as { id?: string } | undefined)?.id;
     if (!response.ok || !id) {
-      setError(response.payload.error === "note_title_taken" ? `A note called "${title}" already exists.` : explain(response.payload));
+      setError(response.payload.error === "note_title_taken" ? `A note called "${title}" already exists.` : explainUpload(response.payload));
       return;
     }
     window.location.assign(`/admin?section=notes&note=${id}`);
@@ -551,7 +588,7 @@ function FileSheet({
     });
     setPending(null);
     if (!response.ok) {
-      setError(explain(response.payload));
+      setError(explainUpload(response.payload));
       return;
     }
     toast("File updated");
@@ -562,10 +599,10 @@ function FileSheet({
     if (!row) return;
     setPending("delete");
     setError(null);
-    const response = await businessPost("/api/business-os/documents/delete", { documentId: row.id });
+    const response = await businessPost("/api/business-os/documents/delete", { documentId: row.id }, { confirm: `Delete ${row.title}` });
     setPending(null);
     if (!response.ok) {
-      setError(explain(response.payload));
+      setError(explainUpload(response.payload));
       setConfirmDelete(false);
       return;
     }

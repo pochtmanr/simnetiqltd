@@ -22,7 +22,9 @@ export default async function TelegramPage({
       );
     }
     const query = parseWorkspaceQuery(params, "tg");
-    const data = await loadWorkspace(identity.profile, query);
+    const data = await loadWorkspace(identity.profile, query, {
+      documents: query.section === "documents",
+    });
     const config = readBusinessOsConfig();
     return (
       <BusinessWorkspace

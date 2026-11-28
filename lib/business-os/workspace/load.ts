@@ -1,3 +1,4 @@
+import type { CompanyChecklist } from "@/lib/business-os/company/load";
 import "server-only";
 import { cookies } from "next/headers";
 import { ACCESS_COOKIE } from "@/lib/business-os/auth/cookies";
@@ -92,6 +93,8 @@ export type WorkspaceData = {
   bank?: BankData | { error: string };
   /** Result code of the redirect back from Revolut's consent page, shown once on the Bank tab. */
   bankNotice?: string | null;
+  /** Files tagged against the company document checklist. Absent when not requested. */
+  checklist?: CompanyChecklist;
   /** Everything dated in and around the visible calendar range. Absent when not requested. */
   calendar?: CalendarData;
 };
@@ -113,8 +116,8 @@ export type DocumentRow = {
   createdAt: string;
 };
 
-/** Newest files loaded for the Files page; the page says so when the cap is reached. */
-export const DOCUMENT_LIMIT = 1000;
+/** Newest stored documents loaded into the Files workspace. Search finds older ones. */
+export const DOCUMENT_LIMIT = 5000;
 
 export type NoteMeta = { id: string; title: string; key: string; folder: string; tags: string[]; documentId: string | null; updatedAt: string };
 export type NoteLink = { from: string; toKey: string };
@@ -248,12 +251,17 @@ export async function loadWorkspace(
             .limit(40)
         : Promise.resolve(null),
       options.documents
-        ? db
-            .from("documents")
-            .select("id, title, folder, origin, category, vendor, tags, project_id, document_on, mime_type, byte_size, upload_status, summary, created_at")
-            .neq("upload_status", "orphaned")
-            .order("created_at", { ascending: false })
-            .limit(DOCUMENT_LIMIT)
+        ? selectAll<Record<string, unknown>>(
+            (from, to) =>
+              db
+                .from("documents")
+                .select("id, title, folder, origin, category, vendor, tags, project_id, document_on, mime_type, byte_size, upload_status, summary, created_at")
+                .neq("upload_status", "orphaned")
+                .order("created_at", { ascending: false })
+                .order("id")
+                .range(from, to),
+            DOCUMENT_LIMIT,
+          ).then((rows) => (rows ? { data: rows, error: null } : { data: null, error: { message: "unavailable" } }))
         : Promise.resolve(null),
       options.notes
         ? selectAll<Record<string, unknown>>(

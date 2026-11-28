@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { NAV_GROUPS, SETTINGS_ITEM, isCurrent, navHref, navKey, type NavGroup, type NavItem } from "@/components/business-os/admin/nav";
 import { sectionIcon } from "@/components/business-os/admin/nav-icons";
 import { SIDEBAR_COOKIE, serializeSidebarPrefs, type SidebarPrefs } from "@/components/business-os/admin/sidebar-prefs";
@@ -237,6 +237,7 @@ function AccountMenu({
 }) {
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLDivElement>(null);
+  const panelId = useId();
   const { choice, setChoice } = useTheme();
 
   useEffect(() => {
@@ -246,14 +247,17 @@ function AccountMenu({
     }
     function onKey(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
       setOpen(false);
       anchor.current?.querySelector<HTMLButtonElement>("button")?.focus();
     }
     document.addEventListener("pointerdown", onPointer);
-    document.addEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey, true);
+    anchor.current?.querySelector<HTMLElement>(".bos-side-account__menu :is(a, button)")?.focus();
     return () => {
       document.removeEventListener("pointerdown", onPointer);
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey, true);
     };
   }, [open]);
 
@@ -274,8 +278,9 @@ function AccountMenu({
         type="button"
         className="bos-side-link bos-side-account__btn"
         data-current={onSettings ? "" : undefined}
-        aria-haspopup="menu"
+        aria-haspopup="dialog"
         aria-expanded={open}
+        aria-controls={open ? panelId : undefined}
         title="Settings"
         onClick={() => setOpen((value) => !value)}
       >
@@ -284,7 +289,7 @@ function AccountMenu({
         <SortIcon size={14} className="bos-side-account__chevron" />
       </button>
       {open ? (
-        <div className="bos-pop bos-side-account__menu" role="menu" aria-label="Settings">
+        <div id={panelId} className="bos-pop bos-side-account__menu" role="dialog" aria-label="Settings">
           <div className="bos-side-account__who">
             <span className="bos-avatar" aria-hidden>
               {account.name.charAt(0).toUpperCase()}
@@ -305,13 +310,13 @@ function AccountMenu({
             ))}
           </div>
           <div className="bos-menu-sep" />
-          <a className="bos-menu-item" role="menuitem" href={settingsHref}>
+          <a className="bos-menu-item" href={settingsHref} onClick={() => setOpen(false)}>
             {sectionIcon("settings", 16)}
             Account and security
           </a>
           <button
             type="button"
-            role="menuitem"
+           
             className="bos-menu-item"
             onClick={() => {
               setOpen(false);
@@ -323,7 +328,7 @@ function AccountMenu({
           </button>
           <button
             type="button"
-            role="menuitem"
+           
             className="bos-menu-item bos-side-account__collapse"
             onClick={() => {
               setOpen(false);
@@ -334,7 +339,7 @@ function AccountMenu({
             {collapsed ? "Expand sidebar" : "Icons only"}
           </button>
           <div className="bos-menu-sep" />
-          <button type="button" role="menuitem" className="bos-menu-item bos-side-account__logout" onClick={logout}>
+          <button type="button" className="bos-menu-item bos-side-account__logout" onClick={logout}>
             <LogoutIcon size={16} />
             Log out
           </button>

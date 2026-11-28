@@ -6,6 +6,7 @@ import { BusinessOsUnconfiguredError, readBusinessOsConfig } from "@/lib/busines
 import { parseWorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import { loadWorkspace } from "@/lib/business-os/workspace/load";
 import { loadBank } from "@/lib/business-os/bank/load";
+import { loadCompanyChecklist } from "@/lib/business-os/company/load";
 import { loadCalendar } from "@/lib/business-os/calendar/load";
 import { parseCalendarParams } from "@/lib/business-os/calendar/params";
 
@@ -20,14 +21,16 @@ export default async function AdminPage({
     if (identity.kind === "denied") redirect("/api/business-os/auth/clear-revoked");
     if (identity.kind !== "ready") redirect("/login?next=/admin");
     const query = parseWorkspaceQuery(params, "admin");
-    const [workspace, bank, calendar] = await Promise.all([
+    const [workspace, bank, calendar, checklist] = await Promise.all([
       loadWorkspace(identity.profile, query, { trend: query.section === "overview", upcoming: query.section === "home", documents: query.section === "documents", notes: query.section === "notes" }),
       query.section === "bank" ? loadBank(query) : Promise.resolve(undefined),
       query.section === "timeline" ? loadCalendar(query, parseCalendarParams(params)) : Promise.resolve(undefined),
+      query.section === "home" || query.section === "records" ? loadCompanyChecklist({ recent: query.section === "records" }) : Promise.resolve(undefined),
     ]);
     const revolut = Array.isArray(params.revolut) ? params.revolut[0] : params.revolut;
     const withBank = bank ? { ...workspace, bank, bankNotice: revolut && /^[a-z_]{1,40}$/.test(revolut) ? revolut : null } : workspace;
-    const data = calendar ? { ...withBank, calendar } : withBank;
+    const withCalendar = calendar ? { ...withBank, calendar } : withBank;
+    const data = checklist ? { ...withCalendar, checklist } : withCalendar;
     const config = readBusinessOsConfig();
     return (
       <BusinessWorkspace

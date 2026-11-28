@@ -92,7 +92,7 @@ export function Settings({
       </Section>
       <Section title="Security">
         <Card>
-          <CardHead title="Two-factor and Telegram" meta="Confirm with a Telegram code before changing finance records or secrets." />
+          <CardHead title="Confirmation in Telegram" meta="Money, bank and integration changes and deleting files need a tap on Approve in Telegram. Everyday work never asks." />
           <div className="p-4 md:p-5">
             <IdentityActions role={profile.role} assurance={profile.assurance} surface="admin" telegramConfigured={telegramConfigured} focus="session" stepUpUntil={profile.stepUpUntil} />
           </div>

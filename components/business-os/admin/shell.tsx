@@ -6,6 +6,7 @@ import { AdminSidebar } from "@/components/business-os/admin/sidebar";
 import { SIDEBAR_COOKIE, parseSidebarPrefs } from "@/components/business-os/admin/sidebar-prefs";
 import { PeriodControl } from "@/components/business-os/ui/date-picker";
 import { CloseIcon, FilterIcon } from "@/components/business-os/ui/icons";
+import { StepUpProvider } from "@/components/business-os/step-up";
 import { SheetButton, ToastProvider } from "@/components/business-os/ui/overlay";
 import { Button, ButtonLink, Field, Select } from "@/components/business-os/ui/primitives";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
@@ -39,6 +40,7 @@ export async function AdminWorkspace({
   return (
     <div className="bos admin-shell bos-app">
       <ToastProvider>
+        <StepUpProvider>
           <AdminSidebar
             query={query}
             initialPrefs={sidebarPrefs}
@@ -81,6 +83,7 @@ export async function AdminWorkspace({
           </div>
 
           <MobileTabBar query={query} projects={data.projects} categories={categories} canWrite={canWrite} sourcesAlert={sourcesAlert} />
+        </StepUpProvider>
       </ToastProvider>
     </div>
   );

@@ -3,6 +3,7 @@ import { Bank } from "@/components/business-os/admin/sections/bank";
 import { Calendar } from "@/components/business-os/admin/calendar/calendar";
 import { Audience, Subscriptions } from "@/components/business-os/admin/sections/insights";
 import { Notes } from "@/components/business-os/admin/brain/notes";
+import { CompanyChecklistScreen } from "@/components/business-os/admin/sections/checklist";
 import { Files } from "@/components/business-os/admin/sections/files";
 import { Expenses, Sales } from "@/components/business-os/admin/sections/ledger";
 import { CashAndPayouts, Statements } from "@/components/business-os/admin/sections/money";
@@ -10,7 +11,9 @@ import { Overview } from "@/components/business-os/admin/sections/overview";
 import { Sources } from "@/components/business-os/admin/sections/sources";
 import { ProjectPage, Today } from "@/components/business-os/admin/sections/today";
 import type { IdentityProfile } from "@/lib/business-os/auth/authorize";
-import type { WorkspaceQuery } from "@/lib/business-os/workspace/filters";
+import { CHECKLIST_FOLDER } from "@/lib/business-os/company/checklist";
+import { londonDate } from "@/lib/business-os/finance/london";
+import { workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import { DOCUMENT_LIMIT, type WorkspaceData } from "@/lib/business-os/workspace/load";
 
 export function AdminSection({
@@ -73,6 +76,14 @@ export function AdminSection({
     case "timeline":
       return <Calendar query={query} data={data} canWrite={canWrite} />;
     case "records":
+      return (
+        <CompanyChecklistScreen
+          checklist={data.checklist}
+          today={londonDate(new Date())}
+          canWrite={canWrite}
+          filesHref={`${workspaceHref("/admin", query, { section: "documents", metric: null })}&folder=${encodeURIComponent(CHECKLIST_FOLDER)}`}
+        />
+      );
     case "ask":
     case "appstore":
       return <Later section={query.section} />;

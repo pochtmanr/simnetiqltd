@@ -19,6 +19,7 @@ export async function beginOperationsRead(): Promise<IdentityProfile | NextRespo
   return readyProfile();
 }
 
+/** Everyday writes (files, notes, calendar): a writer role is enough, no Telegram confirmation. */
 export async function beginOperationsWrite(request: NextRequest, bucket: RateBucket = "operations"): Promise<IdentityProfile | NextResponse> {
   const blocked = gateWrite(request, bucket);
   if (blocked) return blocked;
@@ -26,6 +27,17 @@ export async function beginOperationsWrite(request: NextRequest, bucket: RateBuc
   if (profile instanceof NextResponse) return profile;
   try {
     assertFinanceWriter(profile.role);
+    return profile;
+  } catch (error) {
+    return mapAuthError(error);
+  }
+}
+
+/** Sensitive writes (money rules, deleting files): writer role plus a confirmed browser. */
+export async function beginOperationsSensitive(request: NextRequest, bucket: RateBucket = "operations"): Promise<IdentityProfile | NextResponse> {
+  const profile = await beginOperationsWrite(request, bucket);
+  if (profile instanceof NextResponse) return profile;
+  try {
     assertStepUp(profile.assurance);
     return profile;
   } catch (error) {

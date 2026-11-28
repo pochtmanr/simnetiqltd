@@ -8,7 +8,7 @@ import {
   type IdentityProfile,
   type IdentityProject,
 } from "@/lib/business-os/auth/authorize";
-import { ACCESS_COOKIE, SESSION_COOKIE, STEP_UP_COOKIE } from "@/lib/business-os/auth/cookies";
+import { ACCESS_COOKIE, DEVICE_COOKIE, SESSION_COOKIE, STEP_UP_COOKIE } from "@/lib/business-os/auth/cookies";
 import { stepUpExpiry, stepUpKey } from "@/lib/business-os/auth/telegram-code";
 
 export type IdentityLoad =
@@ -76,15 +76,17 @@ export async function loadIdentity(): Promise<IdentityLoad> {
   const sessionId = store.get(SESSION_COOKIE)?.value;
   if (!sessionId) return { kind: "denied" };
 
-  // A Telegram code confirmation for this user and session counts as AAL2, like a Supabase TOTP claim.
-  const stepUpUntil = config.telegramBotToken
-    ? stepUpExpiry(store.get(STEP_UP_COOKIE)?.value, {
-        userId,
-        sessionId,
-        nowMs: Date.now(),
-        key: stepUpKey(config.telegramBotToken),
-      })
-    : null;
+  // A Telegram confirmation for this user on this browser counts as AAL2, like a Supabase TOTP claim.
+  const deviceId = store.get(DEVICE_COOKIE)?.value;
+  const stepUpUntil =
+    config.telegramBotToken && deviceId
+      ? stepUpExpiry(store.get(STEP_UP_COOKIE)?.value, {
+          userId,
+          deviceId,
+          nowMs: Date.now(),
+          key: stepUpKey(config.telegramBotToken),
+        })
+      : null;
   const claimAssurance = assuranceFromAccessToken(accessToken);
 
   const profile = profileFromMembership({

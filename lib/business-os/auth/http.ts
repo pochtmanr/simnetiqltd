@@ -56,6 +56,7 @@ export function mapRpcError(error: { message?: string } | null): NextResponse | 
   if (message.includes("owner_required") || message.includes("membership_missing")) return jsonError("forbidden", 403);
   if (message.includes("replayed_init_data")) return jsonError("replayed_init_data", 403);
   if (message.includes("membership_inactive")) return jsonError("membership_revoked", 403);
+  if (message.includes("step_up_request_invalid")) return jsonError("request_invalid", 410);
   if (message.includes("challenge_invalid")) return jsonError("challenge_invalid", 403);
   if (message.includes("last_owner") || message.includes("owner_exists")) return jsonError("conflict", 409);
   if (

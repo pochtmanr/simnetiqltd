@@ -4,14 +4,14 @@ import { CATEGORY_SLUG } from "@/lib/business-os/bank/categories";
 import { bankRpcFailure } from "@/lib/business-os/bank/route-errors";
 import { isUuid } from "@/lib/business-os/finance/body";
 import { readFinanceRpc } from "@/lib/business-os/finance/rpc";
-import { beginOperationsWrite } from "@/lib/business-os/operations/route-guard";
+import { beginOperationsSensitive } from "@/lib/business-os/operations/route-guard";
 
 /**
  * { match, category } saves a rule and applies it to uncategorised and rule-set rows.
  * { delete: id } removes one; rows it categorised keep their category.
  */
 export async function POST(request: NextRequest) {
-  const profile = await beginOperationsWrite(request);
+  const profile = await beginOperationsSensitive(request);
   if (profile instanceof NextResponse) return profile;
   const body = (await request.json().catch(() => null)) as { match?: unknown; category?: unknown; delete?: unknown } | null;
   if (!body) return jsonError("invalid_body", 400);

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
+  DEVICE_COOKIE,
+  deviceCookiePolicy,
   STEP_UP_COOKIE,
   stepUpCookiePolicy,
   TELEGRAM_CODE_COOKIE,
@@ -8,7 +10,7 @@ import {
 import { gateWrite, isSecureRequest, jsonError, mapAuthError } from "@/lib/business-os/auth/http";
 import { consumeRateLimit, RATE_LIMITS, RATE_WINDOW_MS } from "@/lib/business-os/auth/rate-limit";
 import { loadIdentity } from "@/lib/business-os/auth/session";
-import { signStepUp, STEP_UP_TTL_MS, stepUpKey, verifyCodeTicket } from "@/lib/business-os/auth/telegram-code";
+import { newDeviceId, signStepUp, STEP_UP_TTL_MS, stepUpKey, verifyCodeTicket } from "@/lib/business-os/auth/telegram-code";
 import { requireBusinessOsConfig } from "@/lib/business-os/env";
 
 export async function POST(request: NextRequest) {
@@ -38,9 +40,11 @@ export async function POST(request: NextRequest) {
     if (verdict !== "ok") return jsonError(verdict, verdict === "code_expired" ? 410 : 400);
 
     const secure = isSecureRequest(request);
-    const stepUp = signStepUp(binding);
+    const deviceId = request.cookies.get(DEVICE_COOKIE)?.value || newDeviceId();
+    const stepUp = signStepUp({ userId, deviceId, nowMs: binding.nowMs, key: binding.key });
     const response = NextResponse.json({ status: "confirmed", until: new Date(stepUp.expiresAt).toISOString() });
     response.cookies.set(STEP_UP_COOKIE, stepUp.value, stepUpCookiePolicy(secure, STEP_UP_TTL_MS / 1000));
+    response.cookies.set(DEVICE_COOKIE, deviceId, deviceCookiePolicy(secure));
     response.cookies.set(TELEGRAM_CODE_COOKIE, "", { ...telegramCodeCookiePolicy(secure), maxAge: 0 });
     return response;
   } catch (error) {

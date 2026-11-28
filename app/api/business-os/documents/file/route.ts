@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jsonError } from "@/lib/business-os/auth/http";
+import { gateWrite, jsonError } from "@/lib/business-os/auth/http";
 import { createSecretClient } from "@/lib/business-os/db/client";
 import { isUuid } from "@/lib/business-os/finance/body";
 import { readDocumentAccess, signDocumentAccess } from "@/lib/business-os/operations/documents";
+import { DOCUMENTS_BUCKET } from "@/lib/business-os/files/bucket";
 import { operationsData } from "@/lib/business-os/operations/rpc";
-import { beginOperationsRead, beginOperationsWrite } from "@/lib/business-os/operations/route-guard";
-
-const BUCKET = "business-os-documents";
+import { beginOperationsRead } from "@/lib/business-os/operations/route-guard";
 
 function secret(): string | null {
   const value = process.env.BUSINESS_OS_JOB_SECRET?.trim();
@@ -14,7 +13,10 @@ function secret(): string | null {
 }
 
 export async function POST(request: NextRequest) {
-  const profile = await beginOperationsWrite(request);
+  // Opening a file is a read: CSRF and rate limit only, no writer role and no confirmation.
+  const blocked = gateWrite(request, "operations");
+  if (blocked) return blocked;
+  const profile = await beginOperationsRead();
   if (profile instanceof NextResponse) return profile;
   const key = secret();
   if (!key) return jsonError("business_os_unconfigured", 503);
@@ -57,7 +59,7 @@ export async function GET(request: NextRequest) {
   if (row.origin === "source") return jsonError("source_bytes_unavailable", 409);
   if (row.uploadStatus !== "stored" || !row.objectPath) return jsonError("upload_incomplete", 400);
   const preview = request.nextUrl.searchParams.get("preview") === "1";
-  const signed = await createSecretClient().storage.from(BUCKET).createSignedUrl(row.objectPath, 60, {
+  const signed = await createSecretClient().storage.from(DOCUMENTS_BUCKET).createSignedUrl(row.objectPath, 60, {
     download: preview ? false : true,
   });
   if (signed.error || !signed.data?.signedUrl) return jsonError("unavailable", 404);

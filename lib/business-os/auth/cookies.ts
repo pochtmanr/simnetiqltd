@@ -8,6 +8,7 @@ export const SESSION_COOKIE = "bos_session";
 export const PENDING_COOKIE = "bos_pending";
 export const STEP_UP_COOKIE = "bos_step_up";
 export const TELEGRAM_CODE_COOKIE = "bos_tg_code";
+export const DEVICE_COOKIE = "bos_device";
 
 export type CookiePolicy = {
   httpOnly: boolean;
@@ -41,6 +42,11 @@ export function pendingCookiePolicy(secure: boolean): CookiePolicy {
 
 export function stepUpCookiePolicy(secure: boolean, maxAgeSeconds: number): CookiePolicy {
   return { httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: maxAgeSeconds };
+}
+
+/** Identifies this browser so a confirmation can outlive one sign-in. Not a credential on its own. */
+export function deviceCookiePolicy(secure: boolean): CookiePolicy {
+  return { httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: HOUR * 24 * 400 };
 }
 
 export function telegramCodeCookiePolicy(secure: boolean) {

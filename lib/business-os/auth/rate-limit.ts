@@ -11,6 +11,9 @@ export const RATE_LIMITS = {
   telegram_exchange: 10,
   telegram_code_send: 5,
   telegram_code_verify: 10,
+  step_up_approve: 20,
+  /** The waiting dialog polls every two seconds for up to five minutes. */
+  step_up_status: 400,
   integration: 20,
   sync: 20,
   finance: 30,

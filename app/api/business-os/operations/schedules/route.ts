@@ -3,10 +3,10 @@ import { jsonError } from "@/lib/business-os/auth/http";
 import { moneyField, optionalDate } from "@/lib/business-os/finance/body";
 import { MoneyError } from "@/lib/business-os/finance/money";
 import { operationsRpc } from "@/lib/business-os/operations/rpc";
-import { beginOperationsWrite } from "@/lib/business-os/operations/route-guard";
+import { beginOperationsSensitive } from "@/lib/business-os/operations/route-guard";
 
 export async function POST(request: NextRequest) {
-  const profile = await beginOperationsWrite(request);
+  const profile = await beginOperationsSensitive(request);
   if (profile instanceof NextResponse) return profile;
   let body: Record<string, unknown>;
   try {

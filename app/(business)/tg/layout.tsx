@@ -1,5 +1,6 @@
 import type { Viewport } from "next";
 import { Nunito, Space_Grotesk } from "next/font/google";
+import "../(ops)/admin.css";
 import "./tg.css";
 
 const display = Nunito({

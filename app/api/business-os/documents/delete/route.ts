@@ -17,6 +17,12 @@ export async function POST(request: NextRequest) {
     return jsonError("invalid_body", 400);
   }
   if (!isUuid(body.documentId)) return jsonError("invalid_body", 400);
+  // Clearing an upload that never finished is routine; deleting a stored file needs a confirmed browser.
+  const current = await readFinanceRpc("authorize_document", { actor_id: profile.userId, document_id: body.documentId });
+  if ("error" in current) return mapRpcError(current.error) ?? jsonError("unavailable", 500);
+  if ((current.data as { uploadStatus?: string } | null)?.uploadStatus !== "pending" && profile.assurance !== "aal2") {
+    return jsonError("step_up_required", 403);
+  }
   const deleted = await readFinanceRpc("delete_document", { actor_id: profile.userId, document_id: body.documentId });
   if ("error" in deleted) {
     if (deleted.error.message?.includes("document_linked")) return jsonError("document_linked", 409);

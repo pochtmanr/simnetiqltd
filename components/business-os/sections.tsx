@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
+import { Files } from "@/components/business-os/admin/sections/files";
 import { EntryForm } from "@/components/business-os/entry-form";
 import { ExpenseActions } from "@/components/business-os/expense-actions";
+import { ToastProvider } from "@/components/business-os/ui/overlay";
 import { csvHref, workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import { attentionFor, headlineMetrics, primaryReport, verifiedFor } from "@/lib/business-os/workspace/derive";
-import type { WorkspaceData } from "@/lib/business-os/workspace/load";
+import { DOCUMENT_LIMIT, type WorkspaceData } from "@/lib/business-os/workspace/load";
 import {
   cashCaption,
   displayAmount,
@@ -321,8 +323,22 @@ export function WorkspaceSection({
   canWrite: boolean;
 }) {
   const section = query.section;
-  if (section === "documents" || section === "records" || section === "timeline") {
-    const title = section === "documents" ? "Documents" : section === "records" ? "Business records" : "Timeline";
+  if (section === "documents") {
+    const docs = data.documents;
+    const rows = docs && "rows" in docs ? docs.rows : [];
+    let error: string | null = null;
+    if (!docs) error = "not_loaded";
+    else if ("error" in docs) error = docs.error;
+    return (
+      <div className="bos" data-surface={surface}>
+        <ToastProvider>
+          <Files rows={rows} error={error} projects={data.projects} canWrite={canWrite} limit={DOCUMENT_LIMIT} />
+        </ToastProvider>
+      </div>
+    );
+  }
+  if (section === "records" || section === "timeline") {
+    const title = section === "records" ? "Business records" : "Timeline";
     return <LaterPanel title={title} />;
   }
   if (section === "more") return <MoreLinks base={base} query={query} />;
