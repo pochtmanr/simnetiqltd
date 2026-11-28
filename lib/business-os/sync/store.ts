@@ -28,13 +28,13 @@ export function secretStore(): SyncStore {
     async resync(connectionId, workerId, endpoint) {
       return rpc("begin_resync", { target: connectionId, worker_id: workerId, target_endpoint: endpoint });
     },
-    async fail(connectionId, workerId, endpoint, errorCode, retrySeconds, markStale) {
+    async fail(connectionId, workerId, endpoint, errorCode, retrySeconds, markStale, detail) {
       await rpc("record_sync_failure", {
         target: connectionId,
         worker_id: workerId,
         target_endpoint: endpoint,
         error_code: errorCode,
-        error_detail: errorCode,
+        error_detail: (detail ?? errorCode).slice(0, 200),
         retry_seconds: retrySeconds,
         mark_stale: markStale,
       });

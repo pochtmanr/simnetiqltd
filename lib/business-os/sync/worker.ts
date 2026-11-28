@@ -33,8 +33,14 @@ export type SyncStore = {
     errorCode: string,
     retrySeconds: number,
     markStale: boolean,
+    /** What went wrong, when it says more than the code. Kept with the run, 200 characters at most. */
+    detail?: string,
   ): Promise<void>;
 };
+
+function detailOf(error: unknown): string | undefined {
+  return error instanceof Error && error.message ? error.message : undefined;
+}
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value !== null && typeof value === "object" ? (value as Record<string, unknown>) : null;
@@ -105,16 +111,16 @@ export async function runSyncTick(
         records: mapped.records,
         quarantine: mapped.quarantine,
       });
-    } catch {
-      await store.fail(claim.connection_id, input.workerId, claim.endpoint, "commit_failed", 60, false);
+    } catch (error) {
+      await store.fail(claim.connection_id, input.workerId, claim.endpoint, "commit_failed", 60, false, detailOf(error));
       return { claimed: true, outcome: "commit_failed" };
     }
     return { claimed: true, outcome: mapped.quarantine.length > 0 ? "quarantine" : "committed" };
   }
   try {
     await store.commitSnapshot(claim.connection_id, input.workerId, snapshotPage(claim.endpoint, body));
-  } catch {
-    await store.fail(claim.connection_id, input.workerId, claim.endpoint, "commit_failed", 60, false);
+  } catch (error) {
+    await store.fail(claim.connection_id, input.workerId, claim.endpoint, "commit_failed", 60, false, detailOf(error));
     return { claimed: true, outcome: "commit_failed" };
   }
   return { claimed: true, outcome: "committed" };
