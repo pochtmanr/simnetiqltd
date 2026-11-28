@@ -25,6 +25,11 @@ const retentionSql = readFileSync(
   "utf8",
 );
 
+const phaseSql = readFileSync(
+  join(dirname(fileURLToPath(import.meta.url)), "../../../supabase/business-os/migrations/20261128170000_snapshot_phase.sql"),
+  "utf8",
+);
+
 const capabilities = {
   contract_version: "business-os.contract.v1",
   project_id: "doppler",
@@ -39,6 +44,7 @@ async function withSync() {
   await db.exec(pullsSql);
   await db.exec(reconciliationSql);
   await db.exec(retentionSql);
+  await db.exec(phaseSql);
   return db;
 }
 
@@ -156,7 +162,7 @@ async function claim(db: PGlite, workerId: string) {
     `select business_os.claim_sync_lease($1, 60) as result`,
     [workerId],
   );
-  return json<{ connection_id: string; endpoint: string; cursor: string | null; initial_from: string } | null>(
+  return json<{ connection_id: string; endpoint: string; cursor: string | null; phase: string; initial_from: string } | null>(
     rows.rows[0]?.result,
   );
 }
@@ -465,4 +471,37 @@ test("pruning removes old superseded snapshots and run rows and keeps current da
   const after = await db.query<{ count: string }>(`select count(*)::text as count from business_os.sync_runs`);
   assert.equal(Number(after.rows[0].count), Number(before.rows[0].count) - pruned.runs);
   await assert.rejects(db.query(`select business_os.prune_sync_history(1)`), /retention_invalid/);
+});
+
+test("a several-page dataset keeps its phase while paging, so every page asks for the same window", async () => {
+  const db = await withSync();
+  const id = await enable(db, "doppler", ["analytics/ga4_overview_daily"]);
+  const page = (snapshot: string, hasMore: boolean) =>
+    JSON.stringify({
+      endpoint: "analytics/ga4_overview_daily",
+      has_more: hasMore,
+      next_cursor: hasMore ? "next-page" : null,
+      grain: "ga4_overview_daily",
+      timezone: "Europe/London",
+      coverage: "partial",
+      body: { ...analyticsFixture, snapshot_id: snapshot },
+    });
+  const phase = async () =>
+    (await db.query<{ phase: string }>(`select phase from business_os.sync_cursors where connection_id = $1::uuid`, [id])).rows[0].phase;
+
+  await claim(db, "worker-aaaa");
+  await db.query(`select business_os.commit_snapshot_page($1::uuid, 'worker-aaaa', $2::jsonb)`, [id, page("first", true)]);
+  assert.equal(await phase(), "backfill");
+  await claim(db, "worker-bbbb");
+  await db.query(`select business_os.commit_snapshot_page($1::uuid, 'worker-bbbb', $2::jsonb)`, [id, page("first", false)]);
+  assert.equal(await phase(), "incremental");
+
+  // The next pass starts in the incremental window and must stay in it for its second page.
+  const next = await claim(db, "worker-cccc");
+  assert.equal(next?.phase, "incremental");
+  await db.query(`select business_os.commit_snapshot_page($1::uuid, 'worker-cccc', $2::jsonb)`, [id, page("second", true)]);
+  assert.equal(await phase(), "incremental");
+  const follow = await claim(db, "worker-dddd");
+  assert.equal(follow?.phase, "incremental");
+  assert.equal(follow?.cursor, "next-page");
 });
