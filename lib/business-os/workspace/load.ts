@@ -1,4 +1,5 @@
 import type { CompanyChecklist } from "@/lib/business-os/company/load";
+import type { AgentActivity, TaskList } from "@/lib/business-os/tasks/load";
 import "server-only";
 import { cookies } from "next/headers";
 import { ACCESS_COOKIE } from "@/lib/business-os/auth/cookies";
@@ -95,6 +96,10 @@ export type WorkspaceData = {
   bankNotice?: string | null;
   /** Files tagged against the company document checklist. Absent when not requested. */
   checklist?: CompanyChecklist;
+  /** Next steps for the owner and the agent. Absent when not requested. */
+  tasks?: TaskList;
+  /** What the agent did over MCP, newest first. Absent when not requested. */
+  agentActivity?: AgentActivity;
   /** Everything dated in and around the visible calendar range. Absent when not requested. */
   calendar?: CalendarData;
 };

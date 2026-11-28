@@ -77,3 +77,29 @@ export function companyCopyFields(): CompanyCopyField[] {
     })),
   ];
 }
+
+/** The editable profile row (business_os.legal_entities), as the database functions return it. */
+export type CompanyProfileRow = {
+  legalName: string;
+  jurisdiction: string | null;
+  companyNumber: string | null;
+  utr: string | null;
+  address: string | null;
+  incorporatedOn: string | null;
+  yearEndMonth: number | null;
+  yearEndDay: number | null;
+  vatNumber: string | null;
+  vatStagger: number | null;
+  directorName: string | null;
+};
+
+/** Filing dates from the saved profile; what was never entered falls back to the public record above. */
+export function companyDatesFrom(row: CompanyProfileRow | null | undefined): CompanyDates {
+  if (!row) return COMPANY_DATES;
+  return {
+    incorporatedOn: row.incorporatedOn ?? COMPANY_DATES.incorporatedOn,
+    yearEnd: row.yearEndMonth && row.yearEndDay ? { month: row.yearEndMonth, day: row.yearEndDay } : COMPANY_DATES.yearEnd,
+    vatStagger: row.vatStagger === 1 || row.vatStagger === 2 || row.vatStagger === 3 ? row.vatStagger : COMPANY_DATES.vatStagger,
+    oneOff: COMPANY_DATES.oneOff,
+  };
+}

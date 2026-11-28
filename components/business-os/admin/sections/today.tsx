@@ -1,5 +1,6 @@
 import { hasProjectLogo, ProjectLogo } from "@/components/project-logo";
 import { ProjectLiveDot, ProjectLiveList } from "@/components/business-os/admin/project-status";
+import { isClosed, TaskMeta } from "@/components/business-os/admin/sections/task-meta";
 import { CompanyStrip } from "@/components/business-os/admin/sections/company-strip";
 import { AttentionCard, HeadlineKpis, SourceFreshness } from "@/components/business-os/admin/sections/overview";
 import { ExternalIcon, ServerIcon, TimelineIcon } from "@/components/business-os/ui/icons";
@@ -28,6 +29,7 @@ export function Today({ query, data }: { query: WorkspaceQuery; data: WorkspaceD
   return (
     <div className="flex flex-col gap-8">
       <CompanyStrip query={query} checklist={data.checklist} />
+      <NextSteps tasks={data.tasks} projects={data.projects} href={link("tasks")} />
       <div className="flex flex-col gap-4">
         {PROJECT_STACKS.map((stack) => (
           <ProjectHub
@@ -47,6 +49,33 @@ export function Today({ query, data }: { query: WorkspaceQuery; data: WorkspaceD
         <SourceFreshness data={data} href={link("integrations")} />
       </div>
     </div>
+  );
+}
+
+function NextSteps({ tasks, projects, href }: { tasks: WorkspaceData["tasks"]; projects: ProjectRow[]; href: string }) {
+  if (!tasks || "error" in tasks) return null;
+  const today = londonDate(new Date());
+  const open = tasks.rows.filter((task) => !isClosed(task));
+  return (
+    <Card>
+      <CardHead title="Next steps" meta={`${open.length} open`} actions={<a className="bos-caption bos-link" href={href}>All tasks</a>} />
+      {open.length === 0 ? (
+        <EmptyState icon={<TimelineIcon />} title="Nothing open">
+          Add a task under Next steps, or ask the agent to plan the week.
+        </EmptyState>
+      ) : (
+        <ul className="bos-rows">
+          {open.slice(0, 5).map((task) => (
+            <li key={task.id} className="bos-row">
+              <span className="bos-row__main">
+                <span className="bos-row__title">{task.title}</span>
+                <TaskMeta task={task} today={today} projects={projects} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Card>
   );
 }
 

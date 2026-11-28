@@ -91,6 +91,16 @@ test("the code goes to sendMessage with the given chat id", async () => {
   assert.equal(await sendTelegramCode(sent), true);
   assert.equal(calls[1].body.reply_markup, undefined);
 
+  // Telegram refusing the buttons must not block the code.
+  const bodies: Record<string, unknown>[] = [];
+  const noButtons = (async (_url: string, init: RequestInit) => {
+    const body = JSON.parse(String(init.body)) as Record<string, unknown>;
+    bodies.push(body);
+    return new Response("{}", { status: body.reply_markup ? 400 : 200 });
+  }) as unknown as typeof fetch;
+  assert.equal(await sendTelegramCode({ ...sent, approveUrl: "https://example.test/a?r=1", fetchImpl: noButtons }), true);
+  assert.deepEqual(bodies.map((body) => Boolean(body.reply_markup)), [true, false]);
+
   const refused = (async () => new Response("{}", { status: 403 })) as unknown as typeof fetch;
   assert.equal(await sendTelegramCode({ botToken: "BOT", chatId: "1", code: "1", label: "x", fetchImpl: refused }), false);
   const offline = (async () => {

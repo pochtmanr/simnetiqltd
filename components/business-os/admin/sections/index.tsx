@@ -3,6 +3,8 @@ import { Bank } from "@/components/business-os/admin/sections/bank";
 import { Calendar } from "@/components/business-os/admin/calendar/calendar";
 import { Audience, Subscriptions } from "@/components/business-os/admin/sections/insights";
 import { Notes } from "@/components/business-os/admin/brain/notes";
+import { AgentActivityLog } from "@/components/business-os/admin/sections/agent-activity";
+import { Tasks } from "@/components/business-os/admin/sections/tasks";
 import { CompanyChecklistScreen } from "@/components/business-os/admin/sections/checklist";
 import { Files } from "@/components/business-os/admin/sections/files";
 import { Expenses, Sales } from "@/components/business-os/admin/sections/ledger";
@@ -84,6 +86,10 @@ export function AdminSection({
           filesHref={`${workspaceHref("/admin", query, { section: "documents", metric: null })}&folder=${encodeURIComponent(CHECKLIST_FOLDER)}`}
         />
       );
+    case "tasks":
+      return <Tasks tasks={data.tasks} projects={data.projects} today={londonDate(new Date())} canWrite={canWrite} />;
+    case "agent":
+      return <AgentActivityLog activity={data.agentActivity} />;
     case "ask":
     case "appstore":
       return <Later section={query.section} />;

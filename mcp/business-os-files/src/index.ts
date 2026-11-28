@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Stdio MCP server for Business OS Files.
- * Calls https://<host>/api/business-os/mcp with BUSINESS_OS_MCP_TOKEN.
+ * Stdio MCP server for Business OS: files, company profile and checklist, tasks and calendar.
+ * Calls https://<host>/api/business-os/mcp with BUSINESS_OS_MCP_TOKEN (the read or the write token).
  */
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
@@ -44,7 +44,7 @@ async function sha256File(filePath: string): Promise<{ bytes: Buffer; sha256: st
 const TOOLS = [
   {
     name: "company_profile_get",
-    description: "Return Simnetiq company copy fields (legal name, number, address, email, sites) for form fill-ins.",
+    description: "Company details: the saved profile (number, VAT number, year end, director, UTR) and copy fields for forms.",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
@@ -54,6 +54,7 @@ const TOOLS = [
       type: "object",
       properties: {
         folder: { type: "string", description: "Folder path such as Finance/2026. Empty for unfiltered newest." },
+        tags: { type: "array", items: { type: "string" }, description: "Only files carrying any of these tags." },
         limit: { type: "number" },
       },
       additionalProperties: false,
@@ -97,6 +98,7 @@ const TOOLS = [
         vendor: { type: "string" },
         category: { type: "string" },
         project: { type: "string" },
+        documentOn: { type: "string", description: "The date on the document, YYYY-MM-DD." },
       },
       required: ["path"],
       additionalProperties: false,
@@ -144,6 +146,97 @@ const TOOLS = [
       additionalProperties: false,
     },
   },
+  {
+    name: "company_profile_update",
+    description: "Change saved company details. Only the fields sent are changed; an empty string clears one.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        legalName: { type: "string" },
+        companyNumber: { type: "string" },
+        address: { type: "string" },
+        directorName: { type: "string" },
+        incorporatedOn: { type: "string", description: "YYYY-MM-DD" },
+        yearEndMonth: { type: "number", description: "1-12; send with yearEndDay" },
+        yearEndDay: { type: "number" },
+        vatNumber: { type: "string" },
+        vatStagger: { type: "number", description: "1 = quarters ending Mar/Jun/Sep/Dec, 2 = Apr/Jul/Oct/Jan, 3 = May/Aug/Nov/Feb" },
+        utr: { type: "string", description: "Corporation Tax Unique Taxpayer Reference" },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "checklist_get",
+    description:
+      "The UK Ltd document checklist: which required documents are on file or missing, and the next statutory deadlines. To mark a document as on file, upload it (or update an existing file) with the row's tag.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "tasks_list",
+    description: "Next steps for the owner and the agent, open ones first by due date.",
+    inputSchema: { type: "object", properties: { includeClosed: { type: "boolean" } }, additionalProperties: false },
+  },
+  {
+    name: "tasks_save",
+    description: "Create a task, or change the one named by id (only the fields sent are changed). Set status to done to complete it.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Omit to create." },
+        title: { type: "string" },
+        notes: { type: "string" },
+        dueOn: { type: "string", description: "YYYY-MM-DD, or empty to clear" },
+        status: { type: "string", enum: ["open", "doing", "done", "cancelled"] },
+        assignee: { type: "string", enum: ["owner", "agent"] },
+        project: { type: "string", description: "Project slug, or empty for the whole company" },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "tasks_delete",
+    description: "Delete a task. Prefer status cancelled when the history matters.",
+    inputSchema: { type: "object", properties: { taskId: { type: "string" } }, required: ["taskId"], additionalProperties: false },
+  },
+  {
+    name: "calendar_list",
+    description: "Calendar events between two dates (default: today and the next 90 days). Recurring events are returned with their rule.",
+    inputSchema: {
+      type: "object",
+      properties: { from: { type: "string", description: "YYYY-MM-DD" }, to: { type: "string", description: "YYYY-MM-DD" } },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "calendar_save",
+    description:
+      "Create a calendar event, or replace the one named by id (send every field again when updating). Use category release for development milestones and advertising for marketing campaigns.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Omit to create." },
+        title: { type: "string" },
+        category: { type: "string", enum: ["advertising", "bill", "deadline", "meeting", "release"] },
+        startsOn: { type: "string", description: "YYYY-MM-DD" },
+        endsOn: { type: "string", description: "YYYY-MM-DD; same as startsOn for one day" },
+        startTime: { type: "string", description: "HH:MM" },
+        endTime: { type: "string", description: "HH:MM" },
+        notes: { type: "string" },
+        projectSlug: { type: "string" },
+        amount: { type: "string", description: "Decimal string, with currency" },
+        currency: { type: "string" },
+        status: { type: "string", enum: ["planned", "done", "cancelled"] },
+      },
+      required: ["title", "category", "startsOn", "endsOn"],
+      additionalProperties: true,
+    },
+  },
+  {
+    name: "calendar_delete",
+    description: "Delete a calendar event made on the calendar.",
+    inputSchema: { type: "object", properties: { eventId: { type: "string" } }, required: ["eventId"], additionalProperties: false },
+  },
 ] as const;
 
 async function uploadFromPath(args: Record<string, unknown>) {
@@ -160,6 +253,7 @@ async function uploadFromPath(args: Record<string, unknown>) {
     vendor: args.vendor,
     category: args.category,
     project: args.project,
+    documentOn: args.documentOn,
   })) as { documentId: string; uploadUrl: string; mime: string; apikey?: string };
 
   const put = await fetch(registered.uploadUrl, {
@@ -183,7 +277,7 @@ async function uploadFromPath(args: Record<string, unknown>) {
   return { documentId: registered.documentId, completed };
 }
 
-const server = new Server({ name: "business-os-files", version: "0.1.0" }, { capabilities: { tools: {} } });
+const server = new Server({ name: "business-os", version: "0.2.0" }, { capabilities: { tools: {} } });
 
 const TOOL_NAMES = new Set<string>(TOOLS.map((tool) => tool.name));
 

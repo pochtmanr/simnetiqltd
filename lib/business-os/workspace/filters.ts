@@ -37,6 +37,8 @@ const ADMIN_SECTIONS = [
   "settings",
   "documents",
   "records",
+  "tasks",
+  "agent",
   "timeline",
   "appstore",
   "notes",

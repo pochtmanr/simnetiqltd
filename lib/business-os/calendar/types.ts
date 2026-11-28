@@ -7,7 +7,7 @@
  * Europe/London; `end` is inclusive, so a one-day item has start === end.
  */
 
-export const CALENDAR_CATEGORIES = ["advertising", "bill", "deadline", "meeting"] as const;
+export const CALENDAR_CATEGORIES = ["advertising", "bill", "deadline", "meeting", "release"] as const;
 export type CalendarCategory = (typeof CALENDAR_CATEGORIES)[number];
 
 export const CALENDAR_SOURCES = [

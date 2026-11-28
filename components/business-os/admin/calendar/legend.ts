@@ -5,10 +5,11 @@ import type { Tone } from "@/components/business-os/ui/primitives";
 export type LegendEntry = { label: string; color: string; glyph: string };
 
 export const CATEGORY_LEGEND: Record<CalendarCategory, LegendEntry> = {
-  advertising: { label: "Advertising", color: "var(--bos-series-4)", glyph: "Ad" },
+  advertising: { label: "Campaign / advertising", color: "var(--bos-series-4)", glyph: "Ad" },
   bill: { label: "Bills & payments", color: "var(--bos-series-3)", glyph: "Pay" },
   deadline: { label: "Deadline", color: "var(--bos-series-5)", glyph: "Due" },
   meeting: { label: "Meeting / task", color: "var(--bos-series-2)", glyph: "Mtg" },
+  release: { label: "Release", color: "var(--bos-series-6)", glyph: "Rel" },
 };
 
 /*

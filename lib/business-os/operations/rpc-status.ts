@@ -28,6 +28,8 @@ const INVALID = [
   "calendar_status_invalid",
   "calendar_link_invalid",
   "calendar_event_not_found",
+  "task_",
+  "company_profile_",
 ];
 
 export function operationsRpcStatus(message: string): number | null {

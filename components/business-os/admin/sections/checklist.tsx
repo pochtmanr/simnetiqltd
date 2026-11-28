@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { CompanyProfileCard } from "@/components/business-os/admin/sections/company-profile";
 import { DeadlineRow } from "@/components/business-os/admin/sections/deadline-row";
 import { explainUpload, uploadDocument } from "@/components/business-os/admin/upload";
 import { businessPost } from "@/components/business-os/business-post";
@@ -11,7 +12,7 @@ import { Button, Card, CardHead, EmptyState, Input, Notice, StatusPill } from "@
 import { CHECKLIST_FOLDER, checklistProgress, checklistRows, type ChecklistGroup, type ChecklistRow, type ChecklistState } from "@/lib/business-os/company/checklist";
 import { upcomingDeadlines } from "@/lib/business-os/company/deadlines";
 import type { CompanyChecklist, PickableFile } from "@/lib/business-os/company/load";
-import { COMPANY_DATES } from "@/lib/business-os/company/profile";
+import { companyDatesFrom } from "@/lib/business-os/company/profile";
 import { ACCEPTED_EXTENSIONS } from "@/lib/business-os/files/kinds";
 import { formatDate } from "@/lib/business-os/workspace/format";
 
@@ -42,7 +43,8 @@ export function CompanyChecklistScreen({ checklist, today, canWrite, filesHref }
 
   if (!ready) return <Notice tone="bad">The checklist could not be loaded. Reload the page.</Notice>;
   const progress = checklistProgress(rows);
-  const deadlines = upcomingDeadlines(COMPANY_DATES, today, 8);
+  const dates = companyDatesFrom(ready.profile);
+  const deadlines = upcomingDeadlines(dates, today, 8);
 
   function choose(row: ChecklistRow) {
     target.current = row;
@@ -111,18 +113,20 @@ export function CompanyChecklistScreen({ checklist, today, canWrite, filesHref }
       {problem ? <Notice tone="bad">{problem}</Notice> : null}
 
       <Card>
-        <CardHead title="What to file next" meta="Computed from the incorporation date and the 30 November year end. Passed dates stay listed for 60 days, because filings are not tracked here yet." />
+        <CardHead title="What to file next" meta="Computed from the incorporation date and the year end in the company profile. Passed dates stay listed for 60 days, because filings are not tracked here yet." />
         <ul className="bos-rows">
           {deadlines.map((item) => (
             <DeadlineRow key={item.id} item={item} today={today} />
           ))}
         </ul>
-        {COMPANY_DATES.vatStagger ? null : (
+        {dates.vatStagger ? null : (
           <div className="p-4 pt-0">
-            <Notice>VAT return dates are not shown yet: the VAT quarter group from the VAT certificate has not been entered.</Notice>
+            <Notice>VAT return dates are not shown yet: choose the VAT quarters in the company profile below.</Notice>
           </div>
         )}
       </Card>
+
+      <CompanyProfileCard profile={ready.profile} canWrite={canWrite} />
 
       {groups.map(([group, items]) => (
         <Card key={group}>

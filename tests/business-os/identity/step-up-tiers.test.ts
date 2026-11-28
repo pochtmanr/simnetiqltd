@@ -32,10 +32,12 @@ const EVERYDAY = [
   "notes/save",
   "operations/events",
   "registry",
+  "tasks",
+  "tasks/delete",
 ];
 
 /** Sensitive writes: these must keep asking for a confirmed browser. */
-const SENSITIVE = ["bank/category", "bank/rules", "operations/schedules"];
+const SENSITIVE = ["bank/category", "bank/rules", "company/profile", "operations/schedules"];
 const OWNER = ["operations/reminders", "providers/revolut/connect", "providers/revolut/disconnect"];
 
 const source = (route: string) => readFileSync(join(api, route, "route.ts"), "utf8");

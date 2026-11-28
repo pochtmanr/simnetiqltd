@@ -17,6 +17,7 @@ import {
   SettingsIcon,
   SourcesIcon,
   SparkIcon,
+  CheckCircleIcon,
   StatementIcon,
   UserIcon,
 } from "@/components/business-os/ui/icons";
@@ -73,6 +74,10 @@ export function sectionIcon(section: string, size = 18): ReactNode {
       return <DocumentIcon {...props} />;
     case "records":
       return <RegistryIcon {...props} />;
+    case "tasks":
+      return <CheckCircleIcon {...props} />;
+    case "agent":
+      return <SparkIcon {...props} />;
     case "timeline":
       return <CalendarIcon {...props} />;
     case "settings":

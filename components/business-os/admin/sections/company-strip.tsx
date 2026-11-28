@@ -3,7 +3,7 @@ import { DeadlineRow } from "@/components/business-os/admin/sections/deadline-ro
 import { ButtonLink, Card, CardHead } from "@/components/business-os/ui/primitives";
 import { checklistProgress, checklistRows, CHECKLIST_FOLDER } from "@/lib/business-os/company/checklist";
 import { upcomingDeadlines } from "@/lib/business-os/company/deadlines";
-import { COMPANY_DATES, COMPANY_PROFILE, companyFullAddress } from "@/lib/business-os/company/profile";
+import { companyDatesFrom, COMPANY_PROFILE, companyFullAddress } from "@/lib/business-os/company/profile";
 import { londonDate } from "@/lib/business-os/finance/london";
 import { workspaceHref, type WorkspaceQuery } from "@/lib/business-os/workspace/filters";
 import type { WorkspaceData } from "@/lib/business-os/workspace/load";
@@ -26,7 +26,8 @@ export function CompanyStrip({ query, checklist }: { query: WorkspaceQuery; chec
   const filesHref = `${workspaceHref("/admin", query, { section: "documents", metric: null })}&folder=${encodeURIComponent(CHECKLIST_FOLDER)}`;
   const checklistHref = workspaceHref("/admin", query, { section: "records", metric: null });
   const progress = checklist && "filesByTag" in checklist ? checklistProgress(checklistRows(checklist.filesByTag, today)) : null;
-  const deadlines = upcomingDeadlines(COMPANY_DATES, today, 3);
+  const saved = checklist && "filesByTag" in checklist ? checklist.profile : null;
+  const deadlines = upcomingDeadlines(companyDatesFrom(saved), today, 3);
 
   return (
     <Card>
@@ -41,9 +42,10 @@ export function CompanyStrip({ query, checklist }: { query: WorkspaceQuery; chec
       />
       <div className="bos-company-strip">
         <div className="bos-facts">
-          <Fact label="Company number" value={COMPANY_PROFILE.companyNumber} />
-          <Fact label="Legal name" value={COMPANY_PROFILE.legalName} />
-          <Fact label="Registered office" value={companyFullAddress()} />
+          <Fact label="Company number" value={saved?.companyNumber ?? COMPANY_PROFILE.companyNumber} />
+          <Fact label="Legal name" value={saved?.legalName || COMPANY_PROFILE.legalName} />
+          {saved?.vatNumber ? <Fact label="VAT number" value={saved.vatNumber} /> : null}
+          <Fact label="Registered office" value={saved?.address ?? companyFullAddress()} />
           <Fact label="Email" value={COMPANY_PROFILE.emails[0]} />
         </div>
         <div className="min-w-0">

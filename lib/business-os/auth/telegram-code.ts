@@ -97,7 +97,7 @@ export function codeMessage(code: string, label: string): string {
   ].join("\n");
 }
 
-/** True when Telegram accepted the message. */
+/** True when Telegram accepted the message. If it refuses the buttons, the code alone is sent so the member is never locked out. */
 export async function sendTelegramCode(input: {
   botToken: string;
   chatId: string;
@@ -108,32 +108,36 @@ export async function sendTelegramCode(input: {
   fetchImpl?: typeof fetch;
 }): Promise<boolean> {
   const send = input.fetchImpl ?? fetch;
-  try {
-    const response = await send(`https://api.telegram.org/bot${input.botToken}/sendMessage`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        chat_id: input.chatId,
-        text: codeMessage(input.code, input.label),
-        parse_mode: "HTML",
-        ...(input.approveUrl
-          ? {
-              reply_markup: {
-                inline_keyboard: [
-                  [
-                    { text: "Approve", web_app: { url: input.approveUrl } },
-                    { text: "Not me", web_app: { url: `${input.approveUrl}&d=1` } },
+  const post = async (withButtons: boolean) => {
+    try {
+      const response = await send(`https://api.telegram.org/bot${input.botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          chat_id: input.chatId,
+          text: codeMessage(input.code, input.label),
+          parse_mode: "HTML",
+          ...(withButtons && input.approveUrl
+            ? {
+                reply_markup: {
+                  inline_keyboard: [
+                    [
+                      { text: "Approve", web_app: { url: input.approveUrl } },
+                      { text: "Not me", web_app: { url: `${input.approveUrl}&d=1` } },
+                    ],
                   ],
-                ],
-              },
-            }
-          : {}),
-      }),
-    });
-    return response.ok;
-  } catch {
-    return false;
-  }
+                },
+              }
+            : {}),
+        }),
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  };
+  if (input.approveUrl && (await post(true))) return true;
+  return post(false);
 }
 
 const usernames = new Map<string, string | null>();

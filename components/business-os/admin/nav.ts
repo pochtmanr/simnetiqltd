@@ -66,6 +66,7 @@ export const NAV_GROUPS: NavGroup[] = [
     label: "Plan",
     items: [
       { section: "timeline", label: "Calendar", description: "Campaigns, bills, deadlines, meetings and everything dated from the other tabs, in one view.", periodic: false },
+      { section: "tasks", label: "Next steps", description: "Tasks for you and for the agent, by due date.", periodic: false },
       { section: "records", label: "Company checklist", description: "Documents the company must hold and what it files next.", periodic: false },
     ],
   },
@@ -75,6 +76,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { section: "integrations", label: "Sources", description: "Connections, datasets, sync runs and quarantine.", periodic: false },
       { section: "projects", label: "Projects", description: "Products and their reporting status.", periodic: false },
+      { section: "agent", label: "Agent activity", description: "Everything the agent did over MCP, newest first.", periodic: false },
     ],
   },
 ];
