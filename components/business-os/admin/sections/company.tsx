@@ -77,7 +77,7 @@ export function Settings({
   telegramConfigured: boolean;
 }) {
   return (
-    <div className="bos-grid-2" data-even="">
+    <div className="bos-settings">
       <Section title="Account">
         <Card pad>
           <KeyValues
@@ -91,7 +91,7 @@ export function Settings({
         </Card>
       </Section>
       <Section title="Security">
-        <Card>
+        <Card tone={profile.assurance === "aal2" ? "ok" : "warn"}>
           <CardHead title="Confirmation in Telegram" meta="Money, bank and integration changes and deleting files need a tap on Approve in Telegram. Everyday work never asks." />
           <div className="p-4 md:p-5">
             <IdentityActions role={profile.role} assurance={profile.assurance} surface="admin" telegramConfigured={telegramConfigured} focus="session" stepUpUntil={profile.stepUpUntil} />

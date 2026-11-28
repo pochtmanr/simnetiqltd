@@ -50,7 +50,7 @@ export async function AdminWorkspace({
           />
 
           <div className="bos-main">
-            <main className="bos-content">
+            <main className="bos-content" data-section={query.section}>
               <div className="bos-page-head">
                 <div>
                   <div className="flex items-center gap-2">

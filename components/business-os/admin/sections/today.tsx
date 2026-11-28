@@ -27,27 +27,42 @@ const ACTIONABLE = new Set(["finance_due", "recurring_expectation", "service_ren
 export function Today({ query, data }: { query: WorkspaceQuery; data: WorkspaceData }) {
   const link = (section: string) => workspaceHref(BASE, query, { section, metric: null });
   return (
-    <div className="flex flex-col gap-8">
-      <CompanyStrip query={query} checklist={data.checklist} />
-      <NextSteps tasks={data.tasks} projects={data.projects} href={link("tasks")} />
-      <div className="flex flex-col gap-4">
-        {PROJECT_STACKS.map((stack) => (
-          <ProjectHub
-            key={stack.slug}
-            stack={stack}
-            project={data.projects.find((row) => row.slug === stack.slug)}
-            overviewHref={workspaceHref(BASE, query, { section: "overview", project: stack.slug, metric: null })}
-          />
-        ))}
+    // Two columns on wide screens. On narrow ones the wrappers dissolve and CSS `order` restores the single-column reading order.
+    <div className="bos-dash">
+      <div className="bos-dash__main">
+        <div className="bos-dash__slot" data-slot="company">
+          <CompanyStrip query={query} checklist={data.checklist} />
+        </div>
+        <div className="bos-dash__slot bos-dash__hubs" data-slot="hubs">
+          {PROJECT_STACKS.map((stack) => (
+            <ProjectHub
+              key={stack.slug}
+              stack={stack}
+              project={data.projects.find((row) => row.slug === stack.slug)}
+              overviewHref={workspaceHref(BASE, query, { section: "overview", project: stack.slug, metric: null })}
+            />
+          ))}
+        </div>
+        <div className="bos-dash__slot" data-slot="kpis">
+          <Section title={periodLabel(query)} description="Headline figures for the current month. Open Overview to change the period.">
+            <HeadlineKpis query={query} data={data} />
+          </Section>
+        </div>
       </div>
-      <AttentionCard query={query} data={data} />
-      <Section title={periodLabel(query)} description="Headline figures for the current month. Open Overview to change the period.">
-        <HeadlineKpis query={query} data={data} />
-      </Section>
-      <div className="bos-grid-2">
-        <UpNext upcoming={data.upcoming} href={link("timeline")} />
-        <SourceFreshness data={data} href={link("integrations")} />
-      </div>
+      <aside className="bos-dash__rail">
+        <div className="bos-dash__slot" data-slot="steps">
+          <NextSteps tasks={data.tasks} projects={data.projects} href={link("tasks")} />
+        </div>
+        <div className="bos-dash__slot" data-slot="attention">
+          <AttentionCard query={query} data={data} />
+        </div>
+        <div className="bos-dash__slot" data-slot="upnext">
+          <UpNext upcoming={data.upcoming} href={link("timeline")} />
+        </div>
+        <div className="bos-dash__slot" data-slot="sources">
+          <SourceFreshness data={data} href={link("integrations")} />
+        </div>
+      </aside>
     </div>
   );
 }
@@ -57,7 +72,7 @@ function NextSteps({ tasks, projects, href }: { tasks: WorkspaceData["tasks"]; p
   const today = londonDate(new Date());
   const open = tasks.rows.filter((task) => !isClosed(task));
   return (
-    <Card>
+    <Card tone="accent">
       <CardHead title="Next steps" meta={`${open.length} open`} actions={<a className="bos-caption bos-link" href={href}>All tasks</a>} />
       {open.length === 0 ? (
         <EmptyState icon={<TimelineIcon />} title="Nothing open">
@@ -233,7 +248,7 @@ function UpNext({ upcoming, href }: { upcoming: WorkspaceData["upcoming"]; href:
   const overdue = upcoming.rows.filter((row) => row.occursOn < today && ACTIONABLE.has(row.kind));
   const ahead = upcoming.rows.filter((row) => row.occursOn >= today);
   return (
-    <Card>
+    <Card tone="teal">
       <CardHead title="Up next" meta="Next 14 days" actions={<a className="bos-caption bos-link" href={href}>Calendar</a>} />
       {overdue.length + ahead.length === 0 ? (
         <EmptyState icon={<TimelineIcon />} title="Nothing due">

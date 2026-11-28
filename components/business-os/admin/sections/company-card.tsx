@@ -34,7 +34,7 @@ export function CompanyInfoCard() {
   const [open, setOpen] = useState(true);
 
   return (
-    <Card className="bos-company-card">
+    <Card className="bos-company-card" tone="accent">
       <CardHead
         title="Company info"
         actions={

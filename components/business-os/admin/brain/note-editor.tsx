@@ -533,8 +533,8 @@ export function NoteEditor({
   );
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_240px]">
-      <Card pad className="flex min-w-0 flex-col gap-3">
+    <div className="bos-note-layout">
+      <Card pad className="bos-note-card flex min-w-0 flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2">
           {onBack ? (
             <Button variant="ghost" size="sm" onClick={onBack}>
@@ -692,7 +692,7 @@ export function NoteEditor({
         </div>
       </Card>
 
-      <aside className="flex flex-col gap-4">
+      <aside className="bos-note-side">
         {headings.length >= 2 ? (
           <SideCard label="Outline">
             <ul className="flex flex-col gap-1">

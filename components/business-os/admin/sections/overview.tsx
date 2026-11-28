@@ -58,7 +58,7 @@ export function AttentionCard({ query, data }: { query: WorkspaceQuery; data: Wo
   if (attention.length === 0) return null;
   const link = (section: string) => workspaceHref(BASE, query, { section, metric: null });
   return (
-    <Card>
+    <Card tone="warn">
       <CardHead title={`Needs attention · ${attention.length}`} actions={<a className="bos-caption bos-link" href={link("integrations")}>Open sources</a>} />
       <ul className="flex flex-col gap-2 p-4 md:px-5">
         {attention.slice(0, 4).map((item) => (

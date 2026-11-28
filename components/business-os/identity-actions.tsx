@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { businessPost } from "@/components/business-os/business-post";
 import { ensureStepUp } from "@/components/business-os/step-up";
+import { Button } from "@/components/business-os/ui/primitives";
 
 async function csrfHeader(): Promise<HeadersInit> {
   await fetch("/api/business-os/auth/csrf", { credentials: "same-origin" });
@@ -73,9 +74,12 @@ export function IdentityActions({
     <div className="flex flex-col gap-6">
       {focus === "session" ? (
         <>
-          <button type="button" onClick={logout} className={surface === "admin" ? "btn-secondary w-fit text-sm" : "min-h-11 w-fit rounded-md border border-border px-3 py-2 text-sm"}>
-            Log out
-          </button>
+          {/* The admin Account page has its own Log out under Settings. */}
+          {surface === "admin" ? null : (
+            <button type="button" onClick={logout} className="min-h-11 w-fit rounded-md border border-border px-3 py-2 text-sm">
+              Log out
+            </button>
+          )}
           <section className="flex flex-col gap-3">
             <h2 className="text-sm font-medium">Confirm with Telegram</h2>
             {assurance === "aal2" ? (
@@ -89,9 +93,15 @@ export function IdentityActions({
                 <p className="text-sm text-text-dim">
                   Money, bank and integration changes and deleting files ask you to tap Approve in Telegram. You can do it now so nothing interrupts you later.
                 </p>
-                <button type="button" onClick={confirm} className="min-h-11 w-fit rounded-md bg-primary px-3 py-2 text-sm text-white">
-                  Trust this browser
-                </button>
+                {surface === "admin" ? (
+                  <Button variant="primary" className="w-fit" onClick={confirm}>
+                    Trust this browser
+                  </Button>
+                ) : (
+                  <button type="button" onClick={confirm} className="min-h-11 w-fit rounded-md bg-primary px-3 py-2 text-sm text-white">
+                    Trust this browser
+                  </button>
+                )}
               </>
             ) : (
               <p className="text-sm text-text-dim">Telegram bot configuration is not set.</p>

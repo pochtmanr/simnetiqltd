@@ -153,7 +153,10 @@
   display: none;
 }
 
+/* Layouts below size themselves from this column (`@container main`), so they
+   follow the space left beside the sidebar rather than the viewport. */
 .bos-main {
+  container: main / inline-size;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -170,6 +173,12 @@
   flex-direction: column;
   gap: 24px;
 }
+
+/* Sections laid out for wide screens. Everything else keeps the 1200px column. */
+.bos-content[data-section="home"] { max-width: 2400px; }
+.bos-content[data-section="notes"],
+.bos-content[data-section="documents"] { max-width: none; }
+.bos-content[data-section="settings"] { max-width: 1440px; }
 
 .bos-page-head {
   display: flex;
@@ -286,6 +295,10 @@
   .bos-side-link__text, .bos-side-brand span, .bos-side-group__head { transition: opacity var(--motion-fast) ease; }
   .bos-sidebar[data-collapsed]:not([data-editing]) :is(.bos-side-link__text, .bos-side-brand span, .bos-side-group__head) { opacity: 0; }
   .bos-content { padding: 28px 32px 56px; }
+}
+
+@container main (min-width: 1600px) {
+  .bos-content { padding: 32px 40px 64px; }
 }
 
 /* ---------- Sidebar ---------- */
@@ -496,6 +509,28 @@
   border-radius: var(--bos-radius-card);
   background: var(--bos-card);
   box-shadow: var(--bos-card-shadow);
+}
+
+/* A tinted card marks a role (to-do, warning, schedule). Most cards stay neutral. */
+.bos-card[data-tone] {
+  --bos-tone: var(--bos-accent);
+  background: color-mix(in srgb, var(--bos-tone) 7%, var(--bos-card));
+  border-color: color-mix(in srgb, var(--bos-tone) 30%, var(--bos-card-border));
+}
+.bos-card[data-tone="ok"] { --bos-tone: var(--bos-ok); }
+.bos-card[data-tone="warn"] { --bos-tone: var(--bos-warn); }
+.bos-card[data-tone="teal"] { --bos-tone: var(--bos-series-2); }
+.bos-card[data-tone="violet"] { --bos-tone: var(--bos-series-5); }
+.bos-card[data-tone] > .bos-card__head { border-bottom-color: color-mix(in srgb, var(--bos-tone) 22%, transparent); }
+.bos-card[data-tone] > .bos-card__head .bos-h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-inline-end: 8px;
+  border-radius: 999px;
+  background: var(--bos-tone);
+  vertical-align: 1px;
 }
 
 .bos-card__pad { padding: 16px; }
@@ -776,6 +811,21 @@ a.bos-kpi:hover { border-color: var(--color-border-strong); }
 .bos-kpi__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; min-height: 18px; }
 .bos-kpi__spark { width: 96px; height: 32px; flex-shrink: 0; color: var(--bos-series-1); }
 .bos-delta { font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
+.bos-dash .bos-kpis > :nth-child(1) { --bos-kpi: var(--bos-series-1); }
+.bos-dash .bos-kpis > :nth-child(2) { --bos-kpi: var(--bos-series-2); }
+.bos-dash .bos-kpis > :nth-child(3) { --bos-kpi: var(--bos-ok); }
+.bos-dash .bos-kpis > :nth-child(4) { --bos-kpi: var(--bos-series-5); }
+.bos-dash .bos-kpi { border-top: 2px solid var(--bos-kpi, var(--bos-card-border)); }
+.bos-dash .bos-kpi__icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-inline-end: 2px;
+  border-radius: 8px;
+  color: var(--bos-kpi, var(--bos-link));
+  background: color-mix(in srgb, var(--bos-kpi, var(--bos-accent)) 16%, transparent);
+}
 @media (max-width: 767px) {
   .bos-kpi__foot { flex-direction: column-reverse; align-items: stretch; gap: 4px; }
   .bos-kpi__spark { width: 100%; height: 28px; }
@@ -1147,7 +1197,63 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
 /* ---------- Company strip and checklist ---------- */
 
 .bos-company-strip { display: grid; gap: 16px; padding: 0 16px 16px; }
-@media (min-width: 1024px) { .bos-company-strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; } }
+@container main (min-width: 680px) and (max-width: 999.98px) { .bos-company-strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; } }
+@container main (min-width: 1250px) { .bos-company-strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; } }
+
+/* ---------- Dashboard ---------- */
+
+/* One column by default: the two wrappers dissolve and `order` sets the reading order. */
+.bos-dash { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+.bos-dash__main, .bos-dash__rail { display: contents; }
+.bos-dash__slot { min-width: 0; }
+.bos-dash__slot:empty { display: none; }
+.bos-dash__hubs { display: flex; flex-direction: column; gap: 16px; }
+.bos-dash__slot[data-slot="company"] { order: 1; }
+.bos-dash__slot[data-slot="steps"] { order: 2; }
+.bos-dash__slot[data-slot="hubs"] { order: 3; }
+.bos-dash__slot[data-slot="attention"] { order: 4; }
+.bos-dash__slot[data-slot="kpis"] { order: 5; }
+.bos-dash__slot[data-slot="upnext"] { order: 6; }
+.bos-dash__slot[data-slot="sources"] { order: 7; }
+
+@container main (min-width: 680px) and (max-width: 999.98px) {
+  .bos-dash { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 20px; }
+  .bos-dash__slot { grid-column: 1 / -1; }
+  .bos-dash__slot[data-slot="upnext"] { grid-column: span 2; }
+  .bos-dash__slot[data-slot="sources"] { grid-column: span 1; }
+}
+
+/* Main column plus a rail of what needs doing. Figures lead the main column. */
+@container main (min-width: 1000px) {
+  .bos-dash { grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+  .bos-dash__main, .bos-dash__rail { display: flex; flex-direction: column; min-width: 0; }
+  .bos-dash__main { gap: 24px; }
+  .bos-dash__rail { gap: 16px; }
+  .bos-dash .bos-dash__slot[data-slot] { order: 0; }
+  .bos-dash .bos-dash__slot[data-slot="kpis"] { order: -1; }
+  /* The four figures share the full row instead of leaving empty tracks. */
+  .bos-dash .bos-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@container main (min-width: 1400px) {
+  .bos-dash .bos-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@container main (min-width: 1700px) {
+  .bos-dash { grid-template-columns: minmax(0, 1fr) 440px; gap: 32px; }
+  .bos-dash__main { gap: 28px; }
+  /* Project cards differ a lot in height, so they pack as two masonry columns. */
+  .bos-dash__hubs { display: block; columns: 2; column-gap: 16px; }
+  .bos-dash__hubs > * { break-inside: avoid; margin-bottom: 16px; }
+  .bos-dash__hubs > :last-child { margin-bottom: 0; }
+}
+
+/* ---------- Account ---------- */
+
+.bos-settings { display: grid; gap: 16px; align-items: start; }
+.bos-settings > * { min-width: 0; }
+@container main (min-width: 680px) { .bos-settings { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@container main (min-width: 1200px) { .bos-settings { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
 .bos-facts { border: 1px solid var(--bos-card-border); border-radius: var(--bos-radius-card); overflow: hidden; align-self: start; }
 .bos-fact { display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 12px; border-top: 1px solid var(--bos-card-border); }
 .bos-fact:first-child { border-top: 0; }
@@ -1273,9 +1379,28 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
 .bos-usage__fill[data-full] { background: var(--bos-bad); }
 .bos-folder--sep { margin-top: 10px; }
 .bos-files { display: grid; gap: 16px; }
-@media (min-width: 1024px) { .bos-files { grid-template-columns: 220px minmax(0, 1fr); align-items: start; } }
 .bos-files__tree { display: none; }
-@media (min-width: 1024px) { .bos-files__tree { display: flex; flex-direction: column; gap: 2px; position: sticky; top: 16px; } }
+/* The folder tree shows from iPad portrait up; phones keep breadcrumbs and chips. */
+@media (min-width: 768px) {
+  @container main (min-width: 680px) {
+    .bos-files { grid-template-columns: 220px minmax(0, 1fr); align-items: start; }
+    .bos-files__tree { display: flex; flex-direction: column; gap: 2px; position: sticky; top: 16px; max-height: calc(100dvh - 32px); overflow-y: auto; }
+    .bos .bos-files__alt { display: none; }
+  }
+}
+/* Between phone and rail widths the company facts run in two columns, so the card is half as tall. */
+@container main (min-width: 680px) and (max-width: 1499.98px) {
+  .bos-company-body { columns: 2; column-gap: 16px; }
+  .bos-company-body > p { column-span: all; }
+  .bos-company-group { break-inside: avoid; }
+}
+/* Wide screens move company info into a rail beside the table. */
+@container main (min-width: 1500px) {
+  .bos-files-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+  .bos-files-layout > * { grid-column: 1; grid-row: 1; }
+  .bos-files-layout > .bos-company-card { grid-column: 2; position: sticky; top: 16px; max-height: calc(100dvh - 32px); overflow-y: auto; }
+  .bos-files { grid-template-columns: 260px minmax(0, 1fr); gap: 24px; }
+}
 .bos-folder {
   display: flex;
   align-items: center;
@@ -1292,6 +1417,10 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
 .bos-folder[aria-current="true"] { background: var(--bos-accent-soft); color: var(--bos-link); }
 .bos-folder__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bos-folder__count { font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+@media (pointer: coarse) {
+  .bos-folder { min-height: 44px; }
+  .bos-crumbs button { padding: 10px 6px; }
+}
 .bos-drop { position: relative; }
 .bos-drop[data-over]::after {
   content: "Drop to upload";
@@ -1320,13 +1449,39 @@ button.bos-row:hover, a.bos-row:hover { background: var(--bos-hover); }
 .bos-wikilink { color: var(--bos-link); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--bos-link) 40%, transparent); text-underline-offset: 3px; }
 .bos-wikilink[data-unresolved] { color: var(--color-text-dim); text-decoration-style: dashed; }
 .bos-notes { display: grid; gap: 16px; }
-@media (min-width: 1024px) { .bos-notes { grid-template-columns: 280px minmax(0, 1fr); align-items: start; } }
 .bos-notes__list { display: flex; flex-direction: column; gap: 8px; }
-@media (min-width: 1024px) { .bos-notes__list { position: sticky; top: 16px; max-height: calc(100dvh - 120px); } }
+.bos-note-layout { display: grid; gap: 16px; min-width: 0; }
+.bos-note-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+/* List beside the editor from iPad portrait up. Phones show one pane at a time. */
+@media (min-width: 768px) {
+  @container main (min-width: 680px) {
+    .bos-notes { grid-template-columns: 260px minmax(0, 1fr); align-items: start; }
+    .bos-notes__list { position: sticky; top: 16px; max-height: calc(100dvh - 120px); }
+    /* Until there is room for a third column, the side cards sit under the editor in a row. */
+    .bos-note-side { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); align-items: start; }
+  }
+}
+@container main (min-width: 1180px) {
+  .bos-notes { grid-template-columns: 280px minmax(0, 1fr); gap: 20px; }
+  .bos-note-layout { grid-template-columns: minmax(0, 1fr) 240px; align-items: start; }
+  .bos-note-side { display: flex; align-items: stretch; position: sticky; top: 16px; max-height: calc(100dvh - 32px); overflow-y: auto; }
+  .bos-graph { height: max(480px, calc(100dvh - 220px)); }
+}
+@container main (min-width: 1500px) {
+  .bos-notes { grid-template-columns: 320px minmax(0, 1fr); gap: 24px; }
+  .bos-note-layout { grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; }
+}
+@container main (min-width: 1900px) {
+  .bos-notes { grid-template-columns: 360px minmax(0, 1fr); }
+  .bos-note-layout { grid-template-columns: minmax(0, 1fr) 340px; }
+}
+/* Outside split view the note keeps a readable measure in the middle of its card. */
+.bos-note-card:not(:has(.bos-note-body[data-view="split"])) > * { width: 100%; max-width: 860px; margin-inline: auto; }
+.bos-note-card:not(:has(.bos-note-body[data-view="split"])) .bos-md { max-width: none; }
 .bos-notes__items { overflow-y: auto; min-height: 0; }
 .bos-note-item { display: flex; flex-direction: column; gap: 2px; width: 100%; padding: 8px 12px; border-radius: 8px; text-align: start; }
 .bos-note-item:hover { background: var(--bos-hover); }
-.bos-note-item[aria-current="true"] { background: var(--bos-accent-soft); }
+.bos-note-item[aria-current="true"] { background: var(--bos-accent-soft); box-shadow: inset 3px 0 0 var(--bos-accent); }
 .bos-note-item__title { font-size: 0.875rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bos-note-title { width: 100%; background: transparent; border: 0; outline: none; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; color: var(--color-text); padding: 0; }
 .bos-note-editor {
@@ -1531,7 +1686,18 @@ button.bos-notes-start__card:hover { background: var(--bos-hover); border-color:
 .bos-note-tag { padding: 0 10px; cursor: pointer; background: none; }
 .bos-menu-item[data-danger] { color: var(--bos-bad); }
 .bos-note-confirm { display: flex; flex-direction: column; gap: 10px; padding: 6px; max-width: 260px; }
-@media (pointer: coarse) { .bos-note-tool { min-width: 40px; height: 40px; } }
+@media (pointer: coarse) {
+  .bos-note-tool { min-width: 40px; height: 40px; }
+  .bos-note-outline, .bos-note-side .bos-wikilink { display: inline-block; padding-block: 8px; }
+  .bos-notes-chip { min-height: 36px; padding: 0 12px; }
+  .bos-notes-search__clear { width: 36px; height: 36px; }
+  .bos-notes-new .bos-notes-new__more { width: 40px; }
+  .bos-notes-filters summary { padding: 10px 0; }
+  .bos-notes-more { padding: 10px 6px; }
+  /* The colour dot stays small; its tap area grows around it. */
+  .bos-btn.bos-folder-pick { position: relative; }
+  .bos-btn.bos-folder-pick::after { content: ""; position: absolute; inset: -11px; }
+}
 
 /* ── end notes editor ── */
 
@@ -1567,13 +1733,16 @@ button.bos-notes-start__card:hover { background: var(--bos-hover); border-color:
   inset: 0;
   z-index: 70;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 16px;
   background: var(--bos-scrim);
   pointer-events: none;
 }
+/* `.bos-main` is a query container, so the overlay spans the whole column; sticky keeps the box on screen. */
 .bos-vault-drop__box {
+  position: sticky;
+  top: calc(50dvh - 90px);
   display: flex;
   width: min(420px, 100%);
   flex-direction: column;

@@ -306,7 +306,7 @@ export function Files({ rows, error, projects, canWrite, limit }: { rows: Docume
 
         {panel === "connectors" ? (
           <div className="flex min-w-0 flex-col gap-4">
-            <Button type="button" variant="ghost" className="self-start lg:hidden" onClick={() => setPanel("files")}>
+            <Button type="button" variant="ghost" className="bos-files__alt self-start" onClick={() => setPanel("files")}>
               Back to files
             </Button>
             <ConnectorsStub />
@@ -333,7 +333,7 @@ export function Files({ rows, error, projects, canWrite, limit }: { rows: Docume
                 </span>
                 <Input type="search" aria-label="Search files" placeholder="Search names, folders, vendors and text" value={query} onChange={(event) => setQuery(event.target.value)} className="ps-9" />
               </div>
-              <Button type="button" variant="ghost" className="lg:hidden" onClick={() => setPanel("connectors")}>
+              <Button type="button" variant="ghost" className="bos-files__alt" onClick={() => setPanel("connectors")}>
                 Connectors
               </Button>
               {canWrite ? (

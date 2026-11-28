@@ -201,8 +201,10 @@ export function StatusPill({ status, label, tone, title, compact }: { status?: s
 
 /* ---------- Surfaces ---------- */
 
-export function Card({ children, className, pad, as: Tag = "section" }: { children: ReactNode; className?: string; pad?: boolean; as?: "section" | "div" | "article" }) {
-  return <Tag className={cx("bos-card", pad && "bos-card__pad", className)}>{children}</Tag>;
+export type CardTone = "accent" | "ok" | "warn" | "teal" | "violet";
+
+export function Card({ children, className, pad, tone, as: Tag = "section" }: { children: ReactNode; className?: string; pad?: boolean; tone?: CardTone; as?: "section" | "div" | "article" }) {
+  return <Tag className={cx("bos-card", pad && "bos-card__pad", className)} data-tone={tone}>{children}</Tag>;
 }
 
 export function CardHead({ title, meta, actions }: { title: ReactNode; meta?: ReactNode; actions?: ReactNode }) {

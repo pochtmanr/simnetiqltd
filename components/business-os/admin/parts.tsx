@@ -51,7 +51,7 @@ export function KpiCard({
   const body = (
     <>
       <div className="bos-kpi__top">
-        {icon ? <span className="text-[var(--bos-link)]">{icon}</span> : null}
+        {icon ? <span className="bos-kpi__icon text-[var(--bos-link)]">{icon}</span> : null}
         <span className="bos-label">{label}</span>
         {metric !== undefined ? <QualityPill metric={metric ?? null} /> : null}
       </div>
