@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { jsonError } from "@/lib/business-os/auth/http";
-import { jobAuthorized, readSourceSecret, secretStore } from "@/lib/business-os/sync/store";
+import { jobAuthorized, pruneSyncHistory, readSourceSecret, secretStore } from "@/lib/business-os/sync/store";
 import { runSyncTick } from "@/lib/business-os/sync/worker";
 
 export const dynamic = "force-dynamic";
@@ -13,6 +13,8 @@ async function tick(request: NextRequest) {
   try {
     const workerId = `cronw-${randomBytes(4).toString("hex")}`;
     const result = await runSyncTick(secretStore(), { workerId, secretFor: readSourceSecret });
+    // Housekeeping rides on the tick; a failed cleanup must not fail the sync it follows.
+    await pruneSyncHistory().catch(() => undefined);
     return NextResponse.json(result);
   } catch {
     return jsonError("unavailable", 500);

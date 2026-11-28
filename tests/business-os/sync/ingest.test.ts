@@ -20,6 +20,11 @@ const reconciliationSql = readFileSync(
   "utf8",
 );
 
+const retentionSql = readFileSync(
+  join(dirname(fileURLToPath(import.meta.url)), "../../../supabase/business-os/migrations/20261128160000_sync_retention.sql"),
+  "utf8",
+);
+
 const capabilities = {
   contract_version: "business-os.contract.v1",
   project_id: "doppler",
@@ -33,6 +38,7 @@ async function withSync() {
   const db = await withLedger();
   await db.exec(pullsSql);
   await db.exec(reconciliationSql);
+  await db.exec(retentionSql);
   return db;
 }
 
@@ -418,4 +424,45 @@ test("read-only members can inspect sync rows and cannot register a connection",
   await db.exec("set local role anon");
   await assert.rejects(() => db.exec(`insert into business_os.source_connections default values`));
   await db.exec("rollback");
+});
+
+test("pruning removes old superseded snapshots and run rows and keeps current data", async () => {
+  const db = await withSync();
+  const id = await enable(db, "doppler", ["analytics/ga4_overview_daily"]);
+  for (const snapshot of ["snap-old", "snap-mid", "snap-new"]) {
+    await claim(db, `worker-${snapshot}`);
+    await db.query(`select business_os.commit_snapshot_page($1::uuid, $2, $3::jsonb)`, [
+      id,
+      `worker-${snapshot}`,
+      JSON.stringify({
+        endpoint: "analytics/ga4_overview_daily",
+        has_more: false,
+        next_cursor: null,
+        grain: "ga4_overview_daily",
+        timezone: "Europe/London",
+        coverage: "partial",
+        body: { ...analyticsFixture, snapshot_id: snapshot },
+      }),
+    ]);
+  }
+  // Age the first copy and its runs past the window; the second superseded copy stays inside it.
+  await db.query(`update business_os.imported_snapshots set created_at = now() - interval '40 days' where snapshot_id = 'snap-old'`);
+  await db.query(`update business_os.sync_runs set started_at = now() - interval '40 days' where worker_id = 'worker-snap-old'`);
+  const before = await db.query<{ count: string }>(`select count(*)::text as count from business_os.sync_runs`);
+
+  const pruned = json<{ snapshots: number; runs: number }>(
+    (await db.query<{ result: unknown }>(`select business_os.prune_sync_history(30) as result`)).rows[0].result,
+  );
+  assert.equal(pruned.snapshots, 1);
+  assert.ok(pruned.runs >= 1);
+  const left = await db.query<{ snapshot_id: string; status: string }>(
+    `select snapshot_id, status from business_os.imported_snapshots order by snapshot_id`,
+  );
+  assert.deepEqual(left.rows, [
+    { snapshot_id: "snap-mid", status: "retained" },
+    { snapshot_id: "snap-new", status: "current" },
+  ]);
+  const after = await db.query<{ count: string }>(`select count(*)::text as count from business_os.sync_runs`);
+  assert.equal(Number(after.rows[0].count), Number(before.rows[0].count) - pruned.runs);
+  await assert.rejects(db.query(`select business_os.prune_sync_history(1)`), /retention_invalid/);
 });

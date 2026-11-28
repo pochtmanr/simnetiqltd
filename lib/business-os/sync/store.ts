@@ -42,6 +42,14 @@ export function secretStore(): SyncStore {
   };
 }
 
+/** Days of superseded snapshot copies and sync run rows kept before the tick deletes them. */
+export const SYNC_HISTORY_DAYS = 30;
+
+/** Deletes sync history older than the retention window. Current data and sales records are never touched. */
+export async function pruneSyncHistory(): Promise<void> {
+  await rpc("prune_sync_history", { keep_days: SYNC_HISTORY_DAYS });
+}
+
 export function jobAuthorized(header: string | null, secret: string | null): boolean {
   if (!secret) return false;
   const token = header?.startsWith("Bearer ") ? header.slice("Bearer ".length) : "";
